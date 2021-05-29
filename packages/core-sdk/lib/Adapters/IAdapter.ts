@@ -5,6 +5,7 @@ import {
   Address,
   ExecutionResponse,
   ExecutionValueProps,
+  ExecutionParams,
 } from "./Types";
 
 export interface IAdapter {

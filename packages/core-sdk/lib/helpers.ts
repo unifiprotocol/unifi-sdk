@@ -6,7 +6,9 @@ import {
 } from "@root/Types";
 import { Opt } from "@root/Utils/Typings";
 
-export const isValidConnector = (connectorName: any) => {
+export const isValidConnector = (
+  connectorName: WalletConnectors | OfflineConnectors
+): boolean => {
   const connectors = [
     ...Object.values(WalletConnectors),
     ...Object.values(OfflineConnectors),
@@ -14,7 +16,7 @@ export const isValidConnector = (connectorName: any) => {
   return connectors.includes(connectorName);
 };
 
-export const isValidBlockchain = (blockchain: any) => {
+export const isValidBlockchain = (blockchain: Blockchains): boolean => {
   return Object.values(Blockchains).includes(blockchain);
 };
 
@@ -30,4 +32,4 @@ export const blockchainToEthChainId = (
   return map[blockchain] || undefined;
 };
 
-export const hexToDec = (hex: string) => parseInt(hex, 16);
+export const hexToDec = (hex: string): number => parseInt(hex, 16);

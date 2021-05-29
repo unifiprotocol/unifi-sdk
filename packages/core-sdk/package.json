@@ -14,7 +14,10 @@
     "build": "yarn run clean && yarn run compile && yarn run tsc-replace-paths",
     "tsc-replace-paths": "tsconfig-replace-paths --project tsconfig.json",
     "clean": "rm -rf ./dist && rm -rf tsconfig.tsbuildinfo",
-    "compile": "tsc -b tsconfig.json"
+    "compile": "tsc -b tsconfig.json",
+    "lint": "eslint lib/**.ts",
+    "prepublishOnly" : "npm run lint"
+
   },
   "directories": {
     "lib": "lib",

@@ -50,18 +50,20 @@ export const connectorFactory = (
   return new ConnectorClass(adapter, blockchain);
 };
 
-export const getBlockchainConnectors =
-  (type: "wallet" | "offline") => (blockchain: Blockchains) => {
-    if (!Object.values(Blockchains).includes(blockchain)) {
-      throw new UnknownBlockchainError(blockchain);
-    }
-    if (type === "wallet") {
-      return blockchainWalletConnectors[blockchain] || [];
-    }
+export const getBlockchainConnectors = (type: "wallet" | "offline") => (
+  blockchain: Blockchains
+): (WalletConnectors | OfflineConnectors)[] => {
+  if (!Object.values(Blockchains).includes(blockchain)) {
+    throw new UnknownBlockchainError(blockchain);
+  }
+  if (type === "wallet") {
+    return blockchainWalletConnectors[blockchain] || [];
+  }
 
-    return blockchainOfflineConnectors[blockchain] || [];
-  };
+  return blockchainOfflineConnectors[blockchain] || [];
+};
 export const getBlockchainWalletConnectors = getBlockchainConnectors("wallet");
 
-export const getBlockchainOfflineConnectors =
-  getBlockchainConnectors("offline");
+export const getBlockchainOfflineConnectors = getBlockchainConnectors(
+  "offline"
+);
