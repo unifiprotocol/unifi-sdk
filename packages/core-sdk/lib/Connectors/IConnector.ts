@@ -1,7 +1,9 @@
-import { IAdapter } from '@root/Adapters/IAdapter'
+import { IAdapter } from "@root/Adapters/IAdapter";
 
 export interface IConnector {
-  connect(): Promise<IAdapter>
-  logout(): Promise<void>
-  isWallet(): boolean
+  connect(): Promise<IAdapter>;
+  logout(): Promise<void>;
+  isWallet(): boolean;
+  on(event: string, callback: (...args: any) => void): void;
+  off(event: string, callback: (...args: any) => void): void;
 }

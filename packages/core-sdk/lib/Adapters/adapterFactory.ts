@@ -1,22 +1,23 @@
-import { InvalidBlockchainError } from '@root/Errors/InvalidBlockchainError'
-import { Blockchains } from '@root/Types'
-import { BscAdapter } from './Bsc/BscAdapter'
-import { EthAdapter } from './Eth/EthAdapter'
-import { IAdapter } from './IAdapter'
-import { IotxAdapter } from './Iotex/IotexAdapter'
-import { TrxAdapter } from './Trx/TrxAdapter'
+import { InvalidBlockchainError } from "@root/Errors/InvalidBlockchainError";
+import { Blockchains } from "@root/Types";
+import { BscAdapter } from "./Bsc/BscAdapter";
+import { EthAdapter } from "./Eth/EthAdapter";
+import { IAdapter } from "./IAdapter";
+import { IotxAdapter } from "./Iotex/IotexAdapter";
+import { TrxAdapter } from "./Trx/TrxAdapter";
 
 export const adapterFactory = (chain: Blockchains): IAdapter => {
-  const adapter = {
+  const adapterClass = {
     [Blockchains.Binance]: BscAdapter,
     [Blockchains.Ethereum]: EthAdapter,
     [Blockchains.Iotex]: IotxAdapter,
-    [Blockchains.Tron]: TrxAdapter
-  }[chain]
+    [Blockchains.Tron]: TrxAdapter,
+  }[chain];
 
-  if (!adapter) {
-    throw new InvalidBlockchainError()
+  if (!adapterClass) {
+    throw new InvalidBlockchainError(chain);
   }
 
-  return new adapter()
-}
+  const adapter = new adapterClass();
+  return adapter;
+};
