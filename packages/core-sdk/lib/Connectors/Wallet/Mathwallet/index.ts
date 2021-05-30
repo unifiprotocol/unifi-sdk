@@ -8,7 +8,7 @@ declare global {
   }
 }
 export class MathWalletConnector extends MetamaskConnector {
-  isAvailable() {
+  async isAvailable() {
     return !!this.getAgent() && window.ethereum.isMathWallet;
   }
 }

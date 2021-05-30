@@ -41,7 +41,11 @@ export class MetamaskConnector extends WalletConnector {
   }
 
   async isAvailable() {
-    return !!this.getAgent() && window.ethereum.isMetaMask;
+    return (
+      !!this.getAgent() &&
+      window.ethereum.isMetaMask &&
+      !window.ethereum.isMathWallet
+    );
   }
 
   async initEventController() {
