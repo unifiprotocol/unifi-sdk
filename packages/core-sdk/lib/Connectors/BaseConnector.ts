@@ -14,7 +14,12 @@ export abstract class BaseConnector implements IConnector {
   ) {}
 
   abstract connect(): Promise<IAdapter>;
-  abstract logout(): Promise<void>;
+  async disconnect(): Promise<void> {
+    this.adapter.setAddress("");
+    this.adapter.resetContracts();
+    this.emitter.emit("Disconnect", {});
+    this.emitter.removeAllListeners();
+  }
 
   isWallet(): boolean {
     return this._isWallet;
@@ -27,6 +32,7 @@ export abstract class BaseConnector implements IConnector {
   on(event: ConnectorEvent, callback: Callback) {
     this.emitter.on(event, callback);
   }
+
   off(event: ConnectorEvent, callback: Callback) {
     this.emitter.off(event, callback);
   }

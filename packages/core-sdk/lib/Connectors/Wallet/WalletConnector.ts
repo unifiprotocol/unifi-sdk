@@ -9,11 +9,6 @@ export abstract class WalletConnector extends BaseConnector {
 
   abstract connect(): Promise<IAdapter>;
 
-  async logout(): Promise<void> {
-    this.adapter.setAddress("");
-    this.adapter.resetContracts();
-  }
-
   async isAvailable(): Promise<boolean> {
     return !!this.getAgent();
   }

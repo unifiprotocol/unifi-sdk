@@ -26,4 +26,4 @@ export enum EthChainIds {
 
 export type Connectors = OfflineConnectors | WalletConnectors;
 
-export type ConnectorEvent = "AddressChanged" | "NetworkChanged";
+export type ConnectorEvent = "AddressChanged" | "NetworkChanged" | "Disconnect";
