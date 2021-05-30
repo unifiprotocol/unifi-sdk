@@ -42,12 +42,11 @@ export class MetamaskConnector extends WalletConnector {
 
   async initEventController() {
     this.getAgent().on("accountsChanged", ([address]: string[]) => {
-      debugger;
+      this.adapter.setAddress(address);
       this.emitter.emit("AddressChanged", address);
     });
 
     this.getAgent().on("chainChanged", (chainId: string) => {
-      debugger;
       this.emitter.emit("NetworkChanged", hexToDec(chainId));
     });
   }
