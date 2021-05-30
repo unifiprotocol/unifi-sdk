@@ -10,12 +10,15 @@ import {
   MetamaskConnector,
   TronGridConnector,
   TronLinkConnector,
+  EtherScanConnector,
+  BscDataSeedConnector,
 } from "@root/Connectors";
-import { BscDataSeedConnector } from "@root/Connectors/Offline/BscDataSeed";
-import { EtherScanConnector } from "@root/Connectors/Offline/EtherScan";
-import { InvalidConnectorSetup } from "@root/Errors/InvalidConnectorSetup";
-import { UnknownBlockchainError } from "@root/Errors/UnknownBlockchainError";
-import { UnknownConnectorError } from "@root/Errors/UnknownConnectorError";
+
+import {
+  UnknownBlockchainError,
+  UnknownConnectorError,
+  InvalidConnectorSetup,
+} from "@root/Errors";
 import { isValidBlockchain, isValidConnector } from "@root/helpers";
 import {
   Blockchains,
@@ -23,6 +26,7 @@ import {
   WalletConnectors,
   OfflineConnectors,
 } from "@root/Types";
+import { Wallet } from "./Entities/Wallet";
 
 export const connectorFactory = (
   blockchain: Blockchains,
@@ -50,20 +54,21 @@ export const connectorFactory = (
   return new ConnectorClass(adapter, blockchain);
 };
 
-export const getBlockchainConnectors = (type: "wallet" | "offline") => (
+export const getBlockchainWalletConnectors = (
   blockchain: Blockchains
-): (WalletConnectors | OfflineConnectors)[] => {
+): Wallet[] => {
   if (!Object.values(Blockchains).includes(blockchain)) {
     throw new UnknownBlockchainError(blockchain);
   }
-  if (type === "wallet") {
-    return blockchainWalletConnectors[blockchain] || [];
+  return blockchainWalletConnectors[blockchain] || [];
+};
+
+export const getBlockchainOfflineConnectors = (
+  blockchain: Blockchains
+): OfflineConnectors[] => {
+  if (!Object.values(Blockchains).includes(blockchain)) {
+    throw new UnknownBlockchainError(blockchain);
   }
 
   return blockchainOfflineConnectors[blockchain] || [];
 };
-export const getBlockchainWalletConnectors = getBlockchainConnectors("wallet");
-
-export const getBlockchainOfflineConnectors = getBlockchainConnectors(
-  "offline"
-);
