@@ -1,23 +1,24 @@
-import { IAdapter } from '@root/Adapters/IAdapter'
-import { BaseConnector } from '@root/Connectors/BaseConnector'
-import { Blockchains } from '@root/Types'
+import { IAdapter } from "@root/Adapters/IAdapter";
+import { BaseConnector } from "@root/Connectors/BaseConnector";
+import { Blockchains } from "@root/Types";
 
 export abstract class WalletConnector extends BaseConnector {
   constructor(adapter: IAdapter, blockchain: Blockchains) {
-    super(adapter, blockchain, true)
+    super(adapter, blockchain, true);
   }
 
-  abstract connect(): Promise<IAdapter>
+  abstract connect(): Promise<IAdapter>;
 
   async logout(): Promise<void> {
-    this.adapter.setAddress('')
+    this.adapter.setAddress("");
+    this.adapter.resetContracts();
   }
 
-  async isWalletAvailable(): Promise<boolean> {
-    return !!this.getAgent()
+  async isAvailable(): Promise<boolean> {
+    return !!this.getAgent();
   }
 
   protected getAgent() {
-    return window.ethereum
+    return window.ethereum;
   }
 }

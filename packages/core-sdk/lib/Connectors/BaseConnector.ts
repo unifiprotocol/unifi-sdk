@@ -20,6 +20,10 @@ export abstract class BaseConnector implements IConnector {
     return this._isWallet;
   }
 
+  async isAvailable() {
+    return true;
+  }
+
   on(event: ConnectorEvent, callback: Callback) {
     this.emitter.on(event, callback);
   }
