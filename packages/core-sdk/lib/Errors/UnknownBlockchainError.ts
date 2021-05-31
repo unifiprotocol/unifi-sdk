@@ -1,4 +1,4 @@
-import { Blockchains } from "@root/Types";
+import { Blockchains } from "../Types";
 
 export class UnknownBlockchainError extends Error {
   constructor(blockchain: Blockchains) {

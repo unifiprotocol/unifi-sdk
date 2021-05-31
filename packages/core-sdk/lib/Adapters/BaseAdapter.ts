@@ -1,6 +1,6 @@
 import { BlockTag, Block } from "@ethersproject/abstract-provider";
 import { ContractInterface } from "@ethersproject/contracts";
-import { Currency } from "@root/Entities/Currency";
+import { Currency } from "../Entities";
 import { IAdapter } from "./IAdapter";
 import {
   ExecutionParams,

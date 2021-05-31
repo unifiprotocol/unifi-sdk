@@ -1,9 +1,9 @@
-import { Currency } from '@root/Entities/Currency'
+import { Currency } from "../../Entities";
 
 export const Iotex = new Currency(
-  'IOTEX',
+  "IOTEX",
   18,
-  'IOTX',
-  'IoTeX',
-  'https://assets.unifiprotocol.com/IOTX.png'
-)
+  "IOTX",
+  "IoTeX",
+  "https://assets.unifiprotocol.com/IOTX.png"
+);

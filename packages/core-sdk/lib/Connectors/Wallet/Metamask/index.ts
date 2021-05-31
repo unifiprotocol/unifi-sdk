@@ -1,8 +1,7 @@
-import { IAdapter } from "@root/Adapters/IAdapter";
-import { WalletConnector } from "@root/Connectors/Wallet/WalletConnector";
-import { InvalidNetworkError } from "@root/Errors/InvalidNetworkError";
-import { WalletNotDetectedError } from "@root/Errors/WalletNotDetectedError";
-import { hexToDec } from "@root/helpers";
+import { IAdapter } from "../../../Adapters";
+import { WalletConnector } from "../..//Wallet/WalletConnector";
+import { InvalidNetworkError, WalletNotDetectedError } from "../../../Errors";
+import { hexToDec } from "../../../Utils/BigNumber";
 import { ethers } from "ethers";
 
 declare global {

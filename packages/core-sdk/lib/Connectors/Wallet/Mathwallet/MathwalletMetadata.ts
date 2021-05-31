@@ -1,7 +1,7 @@
-import { Wallet } from "@root/Entities/Wallet";
-import { WalletConnectors } from "@root/Types";
+import { ConnectorMetadata } from "../../../Entities/ConnectorMetadata";
+import { WalletConnectors } from "../../../Types";
 
-export class MathWallet extends Wallet {
+export class MathWalletMetadata extends ConnectorMetadata {
   constructor() {
     super(
       WalletConnectors.MathWallet,
@@ -12,4 +12,4 @@ export class MathWallet extends Wallet {
   }
 }
 
-export const mathWallet = new MathWallet();
+export const mathWalletMetadata = new MathWalletMetadata();

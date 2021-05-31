@@ -1,4 +1,4 @@
-import { Blockchains, Connectors } from "@root/Types";
+import { Blockchains, Connectors } from "../Types";
 
 export class InvalidConnectorSetup extends Error {
   constructor(connector: Connectors, blockchain: Blockchains) {

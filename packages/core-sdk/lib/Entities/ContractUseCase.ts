@@ -1,5 +1,4 @@
-import { IAdapter } from '@root/Adapters/IAdapter'
-import { ExecutionResponse } from '@root/Adapters/Types'
+import { IAdapter, ExecutionResponse } from "../Adapters";
 
 export abstract class ContractUseCase<
   ContractMethod extends string,
@@ -14,11 +13,11 @@ export abstract class ContractUseCase<
   ) {}
 
   getCallValue(): string | number | undefined {
-    return undefined
+    return undefined;
   }
 
   getArgs(): any[] {
-    return []
+    return [];
   }
 
   execute(adapter: IAdapter) {
@@ -27,9 +26,9 @@ export abstract class ContractUseCase<
       this.method,
       {
         args: this.getArgs(),
-        callValue: this.getCallValue()
+        callValue: this.getCallValue(),
       },
       this.isWrite
-    )
+    );
   }
 }

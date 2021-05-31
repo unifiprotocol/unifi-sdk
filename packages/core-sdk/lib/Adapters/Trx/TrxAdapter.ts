@@ -1,11 +1,7 @@
-import {
-  AdapterBalance,
-  ExecutionParams,
-  ExecutionResponse,
-} from "@root/Adapters/Types";
+import { AdapterBalance, ExecutionParams, ExecutionResponse } from "../Types";
 import { BlockTag, Block } from "@ethersproject/abstract-provider";
 import { ContractInterface } from "@ethersproject/contracts";
-import { BaseAdapter } from "@root/Adapters/BaseAdapter";
+import { BaseAdapter } from "../BaseAdapter";
 import { Tron } from "./NativeToken";
 import { XRC20ABI } from "../Iotex/ABIs/XRC20ABI";
 

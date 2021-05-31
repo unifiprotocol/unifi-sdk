@@ -1,4 +1,4 @@
-import { Connectors } from "@root/Types";
+import { Connectors } from "../Types";
 
 export class UnknownConnectorError extends Error {
   constructor(connector: Connectors) {

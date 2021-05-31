@@ -7,7 +7,7 @@ export enum Blockchains {
 
 export enum OfflineConnectors {
   Cloudflare = "cloudflare",
-  Etherscan = "etherscan",
+  EtherScan = "etherscan",
   BscDataSeed = "bscdataseed",
   TronGrid = "trongrid",
 }

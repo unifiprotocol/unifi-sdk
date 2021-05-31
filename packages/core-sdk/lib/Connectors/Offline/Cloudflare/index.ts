@@ -1,4 +1,4 @@
-import { IAdapter } from "@root/Adapters/IAdapter";
+import { IAdapter } from "../../../Adapters/IAdapter";
 import { ethers } from "ethers";
 import { OfflineConnector } from "../OfflineConnector";
 

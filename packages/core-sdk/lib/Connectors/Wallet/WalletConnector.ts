@@ -1,6 +1,6 @@
-import { IAdapter } from "@root/Adapters/IAdapter";
-import { BaseConnector } from "@root/Connectors/BaseConnector";
-import { Blockchains } from "@root/Types";
+import { IAdapter } from "../../Adapters";
+import { BaseConnector } from "../BaseConnector";
+import { Blockchains } from "../../Types";
 
 export abstract class WalletConnector extends BaseConnector {
   constructor(adapter: IAdapter, blockchain: Blockchains) {

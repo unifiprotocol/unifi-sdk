@@ -1,5 +1,5 @@
-import { IAdapter } from "@root/Adapters/IAdapter";
-import { ConnectorEvent } from "@root/Types";
+import { IAdapter } from "../Adapters";
+import { ConnectorEvent } from "../Types";
 
 export interface IConnector {
   connect(): Promise<IAdapter>;

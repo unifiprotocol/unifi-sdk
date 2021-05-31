@@ -1,5 +1,5 @@
-import { IAdapter } from "@root/Adapters/IAdapter";
-import { WalletConnector } from "@root/Connectors/Wallet/WalletConnector";
+import { IAdapter } from "../../../Adapters/IAdapter";
+import { WalletConnector } from "../../../Connectors/Wallet/WalletConnector";
 import { MetamaskConnector } from "../Metamask";
 
 declare global {

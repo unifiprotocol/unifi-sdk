@@ -1,5 +1,5 @@
-import { IAdapter } from "@root/Adapters/IAdapter";
-import { Blockchains, ConnectorEvent } from "@root/Types";
+import { IAdapter } from "../Adapters";
+import { Blockchains, ConnectorEvent } from "../Types";
 import EventEmitter from "eventemitter3";
 import { IConnector } from "./IConnector";
 

@@ -15,7 +15,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "yarn run clean && yarn run compile && yarn run tsc-replace-paths",
+    "build": "yarn run clean && yarn run compile",
     "tsc-replace-paths": "tsconfig-replace-paths --project tsconfig.json",
     "clean": "rm -rf ./dist && rm -rf tsconfig.tsbuildinfo",
     "compile": "tsc -b tsconfig.json",

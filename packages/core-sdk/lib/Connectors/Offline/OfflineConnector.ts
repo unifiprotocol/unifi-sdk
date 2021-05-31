@@ -1,12 +1,12 @@
-import { IAdapter } from '@root/Adapters/IAdapter'
-import { BaseConnector } from '@root/Connectors/BaseConnector'
-import { Blockchains } from '@root/Types'
+import { IAdapter } from "../../Adapters/IAdapter";
+import { BaseConnector } from "../../Connectors/BaseConnector";
+import { Blockchains } from "../../Types";
 
 export abstract class OfflineConnector extends BaseConnector {
   constructor(adapter: IAdapter, blockchain: Blockchains) {
-    super(adapter, blockchain, false)
+    super(adapter, blockchain, false);
   }
 
-  abstract connect(): Promise<IAdapter>
+  abstract connect(): Promise<IAdapter>;
   async logout(): Promise<void> {}
 }

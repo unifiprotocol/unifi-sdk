@@ -1,9 +1,9 @@
-import { Currency } from '@root/Entities/Currency'
+import { Currency } from "../../Entities/Currency";
 
 export const Ethereum = new Currency(
-  'ETH',
+  "ETH",
   18,
-  'ETH',
-  'Ethereum',
-  'https://assets.unifiprotocol.com/ETH.png'
-)
+  "ETH",
+  "Ethereum",
+  "https://assets.unifiprotocol.com/ETH.png"
+);

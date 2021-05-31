@@ -5,13 +5,13 @@ import {
   ExecutionParams,
   ExecutionResponse,
   TransactionResult,
-} from "@root/Adapters/Types";
-import { Currency } from "@root/Entities/Currency";
-import { BN } from "@root/Utils/BigNumber";
-import { nonSuccessResponse, successResponse } from "@root/Adapters/helpers";
+} from "../Types";
+import { Currency } from "../../Entities/Currency";
+import { BN } from "../../Utils/BigNumber";
+import { nonSuccessResponse, successResponse } from "../Helpers";
 import { ERC20ABI } from "./ABIs/ERC20";
-import { BaseAdapter } from "@root/Adapters/BaseAdapter";
-import { EthChainIds } from "@root/Types";
+import { BaseAdapter } from "../BaseAdapter";
+import { EthChainIds } from "../../Types";
 
 export abstract class EthBaseAdapter extends BaseAdapter {
   protected etherClient: ethers.providers.BaseProvider;
@@ -132,7 +132,10 @@ export abstract class EthBaseAdapter extends BaseAdapter {
     } catch (err) {
       return this.lastGasLimit
         ? "0x" +
-            BN(this.lastGasLimit).multipliedBy(2).decimalPlaces(0).toString(16)
+            BN(this.lastGasLimit)
+              .multipliedBy(2)
+              .decimalPlaces(0)
+              .toString(16)
         : undefined;
     }
   }

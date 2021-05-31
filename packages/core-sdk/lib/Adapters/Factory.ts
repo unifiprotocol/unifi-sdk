@@ -1,5 +1,5 @@
-import { InvalidBlockchainError } from "@root/Errors/InvalidBlockchainError";
-import { Blockchains } from "@root/Types";
+import { InvalidBlockchainError } from "../Errors";
+import { Blockchains } from "../Types";
 import { BscAdapter } from "./Bsc/BscAdapter";
 import { EthAdapter } from "./Eth/EthAdapter";
 import { IAdapter } from "./IAdapter";

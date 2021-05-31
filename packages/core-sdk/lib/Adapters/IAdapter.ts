@@ -1,4 +1,4 @@
-import { Currency } from "@root/Entities/Currency";
+import { Currency } from "../Entities";
 import { ContractInterface, ethers } from "ethers";
 import {
   AdapterBalance,
