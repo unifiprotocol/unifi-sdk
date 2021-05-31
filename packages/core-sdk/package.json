@@ -2,11 +2,15 @@
   "name": "@unifiprotocol/core-sdk",
   "version": "0.1.0",
   "description": "> TODO: description",
-  "author": "Sergio <sergiazow@gmail.com>",
-  "homepage": "",
-  "license": "ISC",
+  "author": "Unifi Protocol",
+  "repository": "git@github.com:sesame-seed/unifi-sdk.git",
+  "homepage": "https://github.com/sesame-seed/unifi-sdk/tree/master/packages/core-sdk",
+  "license": "BSD-3-Clause",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
   "files": [
     "dist"
   ],

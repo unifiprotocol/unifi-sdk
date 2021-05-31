@@ -3,10 +3,4 @@
   </a>
   <br />
 
-# Unifi Protocol JS SDK Core
-
-## Usage
-
-```
-import coreSdk from '@unifiprotocol/core-sdk';
-```
+# Unifi Protocol SDK
