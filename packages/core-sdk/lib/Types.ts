@@ -18,6 +18,7 @@ export enum WalletConnectors {
   MathWallet = "mathwallet",
   TronLink = "tronlink",
   TrustWallet = "trustwallet",
+  OtherEthWallet = "otherwallet",
 }
 
 export enum EthChainIds {

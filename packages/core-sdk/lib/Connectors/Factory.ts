@@ -18,9 +18,10 @@ import {
   MathWalletConnector,
   MetamaskConnector,
   TronLinkConnector,
+  BinanceChainWalletConnector,
+  TrustWalletConnector,
+  OtherEthWalletConnector,
 } from "./Wallet";
-import { BinanceChainWalletConnector } from "./Wallet/Binance";
-import { TrustWalletConnector } from "./Wallet/TrustWallet";
 
 export const connectorFactory = (
   blockchain: Blockchains,
@@ -39,6 +40,7 @@ export const connectorFactory = (
     [WalletConnectors.TronLink]: TronLinkConnector,
     [WalletConnectors.TrustWallet]: TrustWalletConnector,
     [WalletConnectors.Binance]: BinanceChainWalletConnector,
+    [WalletConnectors.OtherEthWallet]: OtherEthWalletConnector,
     [OfflineConnectors.Cloudflare]: CloudflareConnector,
     [OfflineConnectors.BscDataSeed]: BscDataSeedConnector,
     [OfflineConnectors.TronGrid]: TronGridConnector,
