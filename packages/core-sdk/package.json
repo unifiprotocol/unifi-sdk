@@ -1,10 +1,10 @@
 {
   "name": "@unifiprotocol/core-sdk",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "Unifi Protocol JS Core SDK",
   "author": "Unifi Protocol",
-  "repository": "git@github.com:sesame-seed/unifi-sdk.git",
-  "homepage": "https://github.com/sesame-seed/unifi-sdk/tree/master/packages/core-sdk",
+  "repository": "git@github.com:unifiprotocol/unifi-sdk.git",
+  "homepage": "https://github.com/unifiprotocol/unifi-sdk/tree/master/packages/core-sdk",
   "license": "BSD-3-Clause",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
