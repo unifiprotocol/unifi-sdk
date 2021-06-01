@@ -1,12 +1,5 @@
 import styled from "styled-components";
 
-export const StepperWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  flex-grow: 1;
-  flex-basis: 0;
-`;
-
 export const StepNum = styled.div`
   background: #ededed;
   width: 2rem;
@@ -31,3 +24,18 @@ export const Step = styled.div`
 
 export const StepAction = styled.div``;
 export const StepContent = styled.div``;
+
+export const StepperWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  flex-grow: 1;
+  flex-basis: 0;
+
+  @media (max-width: 650px) {
+    display: block;
+
+    ${Step} {
+      width: 100%;
+    }
+  }
+`;
