@@ -1,0 +1,29 @@
+{
+  "name": "examples",
+  "version": "0.0.0",
+  "description": "> TODO: description",
+  "author": "Sergio <sergiazow@gmail.com>",
+  "homepage": "https://github.com/sesame-seed/unifi-sdk#readme",
+  "license": "ISC",
+  "main": "lib/examples.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sesame-seed/unifi-sdk.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/sesame-seed/unifi-sdk/issues"
+  },
+  "dependencies": {
+    "@unifiprotocol/core-sdk": "^0.1.0"
+  }
+}
