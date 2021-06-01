@@ -16,4 +16,7 @@ export class BinanceChainWalletConnector extends MetamaskConnector {
   getAgent() {
     return window.BinanceChain;
   }
+  async isAvailable() {
+    return this.getAgent();
+  }
 }
