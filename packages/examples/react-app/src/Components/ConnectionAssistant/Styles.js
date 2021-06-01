@@ -35,7 +35,7 @@ export const StepperWrapper = styled.div`
     display: block;
 
     ${Step} {
-      width: 100%;
+      width: auto;
     }
   }
 `;
