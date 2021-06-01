@@ -6,7 +6,13 @@ const tronLinkLogo =
 
 export class TronLinkWaltetMetadata extends ConnectorMetadata {
   constructor() {
-    super(WalletConnectors.TronLink, "TronLink", tronLinkLogo, tronLinkLogo);
+    super(
+      WalletConnectors.TronLink,
+      "TronLink",
+      true,
+      tronLinkLogo,
+      tronLinkLogo
+    );
   }
 }
 

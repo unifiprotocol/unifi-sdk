@@ -3,7 +3,7 @@ import { OfflineConnectors } from "../../../Types";
 
 export class CloudflareMetadata extends ConnectorMetadata {
   constructor() {
-    super(OfflineConnectors.Cloudflare, "Cloudflare", "", "");
+    super(OfflineConnectors.Cloudflare, "Cloudflare", false, "", "");
   }
 }
 

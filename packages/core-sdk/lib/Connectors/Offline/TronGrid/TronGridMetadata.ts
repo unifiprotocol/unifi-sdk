@@ -3,7 +3,7 @@ import { OfflineConnectors } from "../../../Types";
 
 export class TronGridMetadata extends ConnectorMetadata {
   constructor() {
-    super(OfflineConnectors.TronGrid, "TronGrid", "", "");
+    super(OfflineConnectors.TronGrid, "TronGrid", false, "", "");
   }
 }
 

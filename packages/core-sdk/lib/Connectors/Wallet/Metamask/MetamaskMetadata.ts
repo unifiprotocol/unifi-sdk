@@ -6,7 +6,13 @@ const metamaskLogo =
 
 export class MetamaskWalletMetadata extends ConnectorMetadata {
   constructor() {
-    super(WalletConnectors.Metamask, "Metamask", metamaskLogo, metamaskLogo);
+    super(
+      WalletConnectors.Metamask,
+      "Metamask",
+      true,
+      metamaskLogo,
+      metamaskLogo
+    );
   }
 }
 

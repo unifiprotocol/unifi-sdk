@@ -13,9 +13,11 @@ export enum OfflineConnectors {
 }
 
 export enum WalletConnectors {
+  Binance = "binance",
   Metamask = "metamask",
   MathWallet = "mathwallet",
   TronLink = "tronlink",
+  TrustWallet = "trustwallet",
 }
 
 export enum EthChainIds {

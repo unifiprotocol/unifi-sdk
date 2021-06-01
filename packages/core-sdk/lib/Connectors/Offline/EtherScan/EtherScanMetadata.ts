@@ -3,7 +3,7 @@ import { OfflineConnectors } from "../../../Types";
 
 export class EtherScanMetadata extends ConnectorMetadata {
   constructor() {
-    super(OfflineConnectors.EtherScan, "EtherScan", "", "");
+    super(OfflineConnectors.EtherScan, "EtherScan", false, "", "");
   }
 }
 

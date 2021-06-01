@@ -2,6 +2,7 @@ import { IAdapter } from "../Adapters";
 import { Blockchains, ConnectorEvent } from "../Types";
 import EventEmitter from "eventemitter3";
 import { IConnector } from "./IConnector";
+import { ConnectorMetadata } from "../Entities";
 
 type Callback = (...args: any[]) => void;
 export abstract class BaseConnector implements IConnector {
@@ -10,7 +11,7 @@ export abstract class BaseConnector implements IConnector {
   constructor(
     protected adapter: IAdapter,
     protected blockchain: Blockchains,
-    protected _isWallet: boolean
+    protected metadata: ConnectorMetadata
   ) {}
 
   abstract connect(): Promise<IAdapter>;
@@ -22,7 +23,7 @@ export abstract class BaseConnector implements IConnector {
   }
 
   isWallet(): boolean {
-    return this._isWallet;
+    return this.metadata.isWallet;
   }
 
   async isAvailable() {

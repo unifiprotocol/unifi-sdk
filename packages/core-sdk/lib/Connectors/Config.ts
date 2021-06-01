@@ -3,11 +3,19 @@ import { mathWalletMetadata } from "./Wallet/Mathwallet/MathwalletMetadata";
 import { metamaskWalletMetadata } from "./Wallet/Metamask/MetamaskMetadata";
 import { tronLinkWalletMetadata } from "./Wallet/TronLink/TronLinkMetadata";
 import { cloudflareMetadata } from "./Offline/Cloudflare/CloudflareMetadata";
+import { trustWalletMetadata } from "./Wallet/TrustWallet/TrustWalletMetadata";
+import { binanceWalletMetadata } from "./Wallet/Binance/BinanceMetadata";
+
+const ethereumWallets = [
+  mathWalletMetadata,
+  metamaskWalletMetadata,
+  trustWalletMetadata,
+];
 
 export const blockchainWalletConnectors = Object.freeze({
-  [Blockchains.Binance]: [mathWalletMetadata, metamaskWalletMetadata],
-  [Blockchains.Ethereum]: [mathWalletMetadata, metamaskWalletMetadata],
-  [Blockchains.Iotex]: [metamaskWalletMetadata],
+  [Blockchains.Binance]: [...ethereumWallets, binanceWalletMetadata],
+  [Blockchains.Ethereum]: [...ethereumWallets],
+  [Blockchains.Iotex]: [...ethereumWallets],
   [Blockchains.Tron]: [tronLinkWalletMetadata],
 });
 

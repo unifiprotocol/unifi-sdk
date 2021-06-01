@@ -3,7 +3,7 @@ import { OfflineConnectors } from "../../../Types";
 
 export class BscDataSeedMetadata extends ConnectorMetadata {
   constructor() {
-    super(OfflineConnectors.BscDataSeed, "BscDataSeed", "", "");
+    super(OfflineConnectors.BscDataSeed, "BscDataSeed", false, "", "");
   }
 }
 

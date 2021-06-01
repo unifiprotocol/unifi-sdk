@@ -3,6 +3,8 @@ import { WalletConnector } from "../..//Wallet/WalletConnector";
 import { InvalidNetworkError, WalletNotDetectedError } from "../../../Errors";
 import { hexToDec } from "../../../Utils/BigNumber";
 import { ethers } from "ethers";
+import { Blockchains } from "../../../Types";
+import { metamaskWalletMetadata } from "./MetamaskMetadata";
 
 declare global {
   interface Window {
@@ -11,10 +13,17 @@ declare global {
 }
 
 export class MetamaskConnector extends WalletConnector {
+  constructor(
+    protected adapter: IAdapter,
+    protected blockchain: Blockchains,
+    connectorMetadata = metamaskWalletMetadata
+  ) {
+    super(adapter, blockchain, connectorMetadata);
+  }
   async connect(): Promise<IAdapter> {
     const ethAgent = this.getAgent();
-    if (!ethAgent) {
-      throw new WalletNotDetectedError("Metamask");
+    if (!(await this.isAvailable())) {
+      throw new WalletNotDetectedError(this.metadata.displayName);
     }
     const accounts: string[] = await ethAgent.request({
       method: "eth_requestAccounts",
@@ -42,8 +51,8 @@ export class MetamaskConnector extends WalletConnector {
   async isAvailable() {
     return (
       !!this.getAgent() &&
-      window.ethereum.isMetaMask &&
-      !window.ethereum.isMathWallet
+      this.getAgent().isMetaMask &&
+      !this.getAgent().isMathWallet
     );
   }
 
