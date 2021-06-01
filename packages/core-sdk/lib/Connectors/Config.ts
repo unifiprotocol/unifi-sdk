@@ -15,7 +15,7 @@ const ethereumWallets = [
 export const blockchainWalletConnectors = Object.freeze({
   [Blockchains.Binance]: [...ethereumWallets, binanceWalletMetadata],
   [Blockchains.Ethereum]: [...ethereumWallets],
-  [Blockchains.Iotex]: [...ethereumWallets],
+  [Blockchains.Iotex]: [metamaskWalletMetadata],
   [Blockchains.Tron]: [tronLinkWalletMetadata],
 });
 
