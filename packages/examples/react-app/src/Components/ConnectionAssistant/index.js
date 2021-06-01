@@ -22,15 +22,21 @@ const blockchains = [
   Blockchains.Binance,
   Blockchains.Ethereum,
   Blockchains.Iotex,
-];
+].map((v) => [v, v]);
 
 const ConnectionAssistantWrapper = styled.div`
   margin-bottom: 1rem;
 `;
 
 export const ConnectionAssistant = () => {
-  const [blockchain, selectBlockchain] = useState();
-  const { setAdapter, setConnector, connector, adapter } = useConnection();
+  const {
+    setAdapter,
+    setConnector,
+    setBlockchain,
+    blockchain,
+    connector,
+    adapter,
+  } = useConnection();
   const [wallets, setWallets] = useState([]);
   const [wallet, selectWallet] = useState();
   const [message, setMessage] = useState();
@@ -39,7 +45,19 @@ export const ConnectionAssistant = () => {
   const onBlockchainChange = useCallback(() => {
     if (!blockchain) return;
     const chainWallets = getBlockchainWalletConnectors(blockchain);
-    setWallets(chainWallets.map((wallet) => wallet.name));
+    setWallets(
+      chainWallets.map((wallet) => [
+        wallet.name,
+        <>
+          <img
+            alt={wallet.displayName}
+            style={{ width: "1rem", marginRight: "0.2rem" }}
+            src={wallet.logoURI}
+          />
+          {wallet.displayName}{" "}
+        </>,
+      ])
+    );
     selectWallet(undefined);
   }, [blockchain]);
 
@@ -64,9 +82,9 @@ export const ConnectionAssistant = () => {
   const disconnect = useCallback(() => {
     connector.disconnect();
     setAdapter();
-    selectBlockchain();
+    setBlockchain();
     selectWallet();
-  }, [setAdapter, selectBlockchain, selectWallet, connector]);
+  }, [setAdapter, setBlockchain, selectWallet, connector]);
   useEffect(onBlockchainChange, [onBlockchainChange]);
   useEffect(onWalletChange, [onWalletChange]);
 
@@ -80,7 +98,7 @@ export const ConnectionAssistant = () => {
               <StepAction>
                 <Selector
                   options={blockchains}
-                  onChange={selectBlockchain}
+                  onChange={setBlockchain}
                   placeholder="Select blockchain"
                   value={blockchain}
                 />

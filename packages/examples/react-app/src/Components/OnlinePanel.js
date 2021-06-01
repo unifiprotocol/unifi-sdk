@@ -22,13 +22,6 @@ export const OnlinePanel = () => {
     });
   }, [adapter, setBalance]);
 
-  if (!adapter) {
-    return (
-      <Card elevation={0}>
-        <CardContent>Connect to start interacting</CardContent>
-      </Card>
-    );
-  }
   return (
     <Grid container spacing={3}>
       <Grid item xs={12} md={6}>

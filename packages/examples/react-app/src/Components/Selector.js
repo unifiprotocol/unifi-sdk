@@ -19,9 +19,9 @@ export const Selector = ({ options, onChange, value = "", placeholder }) => {
       <MenuItem value="" disabled>
         {placeholder}
       </MenuItem>
-      {options.map((option) => (
-        <MenuItem key={option} value={option}>
-          {option}
+      {options.map(([value, display]) => (
+        <MenuItem key={value} value={value}>
+          {display}
         </MenuItem>
       ))}
     </Select>
