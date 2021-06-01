@@ -40,4 +40,5 @@ export interface IAdapter {
   getAddress(): Address;
 
   setProvider(provider: any): void;
+  isValidAddress(address: Address): boolean;
 }

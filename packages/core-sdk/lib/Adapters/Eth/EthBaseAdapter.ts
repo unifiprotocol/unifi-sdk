@@ -1,4 +1,4 @@
-import { ContractInterface, ethers } from "ethers";
+import { ContractInterface, ethers, utils } from "ethers";
 import {
   AdapterBalance,
   Address,
@@ -215,6 +215,14 @@ export abstract class EthBaseAdapter extends BaseAdapter {
 
   resetContracts() {
     this.contracts = {};
+  }
+
+  isValidAddress(address: Address) {
+    try {
+      return utils.isAddress(address);
+    } catch (error) {
+      return false;
+    }
   }
 }
 

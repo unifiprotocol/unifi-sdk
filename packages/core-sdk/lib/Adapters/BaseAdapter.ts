@@ -53,4 +53,6 @@ export abstract class BaseAdapter implements IAdapter {
   getAddress() {
     return this.address;
   }
+
+  abstract isValidAddress(address: Address): boolean;
 }

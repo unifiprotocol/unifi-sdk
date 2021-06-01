@@ -68,4 +68,7 @@ export class TrxAdapter extends BaseAdapter {
   getTokenLink(hash: string): string {
     throw new Error("TRX Adapter not implemented yet");
   }
+  isValidAddress(address: string): boolean {
+    throw new Error("TRX Adapter not implemented yet");
+  }
 }
