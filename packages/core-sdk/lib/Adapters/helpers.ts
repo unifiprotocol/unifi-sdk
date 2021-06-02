@@ -3,7 +3,7 @@ import { Opt } from "../Utils/Typings";
 import { ExecutionResponse } from "./Types";
 
 export const nonSuccessResponse = (
-  value: Partial<ExecutionResponse>
+  value: Partial<ExecutionResponse> = {}
 ): ExecutionResponse => ({
   success: false,
   value: "",
@@ -12,7 +12,7 @@ export const nonSuccessResponse = (
 });
 
 export const successResponse = (
-  value: Partial<ExecutionResponse>
+  value: Partial<ExecutionResponse> = {}
 ): ExecutionResponse => ({
   success: true,
   value: "",
