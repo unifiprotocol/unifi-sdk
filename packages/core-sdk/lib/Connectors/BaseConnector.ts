@@ -11,7 +11,7 @@ export abstract class BaseConnector implements IConnector {
   constructor(
     protected adapter: IAdapter,
     protected blockchain: Blockchains,
-    protected metadata: ConnectorMetadata
+    public readonly metadata: ConnectorMetadata
   ) {}
 
   abstract connect(): Promise<IAdapter>;
