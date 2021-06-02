@@ -1,9 +1,9 @@
-import { IAdapter, ExecutionResponse } from "../Adapters";
+import { IAdapter } from "../Adapters";
 
 export abstract class ContractUseCase<
   ContractMethod extends string,
   ContractParams,
-  Response = ExecutionResponse
+  ResponseValue = any
 > {
   constructor(
     public contractAddress: string,
@@ -21,7 +21,7 @@ export abstract class ContractUseCase<
   }
 
   execute(adapter: IAdapter) {
-    return adapter.execute<Response>(
+    return adapter.execute<ResponseValue>(
       this.contractAddress,
       this.method,
       {
