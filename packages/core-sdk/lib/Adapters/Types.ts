@@ -2,8 +2,6 @@ import { BigNumberish } from "@ethersproject/bignumber";
 
 export type AdapterBalance = { name: string; balance: string };
 
-export type AdapterError = "wallet_not_installed" | "wrong_chain_id";
-
 export type Address = string;
 export interface ExecutionResponse<T = any> {
   success: boolean;
