@@ -1,5 +1,4 @@
-import { blockchainToEthChainId } from "../../../Adapters/Helpers";
-import { IAdapter } from "../../../Adapters/IAdapter";
+import { IAdapter, blockchainToEthChainId } from "../../../Adapters";
 import { ethers } from "ethers";
 import { OfflineConnector } from "../OfflineConnector";
 import { Blockchains } from "../../../Types";
