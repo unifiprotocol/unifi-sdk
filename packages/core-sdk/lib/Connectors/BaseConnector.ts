@@ -11,7 +11,7 @@ export abstract class BaseConnector implements IConnector {
   constructor(
     protected adapter: IAdapter,
     protected blockchain: Blockchains,
-    public readonly metadata: ConnectorMetadata
+    protected metadata: ConnectorMetadata
   ) {}
 
   abstract connect(): Promise<IAdapter>;
@@ -28,6 +28,10 @@ export abstract class BaseConnector implements IConnector {
 
   async isAvailable() {
     return true;
+  }
+
+  getMedatata() {
+    return this.metadata;
   }
 
   on(event: ConnectorEvent, callback: Callback) {
