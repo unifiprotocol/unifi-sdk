@@ -36,14 +36,11 @@ export class Currency {
 
   // with all the decimals applied = Wei
   toPrecision(amount: BigNumber.Value) {
-    return BN(amount)
-      .multipliedBy(BN(10).pow(this.decimals))
-      .dp(0)
-      .toFixed();
+    return BN(amount).multipliedBy(BN(10).pow(this.decimals)).dp(0).toFixed();
   }
 
   equals(currency: Currency) {
-    return this.address === currency.address;
+    return this.address.toLowerCase() === currency.address.toLowerCase();
   }
 
   sortsBefore(other: Currency) {
