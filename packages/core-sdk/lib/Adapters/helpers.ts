@@ -26,6 +26,7 @@ export const blockchainToEthChainId = (
   const map: Partial<Record<Blockchains, EthChainIds>> = {
     [Blockchains.Binance]: EthChainIds.Bsc,
     [Blockchains.Ethereum]: EthChainIds.Eth,
+    [Blockchains.EthereumRopsten]: EthChainIds.EthRopsten,
     [Blockchains.Iotex]: EthChainIds.Iotex,
   };
 

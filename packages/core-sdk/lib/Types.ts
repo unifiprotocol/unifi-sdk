@@ -1,6 +1,7 @@
 export enum Blockchains {
   Binance = "BSC",
   Ethereum = "ETH",
+  EthereumRopsten = "ETHRopsten",
   Iotex = "IOTX",
   Tron = "TRX",
 }
@@ -23,6 +24,7 @@ export enum WalletConnectors {
 
 export enum EthChainIds {
   Eth = 1,
+  EthRopsten = 3,
   Bsc = 56,
   Iotex = 4689,
 }
