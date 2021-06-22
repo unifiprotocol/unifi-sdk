@@ -12,10 +12,8 @@ declare global {
 }
 
 export class TrxAdapter extends BaseAdapter {
-  protected tronWeb: any;
   constructor() {
     super(Tron, "https://tronscan.org/");
-    this.tronWeb.setAddress("TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t");
   }
 
   setProvider(provider: any): void {
