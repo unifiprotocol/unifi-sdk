@@ -14,6 +14,7 @@ import {
   EtherScanConnector,
   TronGridConnector,
 } from "./Offline";
+import { AlchemyConnector } from "./Offline/Alchemy";
 import {
   MathWalletConnector,
   MetamaskConnector,
@@ -45,6 +46,7 @@ export const connectorFactory = (
     [OfflineConnectors.BscDataSeed]: BscDataSeedConnector,
     [OfflineConnectors.TronGrid]: TronGridConnector,
     [OfflineConnectors.EtherScan]: EtherScanConnector,
+    [OfflineConnectors.Alchemy]: AlchemyConnector,
   }[connectorName];
 
   const adapter = adapterFactory(blockchain);

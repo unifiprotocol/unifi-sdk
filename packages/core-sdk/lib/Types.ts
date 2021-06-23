@@ -11,6 +11,7 @@ export enum OfflineConnectors {
   EtherScan = "etherscan",
   BscDataSeed = "bscdataseed",
   TronGrid = "trongrid",
+  Alchemy = "alchemy",
 }
 
 export enum WalletConnectors {
