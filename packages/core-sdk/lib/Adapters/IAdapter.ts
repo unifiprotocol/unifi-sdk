@@ -5,7 +5,6 @@ import {
   Address,
   ExecutionResponse,
   ExecutionValueProps,
-  ExecutionParams,
 } from "./Types";
 
 export interface IAdapter {
@@ -16,6 +15,8 @@ export interface IAdapter {
   initializeContract(contractAddress: string, abi: ContractInterface): void;
   initializeToken(contractAddress: string, abi?: ContractInterface): void;
 
+  getContractInterface(contractAddress: string): ContractInterface;
+
   resetContracts(): void;
 
   execute<T = any>(
@@ -24,6 +25,8 @@ export interface IAdapter {
     values: ExecutionValueProps,
     isWrite?: boolean
   ): Promise<ExecutionResponse<T>>;
+
+  supportsMulticall(): boolean;
 
   waitForTransaction(transactionHash: string): Promise<"SUCCESS" | "FAILED">;
 
@@ -40,5 +43,6 @@ export interface IAdapter {
   getAddress(): Address;
 
   setProvider(provider: any): void;
+  getProvider(): any;
   isValidAddress(address: Address): boolean;
 }

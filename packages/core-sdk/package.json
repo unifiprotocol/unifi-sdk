@@ -27,6 +27,7 @@
     "test": "__tests__"
   },
   "dependencies": {
+    "ethereum-multicall": "^2.4.0",
     "bignumber.js": "^9.0.1",
     "ethers": "^5.2.0",
     "eventemitter3": "^4.0.7",

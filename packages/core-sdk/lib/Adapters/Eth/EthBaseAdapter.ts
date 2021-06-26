@@ -17,7 +17,7 @@ export abstract class EthBaseAdapter extends BaseAdapter {
   protected etherClient: ethers.providers.BaseProvider;
   protected contracts: { [nameContract: string]: ethers.Contract } = {};
   protected stablePairs: string[] = [];
-  protected lastGasLimit: string = "30000";
+  protected lastGasLimit = "30000";
   protected readonly chainId: EthChainIds;
 
   constructor(
@@ -29,10 +29,18 @@ export abstract class EthBaseAdapter extends BaseAdapter {
     this.chainId = chainId;
   }
 
-  setProvider(providerClass: ethers.providers.BaseProvider) {
+  setProvider(providerClass: ethers.providers.BaseProvider): void {
     this.etherClient = providerClass;
   }
-  async initializeContract(contractAddress: Address, abi: ContractInterface) {
+
+  getProvider() {
+    return this.etherClient;
+  }
+
+  initializeContract(
+    contractAddress: Address,
+    abi: ContractInterface
+  ): Promise<void> {
     if (
       this.contracts[contractAddress] ||
       contractAddress === this.nativeToken.address
@@ -48,10 +56,10 @@ export abstract class EthBaseAdapter extends BaseAdapter {
     );
   }
 
-  async initializeToken(
+  initializeToken(
     tokenAddress: Address,
     abi: ContractInterface = ERC20ABI
-  ) {
+  ): void {
     this.initializeContract(tokenAddress, abi);
   }
 
@@ -132,10 +140,7 @@ export abstract class EthBaseAdapter extends BaseAdapter {
     } catch (err) {
       return this.lastGasLimit
         ? "0x" +
-            BN(this.lastGasLimit)
-              .multipliedBy(2)
-              .decimalPlaces(0)
-              .toString(16)
+            BN(this.lastGasLimit).multipliedBy(2).decimalPlaces(0).toString(16)
         : undefined;
     }
   }
@@ -193,6 +198,10 @@ export abstract class EthBaseAdapter extends BaseAdapter {
     }
 
     return reducedParams;
+  }
+
+  supportsMulticall(): boolean {
+    return true;
   }
 
   async isValidNetwork(network: string): Promise<boolean> {

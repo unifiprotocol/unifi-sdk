@@ -17,6 +17,7 @@ export abstract class BaseAdapter implements IAdapter {
   }
 
   abstract setProvider(provider: any): void;
+  abstract getProvider(): any;
   abstract resetContracts(): void;
 
   abstract isConnected(): boolean;
@@ -36,10 +37,15 @@ export abstract class BaseAdapter implements IAdapter {
     isWrite?: boolean
   ): Promise<ExecutionResponse<T>>;
 
+  supportsMulticall(): boolean {
+    return false;
+  }
+
   abstract waitForTransaction(
     transactionHash: string
   ): Promise<"SUCCESS" | "FAILED">;
 
+  abstract getContractInterface(contractAddress: string): ContractInterface;
   abstract getBalance(): Promise<AdapterBalance>;
   abstract getBlock(blockTag: BlockTag): Promise<Block>;
   abstract isValidNetwork(network: string): Promise<boolean>;
