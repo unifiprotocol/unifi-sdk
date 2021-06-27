@@ -4,10 +4,10 @@ import {
   ContractCallResults,
   Multicall,
 } from "ethereum-multicall";
-import Throttle from "promise-parallel-throttle";
+import * as Throttle from "promise-parallel-throttle";
 
 import { BigNumber } from "ethers";
-import { ExecutionResponse, IAdapter } from "../Adapters";
+import { ExecutionResponse, IAdapter, successResponse } from "../Adapters";
 import { ContractUseCase } from "../Entities";
 
 type GenericUseCase = ContractUseCase<any, any, any>;
@@ -31,8 +31,8 @@ export class MulticallAdapter {
     useCases: GenericUseCase[]
   ): Promise<ExecutionResponse[]> {
     // Throttle.raw expects Tasks<T> (equivalent to Array<Promise<T>>) as arguments but not resolve correctly
-    const promises = useCases.map((useCase) =>
-      useCase.execute(this.adapter)
+    const promises = useCases.map(
+      (useCase) => () => useCase.execute(this.adapter)
     ) as any;
     const { taskResults } = await Throttle.raw<ExecutionResponse>(promises);
     return taskResults;
@@ -44,8 +44,8 @@ export class MulticallAdapter {
     }
     // todo keep order
     const callContexts: ContractCallContext[] = Object.values(
-      useCases.reduce(this.groupUseCasesByContractKeepingOrder.bind(this))
-    ).map(this.mapGroupedUseCasesToMulticallCtx);
+      useCases.reduce(this.groupUseCasesByContractKeepingOrder.bind(this), {})
+    ).map(this.mapGroupedUseCasesToMulticallCtx.bind(this));
 
     return this.multicall
       .call(callContexts)
@@ -62,7 +62,7 @@ export class MulticallAdapter {
       calls: group.useCases.map((useCase) => ({
         reference: `${useCase.order}`,
         methodName: useCase.useCase.method,
-        methodParameters: useCase.useCase.params,
+        methodParameters: useCase.useCase.getArgs(),
       })),
     };
   }
@@ -94,12 +94,21 @@ export class MulticallAdapter {
     });
   }
 
-  processMulticallResult(res: ContractCallResults) {
+  processMulticallResult(res: ContractCallResults): ExecutionResponse[] {
     return Object.entries(res.results).reduce(
-      (orderedResult: any[], [, contractResult]) => {
+      (orderedResult, [, contractResult]) => {
         return contractResult.callsReturnContext.reduce((obj, cur) => {
           const order = Number(cur.reference);
-          orderedResult[order] = this.decodeReturnValues.bind(cur.returnValues);
+          const value = this.decodeReturnValues(cur);
+          orderedResult[order] = successResponse({
+            success: cur.success,
+            functionName: cur.methodName,
+            params: {
+              args: cur.methodParameters,
+              callValue: undefined,
+            },
+            value,
+          });
 
           return orderedResult;
         }, orderedResult);

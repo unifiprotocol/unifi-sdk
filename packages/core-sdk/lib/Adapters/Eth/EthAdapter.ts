@@ -6,4 +6,8 @@ export class EthAdapter extends EthBaseAdapter {
   constructor() {
     super(Ethereum, EthChainIds.Eth, "https://etherscan.io");
   }
+
+  supportsMulticall(): boolean {
+    return true;
+  }
 }

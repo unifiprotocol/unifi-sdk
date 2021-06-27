@@ -205,10 +205,6 @@ export abstract class EthBaseAdapter extends BaseAdapter {
     return reducedParams;
   }
 
-  supportsMulticall(): boolean {
-    return true;
-  }
-
   async isValidNetwork(network: string): Promise<boolean> {
     return `${this.chainId}` === network;
   }

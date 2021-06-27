@@ -6,4 +6,8 @@ export class BscAdapter extends EthBaseAdapter {
   constructor() {
     super(BNB, EthChainIds.Bsc, "https://bscscan.com");
   }
+
+  supportsMulticall(): boolean {
+    return true;
+  }
 }

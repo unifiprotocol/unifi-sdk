@@ -1,12 +1,12 @@
 import { Button, Card, CardContent, TextField } from "@material-ui/core";
-import { Blockchains } from "@unifiprotocol/core-sdk";
+import { Blockchains, MulticallAdapter } from "@unifiprotocol/core-sdk";
 import { useConnection } from "../Hooks/useConnection";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { GetTotalSupply } from "../UseCases/GetTotalSupply";
-import { GetSymbol } from "../UseCases/GetSymbol";
 import styled from "styled-components";
-import { Switch } from "@material-ui/core/";
-import { GetTokenData } from "../UseCases/GetTokenData";
+import { GetName } from "../UseCases/GetName";
+import { GetSymbol } from "../UseCases/GetSymbol";
+import { GetDecimals } from "../UseCases/GetDecimals";
 
 const Status = {
   Idle: "idle",
@@ -24,12 +24,13 @@ const FormField = styled.div`
 export const Erc20Info = () => {
   const { adapter, blockchain } = useConnection();
   const [state, setState] = useState(Status.Idle);
-  const [multicall, setMulticall] = useState(true);
   const [invalidTokenAddress, setInvalidTokenAddress] = useState(false);
   const [tokenData, setTokenData] = useState();
   const [tokenAddress, setTokenAddress] = useState(
     UNFI_TOKEN_ADDR[blockchain] || ""
   );
+
+  const multicall = useMemo(() => new MulticallAdapter(adapter), [adapter]);
 
   const fetchTokenData = useCallback(async () => {
     try {
@@ -38,33 +39,34 @@ export const Erc20Info = () => {
       }
       setState(Status.Fetching);
       adapter.initializeToken(tokenAddress);
-      if (multicall) {
-        const res = await new GetTokenData({
-          tokenAddress,
-        }).execute(adapter);
 
-        setTokenData(res.value);
-        setState(Status.Idle);
-        return;
-      }
+      const [totalSupply, symbol, name, decimals] = await multicall
+        .execute([
+          new GetTotalSupply({
+            tokenAddress,
+          }),
+          new GetSymbol({
+            tokenAddress,
+          }),
+          new GetName({
+            tokenAddress,
+          }),
+          new GetDecimals({
+            tokenAddress,
+          }),
+        ])
+        .then((results) => {
+          debugger;
+          return results.map((res) => res.value);
+        });
+      setTokenData({ totalSupply, symbol, name, decimals });
 
-      const getTotalSupply = new GetTotalSupply({
-        tokenAddress,
-      });
-      const getSymbol = new GetSymbol({
-        tokenAddress,
-      });
-      const [totalSupply, symbol] = await Promise.all([
-        getTotalSupply.execute(adapter),
-        getSymbol.execute(adapter),
-      ]).then((values) => values.map((v) => v.value));
-      setTokenData({ totalSupply, symbol });
       setState(Status.Idle);
     } catch (error) {
       setState(Status.Idle);
       console.error(error);
     }
-  }, [adapter, tokenAddress, multicall, setState, invalidTokenAddress]);
+  }, [adapter, tokenAddress, setState, invalidTokenAddress, multicall]);
 
   const fetchDisabled = state !== Status.Idle || invalidTokenAddress;
   console.log(invalidTokenAddress);
@@ -84,12 +86,7 @@ export const Erc20Info = () => {
             value={tokenAddress}
             helperText={invalidTokenAddress ? "Invalid token address" : ""}
           />
-          <Switch
-            checked={multicall}
-            onChange={setMulticall}
-            name="multicall"
-          />{" "}
-          Multicall?
+
           <Button
             disabled={fetchDisabled}
             variant="contained"
