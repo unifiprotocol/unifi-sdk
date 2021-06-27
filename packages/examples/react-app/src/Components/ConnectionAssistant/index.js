@@ -21,7 +21,7 @@ import {
 const blockchains = [
   Blockchains.Binance,
   Blockchains.Ethereum,
-  Blockchains.Iotex,
+  Blockchains.EthereumRopsten,
 ].map((v) => [v, v]);
 
 const ConnectionAssistantWrapper = styled.div`

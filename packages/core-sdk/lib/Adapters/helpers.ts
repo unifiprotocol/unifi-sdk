@@ -6,6 +6,7 @@ export const nonSuccessResponse = (
   value: Partial<ExecutionResponse> = {}
 ): ExecutionResponse => ({
   success: false,
+  multicall: false,
   value: "",
   hash: "",
   ...value,
@@ -15,6 +16,7 @@ export const successResponse = (
   value: Partial<ExecutionResponse> = {}
 ): ExecutionResponse => ({
   success: true,
+  multicall: false,
   value: "",
   hash: "",
   ...value,

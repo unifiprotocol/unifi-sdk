@@ -59,6 +59,7 @@ export const Erc20Info = () => {
           debugger;
           return results.map((res) => res.value);
         });
+
       setTokenData({ totalSupply, symbol, name, decimals });
 
       setState(Status.Idle);

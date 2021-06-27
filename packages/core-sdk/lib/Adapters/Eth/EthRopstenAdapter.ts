@@ -6,4 +6,7 @@ export class EthRopstenAdapter extends EthBaseAdapter {
   constructor() {
     super(Ethereum, EthChainIds.EthRopsten, "https://ropsten.etherscan.io");
   }
+  supportsMulticall() {
+    return false;
+  }
 }

@@ -102,12 +102,14 @@ export class MulticallAdapter {
           const value = this.decodeReturnValues(cur);
           orderedResult[order] = successResponse({
             success: cur.success,
+            multicall: true,
             functionName: cur.methodName,
             params: {
               args: cur.methodParameters,
               callValue: undefined,
             },
-            value,
+            value:
+              Array.isArray(value) && value.length === 1 ? value[0] : value,
           });
 
           return orderedResult;
