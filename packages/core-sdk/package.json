@@ -27,11 +27,12 @@
     "test": "__tests__"
   },
   "dependencies": {
-    "ethereum-multicall": "^2.4.0",
     "bignumber.js": "^9.0.1",
+    "ethereum-multicall": "^2.4.0",
     "ethers": "^5.2.0",
     "eventemitter3": "^4.0.7",
     "js-sha3": "^0.8.0",
+    "promise-parallel-throttle": "^3.3.0",
     "tronweb": "^3.2.6",
     "tslib": "^2.1.0"
   },

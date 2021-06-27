@@ -20,6 +20,5 @@ export const adapterFactory = (chain: Blockchains): IAdapter => {
     throw new InvalidBlockchainError(chain);
   }
 
-  const adapter = new adapterClass();
-  return adapter;
+  return new adapterClass();
 };

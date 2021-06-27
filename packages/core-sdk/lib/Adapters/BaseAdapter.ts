@@ -45,7 +45,7 @@ export abstract class BaseAdapter implements IAdapter {
     transactionHash: string
   ): Promise<"SUCCESS" | "FAILED">;
 
-  abstract getContractInterface(contractAddress: string): ContractInterface;
+  abstract getContractInterface(contractAddress: string): any[];
   abstract getBalance(): Promise<AdapterBalance>;
   abstract getBlock(blockTag: BlockTag): Promise<Block>;
   abstract isValidNetwork(network: string): Promise<boolean>;

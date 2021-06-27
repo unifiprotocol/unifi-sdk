@@ -19,7 +19,7 @@ export abstract class EthBaseAdapter extends BaseAdapter {
   protected stablePairs: string[] = [];
   protected lastGasLimit = "30000";
   protected readonly chainId: EthChainIds;
-
+  protected abi: Record<string, ContractInterface> = {};
   constructor(
     nativeToken: Currency,
     chainId: EthChainIds,
@@ -37,6 +37,10 @@ export abstract class EthBaseAdapter extends BaseAdapter {
     return this.etherClient;
   }
 
+  getContractInterface(contractAddress: string): any {
+    return this.abi[contractAddress];
+  }
+
   initializeContract(
     contractAddress: Address,
     abi: ContractInterface
@@ -47,6 +51,7 @@ export abstract class EthBaseAdapter extends BaseAdapter {
     ) {
       return;
     }
+    this.abi[contractAddress] = abi;
     this.contracts[contractAddress] = new ethers.Contract(
       contractAddress,
       abi,

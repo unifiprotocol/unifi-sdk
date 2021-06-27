@@ -4,10 +4,11 @@ import {
   ContractCallResults,
   Multicall,
 } from "ethereum-multicall";
+import Throttle from "promise-parallel-throttle";
+
 import { BigNumber } from "ethers";
-import { IAdapter } from "./Adapters";
-import { ContractUseCase } from "./Entities";
-import { BN } from "./Utils/BigNumber";
+import { ExecutionResponse, IAdapter } from "../Adapters";
+import { ContractUseCase } from "../Entities";
 
 type GenericUseCase = ContractUseCase<any, any, any>;
 
@@ -26,7 +27,21 @@ export class MulticallAdapter {
     });
   }
 
+  private async singleExecution(
+    useCases: GenericUseCase[]
+  ): Promise<ExecutionResponse[]> {
+    // Throttle.raw expects Tasks<T> (equivalent to Array<Promise<T>>) as arguments but not resolve correctly
+    const promises = useCases.map((useCase) =>
+      useCase.execute(this.adapter)
+    ) as any;
+    const { taskResults } = await Throttle.raw<ExecutionResponse>(promises);
+    return taskResults;
+  }
+
   execute(useCases: GenericUseCase[]): Promise<any> {
+    if (!this.adapter.supportsMulticall()) {
+      return this.singleExecution(useCases);
+    }
     // todo keep order
     const callContexts: ContractCallContext[] = Object.values(
       useCases.reduce(this.groupUseCasesByContractKeepingOrder.bind(this))

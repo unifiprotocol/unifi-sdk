@@ -348,14 +348,15 @@
     "@ethersproject/properties" "^5.3.0"
     "@ethersproject/strings" "^5.3.0"
 
-"@unifiprotocol/core-sdk@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@unifiprotocol/core-sdk/-/core-sdk-0.1.0.tgz#1f000ab7dc9103a5668a7d23dc592ae23e0afa1e"
-  integrity sha512-moR3tzGAkUiTnPTzUFGwUpsRRoDIA/xu6+Uk3muoRqpzpxLRCvoccm3S925ZJLMcR5WDrr/5RiwvqhpThx2roQ==
+"@unifiprotocol/core-sdk@0.8.1":
+  version "0.8.1"
+  resolved "https://registry.yarnpkg.com/@unifiprotocol/core-sdk/-/core-sdk-0.8.1.tgz#c9fa5a2c3ad3e8ac6d2eb20233511ffd863e2299"
+  integrity sha512-0Wxk1UoDO+zXLDJnTQpXVj04zYNBs0AZRkd9I8TZiHRXFLAWTjIKTBJzafsMkNz+lQYpc8n/BJ2RqOPx0Yq09Q==
   dependencies:
     bignumber.js "^9.0.1"
     ethers "^5.2.0"
     eventemitter3 "^4.0.7"
+    js-sha3 "^0.8.0"
     tronweb "^3.2.6"
     tslib "^2.1.0"
 
@@ -746,6 +747,11 @@ js-sha3@0.5.7:
   version "0.5.7"
   resolved "https://registry.yarnpkg.com/js-sha3/-/js-sha3-0.5.7.tgz#0d4ffd8002d5333aabaf4a23eed2f6374c9f28e7"
   integrity sha1-DU/9gALVMzqrr0oj7tL2N0yfKOc=
+
+js-sha3@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/js-sha3/-/js-sha3-0.8.0.tgz#b9b7a5da73afad7dedd0f8c463954cbde6818840"
+  integrity sha512-gF1cRrHhIzNfToc802P800N8PpXS+evLLXfsVpowqmAFR9uwbi89WvXg2QspOmXL8QL86J4T1EpFu+yUkwJY3Q==
 
 json-parse-better-errors@^1.0.1:
   version "1.0.2"

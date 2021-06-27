@@ -12,6 +12,13 @@ declare global {
 }
 
 export class TrxAdapter extends BaseAdapter {
+  getProvider(): any {
+    return null;
+  }
+  getContractInterface(contractAddress: string): any[] {
+    return [];
+  }
+
   constructor() {
     super(Tron, "https://tronscan.org/");
   }

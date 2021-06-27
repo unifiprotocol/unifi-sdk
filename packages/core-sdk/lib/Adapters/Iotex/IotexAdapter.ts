@@ -14,6 +14,10 @@ export class IotxAdapter extends EthBaseAdapter {
     return window.ethereum;
   }
 
+  supportsMulticall() {
+    return false;
+  }
+
   protected getDefaultProvider() {
     return new ethers.providers.JsonRpcProvider(
       "https://babel-api.mainnet.iotex.io/",
