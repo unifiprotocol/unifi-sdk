@@ -37,12 +37,33 @@ export class MulticallAdapter {
     const { taskResults } = await Throttle.raw<ExecutionResponse>(promises);
     return taskResults;
   }
+  private groupResultsByAmount(size: number) {
+    return (results: ExecutionResponse[]) => {
+      const groupedResults: ExecutionResponse[][] = [];
+      while (results.length !== 0) {
+        groupedResults.push(results.splice(0, size));
+      }
+      return groupedResults;
+    };
+  }
 
-  execute(useCases: GenericUseCase[]): Promise<any> {
+  executeGrouped(
+    useCaseGroups: GenericUseCase[][]
+  ): Promise<ExecutionResponse[][]> {
+    const useCases: GenericUseCase[] = useCaseGroups.reduce(
+      (list, group) => [...list, ...group],
+      []
+    );
+    return this.execute(useCases).then(
+      this.groupResultsByAmount(useCaseGroups[0].length)
+    );
+  }
+
+  execute(useCases: GenericUseCase[]): Promise<ExecutionResponse[]> {
     if (!this.adapter.supportsMulticall()) {
       return this.singleExecution(useCases);
     }
-    // todo keep order
+
     const callContexts: ContractCallContext[] = Object.values(
       useCases.reduce(this.groupUseCasesByContractKeepingOrder.bind(this), {})
     ).map(this.mapGroupedUseCasesToMulticallCtx.bind(this));
@@ -85,7 +106,7 @@ export class MulticallAdapter {
     return map;
   }
 
-  decodeReturnValues(ret: CallReturnContext): any[] {
+  decodeReturnValues(ret: CallReturnContext): string[] {
     return ret.returnValues.map((v) => {
       if (typeof v === "object" && v.type === "BigNumber") {
         return BigNumber.from(v.hex).toString();
