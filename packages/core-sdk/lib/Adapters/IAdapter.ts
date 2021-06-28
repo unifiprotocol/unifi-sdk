@@ -1,20 +1,22 @@
 import { Currency } from "../Entities";
-import { ContractInterface, ethers } from "ethers";
 import {
   AdapterBalance,
   Address,
   ExecutionResponse,
   ExecutionValueProps,
-  ExecutionParams,
 } from "./Types";
+import { Blockchains } from "../Types";
 
-export interface IAdapter {
+export interface IAdapter<ContractInterface = any> {
   readonly nativeToken: Currency;
+  readonly blockchain: Blockchains;
 
   isConnected(): boolean;
 
   initializeContract(contractAddress: string, abi: ContractInterface): void;
   initializeToken(contractAddress: string, abi?: ContractInterface): void;
+
+  getContractInterface(contractAddress: string): ContractInterface;
 
   resetContracts(): void;
 
@@ -28,9 +30,7 @@ export interface IAdapter {
   waitForTransaction(transactionHash: string): Promise<"SUCCESS" | "FAILED">;
 
   getBalance(): Promise<AdapterBalance>;
-  getBlock(
-    blockTag: ethers.providers.BlockTag
-  ): Promise<ethers.providers.Block>;
+
   isValidNetwork(network: string): Promise<boolean>;
   getTxLink(hash: string): string;
   getAddressLink(hash: string): string;
@@ -40,5 +40,6 @@ export interface IAdapter {
   getAddress(): Address;
 
   setProvider(provider: any): void;
+  getProvider(): any;
   isValidAddress(address: Address): boolean;
 }

@@ -4,7 +4,6 @@ import { useConnection } from "../Hooks/useConnection";
 import { ConnectionAssistant } from "./ConnectionAssistant";
 import { Erc20Info } from "./Erc20Info";
 import { OnlinePanel } from "./OnlinePanel";
-
 const AppWrapper = styled.div`
   h4 {
     margin: 0 0 0.5rem 0;

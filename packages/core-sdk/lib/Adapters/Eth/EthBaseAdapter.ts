@@ -11,34 +11,51 @@ import { BN } from "../../Utils/BigNumber";
 import { nonSuccessResponse, successResponse } from "../Helpers";
 import { ERC20ABI } from "./ABIs/ERC20";
 import { BaseAdapter } from "../BaseAdapter";
-import { EthChainIds } from "../../Types";
+import { Blockchains, EthChainIds } from "../../Types";
 
-export abstract class EthBaseAdapter extends BaseAdapter {
+export abstract class EthBaseAdapter extends BaseAdapter<
+  ContractInterface,
+  ethers.providers.BaseProvider
+> {
   protected etherClient: ethers.providers.BaseProvider;
   protected contracts: { [nameContract: string]: ethers.Contract } = {};
   protected stablePairs: string[] = [];
-  protected lastGasLimit: string = "30000";
+  protected lastGasLimit = "30000";
   protected readonly chainId: EthChainIds;
-
+  protected abi: Record<string, ContractInterface> = {};
   constructor(
+    blockchain: Blockchains,
     nativeToken: Currency,
     chainId: EthChainIds,
     explorerUrl: string
   ) {
-    super(nativeToken, explorerUrl);
+    super(blockchain, nativeToken, explorerUrl);
     this.chainId = chainId;
   }
 
-  setProvider(providerClass: ethers.providers.BaseProvider) {
+  setProvider(providerClass: ethers.providers.BaseProvider): void {
     this.etherClient = providerClass;
   }
-  async initializeContract(contractAddress: Address, abi: ContractInterface) {
+
+  getProvider(): ethers.providers.BaseProvider {
+    return this.etherClient;
+  }
+
+  getContractInterface(contractAddress: string): ContractInterface {
+    return this.abi[contractAddress];
+  }
+
+  initializeContract(
+    contractAddress: Address,
+    abi: ContractInterface
+  ): Promise<void> {
     if (
       this.contracts[contractAddress] ||
       contractAddress === this.nativeToken.address
     ) {
       return;
     }
+    this.abi[contractAddress] = abi;
     this.contracts[contractAddress] = new ethers.Contract(
       contractAddress,
       abi,
@@ -48,10 +65,10 @@ export abstract class EthBaseAdapter extends BaseAdapter {
     );
   }
 
-  async initializeToken(
+  initializeToken(
     tokenAddress: Address,
     abi: ContractInterface = ERC20ABI
-  ) {
+  ): void {
     this.initializeContract(tokenAddress, abi);
   }
 
@@ -61,6 +78,10 @@ export abstract class EthBaseAdapter extends BaseAdapter {
     paramsRaw: ExecutionParams,
     isWrite = false
   ): Promise<ExecutionResponse<T>> {
+    this.gatherExecuteStats(method, {
+      contractAddress,
+      paramsRaw,
+    });
     const params = this.reduceParams(contractAddress, method, paramsRaw);
 
     // ALLOWANCE ON ETH ALWAYS RETURN MAX
@@ -70,7 +91,7 @@ export abstract class EthBaseAdapter extends BaseAdapter {
     ) {
       return successResponse({
         functionName: method,
-        value: BN(2 ** 256).toFixed() as any,
+        value: BN(2 ** 256).toFixed(),
         params,
       });
     }
@@ -92,7 +113,7 @@ export abstract class EthBaseAdapter extends BaseAdapter {
 
         if (contractCall && contractCall.hash) {
           return successResponse({
-            value: "" as any,
+            value: "",
             hash: contractCall.hash,
             functionName: method,
             params,
@@ -122,7 +143,7 @@ export abstract class EthBaseAdapter extends BaseAdapter {
     contract: ethers.Contract,
     contractMethod: string,
     params: ExecutionParams
-  ) {
+  ): Promise<string> {
     try {
       const gasLimit = await contract["estimateGas"][contractMethod]
         .apply(null, computeInvocationParams(params))
@@ -132,10 +153,7 @@ export abstract class EthBaseAdapter extends BaseAdapter {
     } catch (err) {
       return this.lastGasLimit
         ? "0x" +
-            BN(this.lastGasLimit)
-              .multipliedBy(2)
-              .decimalPlaces(0)
-              .toString(16)
+            BN(this.lastGasLimit).multipliedBy(2).decimalPlaces(0).toString(16)
         : undefined;
     }
   }
@@ -159,12 +177,6 @@ export abstract class EthBaseAdapter extends BaseAdapter {
     return this.etherClient.waitForTransaction(transactionHash).then((res) => {
       return res.status && res.status === 1 ? "SUCCESS" : "FAILED";
     });
-  }
-
-  async getBlock(
-    blockTag: ethers.providers.BlockTag
-  ): Promise<ethers.providers.Block> {
-    return this.etherClient.getBlock(blockTag);
   }
 
   protected reduceParams(
@@ -199,7 +211,7 @@ export abstract class EthBaseAdapter extends BaseAdapter {
     return `${this.chainId}` === network;
   }
 
-  isConnected() {
+  isConnected(): boolean {
     return !!this.address;
   }
 
@@ -209,15 +221,15 @@ export abstract class EthBaseAdapter extends BaseAdapter {
   getTokenLink(address: string): string {
     return `${this.explorerUrl}/token/${address}`;
   }
-  getTxLink(hash: any): string {
+  getTxLink(hash: string | number): string {
     return `${this.explorerUrl}/tx/${hash}`;
   }
 
-  resetContracts() {
+  resetContracts(): void {
     this.contracts = {};
   }
 
-  isValidAddress(address: Address) {
+  isValidAddress(address: Address): boolean {
     try {
       return utils.isAddress(address);
     } catch (error) {

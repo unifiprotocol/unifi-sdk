@@ -4,6 +4,7 @@ import { ContractInterface } from "@ethersproject/contracts";
 import { BaseAdapter } from "../BaseAdapter";
 import { Tron } from "./NativeToken";
 import { XRC20ABI } from "../Iotex/ABIs/XRC20ABI";
+import { Blockchains } from "../../Types";
 
 declare global {
   interface Window {
@@ -11,9 +12,16 @@ declare global {
   }
 }
 
-export class TrxAdapter extends BaseAdapter {
+export class TrxAdapter extends BaseAdapter<any, any> {
+  getProvider(): any {
+    return null;
+  }
+  getContractInterface(contractAddress: string): any[] {
+    return [];
+  }
+
   constructor() {
-    super(Tron, "https://tronscan.org/");
+    super(Blockchains.Tron, Tron, "https://tronscan.org/");
   }
 
   setProvider(provider: any): void {
@@ -49,9 +57,6 @@ export class TrxAdapter extends BaseAdapter {
     throw new Error("TRX Adapter not implemented yet");
   }
   getBalance(): Promise<AdapterBalance> {
-    throw new Error("TRX Adapter not implemented yet");
-  }
-  getBlock(blockTag: BlockTag): Promise<Block> {
     throw new Error("TRX Adapter not implemented yet");
   }
   isValidNetwork(network: string): Promise<boolean> {
