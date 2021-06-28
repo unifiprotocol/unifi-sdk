@@ -17,7 +17,7 @@ type GroupedUseCases = {
 type OrderedContractUseCaseMap = Record<string, GroupedUseCases>;
 
 export class EthMulticallAdapter extends MulticallBaseAdapter {
-  private multicall: Multicall;
+  protected multicall: Multicall;
   constructor(adapter: IAdapter) {
     super(adapter);
     this.multicall = new Multicall({

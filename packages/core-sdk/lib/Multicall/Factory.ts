@@ -2,6 +2,7 @@ import { IAdapter } from "../Adapters";
 import { InvalidBlockchainError } from "../Errors";
 import { Blockchains } from "../Types";
 import { EthMulticallAdapter } from "./Adapters/EthMulticallAdapter";
+import { HarmonyMulticallAdapter } from "./Adapters/HarmonyMulticallAdapter";
 import { MulticallFallbackAdapter } from "./Adapters/MulticallFallbackAdapter";
 import { IMulticallAdapter } from "./IMulticallAdapter";
 
@@ -14,7 +15,7 @@ export const multicallAdapterFactory = (
     [Blockchains.EthereumRopsten]: EthMulticallAdapter,
     [Blockchains.Iotex]: MulticallFallbackAdapter,
     [Blockchains.Tron]: MulticallFallbackAdapter,
-    [Blockchains.Harmony]: MulticallFallbackAdapter,
+    [Blockchains.Harmony]: HarmonyMulticallAdapter,
   }[adapter.blockchain];
 
   if (!multicallAdapterClass) {
