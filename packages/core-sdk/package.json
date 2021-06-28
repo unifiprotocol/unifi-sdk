@@ -1,6 +1,6 @@
 {
   "name": "@unifiprotocol/core-sdk",
-  "version": "2.1.4",
+  "version": "2.2.1",
   "description": "Unifi Protocol JS Core SDK",
   "author": "Unifi Protocol",
   "repository": "git@github.com:unifiprotocol/unifi-sdk.git",
