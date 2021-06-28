@@ -14,7 +14,7 @@ export class MulticallFallbackAdapter extends MulticallBaseAdapter {
       (useCase) => () => useCase.execute(this.adapter)
     );
     const { taskResults } = await Throttle.raw<ExecutionResponse>(promises, {
-      maxInProgress: 5,
+      maxInProgress: 2,
     });
     return taskResults;
   }

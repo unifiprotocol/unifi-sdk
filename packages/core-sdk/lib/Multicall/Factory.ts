@@ -14,6 +14,7 @@ export const multicallAdapterFactory = (
     [Blockchains.EthereumRopsten]: EthMulticallAdapter,
     [Blockchains.Iotex]: MulticallFallbackAdapter,
     [Blockchains.Tron]: MulticallFallbackAdapter,
+    [Blockchains.Harmony]: MulticallFallbackAdapter,
   }[adapter.blockchain];
 
   if (!multicallAdapterClass) {
