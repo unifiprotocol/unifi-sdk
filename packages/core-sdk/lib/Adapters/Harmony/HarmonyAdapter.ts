@@ -8,7 +8,7 @@ import { ContractInterface } from "ethers";
 export class HarmonyAdapter extends EthBaseAdapter {
   constructor() {
     super(
-      Blockchains.Binance,
+      Blockchains.Harmony,
       ONE,
       EthChainIds.Harmony,
       "https://explorer.harmony.one/#"
