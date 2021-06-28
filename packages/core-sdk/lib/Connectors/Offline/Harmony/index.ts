@@ -13,7 +13,7 @@ export class HarmonyConnector extends OfflineConnector {
     // TODO network cannot be hardcoded here
     this.adapter.setProvider(
       new ethers.providers.JsonRpcProvider(
-        "https://api.s0.t.hmny.io",
+        "https://api.harmony.one",
         EthChainIds.Harmony
       )
     );

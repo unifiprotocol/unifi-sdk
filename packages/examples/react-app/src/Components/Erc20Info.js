@@ -124,7 +124,7 @@ export const Erc20Info = () => {
                 onChange={(evt) => setMulticall(evt.target.checked)}
               />
             }
-            label="Secondary"
+            label="Use Multicall"
           />
           <Button
             disabled={fetchDisabled}
