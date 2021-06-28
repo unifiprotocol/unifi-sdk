@@ -11,9 +11,12 @@ import { BN } from "../../Utils/BigNumber";
 import { nonSuccessResponse, successResponse } from "../Helpers";
 import { ERC20ABI } from "./ABIs/ERC20";
 import { BaseAdapter } from "../BaseAdapter";
-import { EthChainIds } from "../../Types";
+import { Blockchains, EthChainIds } from "../../Types";
 
-export abstract class EthBaseAdapter extends BaseAdapter {
+export abstract class EthBaseAdapter extends BaseAdapter<
+  ContractInterface,
+  ethers.providers.BaseProvider
+> {
   protected etherClient: ethers.providers.BaseProvider;
   protected contracts: { [nameContract: string]: ethers.Contract } = {};
   protected stablePairs: string[] = [];
@@ -21,11 +24,12 @@ export abstract class EthBaseAdapter extends BaseAdapter {
   protected readonly chainId: EthChainIds;
   protected abi: Record<string, ContractInterface> = {};
   constructor(
+    blockchain: Blockchains,
     nativeToken: Currency,
     chainId: EthChainIds,
     explorerUrl: string
   ) {
-    super(nativeToken, explorerUrl);
+    super(blockchain, nativeToken, explorerUrl);
     this.chainId = chainId;
   }
 
@@ -33,11 +37,11 @@ export abstract class EthBaseAdapter extends BaseAdapter {
     this.etherClient = providerClass;
   }
 
-  getProvider() {
+  getProvider(): ethers.providers.BaseProvider {
     return this.etherClient;
   }
 
-  getContractInterface(contractAddress: string): any {
+  getContractInterface(contractAddress: string): ContractInterface {
     return this.abi[contractAddress];
   }
 
@@ -74,6 +78,10 @@ export abstract class EthBaseAdapter extends BaseAdapter {
     paramsRaw: ExecutionParams,
     isWrite = false
   ): Promise<ExecutionResponse<T>> {
+    this.gatherExecuteStats(method, {
+      contractAddress,
+      paramsRaw,
+    });
     const params = this.reduceParams(contractAddress, method, paramsRaw);
 
     // ALLOWANCE ON ETH ALWAYS RETURN MAX
@@ -83,7 +91,7 @@ export abstract class EthBaseAdapter extends BaseAdapter {
     ) {
       return successResponse({
         functionName: method,
-        value: BN(2 ** 256).toFixed() as any,
+        value: BN(2 ** 256).toFixed(),
         params,
       });
     }
@@ -105,7 +113,7 @@ export abstract class EthBaseAdapter extends BaseAdapter {
 
         if (contractCall && contractCall.hash) {
           return successResponse({
-            value: "" as any,
+            value: "",
             hash: contractCall.hash,
             functionName: method,
             params,
@@ -135,7 +143,7 @@ export abstract class EthBaseAdapter extends BaseAdapter {
     contract: ethers.Contract,
     contractMethod: string,
     params: ExecutionParams
-  ) {
+  ): Promise<string> {
     try {
       const gasLimit = await contract["estimateGas"][contractMethod]
         .apply(null, computeInvocationParams(params))
@@ -171,12 +179,6 @@ export abstract class EthBaseAdapter extends BaseAdapter {
     });
   }
 
-  async getBlock(
-    blockTag: ethers.providers.BlockTag
-  ): Promise<ethers.providers.Block> {
-    return this.etherClient.getBlock(blockTag);
-  }
-
   protected reduceParams(
     contractAddress: string,
     method: string,
@@ -209,7 +211,7 @@ export abstract class EthBaseAdapter extends BaseAdapter {
     return `${this.chainId}` === network;
   }
 
-  isConnected() {
+  isConnected(): boolean {
     return !!this.address;
   }
 
@@ -219,15 +221,15 @@ export abstract class EthBaseAdapter extends BaseAdapter {
   getTokenLink(address: string): string {
     return `${this.explorerUrl}/token/${address}`;
   }
-  getTxLink(hash: any): string {
+  getTxLink(hash: string | number): string {
     return `${this.explorerUrl}/tx/${hash}`;
   }
 
-  resetContracts() {
+  resetContracts(): void {
     this.contracts = {};
   }
 
-  isValidAddress(address: Address) {
+  isValidAddress(address: Address): boolean {
     try {
       return utils.isAddress(address);
     } catch (error) {

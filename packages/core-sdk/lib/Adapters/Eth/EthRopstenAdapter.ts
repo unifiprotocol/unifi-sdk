@@ -1,12 +1,14 @@
-import { EthChainIds } from "../../Types";
+import { Blockchains, EthChainIds } from "../../Types";
 import { EthBaseAdapter } from "./EthBaseAdapter";
 import { Ethereum } from "./NativeToken";
 
 export class EthRopstenAdapter extends EthBaseAdapter {
   constructor() {
-    super(Ethereum, EthChainIds.EthRopsten, "https://ropsten.etherscan.io");
-  }
-  supportsMulticall() {
-    return false;
+    super(
+      Blockchains.EthereumRopsten,
+      Ethereum,
+      EthChainIds.EthRopsten,
+      "https://ropsten.etherscan.io"
+    );
   }
 }

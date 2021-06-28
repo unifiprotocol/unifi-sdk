@@ -1,14 +1,15 @@
 import { Currency } from "../Entities";
-import { ContractInterface, ethers } from "ethers";
 import {
   AdapterBalance,
   Address,
   ExecutionResponse,
   ExecutionValueProps,
 } from "./Types";
+import { Blockchains } from "../Types";
 
-export interface IAdapter {
+export interface IAdapter<ContractInterface = any> {
   readonly nativeToken: Currency;
+  readonly blockchain: Blockchains;
 
   isConnected(): boolean;
 
@@ -26,14 +27,10 @@ export interface IAdapter {
     isWrite?: boolean
   ): Promise<ExecutionResponse<T>>;
 
-  supportsMulticall(): boolean;
-
   waitForTransaction(transactionHash: string): Promise<"SUCCESS" | "FAILED">;
 
   getBalance(): Promise<AdapterBalance>;
-  getBlock(
-    blockTag: ethers.providers.BlockTag
-  ): Promise<ethers.providers.Block>;
+
   isValidNetwork(network: string): Promise<boolean>;
   getTxLink(hash: string): string;
   getAddressLink(hash: string): string;

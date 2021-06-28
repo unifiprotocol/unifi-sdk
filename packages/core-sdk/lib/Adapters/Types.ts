@@ -5,7 +5,6 @@ export type AdapterBalance = { name: string; balance: string };
 export type Address = string;
 export interface ExecutionResponse<T = any> {
   success: boolean;
-  multicall: boolean;
   functionName?: string;
   value: T;
   hash: string;

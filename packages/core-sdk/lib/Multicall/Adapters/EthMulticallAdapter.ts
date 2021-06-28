@@ -4,13 +4,11 @@ import {
   ContractCallResults,
   Multicall,
 } from "ethereum-multicall";
-import * as Throttle from "promise-parallel-throttle";
 
 import { BigNumber } from "ethers";
-import { ExecutionResponse, IAdapter, successResponse } from "../Adapters";
-import { ContractUseCase } from "../Entities";
-
-type GenericUseCase = ContractUseCase<any, any, any>;
+import { ExecutionResponse, IAdapter, successResponse } from "../../Adapters";
+import { GenericUseCase } from "../../Entities";
+import { MulticallBaseAdapter } from "./MulticallBaseAdapter";
 
 type GroupedUseCases = {
   contractAddress: string;
@@ -18,52 +16,17 @@ type GroupedUseCases = {
 };
 type OrderedContractUseCaseMap = Record<string, GroupedUseCases>;
 
-export class MulticallAdapter {
+export class EthMulticallAdapter extends MulticallBaseAdapter {
   private multicall: Multicall;
-  constructor(private adapter: IAdapter) {
+  constructor(adapter: IAdapter) {
+    super(adapter);
     this.multicall = new Multicall({
       ethersProvider: this.adapter.getProvider(),
       tryAggregate: true,
     });
   }
 
-  private async singleExecution(
-    useCases: GenericUseCase[]
-  ): Promise<ExecutionResponse[]> {
-    // Throttle.raw expects Tasks<T> (equivalent to Array<Promise<T>>) as arguments but not resolve correctly
-    const promises = useCases.map(
-      (useCase) => () => useCase.execute(this.adapter)
-    ) as any;
-    const { taskResults } = await Throttle.raw<ExecutionResponse>(promises);
-    return taskResults;
-  }
-  private groupResultsByAmount(size: number) {
-    return (results: ExecutionResponse[]) => {
-      const groupedResults: ExecutionResponse[][] = [];
-      while (results.length !== 0) {
-        groupedResults.push(results.splice(0, size));
-      }
-      return groupedResults;
-    };
-  }
-
-  executeGrouped(
-    useCaseGroups: GenericUseCase[][]
-  ): Promise<ExecutionResponse[][]> {
-    const useCases: GenericUseCase[] = useCaseGroups.reduce(
-      (list, group) => [...list, ...group],
-      []
-    );
-    return this.execute(useCases).then(
-      this.groupResultsByAmount(useCaseGroups[0].length)
-    );
-  }
-
   execute(useCases: GenericUseCase[]): Promise<ExecutionResponse[]> {
-    if (!this.adapter.supportsMulticall()) {
-      return this.singleExecution(useCases);
-    }
-
     const callContexts: ContractCallContext[] = Object.values(
       useCases.reduce(this.groupUseCasesByContractKeepingOrder.bind(this), {})
     ).map(this.mapGroupedUseCasesToMulticallCtx.bind(this));
@@ -73,13 +36,13 @@ export class MulticallAdapter {
       .then(this.processMulticallResult.bind(this));
   }
 
-  mapGroupedUseCasesToMulticallCtx(
+  private mapGroupedUseCasesToMulticallCtx(
     group: GroupedUseCases
   ): ContractCallContext {
     return {
       reference: group.contractAddress,
       contractAddress: group.contractAddress,
-      abi: this.adapter.getContractInterface(group.contractAddress) as any[],
+      abi: this.adapter.getContractInterface(group.contractAddress),
       calls: group.useCases.map((useCase) => ({
         reference: `${useCase.order}`,
         methodName: useCase.useCase.method,
@@ -88,7 +51,7 @@ export class MulticallAdapter {
     };
   }
 
-  groupUseCasesByContractKeepingOrder(
+  private groupUseCasesByContractKeepingOrder(
     map: OrderedContractUseCaseMap,
     useCase: GenericUseCase,
     order: number
@@ -106,7 +69,7 @@ export class MulticallAdapter {
     return map;
   }
 
-  decodeReturnValues(ret: CallReturnContext): string[] {
+  private decodeReturnValues(ret: CallReturnContext): string[] {
     return ret.returnValues.map((v) => {
       if (typeof v === "object" && v.type === "BigNumber") {
         return BigNumber.from(v.hex).toString();
@@ -115,7 +78,9 @@ export class MulticallAdapter {
     });
   }
 
-  processMulticallResult(res: ContractCallResults): ExecutionResponse[] {
+  private processMulticallResult(
+    res: ContractCallResults
+  ): ExecutionResponse[] {
     return Object.entries(res.results).reduce(
       (orderedResult, [, contractResult]) => {
         return contractResult.callsReturnContext.reduce((obj, cur) => {
@@ -123,7 +88,6 @@ export class MulticallAdapter {
           const value = this.decodeReturnValues(cur);
           orderedResult[order] = successResponse({
             success: cur.success,
-            multicall: true,
             functionName: cur.methodName,
             params: {
               args: cur.methodParameters,

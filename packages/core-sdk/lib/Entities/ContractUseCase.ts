@@ -1,4 +1,4 @@
-import { IAdapter } from "../Adapters";
+import { ExecutionResponse, IAdapter } from "../Adapters";
 
 export abstract class ContractUseCase<
   ContractMethod extends string,
@@ -20,7 +20,7 @@ export abstract class ContractUseCase<
     return [];
   }
 
-  execute(adapter: IAdapter) {
+  execute(adapter: IAdapter): Promise<ExecutionResponse<ResponseValue>> {
     return adapter.execute<ResponseValue>(
       this.contractAddress,
       this.method,
@@ -32,3 +32,5 @@ export abstract class ContractUseCase<
     );
   }
 }
+
+export type GenericUseCase = ContractUseCase<any, any, any>;
