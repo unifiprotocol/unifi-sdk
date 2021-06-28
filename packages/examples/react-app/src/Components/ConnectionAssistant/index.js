@@ -22,6 +22,7 @@ const blockchains = [
   Blockchains.Binance,
   Blockchains.Ethereum,
   Blockchains.EthereumRopsten,
+  Blockchains.Harmony,
 ].map((v) => [v, v]);
 
 const ConnectionAssistantWrapper = styled.div`

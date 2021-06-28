@@ -61,20 +61,22 @@ export const Erc20Info = () => {
           }),
         ]);
       } else {
-        results = [
-          new GetTotalSupply({
-            tokenAddress,
-          }),
-          new GetSymbol({
-            tokenAddress,
-          }),
-          new GetName({
-            tokenAddress,
-          }),
-          new GetDecimals({
-            tokenAddress,
-          }),
-        ].map((useCase) => useCase.execute(adapter));
+        results = await Promise.all(
+          [
+            new GetTotalSupply({
+              tokenAddress,
+            }),
+            new GetSymbol({
+              tokenAddress,
+            }),
+            new GetName({
+              tokenAddress,
+            }),
+            new GetDecimals({
+              tokenAddress,
+            }),
+          ].map((useCase) => useCase.execute(adapter))
+        );
       }
 
       const [totalSupply, symbol, name, decimals] = results.map(
