@@ -1,3 +1,4 @@
+on: workflow_dispatch
 publish:
   runs-on: ubuntu-latest
   steps:
@@ -6,8 +7,12 @@ publish:
       with:
         node-version: "12.x"
         registry-url: "https://registry.npmjs.org"
-    - run: yarn install
-    - run: yarn publish
+    - name: install dependencies
+      run: yarn install
+      working-directory: ./packages/core-sdk
+    - name: publish package
+      run: yarn publish
+      working-directory: ./packages/core-sdk
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
     - run: yarn push
