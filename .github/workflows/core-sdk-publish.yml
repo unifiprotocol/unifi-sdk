@@ -9,6 +9,9 @@ jobs:
         with:
           node-version: "12.x"
           registry-url: "https://registry.npmjs.org"
+      - name: install root deps
+        run: yarn install
+        working-directory: ./packages/core-sdk
       - name: install dependencies
         run: yarn install
         working-directory: ./packages/core-sdk
