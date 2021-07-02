@@ -1,11 +1,12 @@
 name: Publish core-sdk package
 on:
-  workflow_dispatch:
-    inputs:
-      newVersion:
-        description: "New version"
-        required: true
-        default: ""
+  workflow_dispatch
+  # atm we will commit versions before executing action
+  # inputs:
+  #   newVersion:
+  #     description: "New version"
+  #     required: true
+  #     default: ""
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -21,8 +22,7 @@ jobs:
         run: yarn install
         working-directory: ./packages/core-sdk
       - name: publish package
-        run: yarn publish --new-version ${{ github.event.inputs.newVersion }}
+        run: yarn publish
         working-directory: ./packages/core-sdk
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
-      - run: yarn push
