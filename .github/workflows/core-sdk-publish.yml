@@ -1,10 +1,11 @@
 name: Publish core-sdk package
-on: 
-  workflow_dispatch
-    newVersion:
-        description: 'New version'     
+on:
+  workflow_dispatch:
+    inputs:
+      newVersion:
+        description: "New version"
         required: true
-        default: ''
+        default: ""
 jobs:
   publish:
     runs-on: ubuntu-latest
