@@ -48,7 +48,7 @@ export class MetamaskConnector extends WalletConnector {
     return this.adapter;
   }
 
-  async isAvailable() {
+  async isAvailable(): Promise<boolean> {
     return (
       !!this.getAgent() &&
       this.getAgent().isMetaMask &&
@@ -56,7 +56,11 @@ export class MetamaskConnector extends WalletConnector {
     );
   }
 
-  async initEventController() {
+  protected getAgent(): any {
+    return window.ethereum;
+  }
+
+  async initEventController(): Promise<void> {
     this.getAgent().on("accountsChanged", ([address]: string[]) => {
       this.adapter.setAddress(address);
       this.emitter.emit("AddressChanged", address);

@@ -1031,7 +1031,7 @@ ecdsa-sig-formatter@1.0.11:
   dependencies:
     safe-buffer "^5.0.1"
 
-elliptic@6.5.4, elliptic@^6.5.3:
+elliptic@6.5.4, elliptic@^6.5.4:
   version "6.5.4"
   resolved "https://registry.yarnpkg.com/elliptic/-/elliptic-6.5.4.tgz#da37cebd31e79a1367e941b592ed1fbebd58abbb"
   integrity sha512-iLhC6ULemrljPZb+QutR5TQGB+pdW6KGD5RSegS+8sorOZT+rdQFbsQFJgvN3eRqNALqJer4oQ16YvJHlU8hzQ==
@@ -2246,23 +2246,23 @@ to-regex-range@^5.0.1:
   dependencies:
     is-number "^7.0.0"
 
-tronweb@^3.2.6:
-  version "3.2.6"
-  resolved "https://registry.yarnpkg.com/tronweb/-/tronweb-3.2.6.tgz#4a9a5eed70561e4ec3cc6faee02b78831dcfaf64"
-  integrity sha512-IZLMNUi1V31bLeU/cK/O0+BUQVMpHdIhBjnQV0vs7D/pGka3qoZCYDS/bH66kPvehwXBZncsSYLJ/qTiJnQSSw==
+tronweb@^3.2.7:
+  version "3.2.7"
+  resolved "https://registry.yarnpkg.com/tronweb/-/tronweb-3.2.7.tgz#207a56741c4d191614c45a543dc3f49248f3632a"
+  integrity sha512-DqKFxhHTwYXFshoD0vGoUYxnXg5xsKxbxJrlfdmDbw22T1M8Cnowo6kpLi4xbHm4hiVVdmyzC6Ty4yniTG3zTw==
   dependencies:
     "@babel/runtime" "^7.0.0"
     axios "^0.21.1"
     babel-runtime "^6.26.0"
     bignumber.js "^7.2.1"
-    elliptic "^6.5.3"
+    elliptic "^6.5.4"
     ethers "^5.0.8"
     eventemitter3 "^3.1.0"
     injectpromise "^1.0.0"
     jsonwebtoken "^8.5.1"
     lodash "^4.17.14"
     semver "^5.6.0"
-    validator "^10.7.1"
+    validator "^13.6.0"
 
 tsconfig-replace-paths@^0.0.5:
   version "0.0.5"
@@ -2329,10 +2329,10 @@ validate-npm-package-license@^3.0.1:
     spdx-correct "^3.0.0"
     spdx-expression-parse "^3.0.0"
 
-validator@^10.7.1:
-  version "10.11.0"
-  resolved "https://registry.yarnpkg.com/validator/-/validator-10.11.0.tgz#003108ea6e9a9874d31ccc9e5006856ccd76b228"
-  integrity sha512-X/p3UZerAIsbBfN/IwahhYaBbY68EN/UQBWHtsbXGT5bfrH/p4NQzUCG1kF/rtKaNpnJ7jAu6NGTdSNtyNIXMw==
+validator@^13.6.0:
+  version "13.6.0"
+  resolved "https://registry.yarnpkg.com/validator/-/validator-13.6.0.tgz#1e71899c14cdc7b2068463cb24c1cc16f6ec7059"
+  integrity sha512-gVgKbdbHgtxpRyR8K0O6oFZPhhB5tT1jeEHZR0Znr9Svg03U0+r9DXWMrnRAB+HtCStDQKlaIZm42tVsVjqtjg==
 
 which-boxed-primitive@^1.0.2:
   version "1.0.2"

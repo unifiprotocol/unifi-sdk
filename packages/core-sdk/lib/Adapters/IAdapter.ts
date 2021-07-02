@@ -13,8 +13,14 @@ export interface IAdapter<ContractInterface = any> {
 
   isConnected(): boolean;
 
-  initializeContract(contractAddress: string, abi: ContractInterface): void;
-  initializeToken(contractAddress: string, abi?: ContractInterface): void;
+  initializeContract(
+    contractAddress: string,
+    abi: ContractInterface
+  ): Promise<void>;
+  initializeToken(
+    contractAddress: string,
+    abi?: ContractInterface
+  ): Promise<void>;
 
   getContractInterface(contractAddress: string): ContractInterface;
 

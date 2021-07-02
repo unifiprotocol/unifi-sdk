@@ -17,6 +17,7 @@
   "scripts": {
     "prepublish": "yarn build",
     "build": "yarn run clean && yarn run compile",
+    "build:watch": "tsc --watch",
     "tsc-replace-paths": "tsconfig-replace-paths --project tsconfig.json",
     "clean": "rm -rf ./dist && rm -rf tsconfig.tsbuildinfo",
     "compile": "tsc -b tsconfig.json",
@@ -34,7 +35,7 @@
     "eventemitter3": "^4.0.7",
     "js-sha3": "^0.8.0",
     "promise-parallel-throttle": "^3.3.0",
-    "tronweb": "^3.2.6",
+    "tronweb": "^3.2.7",
     "tslib": "^2.1.0"
   },
   "devDependencies": {

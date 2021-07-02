@@ -1,6 +1,6 @@
 import { EthBaseAdapter } from "../Eth/EthBaseAdapter";
 import { Blockchains, EthChainIds } from "../../Types";
-import { ONE } from "./NativeToken";
+import { ONENativeToken } from "../../Tokens/ONENativeToken";
 import { HRC20ABI } from "./ABIs/HRC20";
 import { Address } from "../Types";
 import { ContractInterface } from "ethers";
@@ -9,7 +9,7 @@ export class HarmonyAdapter extends EthBaseAdapter {
   constructor() {
     super(
       Blockchains.Harmony,
-      ONE,
+      ONENativeToken,
       EthChainIds.Harmony,
       "https://explorer.harmony.one/#"
     );
@@ -25,10 +25,10 @@ export class HarmonyAdapter extends EthBaseAdapter {
     return `${this.explorerUrl}/tx/${hash}`;
   }
 
-  initializeToken(
+  async initializeToken(
     tokenAddress: Address,
     abi: ContractInterface = HRC20ABI
-  ): void {
+  ): Promise<void> {
     return super.initializeToken(tokenAddress, abi);
   }
 }

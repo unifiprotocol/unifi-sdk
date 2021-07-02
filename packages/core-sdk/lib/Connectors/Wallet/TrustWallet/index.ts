@@ -17,7 +17,12 @@ export class TrustWalletConnector extends MetamaskConnector {
   constructor(adapter: IAdapter, blockchain: Blockchains) {
     super(adapter, blockchain, trustWalletMetadata);
   }
-  async isAvailable() {
+
+  protected getAgent(): any {
+    return window.ethereum;
+  }
+
+  async isAvailable(): Promise<boolean> {
     return !!this.getAgent() && this.getAgent().isTrust;
   }
 }

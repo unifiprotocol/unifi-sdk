@@ -45,7 +45,7 @@ export abstract class EthBaseAdapter extends BaseAdapter<
     return this.abi[contractAddress];
   }
 
-  initializeContract(
+  async initializeContract(
     contractAddress: Address,
     abi: ContractInterface
   ): Promise<void> {
@@ -65,10 +65,10 @@ export abstract class EthBaseAdapter extends BaseAdapter<
     );
   }
 
-  initializeToken(
+  async initializeToken(
     tokenAddress: Address,
     abi: ContractInterface = ERC20ABI
-  ): void {
+  ): Promise<void> {
     this.initializeContract(tokenAddress, abi);
   }
 
@@ -90,7 +90,7 @@ export abstract class EthBaseAdapter extends BaseAdapter<
       ["allowance", "approve"].includes(method)
     ) {
       return successResponse({
-        functionName: method,
+        method,
         value: BN(2 ** 256).toFixed(),
         params,
       });
@@ -115,7 +115,7 @@ export abstract class EthBaseAdapter extends BaseAdapter<
           return successResponse({
             value: "",
             hash: contractCall.hash,
-            functionName: method,
+            method,
             params,
           });
         }
@@ -128,14 +128,14 @@ export abstract class EthBaseAdapter extends BaseAdapter<
           const value = contractCall.toString();
           return successResponse({
             value,
-            functionName: method,
+            method,
             params,
           });
         }
       }
-      return nonSuccessResponse({ functionName: method, params });
+      return nonSuccessResponse({ method, params });
     } catch (err) {
-      return nonSuccessResponse({ functionName: method, params, err });
+      return nonSuccessResponse({ method, params, err });
     }
   }
 

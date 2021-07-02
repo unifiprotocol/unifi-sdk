@@ -1,12 +1,12 @@
 import { Blockchains, EthChainIds } from "../../Types";
 import { EthBaseAdapter } from "./EthBaseAdapter";
-import { Ethereum } from "./NativeToken";
+import { ETHNativeToken } from "../../Tokens/ETHNativeToken";
 
 export class EthAdapter extends EthBaseAdapter {
   constructor() {
     super(
       Blockchains.Ethereum,
-      Ethereum,
+      ETHNativeToken,
       EthChainIds.Eth,
       "https://etherscan.io"
     );

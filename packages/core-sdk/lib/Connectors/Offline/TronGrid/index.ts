@@ -1,3 +1,4 @@
+import TronWeb from "tronweb";
 import { IAdapter } from "../../../Adapters/IAdapter";
 import { Blockchains } from "../../../Types";
 import { OfflineConnector } from "../OfflineConnector";
@@ -8,6 +9,11 @@ export class TronGridConnector extends OfflineConnector {
     super(adapter, blockchain, tronGridMetadata);
   }
   async connect(): Promise<IAdapter> {
+    this.adapter.setProvider(
+      new TronWeb({
+        fullHost: "https://api.trongrid.io/",
+      })
+    );
     return this.adapter;
   }
 }

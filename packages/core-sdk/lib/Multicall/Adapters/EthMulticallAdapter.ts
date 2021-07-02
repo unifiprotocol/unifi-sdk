@@ -88,7 +88,7 @@ export class EthMulticallAdapter extends MulticallBaseAdapter {
           const value = this.decodeReturnValues(cur);
           orderedResult[order] = successResponse({
             success: cur.success,
-            functionName: cur.methodName,
+            method: cur.methodName,
             params: {
               args: cur.methodParameters,
               callValue: undefined,
