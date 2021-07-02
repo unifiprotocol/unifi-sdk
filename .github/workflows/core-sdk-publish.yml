@@ -5,9 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: setup .npmrc file
-        uses: actions/setup-node@v2
-        working-directory: ./packages/core-sdk
+      - uses: actions/setup-node@v2
         with:
           node-version: "12.x"
           registry-url: "https://registry.npmjs.org"
@@ -18,5 +16,5 @@ jobs:
         run: yarn publish
         working-directory: ./packages/core-sdk
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
       - run: yarn push
