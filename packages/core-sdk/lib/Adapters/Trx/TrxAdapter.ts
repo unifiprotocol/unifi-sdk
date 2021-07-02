@@ -8,16 +8,18 @@ import { Blockchains } from "../../Types";
 import TronWeb from "tronweb";
 import { nonSuccessResponse, successResponse } from "../Helpers";
 import { BN } from "../../Utils/BigNumber";
+import { Opt } from "../../Utils/Typings";
 
 declare global {
   interface Window {
     tronWeb: any;
   }
 }
-type TronContract = any;
+type TronContract = Opt<any>;
 export class TrxAdapter extends BaseAdapter<TronContract, TronWeb> {
   private tronWeb: any;
   private contracts: Record<string, TronContract> = {};
+  private abi: Record<string, any> = {};
 
   constructor() {
     super(Blockchains.Tron, TRXNativeToken, "https://tronscan.org/");
@@ -41,17 +43,26 @@ export class TrxAdapter extends BaseAdapter<TronContract, TronWeb> {
   isConnected(): boolean {
     return !!this.getAddress();
   }
-  async initializeContract(contractAddress: string): Promise<void> {
-    this.contracts[contractAddress] = await this.getContractInstance(
-      contractAddress
-    );
+  async initializeContract(
+    contractAddress: string,
+    abi?: TronContract
+  ): Promise<void> {
+    let contract;
+    if (abi) {
+      contract = this.tronWeb.contract(abi, contractAddress);
+    } else {
+      contract = await this.fetchContractABI(contractAddress);
+    }
+    this.contracts[contractAddress] = contract;
   }
 
-  private async getContractInstance(contractAddress: string) {
+  private async fetchContractABI(contractAddress: string) {
     const storageKey = `tron-contract-${contractAddress}`;
     const cachedInstance = localStorage.getItem(storageKey);
     if (cachedInstance) {
-      return this.tronWeb.contract(JSON.parse(cachedInstance), contractAddress);
+      const abi = JSON.parse(cachedInstance);
+      this.abi[contractAddress] = abi;
+      return this.tronWeb.contract(abi, contractAddress);
     }
 
     return this.tronWeb
@@ -59,12 +70,16 @@ export class TrxAdapter extends BaseAdapter<TronContract, TronWeb> {
       .at(contractAddress)
       .then((ins: any) => {
         localStorage.setItem(storageKey, JSON.stringify(ins.abi));
+        this.abi[contractAddress] = ins.abi;
         this.tronWeb.contract(ins.abi, contractAddress);
       });
   }
 
-  async initializeToken(contractAddress: string): Promise<void> {
-    return this.initializeContract(contractAddress);
+  async initializeToken(
+    contractAddress: string,
+    abi = XRC20ABI
+  ): Promise<void> {
+    return this.initializeContract(contractAddress, abi);
   }
 
   async execute<T = any>(
@@ -146,7 +161,6 @@ export class TrxAdapter extends BaseAdapter<TronContract, TronWeb> {
             const isSuccess = (res.ret || []).some(
               (i: any) => i.contractRet === "SUCCESS"
             );
-            debugger;
             clearInterval(interval);
             resolve(isSuccess ? "SUCCESS" : "FAILED");
           }
