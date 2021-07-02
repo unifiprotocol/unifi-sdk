@@ -9,7 +9,5 @@ export abstract class WalletConnector extends BaseConnector {
     return !!this.getAgent();
   }
 
-  protected getAgent() {
-    return window.ethereum;
-  }
+  protected abstract getAgent(): any;
 }

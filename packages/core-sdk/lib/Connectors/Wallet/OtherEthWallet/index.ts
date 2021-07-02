@@ -13,7 +13,12 @@ export class OtherEthWalletConnector extends MetamaskConnector {
   constructor(adapter: IAdapter, blockchain: Blockchains) {
     super(adapter, blockchain, otherEthWalletMetadata);
   }
-  async isAvailable() {
+
+  protected getAgent(): any {
+    return window.ethereum;
+  }
+
+  async isAvailable(): Promise<boolean> {
     return !!this.getAgent();
   }
 }

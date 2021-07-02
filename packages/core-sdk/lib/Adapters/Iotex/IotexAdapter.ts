@@ -3,11 +3,16 @@ import { Blockchains, EthChainIds } from "../../Types";
 import { Address } from "../Types";
 import { ContractInterface, ethers } from "ethers";
 import { XRC20ABI } from "./ABIs/XRC20ABI";
-import { Iotex } from "./NativeToken";
+import { IOTXNativeToken } from "../../Tokens/IOTXNativeToken";
 
 export class IotxAdapter extends EthBaseAdapter {
   constructor() {
-    super(Blockchains.Iotex, Iotex, EthChainIds.Iotex, "https://iotexscan.io");
+    super(
+      Blockchains.Iotex,
+      IOTXNativeToken,
+      EthChainIds.Iotex,
+      "https://iotexscan.io"
+    );
   }
 
   getEthereumAgent() {

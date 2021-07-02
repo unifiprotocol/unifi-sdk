@@ -5,10 +5,10 @@ export type AdapterBalance = { name: string; balance: string };
 export type Address = string;
 export interface ExecutionResponse<T = any> {
   success: boolean;
-  functionName?: string;
+  method?: string;
   value: T;
   hash: string;
-  params?: ExecutionValueProps;
+  params?: any;
   err?: any;
 }
 

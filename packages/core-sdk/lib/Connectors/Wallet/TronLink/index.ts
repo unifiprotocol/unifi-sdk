@@ -3,15 +3,33 @@ import { WalletConnector } from "../../Wallet/WalletConnector";
 import { sleep } from "../../../Utils/Sleep";
 import { Blockchains } from "../../../Types";
 import { tronLinkWalletMetadata } from "./TronLinkMetadata";
+import { WalletNotDetectedError } from "../../../Errors";
 
 export class TronLinkConnector extends WalletConnector {
   constructor(adapter: IAdapter, blockchain: Blockchains) {
     super(adapter, blockchain, tronLinkWalletMetadata);
   }
+
+  protected getAgent(): any {
+    return window.tronWeb;
+  }
+
   async connect(): Promise<IAdapter> {
-    await sleep(500);
-    const address = window.tronWeb.defaultAddress.base58 || "";
-    this.adapter.setAddress(address);
-    return this.adapter;
+    return new Promise((resolve, reject) => {
+      let retries = 0;
+      const retry = setInterval(() => {
+        if (!this.getAgent().ready) {
+          retries++;
+          if (retries > 4) {
+            reject(new WalletNotDetectedError(this.metadata.displayName));
+          }
+          return;
+        }
+        clearInterval(retry);
+        this.adapter.setProvider(this.getAgent());
+        this.adapter.setAddress(this.getAgent().defaultAddress.base58);
+        resolve(this.adapter);
+      }, 500);
+    });
   }
 }

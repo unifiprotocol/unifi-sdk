@@ -47,11 +47,11 @@ export abstract class BaseAdapter<ContractInterface, ProviderType>
   abstract initializeContract(
     contractAddress: string,
     abi: ContractInterface
-  ): void;
+  ): Promise<void>;
   abstract initializeToken(
     contractAddress: string,
     abi?: ContractInterface
-  ): void;
+  ): Promise<void>;
 
   abstract execute<T = any>(
     contractAddress: string,

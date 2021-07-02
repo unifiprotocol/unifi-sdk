@@ -1,6 +1,6 @@
-import { Currency } from "../../Entities";
+import { Currency } from "../Entities";
 
-export const ONE = new Currency(
+export const ONENativeToken = new Currency(
   "ONE",
   18,
   "ONE",

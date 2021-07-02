@@ -4,6 +4,7 @@ import styled from "styled-components";
 import {
   Blockchains,
   connectorFactory,
+  getBlockchainOfflineConnectors,
   getBlockchainWalletConnectors,
 } from "@unifiprotocol/core-sdk";
 import { useCallback, useEffect, useState } from "react";
@@ -23,6 +24,7 @@ const blockchains = [
   Blockchains.Ethereum,
   Blockchains.EthereumRopsten,
   Blockchains.Harmony,
+  Blockchains.Tron,
 ].map((v) => [v, v]);
 
 const ConnectionAssistantWrapper = styled.div`
@@ -46,8 +48,9 @@ export const ConnectionAssistant = () => {
   const onBlockchainChange = useCallback(() => {
     if (!blockchain) return;
     const chainWallets = getBlockchainWalletConnectors(blockchain);
+    const chainProviders = getBlockchainOfflineConnectors(blockchain);
     setWallets(
-      chainWallets.map((wallet) => [
+      [...chainWallets, ...chainProviders].map((wallet) => [
         wallet.name,
         <>
           <img
