@@ -143,14 +143,15 @@ export class TrxAdapter extends BaseAdapter<TronContract, TronWeb> {
       const interval = setInterval(() => {
         checkTx(transactionHash).then((res: any) => {
           if (res) {
-            const isReverted = (res.ret || []).some(
-              (i: any) => i.contractRet === "REVERT"
+            const isSuccess = (res.ret || []).some(
+              (i: any) => i.contractRet === "SUCCESS"
             );
+            debugger;
             clearInterval(interval);
-            resolve(isReverted ? "FAILED" : "SUCCESS");
+            resolve(isSuccess ? "SUCCESS" : "FAILED");
           }
         });
-      }, 5000);
+      }, 1500);
     });
   }
   async getBalance(): Promise<AdapterBalance> {
