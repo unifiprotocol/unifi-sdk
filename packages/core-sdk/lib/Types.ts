@@ -5,6 +5,7 @@ export enum Blockchains {
   Iotex = "IOTX",
   Tron = "TRX",
   Harmony = "Harmony",
+  Polygon = "Polygon",
 }
 
 export enum OfflineConnectors {
@@ -14,6 +15,7 @@ export enum OfflineConnectors {
   TronGrid = "trongrid",
   Alchemy = "alchemy",
   Harmony = "harmony",
+  Polygon = "polygon",
 }
 
 export enum WalletConnectors {
@@ -31,6 +33,7 @@ export enum EthChainIds {
   Bsc = 56,
   Iotex = 4689,
   Harmony = 1666600000,
+  Polygon = 137,
 }
 
 export type Connectors = OfflineConnectors | WalletConnectors;

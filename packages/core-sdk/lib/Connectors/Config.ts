@@ -10,6 +10,7 @@ import { etherScanMetadata } from "./Offline/EtherScan/EtherScanMetadata";
 import { alchemyMetadata } from "./Offline/Alchemy/AlchemyMetadata";
 import { harmonyMetadata } from "./Offline/Harmony/HarmonyMetadata";
 import { tronGridMetadata } from "./Offline/TronGrid/TronGridMetadata";
+import { polygonMetadata } from "./Offline/Polygon/PolygonMetadata";
 
 const ethereumWallets = [
   mathWalletMetadata,
@@ -28,6 +29,7 @@ export const blockchainWalletConnectors = Object.freeze({
   [Blockchains.Iotex]: [metamaskWalletMetadata, otherEthWalletMetadata],
   [Blockchains.Tron]: [tronLinkWalletMetadata],
   [Blockchains.Harmony]: [metamaskWalletMetadata],
+  [Blockchains.Polygon]: [metamaskWalletMetadata],
 });
 
 export const blockchainOfflineConnectors = Object.freeze({
@@ -37,4 +39,5 @@ export const blockchainOfflineConnectors = Object.freeze({
   [Blockchains.EthereumRopsten]: [etherScanMetadata, alchemyMetadata],
   [Blockchains.Iotex]: [cloudflareMetadata],
   [Blockchains.Tron]: [tronGridMetadata],
+  [Blockchains.Polygon]: [polygonMetadata],
 });

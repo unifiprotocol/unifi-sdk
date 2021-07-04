@@ -28,6 +28,7 @@ export const blockchainToEthChainId = (
     [Blockchains.Ethereum]: EthChainIds.Eth,
     [Blockchains.EthereumRopsten]: EthChainIds.EthRopsten,
     [Blockchains.Iotex]: EthChainIds.Iotex,
+    [Blockchains.Polygon]: EthChainIds.Polygon,
   };
 
   return map[blockchain] || undefined;

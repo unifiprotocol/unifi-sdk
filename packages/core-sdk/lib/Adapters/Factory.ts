@@ -6,6 +6,7 @@ import { EthRopstenAdapter } from "./Eth/EthRopstenAdapter";
 import { HarmonyAdapter } from "./Harmony/HarmonyAdapter";
 import { IAdapter } from "./IAdapter";
 import { IotxAdapter } from "./Iotex/IotexAdapter";
+import { PolygonAdapter } from "./Polygon/PolygonAdapter";
 import { TrxAdapter } from "./Trx/TrxAdapter";
 
 export const adapterFactory = (chain: Blockchains): IAdapter => {
@@ -15,6 +16,7 @@ export const adapterFactory = (chain: Blockchains): IAdapter => {
     [Blockchains.EthereumRopsten]: EthRopstenAdapter,
     [Blockchains.Iotex]: IotxAdapter,
     [Blockchains.Tron]: TrxAdapter,
+    [Blockchains.Polygon]: PolygonAdapter,
     [Blockchains.Harmony]: HarmonyAdapter,
   }[chain];
 

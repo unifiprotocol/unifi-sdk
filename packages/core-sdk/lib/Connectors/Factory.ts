@@ -12,6 +12,7 @@ import {
   BscDataSeedConnector,
   CloudflareConnector,
   EtherScanConnector,
+  PolygonConnector,
   TronGridConnector,
 } from "./Offline";
 import { AlchemyConnector } from "./Offline/Alchemy";
@@ -49,6 +50,7 @@ export const connectorFactory = (
     [OfflineConnectors.EtherScan]: EtherScanConnector,
     [OfflineConnectors.Alchemy]: AlchemyConnector,
     [OfflineConnectors.Harmony]: HarmonyConnector,
+    [OfflineConnectors.Polygon]: PolygonConnector,
   }[connectorName];
 
   const adapter = adapterFactory(blockchain);
