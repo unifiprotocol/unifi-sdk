@@ -28,7 +28,11 @@
     "test": "__tests__"
   },
   "dependencies": {
+    "@harmony-js/core": "^0.1.57",
+    "@harmony-js/staking": "^0.1.56",
+    "@harmony-js/utils": "^0.1.56",
     "@unifiprotocol/core-sdk": "^3.0.0",
+    "ethers": "^5.2.0",
     "tslib": "^2.1.0"
   },
   "devDependencies": {

@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useConnection } from "../Hooks/useConnection";
 import { ConnectionAssistant } from "./ConnectionAssistant";
 import { Erc20Info } from "./Erc20Info";
+import { Staking } from "./Staking";
 import { OnlinePanel } from "./OnlinePanel";
 const AppWrapper = styled.div`
   h4 {
@@ -32,7 +33,12 @@ function App() {
           </div>
         )}
 
-        {adapter && <Erc20Info />}
+        {adapter && (
+          <div className="mb-4">
+            <Erc20Info />
+          </div>
+        )}
+        {adapter && <Staking />}
       </Container>
     </AppWrapper>
   );

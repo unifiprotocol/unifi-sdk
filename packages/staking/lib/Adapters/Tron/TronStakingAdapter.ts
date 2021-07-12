@@ -1,7 +1,7 @@
 import { TrxAdapter } from "@unifiprotocol/core-sdk";
-import { BaseAdapter } from "../BaseStakingAdapter";
+import { BaseStakingAdapter } from "../BaseStakingAdapter";
 
-export class TrxStakingAdapter extends BaseAdapter<TrxAdapter> {
+export class TronStakingAdapter extends BaseStakingAdapter<TrxAdapter> {
   freeze(amount: string): Promise<void> {
     throw new Error("Method not implemented.");
   }

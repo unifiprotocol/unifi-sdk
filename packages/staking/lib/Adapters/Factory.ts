@@ -1,20 +1,26 @@
-import { Blockchains, InvalidBlockchainError } from "@unifiprotocol/core-sdk";
+import {
+  IAdapter,
+  Blockchains,
+  InvalidBlockchainError,
+} from "@unifiprotocol/core-sdk";
 import { Constructor } from "../Utils/Typings";
-import { IStakingAdapter } from "./IAdapter";
-import { TrxStakingAdapter } from "./Trx/TrxStakingAdapter";
+import { HarmonyStakingAdapter } from "./Harmony/HarmonyStakingAdapter";
+import { IStakingAdapter } from "./IStakingAdapter";
+import { TronStakingAdapter } from "./Tron/TronStakingAdapter";
 
 const adapterClassMap: Partial<
   Record<Blockchains, Constructor<IStakingAdapter>>
 > = {
-  [Blockchains.Tron]: TrxStakingAdapter,
+  [Blockchains.Tron]: TronStakingAdapter,
+  [Blockchains.Harmony]: HarmonyStakingAdapter,
 };
 
-export const stakingAdapterFactory = (chain: Blockchains): IStakingAdapter => {
-  const adapterClass = adapterClassMap[chain];
+export const stakingAdapterFactory = (adapter: IAdapter): IStakingAdapter => {
+  const adapterClass = adapterClassMap[adapter.blockchain];
 
   if (!adapterClass) {
-    throw new InvalidBlockchainError(chain);
+    throw new InvalidBlockchainError(adapter.blockchain);
   }
 
-  return new adapterClass();
+  return new adapterClass(adapter);
 };
