@@ -33,6 +33,10 @@ export interface IAdapter<ContractInterface = any> {
     isWrite?: boolean
   ): Promise<ExecutionResponse<T>>;
 
+  signTransaction(tx: any): Promise<any>;
+  sendTransaction<T = any>(tx: any): Promise<ExecutionResponse<T>>;
+  signAndSendTransaction<T = any>(tx: any): Promise<ExecutionResponse<T>>;
+
   waitForTransaction(transactionHash: string): Promise<"SUCCESS" | "FAILED">;
 
   getBalance(): Promise<AdapterBalance>;

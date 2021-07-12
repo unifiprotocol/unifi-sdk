@@ -1,6 +1,4 @@
 import { AdapterBalance, ExecutionParams, ExecutionResponse } from "../Types";
-import { BlockTag, Block } from "@ethersproject/abstract-provider";
-import { ContractInterface } from "@ethersproject/contracts";
 import { BaseAdapter } from "../BaseAdapter";
 import { TRXNativeToken } from "../../Tokens/TRXNativeToken";
 import { XRC20ABI } from "../Iotex/ABIs/XRC20ABI";
@@ -9,6 +7,7 @@ import TronWeb from "tronweb";
 import { nonSuccessResponse, successResponse } from "../Helpers";
 import { BN } from "../../Utils/BigNumber";
 import { Opt } from "../../Utils/Typings";
+import { ErrorSigningTransaction } from "../../Errors/ErrorSigningTransaction";
 
 declare global {
   interface Window {
@@ -16,8 +15,9 @@ declare global {
   }
 }
 type TronContract = Opt<any>;
-export class TrxAdapter extends BaseAdapter<TronContract, TronWeb> {
-  private tronWeb: any;
+
+export class TronAdapter extends BaseAdapter<TronContract, TronWeb> {
+  private tronWeb: TronWeb;
   private contracts: Record<string, TronContract> = {};
   private abi: Record<string, any> = {};
 
@@ -143,6 +143,25 @@ export class TrxAdapter extends BaseAdapter<TronContract, TronWeb> {
       return nonSuccessResponse({ method, params, err });
     }
   }
+
+  signTransaction(tx: any): Promise<any> {
+    return this.tronWeb.trx.signTransaction(tx).catch((error) => {
+      throw new ErrorSigningTransaction(error);
+    });
+  }
+
+  async sendTransaction<T = any>(tx: any): Promise<ExecutionResponse<T>> {
+    try {
+      const hash = await this.tronWeb.trx.sendRawTransaction(tx);
+      if (hash) {
+        return successResponse({ hash });
+      }
+      return nonSuccessResponse();
+    } catch (error) {
+      return nonSuccessResponse({ err: error });
+    }
+  }
+
   waitForTransaction(transactionHash: string): Promise<"SUCCESS" | "FAILED"> {
     return new Promise<"FAILED" | "SUCCESS">((resolve) => {
       const checkTx = (hash: string) => {

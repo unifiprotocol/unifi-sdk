@@ -60,6 +60,13 @@ export abstract class BaseAdapter<ContractInterface, ProviderType>
     isWrite?: boolean
   ): Promise<ExecutionResponse<T>>;
 
+  abstract signTransaction(tx: any): Promise<any>;
+  abstract sendTransaction<T = any>(tx: any): Promise<ExecutionResponse<T>>;
+
+  signAndSendTransaction<T = any>(tx: any): Promise<ExecutionResponse<T>> {
+    return this.signTransaction(tx).then(this.sendTransaction.bind(this));
+  }
+
   abstract waitForTransaction(
     transactionHash: string
   ): Promise<"SUCCESS" | "FAILED">;

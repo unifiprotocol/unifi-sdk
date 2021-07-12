@@ -1,5 +1,5 @@
 import { ERC20ABI } from "../Adapters/Eth/ABIs/ERC20";
-import { TRC20ABI } from "../Adapters/Trx/ABIs/TRC20";
+import { TRC20ABI } from "../Adapters/Tron/ABIs/TRC20";
 import { XRC20ABI } from "../Adapters/Iotex/ABIs/XRC20ABI";
 import { HRC20ABI } from "../Adapters/Harmony/ABIs/HRC20";
 import { Blockchains } from "../Types";

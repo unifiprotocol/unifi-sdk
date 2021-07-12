@@ -12,6 +12,8 @@ import { nonSuccessResponse, successResponse } from "../Helpers";
 import { ERC20ABI } from "./ABIs/ERC20";
 import { BaseAdapter } from "../BaseAdapter";
 import { Blockchains, EthChainIds } from "../../Types";
+import { CannotSignUnconnectedError } from "../../Errors/CannotSignUnconnectedError";
+import { ErrorSigningTransaction } from "../../Errors/ErrorSigningTransaction";
 
 export abstract class EthBaseAdapter extends BaseAdapter<
   ContractInterface,
@@ -23,6 +25,7 @@ export abstract class EthBaseAdapter extends BaseAdapter<
   protected lastGasLimit = "30000";
   protected readonly chainId: EthChainIds;
   protected abi: Record<string, ContractInterface> = {};
+
   constructor(
     blockchain: Blockchains,
     nativeToken: Currency,
@@ -31,6 +34,10 @@ export abstract class EthBaseAdapter extends BaseAdapter<
   ) {
     super(blockchain, nativeToken, explorerUrl);
     this.chainId = chainId;
+  }
+
+  protected get web3Provider(): ethers.providers.Web3Provider {
+    return this.etherClient as ethers.providers.Web3Provider;
   }
 
   setProvider(providerClass: ethers.providers.BaseProvider): void {
@@ -59,9 +66,7 @@ export abstract class EthBaseAdapter extends BaseAdapter<
     this.contracts[contractAddress] = new ethers.Contract(
       contractAddress,
       abi,
-      this.isConnected()
-        ? (this.etherClient as ethers.providers.Web3Provider).getSigner()
-        : this.etherClient
+      this.isConnected() ? this.web3Provider : this.etherClient
     );
   }
 
@@ -136,6 +141,31 @@ export abstract class EthBaseAdapter extends BaseAdapter<
       return nonSuccessResponse({ method, params });
     } catch (err) {
       return nonSuccessResponse({ method, params, err });
+    }
+  }
+
+  signTransaction(tx: any): Promise<any> {
+    if (!this.getAddress()) {
+      throw new CannotSignUnconnectedError();
+    }
+    return this.web3Provider
+      .getSigner()
+      .signTransaction(tx)
+      .catch((error) => {
+        throw new ErrorSigningTransaction(error);
+      });
+  }
+
+  async sendTransaction<T = any>(tx: any): Promise<ExecutionResponse<T>> {
+    try {
+      const { hash } = await this.etherClient.sendTransaction(tx);
+
+      if (hash) {
+        return successResponse({ hash });
+      }
+      return nonSuccessResponse();
+    } catch (error) {
+      return nonSuccessResponse({ err: error });
     }
   }
 

@@ -1,6 +1,6 @@
 export * from "./Bsc/BscAdapter";
 export * from "./Eth/EthAdapter";
-export * from "./Trx/TrxAdapter";
+export * from "./Tron/TronAdapter";
 export * from "./Polygon/PolygonAdapter";
 export * from "./Iotex/IotexAdapter";
 export * from "./Harmony/HarmonyAdapter";
