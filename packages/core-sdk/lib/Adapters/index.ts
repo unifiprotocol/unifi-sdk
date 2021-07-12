@@ -3,6 +3,7 @@ export * from "./Eth/EthAdapter";
 export * from "./Trx/TrxAdapter";
 export * from "./Polygon/PolygonAdapter";
 export * from "./Iotex/IotexAdapter";
+export * from "./Harmony/HarmonyAdapter";
 export * from "./BaseAdapter";
 export * from "./IAdapter";
 export * from "./Factory";

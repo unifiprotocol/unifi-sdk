@@ -1,12 +1,12 @@
 import { EthBaseAdapter } from "../Eth/EthBaseAdapter";
 import { Blockchains, EthChainIds } from "../../Types";
-import { MATIC } from "./NativeToken";
+import { MATICNativeToken } from "../../Tokens";
 
 export class PolygonAdapter extends EthBaseAdapter {
   constructor() {
     super(
       Blockchains.Polygon,
-      MATIC,
+      MATICNativeToken,
       EthChainIds.Polygon,
       "https://polygonscan.com/"
     );
