@@ -1,0 +1,42 @@
+{
+  "name": "@unifiprotocol/utils",
+  "version": "1.0.0",
+  "description": "Unifi Protocol JS Utils",
+  "author": "Unifi Protocol",
+  "repository": "git@github.com:unifiprotocol/unifi-sdk.git",
+  "homepage": "https://github.com/unifiprotocol/unifi-sdk/tree/master/packages/core-sdk",
+  "license": "BSD-3-Clause",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "prepublish": "yarn build",
+    "build": "yarn run clean && yarn run compile",
+    "build:watch": "tsc --watch",
+    "tsc-replace-paths": "tsconfig-replace-paths --project tsconfig.json",
+    "clean": "rm -rf ./dist && rm -rf tsconfig.tsbuildinfo",
+    "compile": "tsc -b tsconfig.json",
+    "lint": "eslint lib/**.ts",
+    "prepublishOnly": "npm run lint"
+  },
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "dependencies": {
+    "bignumber.js": "^9.0.1",
+    "tslib": "^2.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^15.6.1",
+    "eslint": "^7.27.0",
+    "npm-run-all": "^4.1.5",
+    "tslib": "^2.1.0",
+    "typescript": "^4.2.4"
+  }
+}
