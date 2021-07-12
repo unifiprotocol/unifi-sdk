@@ -1,9 +1,11 @@
+import { ExecutionResponse } from "@unifiprotocol/core-sdk";
+
 export interface IStakingAdapter {
-  vote(voter: string, validator: string, amount: string): Promise<void>;
-  unvote(voter: string, validator: string, amount: string): Promise<void>;
+  vote(validator: string, amount: string): Promise<ExecutionResponse>;
+  unvote(validator: string, amount?: string): Promise<ExecutionResponse>;
 
   needsFreeze(): boolean;
 
-  freeze(amount: string): Promise<void>;
-  unfreeze(amount: string): Promise<void>;
+  freeze(amount: string, options?: any): Promise<ExecutionResponse>;
+  unfreeze(amount: string, options?: any): Promise<ExecutionResponse>;
 }

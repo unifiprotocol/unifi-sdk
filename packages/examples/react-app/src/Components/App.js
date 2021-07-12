@@ -3,8 +3,9 @@ import styled from "styled-components";
 import { useConnection } from "../Hooks/useConnection";
 import { ConnectionAssistant } from "./ConnectionAssistant";
 import { Erc20Info } from "./Erc20Info";
-import { Staking } from "./Staking";
 import { OnlinePanel } from "./OnlinePanel";
+import { Staking } from "./Staking";
+
 const AppWrapper = styled.div`
   h4 {
     margin: 0 0 0.5rem 0;
@@ -38,7 +39,11 @@ function App() {
             <Erc20Info />
           </div>
         )}
-        {adapter && <Staking />}
+        {adapter && (
+          <div className="mb-4">
+            <Staking />
+          </div>
+        )}
       </Container>
     </AppWrapper>
   );
