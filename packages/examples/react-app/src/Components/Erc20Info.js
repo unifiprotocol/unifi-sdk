@@ -105,23 +105,6 @@ export const Erc20Info = () => {
     setInvalidTokenAddress(!adapter.isValidAddress(tokenAddress));
   }, [tokenAddress, adapter]);
 
-  useEffect(() => {
-    console.log("wait for tx");
-
-    adapter
-      .waitForTransaction(
-        "5518e3937ec392290e8aea7cf35222405fa6abd76578e0a48bc1c4cf19bbcb5d"
-      )
-      .then(console.log)
-      .catch(console.err);
-    adapter
-      .waitForTransaction(
-        "e29dd3dc637f947da2068956d63294dd7b9db3123a1a06a7f4e650b14c600f34"
-      )
-      .then(console.log)
-      .catch(console.error);
-  }, [adapter]);
-
   return (
     <Card elevation={1}>
       <CardContent>
