@@ -1,47 +1,82 @@
 import { ExecutionResponse, TronAdapter } from "@unifiprotocol/core-sdk";
+import { InsufficientVotingPower } from "../../Errors";
+import { BN } from "../../Utils/BigNumber";
 import { BaseStakingAdapter } from "../BaseStakingAdapter";
-type TronResource = 'BANDWIDTH'|'ENERGY'
-interface TronFreezeOptions{
-  resource: TronResource,
-  duration?:number
+import { VotingPower } from "../IStakingAdapter";
+
+export enum TronResource {
+  Bandwidth = "BANDWIDTH",
+  Energy = "ENERGY",
 }
 
-interface TronUnfreezeOptions{
-  resource: TronResource
+interface TronFreezeOptions {
+  resource: TronResource;
+  duration?: number;
 }
+
+interface TronUnfreezeOptions {
+  resource: TronResource;
+}
+
+const MIN_FREEZE_DURATION = 3;
 
 export class TronStakingAdapter extends BaseStakingAdapter<TronAdapter> {
-  protected address () {
-    return this.adapter.getAddress()
-  }
-  freeze(amount: string, {resource, duration = 3}: TronFreezeOptions): Promise<ExecutionResponse<any>> {
-    // TGzz8gjYiYRqpfmDwnLxfgPuLVNmpCswVp
-    const tx = this.adapter.getProvider().transactionBuilder.freezeBalance( 
-      this.adapter.getProvider().toSun(amount),
-      duration,
-      resource,
-      this.address,
-      this.address
-    )
-    return this.adapter.signAndSendTransaction(tx)
-  }
-  
-  unfreeze(amount: string, {resource}:TronUnfreezeOptions): Promise<ExecutionResponse<any>> {
-    const tx = this.adapter.getProvider().transactionBuilder.unfreezeBalance( 
-      resource,this.address
-    )
-    return this.adapter.signAndSendTransaction(tx)
-  }
-
-  vote( validator: string, amount: string): Promise<ExecutionResponse<any> {
-    const tx = this.adapter
+  async getVotingPower(): Promise<VotingPower> {
+    const resources = await this.adapter
       .getProvider()
-      .transactionBuilder.vote({ [validator]: amount }, this.address);
-    return this.adapter.signAndSendTransaction(tx)
+      .trx.getAccountResources(this.address);
+
+    const total = `${resources.tronPowerLimit}`;
+    const used = `${resources.tronPowerUsed}`;
+    const available = `${resources.tronPowerLimit - resources.tronPowerUsed}`;
+
+    return {
+      total,
+      used,
+      available,
+      tranches: [],
+    };
   }
 
-  unvote(validator: string, amount: string = '0'): Promise<ExecutionResponse<any>> {
-    return this.vote(validator, amount)
+  async freeze(
+    amount: string,
+    { resource, duration = MIN_FREEZE_DURATION }: TronFreezeOptions
+  ): Promise<ExecutionResponse> {
+    const tx = await this.adapter
+      .getProvider()
+      .transactionBuilder.freezeBalance(
+        this.adapter.getProvider().toSun(amount),
+        duration,
+        resource,
+        this.address,
+        this.address
+      );
+    return this.adapter.signAndSendTransaction(tx);
+  }
+
+  async unfreeze(
+    _amount: string,
+    { resource }: TronUnfreezeOptions
+  ): Promise<ExecutionResponse> {
+    const tx = await this.adapter
+      .getProvider()
+      .transactionBuilder.unfreezeBalance(resource, this.address);
+    return this.adapter.signAndSendTransaction(tx);
+  }
+
+  async vote(validator: string, amount: string): Promise<ExecutionResponse> {
+    const { available } = await this.getVotingPower();
+    if (BN(amount).isGreaterThan(available)) {
+      throw new InsufficientVotingPower(available, amount);
+    }
+    const tx = await this.adapter
+      .getProvider()
+      .transactionBuilder.vote({ [validator]: amount }, this.address, 1);
+    return this.adapter.signAndSendTransaction(tx);
+  }
+
+  unvote(validator: string, amount = "0"): Promise<ExecutionResponse> {
+    return this.vote(validator, amount);
   }
   needsFreeze(): boolean {
     return true;

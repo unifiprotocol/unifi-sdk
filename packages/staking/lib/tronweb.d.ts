@@ -7,6 +7,137 @@
 
 /// <reference types="node" />
 declare module "tronweb" {
+  interface AccountResources {
+    NetLimit: number;
+    NetUsed: number;
+    TotalEnergyLimit: number;
+    TotalEnergyWeight: number;
+    TotalNetLimit: number;
+    TotalNetWeight: number;
+    assetNetLimit: any[];
+    assetNetUsed: any[];
+    freeNetLimit: number;
+    freeNetUsed: number;
+    tronPowerLimit: number;
+    tronPowerUsed: number;
+  }
+  interface Trx {
+    parseToken(token: any): any;
+    getCurrentBlock(callback?: any): Promise<any>;
+    getBlock(block: any, callback?: any): Promise<any>;
+    getBlockByHash(blockHash: any, callback?: any): Promise<any>;
+    getBlockByNumber(blockID: any, callback?: any): Promise<any>;
+    getBlockTransactionCount(block: any, callback?: any): Promise<any>;
+    getTransactionFromBlock(
+      block: any,
+      index: number,
+      callback?: any
+    ): Promise<any>;
+    getTransaction(transactionID: any, callback?: any): Promise<any>;
+    getConfirmedTransaction(transactionID: any, callback?: any): Promise<any>;
+    getTransactionInfo(transactionID: any, callback?: any): Promise<any>;
+    getTransactionsToAddress(
+      address: any,
+      limit: number,
+      offset: number,
+      callback?: any
+    ): Promise<any>;
+    getTransactionsFromAddress(
+      address: any,
+      limit: number,
+      offset: number,
+      callback?: any
+    ): Promise<any>;
+    getTransactionsRelated(
+      address: any,
+      direction: any,
+      limit: number,
+      offset: number,
+      callback?: any
+    ): Promise<any>;
+    getAccount(address: any, callback?: any): Promise<any>;
+    getBalance(address: any, callback?: any): Promise<any>;
+    getUnconfirmedAccount(address: any, callback?: any): Promise<any>;
+    getUnconfirmedBalance(address: any, callback?: any): Promise<any>;
+    getBandwidth(address: any, callback?: any): Promise<any>;
+    getTokensIssuedByAddress(address: any, callback?: any): Promise<any>;
+    getTokenFromID(tokenID: any, callback?: any): Promise<any>;
+    listNodes(callback?: any): Promise<any>;
+    getBlockRange(start: number, end: number, callback?: any): Promise<any>;
+    listSuperRepresentatives(callback?: any): Promise<any>;
+    listTokens(limit?: number, offset?: number, callback?: any): Promise<any>;
+    timeUntilNextVoteCycle(callback?: any): Promise<any>;
+    getContract(contractAddress: any, callback?: any): Promise<any>;
+    verifyMessage(
+      message: any,
+      signature: any,
+      address: any,
+      useTronHeader: any,
+      callback?: any
+    ): Promise<any>;
+    sign(
+      transaction: any,
+      privateKey: any,
+      useTronHeader: boolean,
+      callback?: any
+    ): Promise<any>;
+    sendRawTransaction(
+      signedTransaction: any,
+      options?: any,
+      callback?: any
+    ): Promise<any>;
+    sendTransaction(
+      to: any,
+      amount: any,
+      options: any,
+      callback?: any
+    ): Promise<any>;
+    sendToken(
+      to: any,
+      amount: any,
+      tokenID: any,
+      options: any,
+      callback?: any
+    ): Promise<any>;
+    freezeBalance(
+      amount: any,
+      duration: number,
+      resource: string,
+      options: any,
+      callback?: any
+    ): Promise<any>;
+    unfreezeBalance(
+      resource: string,
+      options: any,
+      callback?: any
+    ): Promise<any>;
+    updateAccount(
+      accountName: string,
+      options: any,
+      callback?: any
+    ): Promise<any>;
+    signMessage(...args: any[]): Promise<any>;
+    sendAsset(...args: any[]): Promise<any>;
+    send(...args: any[]): Promise<any>;
+    sendTrx(...args: any[]): Promise<any>;
+    broadcast(...args: any[]): Promise<any>;
+    signTransaction(...args: any[]): Promise<any>;
+    getProposal(proposalID: any, callback?: any): Promise<any>;
+    listProposals(callback: any): Promise<any>;
+    getChainParameters(callback: any): Promise<any>;
+    getAccountResources(
+      address: any,
+      callback?: any
+    ): Promise<AccountResources>;
+    getExchangeByID(exchangeID: any, callback?: any): Promise<any>;
+    listExchanges(callback?: any): Promise<any>;
+    listExchangesPaginated(
+      limit: number,
+      offset: number,
+      callback?: any
+    ): Promise<any>;
+  }
+
   interface TransactionBuilder {
     sendTrx(to: any, amount: any, from: any, callback?: any): Promise<any>;
     sendToken(
@@ -99,7 +230,7 @@ declare module "tronweb" {
     ): Promise<any>;
   }
 
-  export class TronWeb {
+  class TronWeb {
     constructor(e: any, r?: any, ...args: any[]);
     contract(...args: any[]): any;
     currentProvider(): any;
@@ -128,154 +259,7 @@ declare module "tronweb" {
     toSun(trx: any): any;
     toUtf8(hex: any): any;
     transactionBuilder: TransactionBuilder;
-  }
-
-  export namespace TronWeb {
-    export namespace trx {
-      function parseToken(token: any): any;
-      function getCurrentBlock(callback?: any): Promise<any>;
-      function getBlock(block: any, callback?: any): Promise<any>;
-      function getBlockByHash(blockHash: any, callback?: any): Promise<any>;
-      function getBlockByNumber(blockID: any, callback?: any): Promise<any>;
-      function getBlockTransactionCount(
-        block: any,
-        callback?: any
-      ): Promise<any>;
-      function getTransactionFromBlock(
-        block: any,
-        index: number,
-        callback?: any
-      ): Promise<any>;
-      function getTransaction(transactionID: any, callback?: any): Promise<any>;
-      function getConfirmedTransaction(
-        transactionID: any,
-        callback?: any
-      ): Promise<any>;
-      function getTransactionInfo(
-        transactionID: any,
-        callback?: any
-      ): Promise<any>;
-      function getTransactionsToAddress(
-        address: any,
-        limit: number,
-        offset: number,
-        callback?: any
-      ): Promise<any>;
-      function getTransactionsFromAddress(
-        address: any,
-        limit: number,
-        offset: number,
-        callback?: any
-      ): Promise<any>;
-      function getTransactionsRelated(
-        address: any,
-        direction: any,
-        limit: number,
-        offset: number,
-        callback?: any
-      ): Promise<any>;
-      function getAccount(address: any, callback?: any): Promise<any>;
-      function getBalance(address: any, callback?: any): Promise<any>;
-      function getUnconfirmedAccount(
-        address: any,
-        callback?: any
-      ): Promise<any>;
-      function getUnconfirmedBalance(
-        address: any,
-        callback?: any
-      ): Promise<any>;
-      function getBandwidth(address: any, callback?: any): Promise<any>;
-      function getTokensIssuedByAddress(
-        address: any,
-        callback?: any
-      ): Promise<any>;
-      function getTokenFromID(tokenID: any, callback?: any): Promise<any>;
-      function listNodes(callback?: any): Promise<any>;
-      function getBlockRange(
-        start: number,
-        end: number,
-        callback?: any
-      ): Promise<any>;
-      function listSuperRepresentatives(callback?: any): Promise<any>;
-      function listTokens(
-        limit?: number,
-        offset?: number,
-        callback?: any
-      ): Promise<any>;
-      function timeUntilNextVoteCycle(callback?: any): Promise<any>;
-      function getContract(contractAddress: any, callback?: any): Promise<any>;
-      function verifyMessage(
-        message: any,
-        signature: any,
-        address: any,
-        useTronHeader: any,
-        callback?: any
-      ): Promise<any>;
-      function sign(
-        transaction: any,
-        privateKey: any,
-        useTronHeader: boolean,
-        callback?: any
-      ): Promise<any>;
-      function sendRawTransaction(
-        signedTransaction: any,
-        options: any,
-        callback?: any
-      ): Promise<any>;
-      function sendTransaction(
-        to: any,
-        amount: any,
-        options: any,
-        callback?: any
-      ): Promise<any>;
-      function sendToken(
-        to: any,
-        amount: any,
-        tokenID: any,
-        options: any,
-        callback?: any
-      ): Promise<any>;
-      function freezeBalance(
-        amount: any,
-        duration: number,
-        resource: string,
-        options: any,
-        callback?: any
-      ): Promise<any>;
-      function unfreezeBalance(
-        resource: string,
-        options: any,
-        callback?: any
-      ): Promise<any>;
-      function updateAccount(
-        accountName: string,
-        options: any,
-        callback?: any
-      ): Promise<any>;
-      function signMessage(...args: any[]): Promise<any>;
-      function sendAsset(...args: any[]): Promise<any>;
-      function send(...args: any[]): Promise<any>;
-      function sendTrx(...args: any[]): Promise<any>;
-      function broadcast(...args: any[]): Promise<any>;
-      function signTransaction(...args: any[]): Promise<any>;
-      function getProposal(proposalID: any, callback?: any): Promise<any>;
-      function listProposals(callback: any): Promise<any>;
-      function getChainParameters(callback: any): Promise<any>;
-      function getAccountResources(address: any, callback?: any): Promise<any>;
-      function getExchangeByID(exchangeID: any, callback?: any): Promise<any>;
-      function listExchanges(callback?: any): Promise<any>;
-      function listExchangesPaginated(
-        limit: number,
-        offset: number,
-        callback?: any
-      ): Promise<any>;
-    }
-
-    namespace address {
-      function fromHex(e: any): any;
-      function fromPrivateKey(e: any): any;
-      function toHex(e: any): any;
-    }
+    trx: Trx;
   }
 
   export default TronWeb;

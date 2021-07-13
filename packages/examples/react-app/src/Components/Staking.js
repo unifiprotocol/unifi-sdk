@@ -1,5 +1,5 @@
 import { Button, Card, CardContent, TextField } from "@material-ui/core";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
 import { useConnection } from "../Hooks/useConnection";
 import { stakingAdapterFactory } from "@unifiprotocol/staking";
@@ -14,7 +14,7 @@ const FormField = styled.div`
   display: flex;
   align-items: baseline;
 `;
-
+const SESAMESEED_TRX_VALIDATOR = "TGzz8gjYiYRqpfmDwnLxfgPuLVNmpCswVp";
 export const Staking = () => {
   const { adapter } = useConnection();
   const stakingAdapter = useMemo(
@@ -23,27 +23,40 @@ export const Staking = () => {
   );
 
   const [state, setState] = useState(Status.Idle);
+  const [votes, setVotes] = useState({ available: "0", total: "0" });
   const [amount, setAmount] = useState();
 
+  useEffect(() => {
+    if (stakingAdapter) {
+      stakingAdapter.getVotingPower().then(setVotes);
+    }
+  }, [stakingAdapter]);
+
   const action = useCallback(async () => {
+    // eslint-disable-next-line default-case
     switch (state) {
       case Status.Idle:
         setState(Status.Staking);
-        await stakingAdapter.vote(amount);
+        await stakingAdapter.vote(SESAMESEED_TRX_VALIDATOR, amount);
         setState(Status.Staked);
         break;
       case Status.Staking:
-      default:
+      case Status.Staked:
+        stakingAdapter.getVotingPower().then(setVotes);
+        setState(Status.Idle);
         break;
     }
   }, [state, stakingAdapter, amount]);
   return (
     <Card elevation={1}>
       <CardContent>
+        <div>
+          You have {votes.available} of {votes.total} votes available
+        </div>
         <FormField>
           <TextField
             onChange={(evt) => setAmount(evt.target.value)}
-            label="Transaction"
+            label="Amount"
             value={amount}
           />
 
@@ -54,8 +67,8 @@ export const Staking = () => {
             onClick={action}
           >
             {console.log(state)}
-            {state === Status.Idle && "Sign"}
-            {state === Status.Staking && "Staking..."}
+            {state === Status.Idle && "Vote"}
+            {state === Status.Staking && "Voting..."}
             {state === Status.Staked && "Done"}
           </Button>
         </FormField>
