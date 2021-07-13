@@ -42,6 +42,11 @@ export const Staking = () => {
     }
   }, [stakingAdapter, validator]);
 
+  const refresh = useCallback(() => {
+    stakingAdapter.getVotingPower().then(setVotes);
+    stakingAdapter.getVotesGivenTo(validator).then(setAmount);
+  }, [stakingAdapter, validator]);
+
   const action = useCallback(async () => {
     // eslint-disable-next-line default-case
     switch (state) {
@@ -62,7 +67,10 @@ export const Staking = () => {
       <CardContent>
         <h4>Staking</h4>
         <p>
-          You have {votes.available} of {votes.total} votes available.
+          You have {votes.available} of {votes.total} votes available.{" "}
+          <a href="#" onClick={refresh}>
+            Refresh
+          </a>
         </p>
         <FormField>
           <TextField
