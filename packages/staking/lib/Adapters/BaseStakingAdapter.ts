@@ -11,6 +11,7 @@ export abstract class BaseStakingAdapter<Adapter extends IAdapter>
   }
 
   abstract getVotingPower(): Promise<VotingPower>;
+  abstract getVotesGivenTo(validator: string): Promise<string>;
   abstract vote(validator: string, amount: string): Promise<ExecutionResponse>;
   abstract unvote(
     validator: string,

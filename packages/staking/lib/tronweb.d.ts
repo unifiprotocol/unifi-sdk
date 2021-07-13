@@ -7,6 +7,54 @@
 
 /// <reference types="node" />
 declare module "tronweb" {
+  interface Account {
+    address: string;
+    balance: number;
+    votes: Array<{
+      vote_address: string;
+      vote_count: number;
+    }>;
+    frozen: Array<{
+      frozen_balance: number;
+      expire_time: number;
+    }>;
+    net_usage: number;
+    create_time: number;
+    latest_opration_time: number;
+    free_net_usage: number;
+    latest_consume_time: number;
+    latest_consume_free_time: number;
+    account_resource: any;
+    owner_permission: {
+      permission_name: string;
+      threshold: number;
+      keys: Array<{
+        address: string;
+        weight: number;
+      }>;
+    };
+    active_permission: Array<{
+      type: string;
+      id: number;
+      permission_name: string;
+      threshold: number;
+      operations: string;
+      keys: [
+        {
+          address: string;
+          weight: number;
+        }
+      ];
+    }>;
+    assetV2: Array<{
+      key: string;
+      value: number;
+    }>;
+    free_asset_net_usageV2: Array<{
+      key: string;
+      value: number;
+    }>;
+  }
   interface AccountResources {
     NetLimit: number;
     NetUsed: number;
@@ -55,7 +103,7 @@ declare module "tronweb" {
       offset: number,
       callback?: any
     ): Promise<any>;
-    getAccount(address: any, callback?: any): Promise<any>;
+    getAccount(address: any, callback?: any): Promise<Account>;
     getBalance(address: any, callback?: any): Promise<any>;
     getUnconfirmedAccount(address: any, callback?: any): Promise<any>;
     getUnconfirmedBalance(address: any, callback?: any): Promise<any>;
@@ -230,6 +278,12 @@ declare module "tronweb" {
     ): Promise<any>;
   }
 
+  interface Address {
+    fromHex(e: string): string;
+    fromPrivateKey(e: any): any;
+    toHex(e: string): string;
+  }
+
   class TronWeb {
     constructor(e: any, r?: any, ...args: any[]);
     contract(...args: any[]): any;
@@ -259,6 +313,7 @@ declare module "tronweb" {
     toSun(trx: any): any;
     toUtf8(hex: any): any;
     transactionBuilder: TransactionBuilder;
+    address: Address;
     trx: Trx;
   }
 

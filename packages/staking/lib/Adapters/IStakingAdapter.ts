@@ -4,11 +4,12 @@ export interface VotingPower {
   total: string;
   used: string;
   available: string;
-  tranches: Array<Omit<VotingPower, "tranches">>;
 }
 
 export interface IStakingAdapter {
   getVotingPower(): Promise<VotingPower>;
+  getVotesGivenTo(validator: string): Promise<string>;
+
   vote(validator: string, amount: string): Promise<ExecutionResponse>;
   unvote(validator: string, amount?: string): Promise<ExecutionResponse>;
 

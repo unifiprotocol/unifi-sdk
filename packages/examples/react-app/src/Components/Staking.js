@@ -3,6 +3,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
 import { useConnection } from "../Hooks/useConnection";
 import { stakingAdapterFactory } from "@unifiprotocol/staking";
+import { Blockchains } from "@unifiprotocol/core-sdk";
 
 const Status = {
   Idle: "Idle",
@@ -13,10 +14,13 @@ const Status = {
 const FormField = styled.div`
   display: flex;
   align-items: baseline;
+  gap: 1rem;
 `;
-const SESAMESEED_TRX_VALIDATOR = "TGzz8gjYiYRqpfmDwnLxfgPuLVNmpCswVp";
+const SESAMESEED_VALIDATOR = {
+  [Blockchains.Tron]: "TGzz8gjYiYRqpfmDwnLxfgPuLVNmpCswVp",
+};
 export const Staking = () => {
-  const { adapter } = useConnection();
+  const { adapter, blockchain } = useConnection();
   const stakingAdapter = useMemo(
     () => stakingAdapterFactory(adapter),
     [adapter]
@@ -24,20 +28,26 @@ export const Staking = () => {
 
   const [state, setState] = useState(Status.Idle);
   const [votes, setVotes] = useState({ available: "0", total: "0" });
-  const [amount, setAmount] = useState();
+  const [amount, setAmount] = useState("0");
+  const [validator, setValidator] = useState(SESAMESEED_VALIDATOR[blockchain]);
 
   useEffect(() => {
     if (stakingAdapter) {
       stakingAdapter.getVotingPower().then(setVotes);
     }
   }, [stakingAdapter]);
+  useEffect(() => {
+    if (stakingAdapter && validator) {
+      stakingAdapter.getVotesGivenTo(validator).then(setAmount);
+    }
+  }, [stakingAdapter, validator]);
 
   const action = useCallback(async () => {
     // eslint-disable-next-line default-case
     switch (state) {
       case Status.Idle:
         setState(Status.Staking);
-        await stakingAdapter.vote(SESAMESEED_TRX_VALIDATOR, amount);
+        await stakingAdapter.vote(validator, amount);
         setState(Status.Staked);
         break;
       case Status.Staking:
@@ -46,14 +56,20 @@ export const Staking = () => {
         setState(Status.Idle);
         break;
     }
-  }, [state, stakingAdapter, amount]);
+  }, [state, stakingAdapter, validator, amount]);
   return (
     <Card elevation={1}>
       <CardContent>
-        <div>
-          You have {votes.available} of {votes.total} votes available
-        </div>
+        <h4>Staking</h4>
+        <p>
+          You have {votes.available} of {votes.total} votes available.
+        </p>
         <FormField>
+          <TextField
+            onChange={(evt) => setValidator(evt.target.value)}
+            label="Validator"
+            value={validator}
+          />
           <TextField
             onChange={(evt) => setAmount(evt.target.value)}
             label="Amount"
@@ -66,7 +82,6 @@ export const Staking = () => {
             elevation={1}
             onClick={action}
           >
-            {console.log(state)}
             {state === Status.Idle && "Vote"}
             {state === Status.Staking && "Voting..."}
             {state === Status.Staked && "Done"}

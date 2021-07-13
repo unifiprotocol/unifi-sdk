@@ -8,6 +8,9 @@ import { VotingPower } from "../IStakingAdapter";
  */
 
 export class HarmonyStakingAdapter extends BaseStakingAdapter<HarmonyAdapter> {
+  getVotesGivenTo(validator: string): Promise<string> {
+    throw new Error("Method not implemented.");
+  }
   constructor(adapter: HarmonyAdapter) {
     super(adapter);
   }

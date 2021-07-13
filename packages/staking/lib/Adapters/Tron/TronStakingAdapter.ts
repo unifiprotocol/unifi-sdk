@@ -21,6 +21,26 @@ interface TronUnfreezeOptions {
 const MIN_FREEZE_DURATION = 3;
 
 export class TronStakingAdapter extends BaseStakingAdapter<TronAdapter> {
+  async getVotes(): Promise<Record<string, string>> {
+    const voterAcc = await this.adapter
+      .getProvider()
+      .trx.getAccount(this.address);
+
+    if (voterAcc.votes.length === 0) {
+      return {};
+    }
+
+    return voterAcc.votes.reduce(
+      (votes, vote) => ({ ...votes, [vote.vote_address]: vote.vote_count }),
+      {}
+    );
+  }
+  async getVotesGivenTo(validator: string): Promise<string> {
+    const validatorHex = this.adapter.getProvider().address.toHex(validator);
+    const votes = await this.getVotes();
+
+    return votes[validatorHex] || `0`;
+  }
   async getVotingPower(): Promise<VotingPower> {
     const resources = await this.adapter
       .getProvider()
@@ -34,7 +54,6 @@ export class TronStakingAdapter extends BaseStakingAdapter<TronAdapter> {
       total,
       used,
       available,
-      tranches: [],
     };
   }
 
