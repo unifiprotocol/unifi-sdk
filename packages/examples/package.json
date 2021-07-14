@@ -27,7 +27,8 @@
     "url": "https://github.com/sesame-seed/unifi-sdk/issues"
   },
   "dependencies": {
-    "@unifiprotocol/core-sdk": "0.8.1"
+    "@unifiprotocol/core-sdk": "^3.0.0",
+    "@unifiprotocol/staking": "^0.1.0"
   },
   "devDependencies": {
     "npm-run-all": "^4.1.5"
