@@ -2,27 +2,29 @@ import { ExecutionResponse, HarmonyAdapter } from "@unifiprotocol/core-sdk";
 import { BaseStakingAdapter } from "../BaseStakingAdapter";
 import { Delegate, Undelegate } from "@harmony-js/staking";
 import { VotingPower } from "../IStakingAdapter";
+import { HarmonyVPToken } from "../../VotingPowerTokens";
 
 /**
  * No es un RPC method, es un broadcasted message
  */
 
 export class HarmonyStakingAdapter extends BaseStakingAdapter<HarmonyAdapter> {
+  constructor(adapter: HarmonyAdapter) {
+    super(adapter, HarmonyVPToken);
+  }
+
   getVotesGivenTo(validator: string): Promise<string> {
     throw new Error("Method not implemented.");
-  }
-  constructor(adapter: HarmonyAdapter) {
-    super(adapter);
   }
 
   getVotingPower(): Promise<VotingPower> {
     throw new Error("Method not implemented.");
   }
 
-  freeze(): Promise<ExecutionResponse> {
+  addVotingPower(): Promise<ExecutionResponse> {
     throw new Error("Not needed.");
   }
-  unfreeze(): Promise<ExecutionResponse> {
+  removeVotingPower(): Promise<ExecutionResponse> {
     throw new Error("Not needed.");
   }
 
@@ -46,7 +48,7 @@ export class HarmonyStakingAdapter extends BaseStakingAdapter<HarmonyAdapter> {
     );
     return this.adapter.signAndSendTransaction(unvote.encode());
   }
-  needsFreeze(): boolean {
+  needVotingPowerCreation(): boolean {
     return false;
   }
 }

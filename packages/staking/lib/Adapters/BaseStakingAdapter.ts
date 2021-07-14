@@ -1,10 +1,17 @@
-import { ExecutionResponse, IAdapter } from "@unifiprotocol/core-sdk";
+import { ExecutionResponse, IAdapter, Currency } from "@unifiprotocol/core-sdk";
 import { IStakingAdapter, VotingPower } from "./IStakingAdapter";
 
-export abstract class BaseStakingAdapter<Adapter extends IAdapter>
-  implements IStakingAdapter
+export abstract class BaseStakingAdapter<
+  Adapter extends IAdapter,
+  AddVotingPowerOpts = any,
+  RemoveVotingPowerOpts = any
+> implements
+    IStakingAdapter<Adapter, AddVotingPowerOpts, RemoveVotingPowerOpts>
 {
-  constructor(protected readonly adapter: Adapter) {}
+  constructor(
+    public readonly adapter: Adapter,
+    public readonly votingPowerCurrency: Currency
+  ) {}
 
   protected get address(): string {
     return this.adapter.getAddress();
@@ -18,8 +25,14 @@ export abstract class BaseStakingAdapter<Adapter extends IAdapter>
     amount?: string
   ): Promise<ExecutionResponse>;
 
-  abstract needsFreeze(): boolean;
+  abstract needVotingPowerCreation(): boolean;
 
-  abstract freeze(amount: string, options?: any): Promise<ExecutionResponse>;
-  abstract unfreeze(amount: string, options?: any): Promise<ExecutionResponse>;
+  abstract addVotingPower(
+    amount: string,
+    options?: AddVotingPowerOpts
+  ): Promise<ExecutionResponse>;
+  abstract removeVotingPower(
+    amount: string,
+    options?: RemoveVotingPowerOpts
+  ): Promise<ExecutionResponse>;
 }

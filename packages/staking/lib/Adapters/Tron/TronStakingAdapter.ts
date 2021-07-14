@@ -3,6 +3,7 @@ import { InsufficientVotingPower } from "../../Errors";
 import { BN } from "../../Utils/BigNumber";
 import { BaseStakingAdapter } from "../BaseStakingAdapter";
 import { VotingPower } from "../IStakingAdapter";
+import { TronVPToken } from "../../VotingPowerTokens";
 
 export enum TronResource {
   Bandwidth = "BANDWIDTH",
@@ -21,6 +22,9 @@ interface TronUnfreezeOptions {
 const MIN_FREEZE_DURATION = 3;
 
 export class TronStakingAdapter extends BaseStakingAdapter<TronAdapter> {
+  constructor(adapter: TronAdapter) {
+    super(adapter, TronVPToken);
+  }
   private get tronweb() {
     return this.adapter.getProvider();
   }
@@ -36,6 +40,7 @@ export class TronStakingAdapter extends BaseStakingAdapter<TronAdapter> {
       {}
     );
   }
+
   async getVotesGivenTo(validator: string): Promise<string> {
     const validatorHex = this.tronweb.address.toHex(validator);
     const votes = await this.getVotes();
@@ -47,7 +52,8 @@ export class TronStakingAdapter extends BaseStakingAdapter<TronAdapter> {
 
     const total = `${resources.tronPowerLimit}`;
     const used = `${resources.tronPowerUsed}`;
-    const available = `${resources.tronPowerLimit - resources.tronPowerUsed}`;
+    // not "total - used" as our policy is to override previous votes to any node
+    const available = total;
 
     return {
       total,
@@ -56,7 +62,7 @@ export class TronStakingAdapter extends BaseStakingAdapter<TronAdapter> {
     };
   }
 
-  async freeze(
+  async addVotingPower(
     amount: string,
     { resource, duration = MIN_FREEZE_DURATION }: TronFreezeOptions
   ): Promise<ExecutionResponse> {
@@ -70,7 +76,7 @@ export class TronStakingAdapter extends BaseStakingAdapter<TronAdapter> {
     return this.adapter.signAndSendTransaction(tx);
   }
 
-  async unfreeze(
+  async removeVotingPower(
     _amount: string,
     { resource }: TronUnfreezeOptions
   ): Promise<ExecutionResponse> {
@@ -82,14 +88,18 @@ export class TronStakingAdapter extends BaseStakingAdapter<TronAdapter> {
   }
 
   async vote(validator: string, amount: string): Promise<ExecutionResponse> {
-    const { total } = await this.getVotingPower();
-    // our policy is to override previous votes to any node
-    if (BN(amount).isGreaterThan(total)) {
-      throw new InsufficientVotingPower(total, amount);
+    const [{ available }, currentVotes] = await Promise.all([
+      this.getVotingPower(),
+      this.getVotesGivenTo(validator),
+    ]);
+    const votingAmount = BN(currentVotes).plus(amount);
+
+    if (BN(votingAmount).isGreaterThan(available)) {
+      throw new InsufficientVotingPower(available, amount);
     }
 
-    // tron does not allow to vote 0
-    const fixedAmount = BN(amount).isZero() ? "1" : amount;
+    // todo: improve this temporal patch tron does not allow to vote 0
+    const fixedAmount = BN(votingAmount).isZero() ? "1" : votingAmount;
 
     const tx = await this.tronweb.transactionBuilder.vote(
       { [validator]: fixedAmount },
@@ -100,9 +110,11 @@ export class TronStakingAdapter extends BaseStakingAdapter<TronAdapter> {
   }
 
   async unvote(validator: string, amount = "0"): Promise<ExecutionResponse> {
-    return this.vote(validator, BN(amount).isZero() ? "1" : amount);
+    const negAmount = BN(amount).multipliedBy(-1).toFixed();
+    return this.vote(validator, BN(amount).isZero() ? "1" : negAmount);
   }
-  needsFreeze(): boolean {
+
+  needVotingPowerCreation(): boolean {
     return true;
   }
 }
