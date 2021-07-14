@@ -1,6 +1,6 @@
 {
   "name": "@unifiprotocol/staking",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Unifi Protocol JS Staking SDK",
   "author": "Unifi Protocol",
   "repository": "git@github.com:unifiprotocol/unifi-sdk.git",
