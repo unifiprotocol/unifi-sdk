@@ -18,7 +18,7 @@ export class TronLinkConnector extends WalletConnector {
     return new Promise((resolve, reject) => {
       let retries = 0;
       const retry = setInterval(() => {
-        if (!this.getAgent() || this.getAgent().ready) {
+        if (!this.getAgent() || !this.getAgent().ready) {
           retries++;
           if (retries > 4) {
             reject(new WalletNotDetectedError(this.metadata.displayName));
