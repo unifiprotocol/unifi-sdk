@@ -195,7 +195,7 @@ export class TronAdapter extends BaseAdapter<TronContract, TronWeb> {
 
     const balance = BN(balanceOf.toString() || 0).toFixed();
 
-    return { name: this.nativeToken.name, balance };
+    return { name: this.nativeToken.symbol, balance };
   }
   async isValidNetwork(network: string): Promise<boolean> {
     return true;
