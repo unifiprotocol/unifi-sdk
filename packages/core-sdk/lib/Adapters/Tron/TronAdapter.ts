@@ -152,7 +152,7 @@ export class TronAdapter extends BaseAdapter<TronContract, TronWeb> {
 
   async sendTransaction<T = any>(tx: any): Promise<ExecutionResponse<T>> {
     try {
-      const hash = await this.tronWeb.trx.sendRawTransaction(tx);
+      const { txid: hash } = await this.tronWeb.trx.sendRawTransaction(tx);
       if (hash) {
         return successResponse({ hash });
       }

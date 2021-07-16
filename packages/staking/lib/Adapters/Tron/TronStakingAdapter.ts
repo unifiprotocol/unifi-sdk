@@ -88,18 +88,14 @@ export class TronStakingAdapter extends BaseStakingAdapter<TronAdapter> {
   }
 
   async vote(validator: string, amount: string): Promise<ExecutionResponse> {
-    const [{ available }, currentVotes] = await Promise.all([
-      this.getVotingPower(),
-      this.getVotesGivenTo(validator),
-    ]);
-    const votingAmount = BN(currentVotes).plus(amount);
+    const { available } = await this.getVotingPower();
 
-    if (BN(votingAmount).isGreaterThan(available)) {
+    if (BN(amount).isGreaterThan(available)) {
       throw new InsufficientVotingPower(available, amount);
     }
 
     // todo: improve this temporal patch tron does not allow to vote 0
-    const fixedAmount = BN(votingAmount).isZero() ? "1" : votingAmount;
+    const fixedAmount = BN(amount).isZero() ? "1" : amount;
 
     const tx = await this.tronweb.transactionBuilder.vote(
       { [validator]: fixedAmount },
