@@ -10,12 +10,12 @@ export enum TronResource {
   Energy = "ENERGY",
 }
 
-interface TronFreezeOptions {
+export interface TronFreezeOptions {
   resource: TronResource;
   duration?: number;
 }
 
-interface TronUnfreezeOptions {
+export interface TronUnfreezeOptions {
   resource: TronResource;
 }
 
@@ -66,6 +66,7 @@ export class TronStakingAdapter extends BaseStakingAdapter<TronAdapter> {
     amount: string,
     { resource, duration = MIN_FREEZE_DURATION }: TronFreezeOptions
   ): Promise<ExecutionResponse> {
+    debugger;
     const tx = await this.tronweb.transactionBuilder.freezeBalance(
       this.tronweb.toSun(amount),
       duration,
@@ -73,6 +74,7 @@ export class TronStakingAdapter extends BaseStakingAdapter<TronAdapter> {
       this.address,
       this.address
     );
+    debugger;
     return this.adapter.signAndSendTransaction(tx);
   }
 
@@ -112,5 +114,9 @@ export class TronStakingAdapter extends BaseStakingAdapter<TronAdapter> {
 
   needVotingPowerCreation(): boolean {
     return true;
+  }
+
+  getValidatorUrl(address: string): string {
+    return `https://tronscan.org/#/address/${address}`;
   }
 }

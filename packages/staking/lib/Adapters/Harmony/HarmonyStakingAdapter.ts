@@ -51,4 +51,8 @@ export class HarmonyStakingAdapter extends BaseStakingAdapter<HarmonyAdapter> {
   needVotingPowerCreation(): boolean {
     return false;
   }
+
+  getValidatorUrl(address: string): string {
+    return `https://staking.harmony.one/validators/mainnet/${address}`;
+  }
 }

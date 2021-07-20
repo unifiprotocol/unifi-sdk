@@ -35,4 +35,6 @@ export interface IStakingAdapter<
     amount: string,
     options?: RemoveVotingPowerOpts
   ): Promise<ExecutionResponse>;
+
+  getValidatorUrl(address: string): string;
 }

@@ -16,7 +16,7 @@ export abstract class BaseStakingAdapter<
   protected get address(): string {
     return this.adapter.getAddress();
   }
-
+  abstract getValidatorUrl(address: string): string;
   abstract getVotingPower(): Promise<VotingPower>;
   abstract getVotesGivenTo(validator: string): Promise<string>;
   abstract vote(validator: string, amount: string): Promise<ExecutionResponse>;
