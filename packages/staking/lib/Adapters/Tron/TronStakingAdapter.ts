@@ -98,9 +98,10 @@ export class TronStakingAdapter extends BaseStakingAdapter<TronAdapter> {
 
     // todo: improve this temporal patch tron does not allow to vote 0
     const fixedAmount = BN(amount).isZero() ? "1" : amount;
+    const fixedIntAmount = BN(fixedAmount).dp(0).toFixed();
 
     const tx = await this.tronweb.transactionBuilder.vote(
-      { [validator]: fixedAmount },
+      { [validator]: fixedIntAmount },
       this.address,
       1
     );
