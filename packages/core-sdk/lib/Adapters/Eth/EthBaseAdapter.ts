@@ -66,7 +66,7 @@ export abstract class EthBaseAdapter extends BaseAdapter<
     this.contracts[contractAddress] = new ethers.Contract(
       contractAddress,
       abi,
-      this.isConnected() ? this.web3Provider : this.etherClient
+      this.isConnected() ? this.web3Provider.getSigner() : this.etherClient
     );
   }
 
