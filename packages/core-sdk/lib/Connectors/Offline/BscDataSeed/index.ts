@@ -10,9 +10,8 @@ export class BscDataSeedConnector extends OfflineConnector {
   }
 
   async connect(): Promise<IAdapter> {
-    // TODO network cannot be hardcoded here
     this.adapter.setProvider(
-      new ethers.providers.JsonRpcProvider(
+      new ethers.providers.StaticJsonRpcProvider(
         "https://bsc-dataseed.binance.org/",
         EthChainIds.Bsc
       )

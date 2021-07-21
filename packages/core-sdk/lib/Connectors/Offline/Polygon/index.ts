@@ -12,7 +12,7 @@ export class PolygonConnector extends OfflineConnector {
   async connect(): Promise<IAdapter> {
     // TODO network cannot be hardcoded here
     this.adapter.setProvider(
-      new ethers.providers.JsonRpcProvider(
+      new ethers.providers.StaticJsonRpcProvider(
         "https://rpc-mainnet.maticvigil.com/",
         EthChainIds.Polygon
       )
