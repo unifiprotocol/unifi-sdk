@@ -1,13 +1,13 @@
 import { AdapterBalance, ExecutionParams, ExecutionResponse } from "../Types";
 import { BaseAdapter } from "../BaseAdapter";
 import { TRXNativeToken } from "../../Tokens/TRXNativeToken";
-import { XRC20ABI } from "../Iotex/ABIs/XRC20ABI";
 import { Blockchains } from "../../Types";
 import TronWeb from "tronweb";
 import { nonSuccessResponse, successResponse } from "../Helpers";
 import { BN } from "../../Utils/BigNumber";
 import { Opt } from "../../Utils/Typings";
 import { ErrorSigningTransaction } from "../../Errors/ErrorSigningTransaction";
+import { ERC20ABI } from "../Eth/ABIs/ERC20";
 
 declare global {
   interface Window {
@@ -77,7 +77,7 @@ export class TronAdapter extends BaseAdapter<TronContract, TronWeb> {
 
   async initializeToken(
     contractAddress: string,
-    abi = XRC20ABI
+    abi = ERC20ABI
   ): Promise<void> {
     return this.initializeContract(contractAddress, abi);
   }
