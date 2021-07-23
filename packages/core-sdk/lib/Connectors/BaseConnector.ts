@@ -7,9 +7,8 @@ import { ConnectorMetadata } from "../Entities";
 type Callback = (...args: any[]) => void;
 export abstract class BaseConnector implements IConnector {
   protected emitter = new EventEmitter<ConnectorEvent>();
-
+  protected adapter: IAdapter;
   constructor(
-    protected adapter: IAdapter,
     protected blockchain: Blockchains,
     protected metadata: ConnectorMetadata
   ) {}

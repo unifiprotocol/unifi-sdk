@@ -3,10 +3,12 @@ import { ethers } from "ethers";
 import { OfflineConnector } from "../OfflineConnector";
 import { Blockchains } from "../../../Types";
 import { cloudflareMetadata } from "./CloudflareMetadata";
+import { web3AdapterFactory } from "../../../Adapters";
 
 export class CloudflareConnector extends OfflineConnector {
-  constructor(adapter: IAdapter, blockchain: Blockchains) {
-    super(adapter, blockchain, cloudflareMetadata);
+  constructor(blockchain: Blockchains) {
+    super(blockchain, cloudflareMetadata);
+    this.adapter = web3AdapterFactory(blockchain);
   }
   async connect(): Promise<IAdapter> {
     this.adapter.setProvider(new ethers.providers.CloudflareProvider());

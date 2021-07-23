@@ -3,10 +3,12 @@ import { IAdapter } from "../../../Adapters/IAdapter";
 import { ethers } from "ethers";
 import { OfflineConnector } from "../OfflineConnector";
 import { bscDataSeedMetadata } from "./BscDataSeedMetadata";
+import { web3AdapterFactory } from "../../../Adapters";
 
 export class BscDataSeedConnector extends OfflineConnector {
-  constructor(adapter: IAdapter, blockchain: Blockchains) {
-    super(adapter, blockchain, bscDataSeedMetadata);
+  constructor(blockchain: Blockchains) {
+    super(blockchain, bscDataSeedMetadata);
+    this.adapter = web3AdapterFactory(blockchain);
   }
 
   async connect(): Promise<IAdapter> {

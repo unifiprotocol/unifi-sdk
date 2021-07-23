@@ -3,10 +3,12 @@ import { IAdapter } from "../../../Adapters/IAdapter";
 import { ethers } from "ethers";
 import { OfflineConnector } from "../OfflineConnector";
 import { harmonyMetadata } from "./HarmonyMetadata";
+import { HarmonyWeb3Adapter } from "../../../Adapters";
 
 export class HarmonyConnector extends OfflineConnector {
-  constructor(adapter: IAdapter, blockchain: Blockchains) {
-    super(adapter, blockchain, harmonyMetadata);
+  constructor(blockchain: Blockchains) {
+    super(blockchain, harmonyMetadata);
+    this.adapter = new HarmonyWeb3Adapter();
   }
 
   async connect(): Promise<IAdapter> {

@@ -1,21 +1,12 @@
-import { IAdapter } from "../../../Adapters";
 import { Blockchains } from "../../../Types";
-import { MetamaskConnector } from "../Metamask";
+import { web3AdapterFactory } from "../../../Adapters";
+import { MetamaskBaseConnector } from "../Metamask/MetamaskBaseConnector";
 import { otherEthWalletMetadata } from "./OtherEthWalletMetadata";
 
-declare global {
-  interface Window {
-    ethereum: any;
-  }
-}
-
-export class OtherEthWalletConnector extends MetamaskConnector {
-  constructor(adapter: IAdapter, blockchain: Blockchains) {
-    super(adapter, blockchain, otherEthWalletMetadata);
-  }
-
-  protected getAgent(): any {
-    return window.ethereum;
+export class OtherEthWalletConnector extends MetamaskBaseConnector {
+  constructor(blockchain: Blockchains) {
+    super(blockchain, otherEthWalletMetadata);
+    this.adapter = web3AdapterFactory(blockchain);
   }
 
   async isAvailable(): Promise<boolean> {
