@@ -16,6 +16,7 @@ export enum OfflineConnectors {
   Alchemy = "alchemy",
   Harmony = "harmony",
   Polygon = "polygon",
+  Iotex = "iotex",
 }
 
 export enum WalletConnectors {

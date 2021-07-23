@@ -12,6 +12,7 @@ import {
   BscDataSeedConnector,
   CloudflareConnector,
   EtherScanConnector,
+  IotexConnector,
   PolygonConnector,
   TronGridConnector,
 } from "./Offline";
@@ -51,6 +52,7 @@ export const connectorFactory = (
     [OfflineConnectors.Alchemy]: AlchemyConnector,
     [OfflineConnectors.Harmony]: HarmonyConnector,
     [OfflineConnectors.Polygon]: PolygonConnector,
+    [OfflineConnectors.Iotex]: IotexConnector,
   }[connectorName];
 
   const adapter = adapterFactory(blockchain);

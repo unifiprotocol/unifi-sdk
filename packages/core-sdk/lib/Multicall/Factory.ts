@@ -3,6 +3,7 @@ import { InvalidBlockchainError } from "../Errors";
 import { Blockchains } from "../Types";
 import { EthMulticallAdapter } from "./Adapters/EthMulticallAdapter";
 import { HarmonyMulticallAdapter } from "./Adapters/HarmonyMulticallAdapter";
+import { IotexMulticallAdapter } from "./Adapters/IotexMulticallAdapter";
 import { MulticallFallbackAdapter } from "./Adapters/MulticallFallbackAdapter";
 import { PolygonMulticallAdapter } from "./Adapters/PolygonMulticallAdapter";
 import { IMulticallAdapter } from "./IMulticallAdapter";
@@ -14,7 +15,7 @@ export const multicallAdapterFactory = (
     [Blockchains.Binance]: EthMulticallAdapter,
     [Blockchains.Ethereum]: EthMulticallAdapter,
     [Blockchains.EthereumRopsten]: EthMulticallAdapter,
-    [Blockchains.Iotex]: MulticallFallbackAdapter,
+    [Blockchains.Iotex]: IotexMulticallAdapter,
     [Blockchains.Tron]: MulticallFallbackAdapter,
     [Blockchains.Harmony]: HarmonyMulticallAdapter,
     [Blockchains.Polygon]: PolygonMulticallAdapter,
