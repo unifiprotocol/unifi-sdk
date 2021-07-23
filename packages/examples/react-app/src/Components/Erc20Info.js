@@ -105,6 +105,19 @@ export const Erc20Info = () => {
     setInvalidTokenAddress(!adapter.isValidAddress(tokenAddress));
   }, [tokenAddress, adapter]);
 
+  const approve = useCallback(async () => {
+    adapter
+      .waitForTransaction(
+        "0x4434caad87a6c447a248446f61194199b9789946918a8aa574ee02b75c50a3ed"
+      )
+      .then((res) => {
+        alert("OK");
+        debugger;
+      })
+      .catch((err) => {
+        debugger;
+      });
+  }, [adapter]);
   return (
     <Card elevation={1}>
       <CardContent>
@@ -136,6 +149,7 @@ export const Erc20Info = () => {
             {state === Status.Idle && "Fetch"}
             {state === Status.Fetching && "Fetching..."}
           </Button>
+          <Button onClick={approve}>Approve 10</Button>
         </FormField>
         {tokenData && (
           <>
