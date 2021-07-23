@@ -7,7 +7,7 @@ export class IotexMulticallAdapter extends EthMulticallAdapter {
     super(adapter);
     this.multicall = new Multicall({
       multicallCustomContractAddress:
-        "0xeefBa1e63905eF1D7ACbA5a8513c70307C1cE441",
+        "0xacce294bf7d25fe8c5c64ae45197d3878f68403b",
       ethersProvider: this.adapter.getProvider(),
       tryAggregate: false,
     });
