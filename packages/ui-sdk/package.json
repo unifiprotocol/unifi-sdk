@@ -1,18 +1,12 @@
 {
-  "name": "sixfootsixdesigns-react-library-boilerplate",
+  "name": "@unifiprotocol/ui-sdk",
   "license": "MIT",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "private": false,
-  "description": "React Typescript Library Boilerplate",
-  "author": "James Olson",
-  "homepage": "https://github.com/sixfootsixdesigns/React-Library-Boilerplate",
-  "bugs": {
-    "url": "https://github.com/sixfootsixdesigns/React-Library-Boilerplate/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/sixfootsixdesigns/React-Library-Boilerplate.git"
-  },
+  "description": "UnifiProtocol UI SDK",
+  "author": "Unifi Protocol",
+  "repository": "git@github.com:unifiprotocol/unifi-sdk.git",
+  "homepage": "https://github.com/unifiprotocol/unifi-sdk/tree/master/packages/ui-sdk",
   "scripts": {
     "build": "yarn clean; rollup -c",
     "clean": "rimraf dist",
