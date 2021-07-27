@@ -14,6 +14,7 @@ import { HarmonyVPToken } from "../../VotingPowerTokens";
 import { BN, toHex } from "../../Utils/BigNumber";
 import { MinStakeAmount } from "../../Errors";
 import { UnknownStakingError } from "../../Errors/UnknownStakingError";
+import { DelegationsResponse } from "./Types";
 
 const MIN_STAKING_AMOUNT = 0;
 
@@ -21,20 +22,81 @@ export class HarmonyStakingAdapter extends BaseStakingAdapter<HarmonyAdapter> {
   constructor(adapter: HarmonyAdapter) {
     super(adapter, HarmonyVPToken);
   }
+  protected async fetchDelegations(): Promise<DelegationsResponse> {
+    if (!this.adapter.isConnected()) {
+      return [];
+    }
+    return fetch(
+      `https://api.stake.hmny.io/networks/mainnet/delegations/${this.adapter.oneAddress}`
+    )
+      .then((res) => res.json())
+      .then((list: DelegationsResponse) =>
+        list.map((delegation) => {
+          return {
+            ...delegation,
+            delegator_address: toHexAddress(delegation.delegator_address),
+            validator_address: toHexAddress(delegation.validator_address),
+            Undelegations: delegation.Undelegations.map((v) => ({
+              ...v,
+              Amount: Number(this.votingPowerCurrency.toFactorized(v.Amount)),
+            })),
+            amount: Number(
+              this.votingPowerCurrency.toFactorized(delegation.amount)
+            ),
+          };
+        })
+      );
+  }
+  async getVotesGivenTo(validatorAddress: string): Promise<string> {
+    if (!this.adapter.isConnected()) {
+      return "0";
+    }
+    console.log("geting votes given to ", validatorAddress);
 
-  getVotesGivenTo(validator: string): Promise<string> {
-    throw new Error("Method not implemented.");
+    const oneValidatorAddress = toOneAddress(validatorAddress).toLowerCase();
+    const delegations = await this.fetchDelegations();
+    const delegationsToNode = delegations.find(
+      (delegation) =>
+        toOneAddress(delegation.validator_address).toLowerCase() ===
+        oneValidatorAddress
+    );
+    if (delegationsToNode) {
+      return BN(delegationsToNode.amount).toFixed();
+    }
+    return "0";
   }
 
   async getVotingPower(): Promise<VotingPower> {
-    const available = await this.adapter
-      .getBalance()
-      .then(({ balance }) => this.votingPowerCurrency.toFactorized(balance));
+    if (!this.adapter.isConnected()) {
+      return {
+        available: "0",
+        total: "0",
+        used: "0",
+        availableLocked: [],
+      };
+    }
+    const [available, delegations] = await Promise.all([
+      this.adapter
+        .getBalance()
+        .then(({ balance }) => this.votingPowerCurrency.toFactorized(balance)),
+      this.fetchDelegations(),
+    ]);
+
+    const availableLocked = delegations.reduce((list, delegation) => {
+      const items: VotingPower["availableLocked"][0][] =
+        delegation.Undelegations.map((v) => ({
+          amount: BN(v.Amount).toFixed(),
+          availableAt: `${v.Epoch}`,
+          lockedAt: delegation.validator_address,
+        }));
+      return [...list, ...items];
+    }, []);
 
     return {
       available,
       total: available,
       used: "0",
+      availableLocked,
     };
   }
 
@@ -118,4 +180,11 @@ export class HarmonyStakingAdapter extends BaseStakingAdapter<HarmonyAdapter> {
   getValidatorUrl(address: string): string {
     return `https://staking.harmony.one/validators/mainnet/${address}`;
   }
+}
+
+function toOneAddress(address: string): string {
+  return new HarmonyAddress(address).bech32;
+}
+function toHexAddress(address: string): string {
+  return new HarmonyAddress(address).basicHex;
 }

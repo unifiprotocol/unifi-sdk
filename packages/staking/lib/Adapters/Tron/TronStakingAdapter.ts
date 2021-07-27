@@ -59,6 +59,7 @@ export class TronStakingAdapter extends BaseStakingAdapter<TronAdapter> {
       total,
       used,
       available,
+      availableLocked: [],
     };
   }
 

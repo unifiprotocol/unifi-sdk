@@ -4,6 +4,11 @@ export interface VotingPower {
   total: string;
   used: string;
   available: string;
+  availableLocked: Array<{
+    amount: string;
+    availableAt: string;
+    lockedAt: string;
+  }>;
 }
 
 export interface IStakingAdapter<
