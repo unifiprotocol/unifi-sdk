@@ -1,6 +1,6 @@
 {
   "name": "@unifiprotocol/staking",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "Unifi Protocol JS Staking SDK",
   "author": "Unifi Protocol",
   "repository": "git@github.com:unifiprotocol/unifi-sdk.git",
@@ -31,7 +31,7 @@
     "@harmony-js/core": "^0.1.57",
     "@harmony-js/staking": "^0.1.56",
     "@harmony-js/utils": "^0.1.56",
-    "@unifiprotocol/core-sdk": "^3.2.1",
+    "@unifiprotocol/core-sdk": "^4.0.0",
     "ethers": "^5.2.0",
     "tronweb": "^3.2.7",
     "tslib": "^2.1.0"
