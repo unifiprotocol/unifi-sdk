@@ -1,4 +1,3 @@
-import { adapterFactory } from "../Adapters";
 import { InvalidConnectorSetup, UnknownConnectorError } from "../Errors";
 import {
   Blockchains,
@@ -26,6 +25,7 @@ import {
   TrustWalletConnector,
   OtherEthWalletConnector,
 } from "./Wallet";
+import { HarmonyOneWalletConnector } from "./Wallet/HarmonyOneWallet";
 
 export const connectorFactory = (
   blockchain: Blockchains,
@@ -45,6 +45,7 @@ export const connectorFactory = (
     [WalletConnectors.TrustWallet]: TrustWalletConnector,
     [WalletConnectors.Binance]: BinanceChainWalletConnector,
     [WalletConnectors.OtherEthWallet]: OtherEthWalletConnector,
+    [WalletConnectors.HarmonyOneWallet]: HarmonyOneWalletConnector,
     [OfflineConnectors.Cloudflare]: CloudflareConnector,
     [OfflineConnectors.BscDataSeed]: BscDataSeedConnector,
     [OfflineConnectors.TronGrid]: TronGridConnector,
@@ -55,7 +56,5 @@ export const connectorFactory = (
     [OfflineConnectors.Iotex]: IotexConnector,
   }[connectorName];
 
-  const adapter = adapterFactory(blockchain);
-
-  return new ConnectorClass(adapter, blockchain);
+  return new ConnectorClass(blockchain);
 };

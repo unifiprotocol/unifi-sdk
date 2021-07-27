@@ -3,13 +3,13 @@ import { Blockchains } from "../Types";
 import { BscAdapter } from "./Bsc/BscAdapter";
 import { EthAdapter } from "./Eth/EthAdapter";
 import { EthRopstenAdapter } from "./Eth/EthRopstenAdapter";
-import { HarmonyAdapter } from "./Harmony/HarmonyAdapter";
+import { HarmonyWeb3Adapter } from "./Harmony/HarmonyWeb3Adapter";
 import { IAdapter } from "./IAdapter";
 import { IotexAdapter } from "./Iotex/IotexAdapter";
 import { PolygonAdapter } from "./Polygon/PolygonAdapter";
 import { TronAdapter } from "./Tron/TronAdapter";
 
-export const adapterFactory = (chain: Blockchains): IAdapter => {
+export const web3AdapterFactory = (blockchain: Blockchains): IAdapter => {
   const adapterClass = {
     [Blockchains.Binance]: BscAdapter,
     [Blockchains.Ethereum]: EthAdapter,
@@ -17,12 +17,11 @@ export const adapterFactory = (chain: Blockchains): IAdapter => {
     [Blockchains.Iotex]: IotexAdapter,
     [Blockchains.Tron]: TronAdapter,
     [Blockchains.Polygon]: PolygonAdapter,
-    [Blockchains.Harmony]: HarmonyAdapter,
-  }[chain];
+    [Blockchains.Harmony]: HarmonyWeb3Adapter,
+  }[blockchain];
 
   if (!adapterClass) {
-    throw new InvalidBlockchainError(chain);
+    throw new InvalidBlockchainError(blockchain);
   }
-
   return new adapterClass();
 };

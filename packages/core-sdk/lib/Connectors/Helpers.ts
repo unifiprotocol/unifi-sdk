@@ -1,18 +1,32 @@
 import { ConnectorMetadata } from "../Entities";
 import { UnknownBlockchainError } from "../Errors";
-import { Blockchains, OfflineConnectors, WalletConnectors } from "../Types";
+import {
+  Blockchains,
+  Connectors,
+  OfflineConnectors,
+  WalletConnectors,
+} from "../Types";
 import {
   blockchainOfflineConnectors,
   blockchainWalletConnectors,
 } from "./Config";
 
+interface GetWalletOpts {
+  disabled?: Connectors[];
+}
+
 export const getBlockchainWalletConnectors = (
-  blockchain: Blockchains
+  blockchain: Blockchains,
+  opts: GetWalletOpts = {
+    disabled: [],
+  }
 ): ConnectorMetadata[] => {
   if (!Object.values(Blockchains).includes(blockchain)) {
     throw new UnknownBlockchainError(blockchain);
   }
-  return blockchainWalletConnectors[blockchain] || [];
+  return blockchainWalletConnectors[blockchain].filter(
+    (wallet) => !opts.disabled.includes(wallet.name)
+  );
 };
 
 export const getBlockchainOfflineConnectors = (

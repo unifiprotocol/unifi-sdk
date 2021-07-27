@@ -29,6 +29,9 @@
     "test": "__tests__"
   },
   "dependencies": {
+    "@harmony-js/account": "^0.1.57",
+    "@harmony-js/core": "^0.1.57",
+    "@harmony-js/utils": "^0.1.56",
     "bignumber.js": "^9.0.1",
     "ethereum-multicall": "^2.4.0",
     "ethers": "^5.2.0",

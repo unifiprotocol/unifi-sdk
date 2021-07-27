@@ -1,13 +1,13 @@
-import { IAdapter } from "../../..//Adapters";
+import { IAdapter, TronAdapter } from "../../..//Adapters";
 import { WalletConnector } from "../../Wallet/WalletConnector";
-import { sleep } from "../../../Utils/Sleep";
 import { Blockchains } from "../../../Types";
 import { tronLinkWalletMetadata } from "./TronLinkMetadata";
 import { WalletNotDetectedError } from "../../../Errors";
 
 export class TronLinkConnector extends WalletConnector {
-  constructor(adapter: IAdapter, blockchain: Blockchains) {
-    super(adapter, blockchain, tronLinkWalletMetadata);
+  constructor(blockchain: Blockchains) {
+    super(blockchain, tronLinkWalletMetadata);
+    this.adapter = new TronAdapter();
   }
 
   protected getAgent(): any {

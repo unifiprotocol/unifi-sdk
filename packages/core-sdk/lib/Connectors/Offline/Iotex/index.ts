@@ -3,10 +3,12 @@ import { IAdapter } from "../../../Adapters/IAdapter";
 import { ethers } from "ethers";
 import { OfflineConnector } from "../OfflineConnector";
 import { iotexMetadata } from "./IotexMetadata";
+import { web3AdapterFactory } from "../../../Adapters";
 
 export class IotexConnector extends OfflineConnector {
-  constructor(adapter: IAdapter, blockchain: Blockchains) {
-    super(adapter, blockchain, iotexMetadata);
+  constructor(blockchain: Blockchains) {
+    super(blockchain, iotexMetadata);
+    this.adapter = web3AdapterFactory(this.blockchain);
   }
 
   async connect(): Promise<IAdapter> {

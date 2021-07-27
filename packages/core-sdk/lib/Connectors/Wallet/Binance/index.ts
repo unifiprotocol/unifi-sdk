@@ -1,6 +1,6 @@
-import { IAdapter } from "../../../Adapters";
 import { Blockchains } from "../../../Types";
-import { MetamaskConnector } from "../Metamask";
+import { web3AdapterFactory } from "../../../Adapters";
+import { MetamaskBaseConnector } from "../Metamask/MetamaskBaseConnector";
 import { binanceWalletMetadata } from "./BinanceMetadata";
 
 declare global {
@@ -9,14 +9,15 @@ declare global {
   }
 }
 
-export class BinanceChainWalletConnector extends MetamaskConnector {
-  constructor(adapter: IAdapter, blockchain: Blockchains) {
-    super(adapter, blockchain, binanceWalletMetadata);
+export class BinanceChainWalletConnector extends MetamaskBaseConnector {
+  constructor(blockchain: Blockchains) {
+    super(blockchain, binanceWalletMetadata);
+    this.adapter = web3AdapterFactory(blockchain);
   }
-  getAgent() {
+  getAgent(): any {
     return window.BinanceChain;
   }
-  async isAvailable() {
-    return this.getAgent();
+  async isAvailable(): Promise<boolean> {
+    return !!this.getAgent();
   }
 }

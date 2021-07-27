@@ -3,10 +3,12 @@ import { ethers } from "ethers";
 import { OfflineConnector } from "../OfflineConnector";
 import { Blockchains } from "../../../Types";
 import { etherScanMetadata } from "./EtherScanMetadata";
+import { web3AdapterFactory } from "../../../Adapters";
 
 export class EtherScanConnector extends OfflineConnector {
-  constructor(adapter: IAdapter, blockchain: Blockchains) {
-    super(adapter, blockchain, etherScanMetadata);
+  constructor(blockchain: Blockchains) {
+    super(blockchain, etherScanMetadata);
+    this.adapter = web3AdapterFactory(blockchain);
   }
   async connect(): Promise<IAdapter> {
     const chainId = blockchainToEthChainId(this.blockchain);
