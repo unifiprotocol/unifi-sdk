@@ -1,8 +1,8 @@
-import { ExtensionInterface, HarmonyExtension } from "@harmony-js/core";
+import { ExtensionInterface } from "@harmony-js/core";
 import { HarmonyAdapter, IAdapter } from "../../../Adapters";
 import { InvalidNetworkError, WalletNotDetectedError } from "../../../Errors";
 import { Blockchains } from "../../../Types";
-import { MetamaskBaseConnector } from "../Metamask/MetamaskBaseConnector";
+import { BaseConnector } from "../../BaseConnector";
 import { harmonyOneWalletMetadata } from "./HarmonyOneWalletMetadata";
 
 declare global {
@@ -10,19 +10,15 @@ declare global {
     onewallet: ExtensionInterface;
   }
 }
-export class HarmonyOneWalletConnector extends MetamaskBaseConnector {
+export class HarmonyOneWalletConnector extends BaseConnector {
   constructor(protected blockchain: Blockchains) {
     super(blockchain, harmonyOneWalletMetadata);
-    this.adapter = new HarmonyAdapter();
+    this.adapter = new HarmonyAdapter(harmonyOneWalletMetadata.name);
   }
   async connect(): Promise<IAdapter> {
     if (!(await this.isAvailable())) {
       throw new WalletNotDetectedError(this.metadata.displayName);
     }
-    const client = new HarmonyExtension(this.getAgent());
-    const account = await client.login();
-
-    this.initEventController();
 
     const chainId = this.getAgent().network.chain_id;
 
@@ -30,10 +26,14 @@ export class HarmonyOneWalletConnector extends MetamaskBaseConnector {
       throw new InvalidNetworkError(chainId);
     }
 
+    const account = await this.getAgent().getAccount();
+
+    this.initEventController();
+
     const address = account.address;
 
     this.adapter.setAddress(address);
-    this.adapter.setProvider(client);
+    this.adapter.setProvider(this.getAgent());
 
     return this.adapter;
   }

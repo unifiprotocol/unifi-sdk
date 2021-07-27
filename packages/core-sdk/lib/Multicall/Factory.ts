@@ -1,4 +1,3 @@
-import { HarmonyExtension } from "@harmony-js/core";
 import { IAdapter } from "../Adapters";
 import { InvalidBlockchainError } from "../Errors";
 import { Blockchains } from "../Types";
@@ -19,7 +18,10 @@ export const multicallAdapterFactory = (
     [Blockchains.Iotex]: () => IotexMulticallAdapter,
     [Blockchains.Tron]: () => MulticallFallbackAdapter,
     [Blockchains.Harmony]: (adapter: IAdapter) => {
-      if (adapter.getProvider() instanceof HarmonyExtension) {
+      if (
+        adapter.getProvider().isOneWallet ||
+        adapter.getProvider().isMathWallet
+      ) {
         return MulticallFallbackAdapter;
       }
       return HarmonyMulticallAdapter;

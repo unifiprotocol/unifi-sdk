@@ -1,8 +1,8 @@
-import { Harmony, HarmonyExtension } from "@harmony-js/core";
+import { Harmony, ExtensionInterface } from "@harmony-js/core";
 import { HarmonyAddress } from "@harmony-js/crypto";
 import { Contract } from "@harmony-js/contract";
 import { ChainType, hexToNumber } from "@harmony-js/utils";
-import { Blockchains, EthChainIds } from "../../Types";
+import { Blockchains, Connectors, EthChainIds } from "../../Types";
 import { ONENativeToken } from "../../Tokens/ONENativeToken";
 import { HRC20ABI } from "./ABIs/HRC20";
 import {
@@ -18,24 +18,25 @@ import { nonSuccessResponse, successResponse } from "../Helpers";
 import { BN } from "../../Utils/BigNumber";
 import { hexlify } from "ethers/lib/utils";
 
+type HarmonyProvider = ExtensionInterface & { network: { chain_id: number } };
 type HarmonyContractInterface = any;
 export class HarmonyAdapter extends BaseAdapter<
   HarmonyContractInterface,
-  HarmonyExtension
+  HarmonyProvider
 > {
-  private _provider: Opt<HarmonyExtension>;
+  private _provider: Opt<HarmonyProvider>;
 
   protected contracts: { [nameContract: string]: Contract } = {};
   protected stablePairs: string[] = [];
   protected lastGasLimit = "30000";
   protected readonly chainId: EthChainIds;
   protected abi: Record<string, ContractInterface> = {};
-  private harmonyClient = new Harmony(`https://api.s0.t.hmny.io`, {
+  public readonly harmonyClient = new Harmony(`https://api.s0.t.hmny.io`, {
     chainType: ChainType.Harmony,
     chainId: 1,
   });
 
-  constructor() {
+  constructor(public readonly connector: Connectors) {
     super(
       Blockchains.Harmony,
       ONENativeToken,
@@ -43,10 +44,10 @@ export class HarmonyAdapter extends BaseAdapter<
     );
   }
 
-  setProvider(provider: any): void {
+  setProvider(provider: HarmonyProvider): void {
     this._provider = provider;
   }
-  getProvider(): HarmonyExtension {
+  getProvider(): HarmonyProvider {
     return this._provider;
   }
   resetContracts(): void {
@@ -81,7 +82,7 @@ export class HarmonyAdapter extends BaseAdapter<
       abi,
       this.toHexAddress(contractAddress)
     );
-    contract.wallet.signTransaction = this._provider.wallet.signTransaction;
+    contract.wallet.signTransaction = this._provider.signTransaction;
 
     this.contracts[this.toHexAddress(contractAddress)] = contract;
   }

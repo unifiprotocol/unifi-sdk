@@ -30,7 +30,11 @@ export const blockchainWalletConnectors = Object.freeze({
   [Blockchains.EthereumRopsten]: [...ethereumWallets, otherEthWalletMetadata],
   [Blockchains.Iotex]: [metamaskWalletMetadata, otherEthWalletMetadata],
   [Blockchains.Tron]: [tronLinkWalletMetadata],
-  [Blockchains.Harmony]: [metamaskWalletMetadata, harmonyOneWalletMetadata],
+  [Blockchains.Harmony]: [
+    metamaskWalletMetadata,
+    harmonyOneWalletMetadata,
+    mathWalletMetadata,
+  ],
   [Blockchains.Polygon]: [metamaskWalletMetadata],
 });
 
