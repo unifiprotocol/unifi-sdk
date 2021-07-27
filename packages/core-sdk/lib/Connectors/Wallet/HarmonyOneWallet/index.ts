@@ -1,5 +1,4 @@
-import { ExtensionInterface } from "@harmony-js/core";
-import { HarmonyAdapter, IAdapter } from "../../../Adapters";
+import { HarmonyAdapter, HarmonyProvider, IAdapter } from "../../../Adapters";
 import { InvalidNetworkError, WalletNotDetectedError } from "../../../Errors";
 import { Blockchains } from "../../../Types";
 import { BaseConnector } from "../../BaseConnector";
@@ -7,10 +6,11 @@ import { harmonyOneWalletMetadata } from "./HarmonyOneWalletMetadata";
 
 declare global {
   interface Window {
-    onewallet: ExtensionInterface;
+    onewallet: HarmonyProvider;
   }
 }
 export class HarmonyOneWalletConnector extends BaseConnector {
+  protected adapter: HarmonyAdapter;
   constructor(protected blockchain: Blockchains) {
     super(blockchain, harmonyOneWalletMetadata);
     this.adapter = new HarmonyAdapter(harmonyOneWalletMetadata.name);
@@ -23,7 +23,7 @@ export class HarmonyOneWalletConnector extends BaseConnector {
     const chainId = this.getAgent().network.chain_id;
 
     if (chainId !== 1) {
-      throw new InvalidNetworkError(chainId);
+      throw new InvalidNetworkError(`${chainId}`);
     }
 
     const account = await this.getAgent().getAccount();
@@ -42,7 +42,7 @@ export class HarmonyOneWalletConnector extends BaseConnector {
     return !!this.getAgent() && this.getAgent().isOneWallet;
   }
 
-  protected getAgent(): any {
+  protected getAgent(): HarmonyProvider {
     return window.onewallet;
   }
 
@@ -55,5 +55,10 @@ export class HarmonyOneWalletConnector extends BaseConnector {
     this.getAgent().on("chainChanged", (chainId: string) => {
       this.emitter.emit("NetworkChanged", hexToDec(chainId));
     });*/
+  }
+
+  async disconnect(): Promise<void> {
+    await super.disconnect();
+    return this.getAgent().forgetIdentity();
   }
 }

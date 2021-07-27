@@ -18,7 +18,9 @@ import { nonSuccessResponse, successResponse } from "../Helpers";
 import { BN } from "../../Utils/BigNumber";
 import { hexlify } from "ethers/lib/utils";
 
-type HarmonyProvider = ExtensionInterface & { network: { chain_id: number } };
+export type HarmonyProvider = ExtensionInterface & {
+  network: { chain_id: number };
+};
 type HarmonyContractInterface = any;
 export class HarmonyAdapter extends BaseAdapter<
   HarmonyContractInterface,
