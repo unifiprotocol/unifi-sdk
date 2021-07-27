@@ -25,14 +25,24 @@ export abstract class BaseStakingAdapter<
     amount?: string
   ): Promise<ExecutionResponse>;
 
-  abstract needVotingPowerCreation(): boolean;
+  needVotingPowerCreation(): boolean {
+    return false;
+  }
 
-  abstract addVotingPower(
+  addVotingPower(
     amount: string,
     options?: AddVotingPowerOpts
-  ): Promise<ExecutionResponse>;
-  abstract removeVotingPower(
+  ): Promise<ExecutionResponse> {
+    throw new Error(
+      `${this.adapter.blockchain} does not require previous steps to get voting power`
+    );
+  }
+  removeVotingPower(
     amount: string,
     options?: RemoveVotingPowerOpts
-  ): Promise<ExecutionResponse>;
+  ): Promise<ExecutionResponse> {
+    throw new Error(
+      `${this.adapter.blockchain} does not require previous steps to get voting power`
+    );
+  }
 }
