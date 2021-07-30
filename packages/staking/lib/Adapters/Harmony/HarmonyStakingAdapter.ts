@@ -38,11 +38,8 @@ export class HarmonyStakingAdapter extends BaseStakingAdapter<HarmonyAdapter> {
             validator_address: toHexAddress(delegation.validator_address),
             Undelegations: delegation.Undelegations.map((v) => ({
               ...v,
-              Amount: Number(this.votingPowerCurrency.toFactorized(v.Amount)),
             })),
-            amount: Number(
-              this.votingPowerCurrency.toFactorized(delegation.amount)
-            ),
+            amount: delegation.amount,
           };
         })
       );
@@ -76,9 +73,7 @@ export class HarmonyStakingAdapter extends BaseStakingAdapter<HarmonyAdapter> {
       };
     }
     const [available, delegations] = await Promise.all([
-      this.adapter
-        .getBalance()
-        .then(({ balance }) => this.votingPowerCurrency.toFactorized(balance)),
+      this.adapter.getBalance().then(({ balance }) => balance),
       this.fetchDelegations(),
     ]);
 
