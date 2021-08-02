@@ -70,6 +70,7 @@ export class IconAdapter extends BaseAdapter<
     values: Partial<ExecutionParams>,
     isWrite?: boolean
   ): Promise<ExecutionResponse<T>> {
+    throw new Error("Not implemented");
     if (
       contractAddress === this.nativeToken.address &&
       ["allowance", "approve"].includes(method)
@@ -92,12 +93,15 @@ export class IconAdapter extends BaseAdapter<
     }
   }
   signTransaction(tx: any): Promise<any> {
+    throw new Error("Not implemented");
     throw new Error("Method not implemented.");
   }
   sendTransaction<T = any>(tx: any): Promise<ExecutionResponse<T>> {
+    throw new Error("Not implemented");
     throw new Error("Method not implemented.");
   }
   async waitForTransaction(txnHash: string): Promise<"SUCCESS" | "FAILED"> {
+    throw new Error("Not implemented");
     return new Promise<"FAILED" | "SUCCESS">((resolve) => {
       const checkTx = () => {
         if (status) {
@@ -114,6 +118,7 @@ export class IconAdapter extends BaseAdapter<
     return this.contracts[contractAddress].abi;
   }
   async getBalance(address: Address = this.address): Promise<AdapterBalance> {
+    throw new Error("Not implemented");
     const balance = await this.getProvider().getBalance(address).execute();
     return {
       balance: balance.toFixed(),
