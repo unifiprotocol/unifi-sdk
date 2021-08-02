@@ -24,4 +24,5 @@ export enum JsonRpcMethod {
   SendTransaction = "icx_sendTransaction",
   SendTransactionAndWait = "icx_sendTransactionAndWait",
   WaitTransactionResult = "icx_waitTransactionResult",
+  EstimateStep = "debug_estimateStep",
 }

@@ -37,7 +37,6 @@
     "ethers": "^5.2.0",
     "eventemitter3": "^4.0.7",
     "icon-sdk-js": "^1.1.0",
-    "js-sha3": "^0.8.0",
     "promise-parallel-throttle": "^3.3.0",
     "tronweb": "^3.2.7",
     "tslib": "^2.1.0"

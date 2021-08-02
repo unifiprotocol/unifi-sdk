@@ -86,26 +86,48 @@ export class IconexWalletApi {
       }
     });
   }
+  estimateStepLimit(params: any): Promise<string> {
+    return this.jsonRpcCall<any, string>(
+      JsonRpcMethod.EstimateStep,
+      params
+    ).then((res) => res.result);
+  }
 
-  jsonRpcCall<Params, Result>(
+  async jsonRpcCall<Params, Result>(
     method: JsonRpcMethod,
     params: Params
   ): Promise<JsonRpcResPayload<Result>> {
-    return this.iconexRequest<JsonRpcResPayload<Result>>(
-      IconexRequestType.JsonRpc,
-      {
-        jsonrpc: "2.0",
-        id: genRandomId(),
-        method,
-        params,
-      },
-      { isCancelable: false }
-    ).then((res) => {
+    const rpcRequestBody = {
+      jsonrpc: "2.0",
+      id: genRandomId(),
+      method,
+      params,
+    };
+
+    try {
+      let res: JsonRpcResPayload<Result>;
+      if (method.includes("debug_")) {
+        res = await fetch("https://wallet.icon.foundation/api/debug/v3", {
+          method: "POST",
+          body: JSON.stringify(rpcRequestBody),
+        }).then((res) => res.json());
+      } else {
+        res = await this.iconexRequest<JsonRpcResPayload<Result>>(
+          IconexRequestType.JsonRpc,
+          rpcRequestBody,
+          { isCancelable: false }
+        );
+      }
+
       if (res.error) {
         throw new JsonRpcCallError(res.error.code, res.error.message, res);
       }
+
       return res;
-    });
+    } catch (error) {
+      debugger;
+      throw error;
+    }
   }
 
   hasAccount(): Promise<boolean> {
