@@ -6,6 +6,7 @@ export enum Blockchains {
   Tron = "TRX",
   Harmony = "Harmony",
   Polygon = "Polygon",
+  Icon = "Icon",
 }
 
 export enum OfflineConnectors {
@@ -17,9 +18,11 @@ export enum OfflineConnectors {
   Harmony = "harmony",
   Polygon = "polygon",
   Iotex = "iotex",
+  Icon = "icon",
 }
 
 export enum WalletConnectors {
+  IconexWallet = "IconexWallet",
   HarmonyOneWallet = "HarmonyOneWallet",
   Binance = "binance",
   Metamask = "metamask",

@@ -17,6 +17,7 @@ export const multicallAdapterFactory = (
     [Blockchains.EthereumRopsten]: () => EthMulticallAdapter,
     [Blockchains.Iotex]: () => IotexMulticallAdapter,
     [Blockchains.Tron]: () => MulticallFallbackAdapter,
+    [Blockchains.Icon]: () => MulticallFallbackAdapter,
     [Blockchains.Harmony]: (adapter: IAdapter) => {
       if (
         adapter.getProvider().isOneWallet ||

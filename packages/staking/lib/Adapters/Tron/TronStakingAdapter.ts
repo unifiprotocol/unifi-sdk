@@ -36,7 +36,12 @@ export class TronStakingAdapter extends BaseStakingAdapter<TronAdapter> {
     }
 
     return voterAcc.votes.reduce(
-      (votes, vote) => ({ ...votes, [vote.vote_address]: vote.vote_count }),
+      (votes, vote) => ({
+        ...votes,
+        [vote.vote_address]: this.votingPowerCurrency.toPrecision(
+          vote.vote_count
+        ),
+      }),
       {}
     );
   }

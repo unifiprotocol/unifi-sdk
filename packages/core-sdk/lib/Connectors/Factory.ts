@@ -17,6 +17,7 @@ import {
 } from "./Offline";
 import { AlchemyConnector } from "./Offline/Alchemy";
 import { HarmonyConnector } from "./Offline/Harmony";
+import { IconConnector } from "./Offline/Icon";
 import {
   MathWalletConnector,
   MetamaskConnector,
@@ -24,8 +25,9 @@ import {
   BinanceChainWalletConnector,
   TrustWalletConnector,
   OtherEthWalletConnector,
+  HarmonyOneWalletConnector,
+  IconexWalletConnector,
 } from "./Wallet";
-import { HarmonyOneWalletConnector } from "./Wallet/HarmonyOneWallet";
 
 export const connectorFactory = (
   blockchain: Blockchains,
@@ -45,6 +47,7 @@ export const connectorFactory = (
     [WalletConnectors.TrustWallet]: TrustWalletConnector,
     [WalletConnectors.Binance]: BinanceChainWalletConnector,
     [WalletConnectors.OtherEthWallet]: OtherEthWalletConnector,
+    [WalletConnectors.IconexWallet]: IconexWalletConnector,
     [WalletConnectors.HarmonyOneWallet]: HarmonyOneWalletConnector,
     [OfflineConnectors.Cloudflare]: CloudflareConnector,
     [OfflineConnectors.BscDataSeed]: BscDataSeedConnector,
@@ -54,6 +57,7 @@ export const connectorFactory = (
     [OfflineConnectors.Harmony]: HarmonyConnector,
     [OfflineConnectors.Polygon]: PolygonConnector,
     [OfflineConnectors.Iotex]: IotexConnector,
+    [OfflineConnectors.Icon]: IconConnector,
   }[connectorName];
 
   return new ConnectorClass(blockchain);

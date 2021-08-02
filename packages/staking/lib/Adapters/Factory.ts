@@ -5,6 +5,7 @@ import {
 } from "@unifiprotocol/core-sdk";
 import { Constructor } from "../Utils/Typings";
 import { HarmonyStakingAdapter } from "./Harmony/HarmonyStakingAdapter";
+import { IconStakingAdapter } from "./Harmony/IconStakingAdapter";
 import { IStakingAdapter } from "./IStakingAdapter";
 import { TronStakingAdapter } from "./Tron/TronStakingAdapter";
 
@@ -13,6 +14,7 @@ const adapterClassMap: Partial<
 > = {
   [Blockchains.Tron]: TronStakingAdapter,
   [Blockchains.Harmony]: HarmonyStakingAdapter,
+  [Blockchains.Icon]: IconStakingAdapter,
 };
 
 export const stakingAdapterFactory = (adapter: IAdapter): IStakingAdapter => {

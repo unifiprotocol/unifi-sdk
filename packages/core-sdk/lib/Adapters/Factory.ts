@@ -1,5 +1,6 @@
-import { InvalidBlockchainError } from "../Errors";
+import { Web3NotSupportedError } from "../Errors";
 import { Blockchains } from "../Types";
+import { Constructor } from "../Utils/Typings";
 import { BscAdapter } from "./Bsc/BscAdapter";
 import { EthAdapter } from "./Eth/EthAdapter";
 import { EthRopstenAdapter } from "./Eth/EthRopstenAdapter";
@@ -10,7 +11,7 @@ import { PolygonAdapter } from "./Polygon/PolygonAdapter";
 import { TronAdapter } from "./Tron/TronAdapter";
 
 export const web3AdapterFactory = (blockchain: Blockchains): IAdapter => {
-  const adapterClass = {
+  const adapterClassMap: Partial<Record<Blockchains, Constructor<IAdapter>>> = {
     [Blockchains.Binance]: BscAdapter,
     [Blockchains.Ethereum]: EthAdapter,
     [Blockchains.EthereumRopsten]: EthRopstenAdapter,
@@ -18,10 +19,12 @@ export const web3AdapterFactory = (blockchain: Blockchains): IAdapter => {
     [Blockchains.Tron]: TronAdapter,
     [Blockchains.Polygon]: PolygonAdapter,
     [Blockchains.Harmony]: HarmonyWeb3Adapter,
-  }[blockchain];
+  };
+
+  const adapterClass = adapterClassMap[blockchain];
 
   if (!adapterClass) {
-    throw new InvalidBlockchainError(blockchain);
+    throw new Web3NotSupportedError(blockchain);
   }
   return new adapterClass();
 };
