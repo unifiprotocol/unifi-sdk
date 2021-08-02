@@ -31,7 +31,7 @@
     "@harmony-js/core": "^0.1.57",
     "@harmony-js/staking": "^0.1.56",
     "@harmony-js/utils": "^0.1.56",
-    "@unifiprotocol/core-sdk": "^4.0.0",
+    "@unifiprotocol/core-sdk": "^4.1.0",
     "ethers": "^5.2.0",
     "icon-sdk-js": "^1.1.0",
     "js-sha3": "^0.8.0",

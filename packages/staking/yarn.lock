@@ -910,10 +910,10 @@
   dependencies:
     "@types/node" "*"
 
-"@unifiprotocol/core-sdk@^4.0.0":
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@unifiprotocol/core-sdk/-/core-sdk-4.0.0.tgz#9b02705cb9a8d3a5343a7ad838b550947ad4e920"
-  integrity sha512-SKMcXKPZDbz+03vrJ4hVU+/ppomfmenUr0YqulTsEx2J7PLI1Do3+RPibuw9441mzyD6twW60XCo286F8+ZjAg==
+"@unifiprotocol/core-sdk@^4.1.0":
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/@unifiprotocol/core-sdk/-/core-sdk-4.1.0.tgz#be5e80a3214caecf914ce0c5831b0619b0104254"
+  integrity sha512-JnlHTDSNSJeV+9N6nWoKC+2ibYxoE2YMYZjGuJqZ2I1IzhQuuHQu2W7Off303yjDhU9ppY2ktEVYFPYPcAvRng==
   dependencies:
     "@harmony-js/account" "^0.1.57"
     "@harmony-js/core" "^0.1.57"
@@ -922,7 +922,7 @@
     ethereum-multicall "^2.4.0"
     ethers "^5.2.0"
     eventemitter3 "^4.0.7"
-    js-sha3 "^0.8.0"
+    icon-sdk-js "^1.1.0"
     promise-parallel-throttle "^3.3.0"
     tronweb "^3.2.7"
     tslib "^2.1.0"
