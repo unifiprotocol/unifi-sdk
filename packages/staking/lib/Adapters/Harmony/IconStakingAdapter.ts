@@ -14,8 +14,6 @@ import IconService from "icon-sdk-js";
 import { VotingPower } from "../IStakingAdapter";
 import { IconVPToken } from "../../VotingPowerTokens";
 import { BN, toHex } from "../../Utils/BigNumber";
-import { toNumber } from "icon-sdk-js/build/data/Converter";
-import { sha3_256 } from "js-sha3";
 
 interface GetStakeResponse {
   stake: string;
@@ -24,6 +22,15 @@ interface GetStakeResponse {
     unstakeBlockHeight: string;
     remainingBlocks: string;
   }>;
+}
+
+interface GetDelegationResponse {
+  delegations: Array<{
+    address: string;
+    value: string;
+  }>;
+  totalDelegated: string;
+  votingPower: string;
 }
 
 const JsonRpcMethod = IconexWalletApi.enums.JsonRpcMethod;
@@ -41,7 +48,25 @@ export class IconStakingAdapter extends BaseStakingAdapter<IconexAdapter> {
       return "0";
     }
 
-    return "0";
+    return this.adapter
+      .getProvider()
+      .jsonRpcCall<any, GetDelegationResponse>(JsonRpcMethod.Call, {
+        to: "cx0000000000000000000000000000000000000000",
+        from: this.address,
+        dataType: "call",
+        data: {
+          method: "getDelegation",
+          params: {
+            address: this.address,
+          },
+        },
+      })
+      .then((res) => {
+        const delegation = res.result.delegations.find(
+          (n) => n.address === validatorAddress
+        );
+        return delegation ? `${parseInt(delegation.value, 16)}` : "0";
+      });
   }
 
   protected getStake(): Promise<GetStakeResponse> {
@@ -86,20 +111,20 @@ export class IconStakingAdapter extends BaseStakingAdapter<IconexAdapter> {
 
     const available = stake.stake;
 
-    /*
+    /* this code is the ICX being unstaked, might be useful 
     const availableLocked = stake.unstakes.map(u=>({
       amount: u.unstake,
     availableAt: u.unstakeBlockHeight,
     lockedAt: ''
     }))
-*/
+    */
     const unstake = stake.unstakes
       .reduce((total, u) => total.plus(u.unstake), BN("0"))
       .toFixed();
 
     return {
       available,
-      total: stake.stake,
+      total: available,
       used: unstake,
       availableLocked: [],
     };
@@ -109,7 +134,11 @@ export class IconStakingAdapter extends BaseStakingAdapter<IconexAdapter> {
     validatorAddress: string,
     amount: string
   ): Promise<ExecutionResponse> {
-    throw new Error("not implemented");
+    const currentAmount = await this.getVotesGivenTo(validatorAddress).then(
+      (votes) => this.votingPowerCurrency.toFactorized(votes)
+    );
+    const remAmount = BN(currentAmount).minus(amount).toFixed();
+    return this.vote(validatorAddress, remAmount);
   }
 
   async vote(
@@ -117,27 +146,38 @@ export class IconStakingAdapter extends BaseStakingAdapter<IconexAdapter> {
     amount: string
   ): Promise<ExecutionResponse> {
     const hexAmount = toHex(this.votingPowerCurrency.toPrecision(amount));
-    debugger;
+    const params = {
+      dataType: "call",
+      from: this.address,
+      to: "cx0000000000000000000000000000000000000000",
+      version: "0x3",
+      nid: "0x1",
+      timestamp: timestamp(),
+      data: {
+        method: "setDelegation",
+        params: {
+          delegations: [
+            {
+              address: validatorAddress,
+              value: hexAmount,
+            },
+          ],
+        },
+      },
+    };
+
+    const stepLimit = await this.adapter
+      .getProvider()
+      .estimateStepLimit(params);
+
     return this.adapter
       .getProvider()
-      .jsonRpcCall(JsonRpcMethod.SendTransaction, {
-        data: {
-          method: "setDelegation",
-          params: {
-            delegations: [
-              {
-                address: validatorAddress,
-                value: hexAmount,
-              },
-            ],
-          },
-        },
+      .jsonRpcCall<any, string>(JsonRpcMethod.SendTransaction, {
+        ...params,
+        stepLimit,
       })
-      .then((value) => {
-        debugger;
-        console.log("vote result", value);
-        return successResponse();
-      });
+      .then((res) => successResponse({ hash: res.result }))
+      .catch(nonSuccessResFromError);
   }
   needVotingPowerCreation(): boolean {
     return true;
@@ -148,9 +188,10 @@ export class IconStakingAdapter extends BaseStakingAdapter<IconexAdapter> {
     const params = {
       dataType: "call",
       from: this.address,
+      to: "cx0000000000000000000000000000000000000000",
       version: "0x3",
-      stepLimit: "0x12345",
       nid: "0x1",
+      timestamp: timestamp(),
       data: {
         method: "setStake",
         params: {
@@ -159,15 +200,28 @@ export class IconStakingAdapter extends BaseStakingAdapter<IconexAdapter> {
       },
     };
 
-    debugger;
+    const stepLimit = await this.adapter.getProvider().estimateStepLimit({
+      from: "hx10575a9a1b6b9516c5254abbef82f1924f01ecac",
+      to: "cx0000000000000000000000000000000000000000",
+      version: "0x3",
+      nid: "0x1",
+      timestamp: timestamp(),
+      dataType: "call",
+      data: {
+        method: "setStake",
+        params: {
+          value: "0x13c144060cbd1c000",
+        },
+      },
+    });
+
     return this.adapter
       .getProvider()
-      .jsonRpcCall(JsonRpcMethod.SendTransaction, params)
-      .then((value) => {
-        debugger;
-        console.log("stake result", value);
-        return successResponse();
-      });
+      .jsonRpcCall<any, string>(JsonRpcMethod.SendTransaction, {
+        ...params,
+        stepLimit,
+      })
+      .then((res) => successResponse({ hash: res.result }));
   }
   async removeVotingPower(amount: string): Promise<ExecutionResponse> {
     const stake = await this.getStake();
@@ -178,4 +232,12 @@ export class IconStakingAdapter extends BaseStakingAdapter<IconexAdapter> {
   getValidatorUrl(address: string): string {
     return `https://tracker.icon.foundation/address/${address}`;
   }
+}
+
+function timestamp() {
+  return toHex(new Date().getTime() * 1000);
+}
+
+function nonSuccessResFromError(err: Error) {
+  return nonSuccessResponse({ err });
 }

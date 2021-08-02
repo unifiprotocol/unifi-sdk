@@ -1,9 +1,9 @@
 import { Currency } from "@unifiprotocol/core-sdk";
 
 export const IconVPToken = new Currency(
-  "sICX",
+  "ICX",
   18,
-  "sICX",
+  "ICX",
   "Staked ICX",
   "https://assets.unifiprotocol.com/ICX.png"
 );
