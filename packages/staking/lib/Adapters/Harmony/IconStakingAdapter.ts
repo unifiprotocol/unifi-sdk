@@ -1,9 +1,5 @@
-import { HarmonyAddress } from "@harmony-js/crypto";
-import { numberToHex } from "@harmony-js/utils";
-import { Unit } from "@harmony-js/utils";
 import {
   ExecutionResponse,
-  HarmonyAdapter,
   nonSuccessResponse,
   successResponse,
   IconexWalletApi,

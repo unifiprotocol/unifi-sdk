@@ -1,13 +1,16 @@
 import { ExecutionResponse, Currency, IAdapter } from "@unifiprotocol/core-sdk";
 
+type PrecisionAmount = string;
+type FactorizedAmount = string;
+type Address = string;
 export interface VotingPower {
-  total: string;
-  used: string;
-  available: string;
+  total: PrecisionAmount;
+  used: PrecisionAmount;
+  available: PrecisionAmount;
   availableLocked: Array<{
-    amount: string;
+    amount: PrecisionAmount;
     availableAt: string;
-    lockedAt: string;
+    lockedAt: Address;
   }>;
 }
 
@@ -25,19 +28,26 @@ export interface IStakingAdapter<
    * @param validator address of validator node in tron format
    * @returns
    */
-  getVotesGivenTo(validator: string): Promise<string>;
+  getVotesGivenTo(validator: Address): Promise<PrecisionAmount>;
 
-  vote(validator: string, amount: string): Promise<ExecutionResponse>;
-  unvote(validator: string, amount?: string): Promise<ExecutionResponse>;
+  vote(
+    validator: Address,
+    amount: FactorizedAmount
+  ): Promise<ExecutionResponse>;
+
+  unvote(
+    validator: Address,
+    amount?: FactorizedAmount
+  ): Promise<ExecutionResponse>;
 
   needVotingPowerCreation(): boolean;
 
   addVotingPower(
-    amount: string,
+    amount: FactorizedAmount,
     options?: AddVotingPowerOpts
   ): Promise<ExecutionResponse>;
   removeVotingPower(
-    amount: string,
+    amount: FactorizedAmount,
     options?: RemoveVotingPowerOpts
   ): Promise<ExecutionResponse>;
 

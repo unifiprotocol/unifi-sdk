@@ -115,8 +115,11 @@ export class TronStakingAdapter extends BaseStakingAdapter<TronAdapter> {
   }
 
   async unvote(validator: string, amount = "0"): Promise<ExecutionResponse> {
-    const negAmount = BN(amount).multipliedBy(-1).toFixed();
-    return this.vote(validator, BN(amount).isZero() ? "1" : negAmount);
+    const currentVotes = await this.getVotesGivenTo(validator).then((v) =>
+      this.votingPowerCurrency.toFactorized(v)
+    );
+    const remAmount = BN(currentVotes).minus(amount).toFixed();
+    return this.vote(validator, remAmount);
   }
 
   needVotingPowerCreation(): boolean {
