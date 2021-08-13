@@ -22,7 +22,9 @@ export class IconAdapter extends BaseAdapter<
   IconProvider
 > {
   private _provider: Opt<IconProvider>;
-
+  private iconSDK = new IconService(
+    new IconService.HttpProvider(`https://ctz.solidwallet.io/api/v3`)
+  );
   protected contracts: { [nameContract: string]: any } = {};
   protected stablePairs: string[] = [];
   protected lastGasLimit = "30000";
@@ -101,14 +103,19 @@ export class IconAdapter extends BaseAdapter<
     throw new Error("Method not implemented.");
   }
   async waitForTransaction(txnHash: string): Promise<"SUCCESS" | "FAILED"> {
-    throw new Error("Not implemented");
     return new Promise<"FAILED" | "SUCCESS">((resolve) => {
-      const checkTx = () => {
-        if (status) {
-          resolve(status as any);
-        } else {
-          setTimeout(checkTx, 1500);
-        }
+      const checkTx = async () => {
+        this.iconSDK
+          .getTransactionResult(txnHash)
+          .execute()
+          .then((res) => {
+            resolve(
+              ["0x1", 1].includes(res.status as any) ? "SUCCESS" : "FAILED"
+            );
+          })
+          .catch(() => {
+            setTimeout(checkTx, 1500);
+          });
       };
 
       checkTx();

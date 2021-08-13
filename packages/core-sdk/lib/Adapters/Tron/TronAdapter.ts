@@ -164,27 +164,25 @@ export class TronAdapter extends BaseAdapter<TronContract, TronWeb> {
 
   waitForTransaction(transactionHash: string): Promise<"SUCCESS" | "FAILED"> {
     return new Promise<"FAILED" | "SUCCESS">((resolve) => {
-      const checkTx = (hash: string) => {
-        return this.tronWeb.trx
-          .getConfirmedTransaction(hash)
-          .then((res: any) => {
-            if (typeof res !== "string") {
-              return res;
-            }
-          });
-      };
+      const checkTx = async () => {
+        try {
+          const res = await this.tronWeb.trx.getConfirmedTransaction(
+            transactionHash
+          );
 
-      const interval = setInterval(() => {
-        checkTx(transactionHash).then((res: any) => {
-          if (res) {
+          if (res && res.ret) {
             const isSuccess = (res.ret || []).some(
               (i: any) => i.contractRet === "SUCCESS"
             );
-            clearInterval(interval);
-            resolve(isSuccess ? "SUCCESS" : "FAILED");
+            return resolve(isSuccess ? "SUCCESS" : "FAILED");
           }
-        });
-      }, 1500);
+          setTimeout(checkTx, 1500);
+        } catch (error) {
+          setTimeout(checkTx, 1500);
+        }
+      };
+
+      checkTx();
     });
   }
   async getBalance(): Promise<AdapterBalance> {

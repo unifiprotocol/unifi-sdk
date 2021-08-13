@@ -1,5 +1,5 @@
 //import IconService from "icon-sdk-js";
-import { Blockchains, Connectors, EthChainIds } from "../../Types";
+import { Blockchains, EthChainIds } from "../../Types";
 
 import {
   AdapterBalance,
@@ -14,6 +14,7 @@ import { nonSuccessResponse, successResponse } from "../Helpers";
 import { BN } from "../../Utils/BigNumber";
 import { ICXNativeToken } from "../../Tokens/ICXNativeToken";
 import { IconexWalletApi } from "../../Connectors/Wallet/IconexWallet/IconexWalletApi";
+import IconService from "icon-sdk-js";
 
 type IconProvider = IconexWalletApi;
 type IconContractInterface = any;
@@ -23,7 +24,9 @@ export class IconexAdapter extends BaseAdapter<
   IconProvider
 > {
   private _provider: Opt<IconProvider>;
-
+  private iconSDK = new IconService(
+    new IconService.HttpProvider(`https://ctz.solidwallet.io/api/v3`)
+  );
   protected contracts: { [nameContract: string]: any } = {};
   protected stablePairs: string[] = [];
   protected lastGasLimit = "30000";
@@ -100,12 +103,18 @@ export class IconexAdapter extends BaseAdapter<
   }
   async waitForTransaction(txnHash: string): Promise<"SUCCESS" | "FAILED"> {
     return new Promise<"FAILED" | "SUCCESS">((resolve) => {
-      const checkTx = () => {
-        if (status) {
-          resolve(status as any);
-        } else {
-          setTimeout(checkTx, 1500);
-        }
+      const checkTx = async () => {
+        this.iconSDK
+          .getTransactionResult(txnHash)
+          .execute()
+          .then((res) => {
+            resolve(
+              ["0x1", 1].includes(res.status as any) ? "SUCCESS" : "FAILED"
+            );
+          })
+          .catch(() => {
+            setTimeout(checkTx, 1500);
+          });
       };
 
       checkTx();
