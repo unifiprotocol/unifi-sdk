@@ -179,7 +179,7 @@ export class IconStakingAdapter extends BaseStakingAdapter<IconexAdapter> {
     return true;
   }
 
-  async addVotingPower(amount: string): Promise<ExecutionResponse> {
+  async setVotingPower(amount: string): Promise<ExecutionResponse> {
     const hexAmount = toHex(this.votingPowerCurrency.toPrecision(amount));
     const params = {
       dataType: "call",
@@ -219,10 +219,18 @@ export class IconStakingAdapter extends BaseStakingAdapter<IconexAdapter> {
       })
       .then((res) => successResponse({ hash: res.result }));
   }
+
+  async addVotingPower(amount: string): Promise<ExecutionResponse> {
+    const stake = await this.getStake();
+    const currentAmount = this.votingPowerCurrency.toFactorized(stake.stake);
+    const finalAmount = BN(currentAmount).plus(amount).toFixed();
+    return this.setVotingPower(finalAmount);
+  }
   async removeVotingPower(amount: string): Promise<ExecutionResponse> {
     const stake = await this.getStake();
-    const remainingAmount = BN(stake.stake).minus(amount).toFixed();
-    return this.addVotingPower(remainingAmount);
+    const currentAmount = this.votingPowerCurrency.toFactorized(stake.stake);
+    const remainingAmount = BN(currentAmount).minus(amount).toFixed();
+    return this.setVotingPower(remainingAmount);
   }
 
   getValidatorUrl(address: string): string {

@@ -1,6 +1,6 @@
 import { ExecutionResponse, TronAdapter } from "@unifiprotocol/core-sdk";
 import { InsufficientVotingPower } from "../../Errors";
-import { BN } from "../../Utils/BigNumber";
+import { BN, ifNanThen } from "../../Utils/BigNumber";
 import { BaseStakingAdapter } from "../BaseStakingAdapter";
 import { VotingPower } from "../IStakingAdapter";
 import { TronVPToken } from "../../VotingPowerTokens";
@@ -31,7 +31,7 @@ export class TronStakingAdapter extends BaseStakingAdapter<TronAdapter> {
   async getVotes(): Promise<Record<string, string>> {
     const voterAcc = await this.tronweb.trx.getAccount(this.address);
 
-    if (voterAcc.votes.length === 0) {
+    if (!voterAcc.votes || voterAcc.votes.length === 0) {
       return {};
     }
 
@@ -61,9 +61,12 @@ export class TronStakingAdapter extends BaseStakingAdapter<TronAdapter> {
     const available = total;
 
     return {
-      total,
-      used,
-      available,
+      total: ifNanThen(this.votingPowerCurrency.toPrecision(total), "0"),
+      used: ifNanThen(this.votingPowerCurrency.toPrecision(used), "0"),
+      available: ifNanThen(
+        this.votingPowerCurrency.toPrecision(available),
+        "0"
+      ),
       availableLocked: [],
     };
   }
@@ -72,7 +75,6 @@ export class TronStakingAdapter extends BaseStakingAdapter<TronAdapter> {
     amount: string,
     { resource, duration = MIN_FREEZE_DURATION }: TronFreezeOptions
   ): Promise<ExecutionResponse> {
-    debugger;
     const tx = await this.tronweb.transactionBuilder.freezeBalance(
       this.tronweb.toSun(amount),
       duration,
@@ -80,7 +82,6 @@ export class TronStakingAdapter extends BaseStakingAdapter<TronAdapter> {
       this.address,
       this.address
     );
-    debugger;
     return this.adapter.signAndSendTransaction(tx);
   }
 

@@ -910,10 +910,10 @@
   dependencies:
     "@types/node" "*"
 
-"@unifiprotocol/core-sdk@^4.1.0":
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/@unifiprotocol/core-sdk/-/core-sdk-4.1.0.tgz#be5e80a3214caecf914ce0c5831b0619b0104254"
-  integrity sha512-JnlHTDSNSJeV+9N6nWoKC+2ibYxoE2YMYZjGuJqZ2I1IzhQuuHQu2W7Off303yjDhU9ppY2ktEVYFPYPcAvRng==
+"@unifiprotocol/core-sdk@^4.1.1":
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/@unifiprotocol/core-sdk/-/core-sdk-4.1.1.tgz#0cb155eed2c2a14e5e8ce69066453af9c9a087b1"
+  integrity sha512-UTUdp2AWL71MPdplNhhOarmPfGGcyHN+5wN2ipFhE7GdcXQAn6ak0kVeB6S2XvMZckmjPbIAMXiMWLXh3TSthw==
   dependencies:
     "@harmony-js/account" "^0.1.57"
     "@harmony-js/core" "^0.1.57"
