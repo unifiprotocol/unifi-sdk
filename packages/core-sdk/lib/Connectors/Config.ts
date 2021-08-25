@@ -15,6 +15,8 @@ import { iotexMetadata } from "./Offline/Iotex/IotexMetadata";
 import { harmonyOneWalletMetadata } from "./Wallet/HarmonyOneWallet/HarmonyOneWalletMetadata";
 import { iconexWalletMetadata } from "./Wallet/IconexWallet/IconexWalletMetadata";
 import { iconMetadata } from "./Offline/Icon/IconMetadata";
+import { binanceMetadata } from "./Offline/Binance/BinanceMetadata";
+import { binanceTestnetMetadata } from "./Offline/Binance/BinanceTestnetMetadata";
 
 const ethereumWallets = [
   mathWalletMetadata,
@@ -26,6 +28,10 @@ export const blockchainWalletConnectors = Object.freeze({
   [Blockchains.Binance]: [
     ...ethereumWallets,
     binanceWalletMetadata,
+    otherEthWalletMetadata,
+  ],
+  [Blockchains.BinanceTestnet]: [
+    ...ethereumWallets,
     otherEthWalletMetadata,
   ],
   [Blockchains.Ethereum]: [...ethereumWallets, otherEthWalletMetadata],
@@ -42,7 +48,8 @@ export const blockchainWalletConnectors = Object.freeze({
 });
 
 export const blockchainOfflineConnectors = Object.freeze({
-  [Blockchains.Binance]: [cloudflareMetadata],
+  [Blockchains.Binance]: [binanceMetadata],
+  [Blockchains.BinanceTestnet]: [binanceTestnetMetadata],
   [Blockchains.Harmony]: [harmonyMetadata],
   [Blockchains.Ethereum]: [cloudflareMetadata, alchemyMetadata],
   [Blockchains.EthereumRopsten]: [etherScanMetadata, alchemyMetadata],

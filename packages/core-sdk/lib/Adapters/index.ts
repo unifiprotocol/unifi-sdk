@@ -1,4 +1,5 @@
 export * from "./Bsc/BscAdapter";
+export * from "./Bsc/BscTestnetAdapter";
 export * from "./Eth/EthAdapter";
 export * from "./Eth/EthRopstenAdapter";
 export * from "./Tron/TronAdapter";

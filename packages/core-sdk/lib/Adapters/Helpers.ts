@@ -27,6 +27,7 @@ export const blockchainToEthChainId = (
     [Blockchains.Binance]: EthChainIds.Bsc,
     [Blockchains.Ethereum]: EthChainIds.Eth,
     [Blockchains.EthereumRopsten]: EthChainIds.EthRopsten,
+    [Blockchains.BinanceTestnet]: EthChainIds.BscTestnet,
     [Blockchains.Iotex]: EthChainIds.Iotex,
     [Blockchains.Polygon]: EthChainIds.Polygon,
   };

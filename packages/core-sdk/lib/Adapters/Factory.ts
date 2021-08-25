@@ -2,6 +2,7 @@ import { Web3NotSupportedError } from "../Errors";
 import { Blockchains } from "../Types";
 import { Constructor } from "../Utils/Typings";
 import { BscAdapter } from "./Bsc/BscAdapter";
+import { BscTestnetAdapter } from "./Bsc/BscTestnetAdapter";
 import { EthAdapter } from "./Eth/EthAdapter";
 import { EthRopstenAdapter } from "./Eth/EthRopstenAdapter";
 import { HarmonyWeb3Adapter } from "./Harmony/HarmonyWeb3Adapter";
@@ -13,6 +14,7 @@ import { TronAdapter } from "./Tron/TronAdapter";
 export const web3AdapterFactory = (blockchain: Blockchains): IAdapter => {
   const adapterClassMap: Partial<Record<Blockchains, Constructor<IAdapter>>> = {
     [Blockchains.Binance]: BscAdapter,
+    [Blockchains.BinanceTestnet]: BscTestnetAdapter,
     [Blockchains.Ethereum]: EthAdapter,
     [Blockchains.EthereumRopsten]: EthRopstenAdapter,
     [Blockchains.Iotex]: IotexAdapter,

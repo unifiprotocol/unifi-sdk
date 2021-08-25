@@ -1,6 +1,7 @@
 import { IAdapter } from "../Adapters";
 import { InvalidBlockchainError } from "../Errors";
 import { Blockchains } from "../Types";
+import { BinanceTestnetMulticallAdapter } from "./Adapters/BinanceTestnetMulticallAdapter";
 import { EthMulticallAdapter } from "./Adapters/EthMulticallAdapter";
 import { HarmonyMulticallAdapter } from "./Adapters/HarmonyMulticallAdapter";
 import { IotexMulticallAdapter } from "./Adapters/IotexMulticallAdapter";
@@ -13,6 +14,7 @@ export const multicallAdapterFactory = (
 ): IMulticallAdapter => {
   const multicallAdapterClass = {
     [Blockchains.Binance]: () => EthMulticallAdapter,
+    [Blockchains.BinanceTestnet]: () => BinanceTestnetMulticallAdapter,
     [Blockchains.Ethereum]: () => EthMulticallAdapter,
     [Blockchains.EthereumRopsten]: () => EthMulticallAdapter,
     [Blockchains.Iotex]: () => IotexMulticallAdapter,

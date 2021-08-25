@@ -8,7 +8,8 @@ import {
 import { isValidBlockchain, isValidConnector } from "./Helpers";
 import { IConnector } from "./IConnector";
 import {
-  BscDataSeedConnector,
+  BinanceConnector,
+  BinanceTestnetConnector,
   CloudflareConnector,
   EtherScanConnector,
   IotexConnector,
@@ -50,13 +51,14 @@ export const connectorFactory = (
     [WalletConnectors.IconexWallet]: IconexWalletConnector,
     [WalletConnectors.HarmonyOneWallet]: HarmonyOneWalletConnector,
     [OfflineConnectors.Cloudflare]: CloudflareConnector,
-    [OfflineConnectors.BscDataSeed]: BscDataSeedConnector,
+    [OfflineConnectors.Binance]: BinanceConnector,
     [OfflineConnectors.TronGrid]: TronGridConnector,
     [OfflineConnectors.EtherScan]: EtherScanConnector,
     [OfflineConnectors.Alchemy]: AlchemyConnector,
     [OfflineConnectors.Harmony]: HarmonyConnector,
     [OfflineConnectors.Polygon]: PolygonConnector,
     [OfflineConnectors.Iotex]: IotexConnector,
+    [OfflineConnectors.BinanceTestnet]: BinanceTestnetConnector,
     [OfflineConnectors.Icon]: IconConnector,
   }[connectorName];
 
