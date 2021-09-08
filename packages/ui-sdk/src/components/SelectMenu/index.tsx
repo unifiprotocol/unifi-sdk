@@ -1,6 +1,7 @@
 import React from 'react';
 import Select, { Props } from 'react-select';
 import styled from 'styled-components';
+// TODO: when having multiple themes this will need to change
 import { DarkTheme } from '../../Theming';
 
 const customStyles: Select['props']['styles'] = {
