@@ -1,10 +1,14 @@
-// .storybook/preview.js
+import React from 'react';
+import { UThemeProvider, DarkTheme } from '../src/Theming';
 
-import { ThemeProvider } from 'styled-components';
-import { addDecorator } from '@storybook/react';
-import { withThemes } from '@react-theming/storybook-addon';
+const withThemeProvider = (Story, context) => {
+  return (
+    <UThemeProvider theme={DarkTheme}>
+      <Story {...context} />
+    </UThemeProvider>
+  );
+};
 
-import { Theme } from '../src/Theme';
+const decorators = [withThemeProvider];
 
-// pass ThemeProvider and array of your themes to decorator
-addDecorator(withThemes(ThemeProvider, [Theme]));
+export { decorators };
