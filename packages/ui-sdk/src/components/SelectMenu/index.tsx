@@ -30,6 +30,7 @@ const customStyles: Select['props']['styles'] = {
     ...provided,
     background: 'transparent',
     cursor: 'pointer',
+    borderWidth: '2px',
     borderColor: state.isFocused ? DarkTheme.primary : DarkTheme.bg0,
     boxShadow: '0',
     fontWeight: 'normal',

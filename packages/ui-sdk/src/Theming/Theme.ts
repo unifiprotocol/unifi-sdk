@@ -5,6 +5,10 @@ const grey2 = '#242732';
 const green0 = '#00e676';
 const green1 = '#38f997f0';
 const green2 = '#00c364';
+
+const blue100 = '#29b6f6';
+const yellow100 = '#ffe082';
+
 export const DarkTheme = {
   name: 'DarkTheme',
   fontFamily:
@@ -14,7 +18,9 @@ export const DarkTheme = {
   primaryLight: green1,
   primaryDark: green2,
   danger: '#de4437',
-
+  info: blue100,
+  warning: yellow100,
+  success: green2,
   // Fonts
   txt0: '#fff',
   txt2: '#989eb5',
