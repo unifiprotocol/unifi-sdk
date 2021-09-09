@@ -5,11 +5,14 @@ import commonjs from '@rollup/plugin-commonjs';
 import pkg from './package.json';
 import resolve from '@rollup/plugin-node-resolve';
 import copy from 'rollup-plugin-copy';
+import importAssets from 'rollup-plugin-import-assets';
+
 import ts from 'typescript';
 
 export default {
   input: './src/index.ts',
   external: [...Object.keys(pkg.dependencies || {}), ...Object.keys(pkg.peerDependencies || {})],
+
   output: [
     {
       file: `./dist/${pkg.module}`,
@@ -26,6 +29,18 @@ export default {
     resolve(),
     commonjs(),
     postcss(),
+    importAssets({
+      // files to import
+      include: [/\.svg$/i],
+      // files to exclude
+      exclude: [],
+      // copy assets to output folder
+      emitAssets: true,
+      // name pattern for the asset copied
+      fileNames: 'assets/[name]-[hash].[ext]',
+      // public path of the assets
+      publicPath: '',
+    }),
     typescript({
       typescript: ts,
       tsconfig: 'tsconfig.json',
