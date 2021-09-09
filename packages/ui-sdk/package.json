@@ -17,6 +17,7 @@
     "lint:script": "eslint ./src --ext .js,.jsx,.ts,.tsx",
     "lint:style": "stylelint ./src",
     "storybook": "start-storybook -p 9001 -s ./src/assets -c .storybook",
+    "storybook:build": "yarn build-storybook -o ./dist/storybook",
     "test": "jest --maxWorkers=2",
     "test:watch": "yarn test --watch",
     "test:coverage": "jest --coverage --colors --maxWorkers=2",
@@ -35,13 +36,14 @@
   },
   "peerDependencies": {
     "react": "^16.8.0",
-    "react-dom": "^16.8.0"
+    "react-dom": "^16.8.0",
+    "@storybook/react": "^6.1.2",
+    "@react-theming/storybook-addon": "^1.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.7",
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-conventional": "^11.0.0",
-    "@react-theming/storybook-addon": "^1.1.1",
     "@rollup/plugin-commonjs": "^16.0.0",
     "@rollup/plugin-node-resolve": "^10.0.0",
     "@semantic-release/changelog": "^5.0.1",
@@ -49,7 +51,6 @@
     "@semantic-release/git": "^9.0.0",
     "@semantic-release/npm": "^7.0.8",
     "@semantic-release/release-notes-generator": "^9.0.1",
-    "@storybook/react": "^6.1.2",
     "@testing-library/react": "^11.2.2",
     "@types/classnames": "^2.2.11",
     "@types/jest": "^26.0.15",
