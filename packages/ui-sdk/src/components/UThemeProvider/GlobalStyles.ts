@@ -1,7 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
-import { Themed } from './Theme';
+import { UTheme } from '../../types';
 
-export const GlobalStyle = createGlobalStyle<Themed>`
+export const GlobalStyle = createGlobalStyle<UTheme>`
   body {
     margin: 0;
     padding: 100px;
@@ -13,7 +13,7 @@ export const GlobalStyle = createGlobalStyle<Themed>`
   }
 `;
 
-export const GlobalFont = createGlobalStyle<Themed>`
+export const GlobalFont = createGlobalStyle<UTheme>`
 /* vietnamese */
 @font-face {
   font-family: 'Nunito Sans';

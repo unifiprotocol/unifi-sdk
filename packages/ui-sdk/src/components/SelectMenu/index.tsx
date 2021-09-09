@@ -1,8 +1,8 @@
 import React from 'react';
 import Select, { Props } from 'react-select';
 import styled from 'styled-components';
+import { Themes } from '../../themes';
 // TODO: when having multiple themes this will need to change
-import { DarkTheme } from '../../Theming';
 
 const customStyles: Select['props']['styles'] = {
   indicatorSeparator: (provided, state) => ({
@@ -12,17 +12,17 @@ const customStyles: Select['props']['styles'] = {
   dropdownIndicator: (provided, state) => ({
     ...provided,
     ':hover': {
-      color: DarkTheme.primary,
+      color: Themes.Dark.primary,
     },
   }),
   option: (provided, state) => ({
     ...provided,
     color: state.isSelected ? '#000' : '#fff',
-    backgroundColor: state.isSelected ? DarkTheme.primary : DarkTheme.bg0,
+    backgroundColor: state.isSelected ? Themes.Dark.primary : Themes.Dark.bg0,
     fontWeight: 'normal',
     cursor: 'pointer',
     ':active': {
-      backgroundColor: DarkTheme.bg0,
+      backgroundColor: Themes.Dark.bg0,
       color: '#000',
     },
   }),
@@ -31,11 +31,11 @@ const customStyles: Select['props']['styles'] = {
     background: 'transparent',
     cursor: 'pointer',
     borderWidth: '2px',
-    borderColor: state.isFocused ? DarkTheme.primary : DarkTheme.bg0,
+    borderColor: state.isFocused ? Themes.Dark.primary : Themes.Dark.bg0,
     boxShadow: '0',
     fontWeight: 'normal',
     ':hover': {
-      borderColor: DarkTheme.primary,
+      borderColor: Themes.Dark.primary,
     },
     padding: '1rem 0 0.3rem 0',
   }),
@@ -50,7 +50,7 @@ const customStyles: Select['props']['styles'] = {
   }),
   menu: (provided) => ({
     ...provided,
-    background: DarkTheme.bg1,
+    background: Themes.Dark.bg1,
   }),
 };
 const SelectLabel = styled.span`

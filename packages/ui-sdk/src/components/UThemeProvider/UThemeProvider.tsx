@@ -1,9 +1,10 @@
 import React from 'react';
-import { DarkTheme, Themed } from './Theme';
+
 import { ThemeProvider } from 'styled-components';
+import { UTheme } from '../../types';
 import { GlobalStyle, GlobalFont } from './GlobalStyles';
 
-export const UThemeProvider: React.FC<Themed> = ({ theme = DarkTheme, children }) => {
+export const UThemeProvider: React.FC<UTheme> = ({ theme, children }) => {
   return (
     <ThemeProvider theme={theme}>
       <GlobalFont />

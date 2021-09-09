@@ -1,10 +1,10 @@
 import { addDecorator } from '@storybook/react';
 import React from 'react';
-import { UThemeProvider, DarkTheme } from '../src/Theming';
-
+import { UThemeProvider } from '../src/components/UThemeProvider';
+import { Themes } from '../src/themes';
 const withThemeProvider = (Story, context) => {
   return (
-    <UThemeProvider theme={DarkTheme}>
+    <UThemeProvider theme={Themes.Dark}>
       <Story {...context} />
     </UThemeProvider>
   );
