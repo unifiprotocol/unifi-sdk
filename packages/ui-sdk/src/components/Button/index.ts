@@ -3,7 +3,7 @@ import { BaseButton } from './BaseButton';
 
 export const PrimaryButton = styled(BaseButton)`
   background-color: ${(p) => (p.variant === 'outline' ? 'transparent' : p.theme.primary)};
-  border-color: ${(p) => (p.variant === 'outline' ? p.theme.primary : 'transparent')};
+  border-color: ${(p) => p.theme.primary};
 
   &,
   svg {
@@ -12,7 +12,7 @@ export const PrimaryButton = styled(BaseButton)`
 
   &:hover {
     background-color: ${(props) => props.theme.primaryDark};
-    border-color: ${(p) => (p.variant === 'outline' ? p.theme.primaryDark : 'transparent')};
+    border-color: ${(p) => p.theme.primaryDark};
 
     color: #000;
     svg {
@@ -27,11 +27,11 @@ export const PrimaryButton = styled(BaseButton)`
 
 export const SecondaryButton = styled(BaseButton)`
   background-color: ${(p) => (p.variant === 'outline' ? 'transparent' : p.theme.bg2)};
-  border-color: ${(p) => (p.variant === 'outline' ? p.theme.bg2 : 'transparent')};
+  border-color: ${(p) => p.theme.bg2};
 
   &:hover {
     background-color: ${(p) => p.theme.bg2};
-    border-color: ${(p) => (p.variant === 'outline' ? p.theme.bg2 : 'transparent')};
+    border-color: ${(p) => p.theme.bg2};
   }
 `;
 
