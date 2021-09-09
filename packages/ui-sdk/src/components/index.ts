@@ -5,3 +5,4 @@ export * from './SelectMenu';
 export * from './Button';
 export * from './Notifications';
 export * from './UThemeProvider';
+export * from './BrandedHeader';

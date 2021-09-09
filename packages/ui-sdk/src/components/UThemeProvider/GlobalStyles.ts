@@ -11,6 +11,9 @@ export const GlobalStyle = createGlobalStyle<UTheme>`
   body, button, input {
     font-family: ${(p) => p.theme.fontFamily};
   }
+  * {
+    box-sizing: border-box;
+  }
 `;
 
 export const GlobalFont = createGlobalStyle<UTheme>`
