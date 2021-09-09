@@ -1,3 +1,5 @@
-// make sure you import all components into this file
-
-export * from './Example';
+export * from './NavigationHeader';
+export * from './Card';
+export * from './Alert';
+export * from './SelectMenu';
+export * from './Button';
