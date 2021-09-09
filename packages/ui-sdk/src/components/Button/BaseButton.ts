@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const BaseButton = styled.button<{ block?: boolean }>`
+export const BaseButton = styled.button<{ variant?: 'outline'; block?: boolean }>`
   display: inline-block;
   margin: 0.25rem 0;
   font-size: 0.9rem;

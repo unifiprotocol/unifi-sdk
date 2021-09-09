@@ -4,8 +4,7 @@ import { UTheme } from '../../types';
 export const GlobalStyle = createGlobalStyle<UTheme>`
   body {
     margin: 0;
-    padding: 100px;
-    background-color: ${(p) => p.theme.bg0};
+    background-color: ${(p) => p.theme.bg1};
     color: ${(p) => p.theme.txt0}
   }
   body, button, input {

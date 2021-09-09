@@ -65,7 +65,7 @@ const SelectLabel = styled.span`
 `;
 const SelectMenuWrapper = styled.div`
   position: relative;
-  background: ${(p) => p.bg0};
+  background: ${(p) => p.theme.bg0};
 `;
 export const SelectMenu: React.FC<Props> = ({ label, ...props }) => {
   return (
