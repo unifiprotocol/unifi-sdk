@@ -9,4 +9,8 @@ export default {
     { file: pkg.module, format: "es" },
   ],
   plugins: [url(), typescript()],
+  external: {
+    react: "react",
+    "styled-components": "styled-components",
+  },
 };
