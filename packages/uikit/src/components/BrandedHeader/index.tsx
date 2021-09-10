@@ -1,8 +1,9 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import UnifiTextLogo from "../../assets/UnifiLogoText.svg";
+import { Themed } from "../../themes/types";
 
-const BrandedHeaderWrapper = styled.div<{ fixed: boolean }>`
+const BrandedHeaderWrapper = styled.div<Themed & { fixed: boolean }>`
   z-index: 999999;
 
   ${(props) =>
@@ -36,9 +37,9 @@ const BrandedHeaderLogo = styled.img`
 
 export const BrandedHeader: React.FC<{ fixed?: boolean }> = ({
   children,
-  fixed,
+  fixed = false,
 }) => (
-  <BrandedHeaderWrapper {...{ fixed }}>
+  <BrandedHeaderWrapper fixed={fixed}>
     <BrandedHeaderContent>
       <BrandedHeaderLogo src={UnifiTextLogo} />
       {children}
