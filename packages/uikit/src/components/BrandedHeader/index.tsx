@@ -1,13 +1,18 @@
-import React from 'react';
-import styled from 'styled-components';
-import UnifiTextLogo from '../../assets/UnifiLogoText.svg';
+import React from "react";
+import styled, { css } from "styled-components";
+import UnifiTextLogo from "../../assets/UnifiLogoText.svg";
 
-const BrandedHeaderWrapper = styled.div`
+const BrandedHeaderWrapper = styled.div<{ fixed: boolean }>`
   z-index: 999999;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+
+  ${(props) =>
+    props.fixed &&
+    css`
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+    `}
 
   display: flex;
   align-items: center;
@@ -29,8 +34,11 @@ const BrandedHeaderLogo = styled.img`
   width: auto;
 `;
 
-export const BrandedHeader: React.FC = ({ children }) => (
-  <BrandedHeaderWrapper>
+export const BrandedHeader: React.FC<{ fixed?: boolean }> = ({
+  children,
+  fixed,
+}) => (
+  <BrandedHeaderWrapper {...{ fixed }}>
     <BrandedHeaderContent>
       <BrandedHeaderLogo src={UnifiTextLogo} />
       {children}
