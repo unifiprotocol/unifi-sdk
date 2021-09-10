@@ -1,15 +1,20 @@
 {
   "name": "@unifiprotocol/uikit",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Set of UI components for pancake projects",
+  "author": "Unifi Protocol",
+  "repository": "git@github.com:unifiprotocol/unifi-sdk.git",
+  "homepage": "https://github.com/unifiprotocol/unifi-sdk/tree/master/packages/uikit",
+  "license": "BSD-3-Clause",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
-  "repository": "https://github.com/pancakeswap/pancake-toolkit/tree/master/packages/pancake-uikit",
-  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "start": "yarn storybook",
     "build": "rm -rf ./dist && rollup -c && tsc -d --emitDeclarationOnly --declarationDir dist",
@@ -59,8 +64,5 @@
     "react-icons": "^4.2.0",
     "react-popper": "^2.2.5",
     "react-select": "^4.3.1"
-  },
-  "publishConfig": {
-    "access": "public"
   }
 }
