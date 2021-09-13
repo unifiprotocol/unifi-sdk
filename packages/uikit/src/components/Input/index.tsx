@@ -3,13 +3,15 @@ import styled from "styled-components";
 import { disableSelectionCss } from "../../util/DOM";
 import { Themed } from "../../themes/types";
 
-const InputWrapper = styled.div<Themed>`
+const InputWrapper = styled.div<Themed<{ focused: boolean }>>`
   display: flex;
   align-items: center;
   background: ${(p) => p.theme.bg200};
   border-radius: ${(p) => p.theme.borderRadius};
+  border: 2px solid ${(p) => (p.focused ? p.theme.primaryLight : p.theme.bg200)};
   padding: 0.6rem;
   height: 3rem;
+  transition: 0.25s all;
 `;
 
 const InputBox = styled.input<Themed>`
@@ -20,6 +22,7 @@ const InputBox = styled.input<Themed>`
   border: none;
   font-size: 1rem;
   color: ${(p) => p.theme.txt100};
+  width: 100%;
 `;
 
 const Label = styled.div`
@@ -58,14 +61,27 @@ const preventFocus = (action: () => void) => (evt: any) => {
 
 export const Input: React.FC<InputProps> = ({ label, actions, ...props }) => {
   const [ref, setRef] = useState<any>();
+  const [focused, setFocused] = useState(false);
   const focus = useCallback(() => {
     ref && ref.focus();
   }, [ref]);
-
+  const onFocus = useCallback((evt) => {
+    setFocused(true);
+    props.onFocus && props.onFocus(evt);
+  }, []);
+  const onBlur = useCallback((evt) => {
+    setFocused(false);
+    props.onBlur && props.onBlur(evt);
+  }, []);
   return (
-    <InputWrapper onClick={focus}>
+    <InputWrapper focused={focused} onClick={focus}>
       {label && <Label>{label}</Label>}
-      <InputBox {...props} ref={(input) => setRef(input)} />
+      <InputBox
+        {...props}
+        onBlur={onBlur}
+        onFocus={onFocus}
+        ref={(input: any) => setRef(input)}
+      />
       {actions && (
         <Actions>
           {actions.map(({ label, action }) => (

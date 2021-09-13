@@ -12,7 +12,7 @@ type Options = { tokenLogoResolver?: TokenLogoResolverFn };
 export const UnifiThemeProvider: React.FC<Themed & Options> = ({
   theme,
   children,
-  ...options
+  options,
 }) => {
   return (
     <ThemeProvider theme={theme}>

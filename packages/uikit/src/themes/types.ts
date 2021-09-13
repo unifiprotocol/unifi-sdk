@@ -2,6 +2,6 @@ import { DarkTheme } from "./DarkTheme";
 
 export type UnifiTheme = typeof DarkTheme;
 
-export interface Themed {
+export type Themed<T = any> = {
   theme: UnifiTheme;
-}
+} & T;

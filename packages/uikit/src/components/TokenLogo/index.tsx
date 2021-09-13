@@ -14,7 +14,6 @@ type TokenLogoProps = {
 
 export const TokenLogo: React.FC<TokenLogoProps> = ({ token, ...imgProps }) => {
   const { tokenLogoResolver } = useContext(UiResolverCtx);
-
   const sources = useMemo(
     () =>
       [

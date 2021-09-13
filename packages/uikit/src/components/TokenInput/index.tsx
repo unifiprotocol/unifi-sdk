@@ -1,4 +1,4 @@
-import React, { Ref, useCallback, useState } from "react";
+import React, { useCallback, useState } from "react";
 import styled from "styled-components";
 import { disableSelectionCss } from "../../util/DOM";
 import { Themed } from "../../themes/types";
@@ -7,12 +7,12 @@ import { TokenLogo } from "../TokenLogo";
 import { BN, Currency } from "@unifiprotocol/utils";
 import { PrimaryButton } from "../Button";
 import { MdSearch } from "react-icons/md";
-import { Theme } from "react-select";
 
 const TokenInputWrapper = styled.div<Themed>`
   background: ${(p) => p.theme.bg200};
   border-radius: ${(p) => p.theme.borderRadius};
   padding: 0.6rem;
+  transition: 0.25s all;
 `;
 
 const Label = styled.div`
@@ -33,9 +33,11 @@ const Balance = styled.div``;
 
 const AmountAndToken = styled.div`
   display: flex;
+  align-items: center;
+  gap: 0.25rem;
 `;
 
-const TokenAndSymbol = styled.div<Themed & { clickable: boolean }>`
+const Token = styled.div<Themed & { clickable: boolean }>`
   border-radius: ${(props) => props.theme.borderRadius};
   transition: background 0.3s;
   display: flex;
@@ -54,7 +56,9 @@ const TokenAndSymbol = styled.div<Themed & { clickable: boolean }>`
   }
 `;
 const TokenSymbol = styled.div``;
-
+const Amount = styled.div`
+  width: 70%;
+`;
 export type TokenInputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   label: React.ReactNode;
   balance: string;
@@ -81,19 +85,21 @@ export const TokenInput: React.FC<TokenInputProps> = ({
   }, [setAmount]);
 
   return (
-    <TokenInputWrapper onClick={focus}>
+    <TokenInputWrapper>
       <Head>
         <Label>{label}</Label>
         <Balance>Balance: {balance}</Balance>
       </Head>
       <AmountAndToken>
-        <Input
-          onChange={(evt) => setAmount(evt.target.value)}
-          value={amount}
-          actions={[{ label: "MAX", action: max }]}
-        />
+        <Amount>
+          <Input
+            onChange={(evt) => setAmount(evt.target.value)}
+            value={amount}
+            actions={[{ label: "MAX", action: max }]}
+          />
+        </Amount>
         {token && (
-          <TokenAndSymbol
+          <Token
             clickable={tokenChangeEnabled}
             onClick={() =>
               tokenChangeEnabled &&
@@ -103,7 +109,7 @@ export const TokenInput: React.FC<TokenInputProps> = ({
           >
             <TokenLogo token={token} />
             <TokenSymbol>{token.symbol}</TokenSymbol>
-          </TokenAndSymbol>
+          </Token>
         )}
         {!token && tokenChangeEnabled && (
           <PrimaryButton
