@@ -6,15 +6,33 @@ import { Card, CardBody, CardHeader } from "../Card";
 storiesOf("Notifications", module)
   .add("Basic", () => (
     <>
-      <ToastNotification appearance="info">FYI, something has happened</ToastNotification>
+      <ToastNotification appearance="info">
+        FYI, something has happened
+      </ToastNotification>
       <ToastNotification appearance="success">
         Congratulations! <br />
         You have done something good
       </ToastNotification>
-      <ToastNotification appearance="warning">Dont worry but take care</ToastNotification>
+      <ToastNotification appearance="warning">
+        Dont worry but take care
+      </ToastNotification>
       <ToastNotification appearance="error">
         Don't hate me but,I will tell you
         <br /> something wrong here
+      </ToastNotification>
+    </>
+  ))
+  .add("Dismisable", () => (
+    <>
+      <ToastNotification onDismiss={() => alert("Dismissed")} appearance="info">
+        You could close me
+      </ToastNotification>
+    </>
+  ))
+  .add("Dismiss timeout", () => (
+    <>
+      <ToastNotification appearance="info" autoDismissTimeout={5000}>
+        Once the bar finish it would close itself
       </ToastNotification>
     </>
   ))
@@ -57,7 +75,9 @@ storiesOf("Notifications", module)
         Congratulations! <br />
         Get your reward <a href="#">clicking here</a>
       </ToastNotification>
-      <ToastNotification appearance="warning">Dont worry but take care</ToastNotification>
+      <ToastNotification appearance="warning">
+        Dont worry but take care
+      </ToastNotification>
       <ToastNotification appearance="error">
         Don't hate me but, you must <br />
         <a href="#">visit this link.</a>
@@ -68,7 +88,10 @@ storiesOf("Notifications", module)
     <>
       <Card style={{ width: "100%" }}>
         <CardHeader>Some content</CardHeader>
-        <CardBody>You could have some nice content here while the notifications are displayed at the top</CardBody>
+        <CardBody>
+          You could have some nice content here while the notifications are
+          displayed at the top
+        </CardBody>
       </Card>
       <ToastContainer>
         <ToastNotification appearance="info">

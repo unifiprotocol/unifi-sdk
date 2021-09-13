@@ -18,11 +18,11 @@ const customStyles: Select["props"]["styles"] = {
   option: (provided, state) => ({
     ...provided,
     color: state.isSelected ? "#000" : "#fff",
-    backgroundColor: state.isSelected ? Themes.Dark.primary : Themes.Dark.bg0,
+    backgroundColor: state.isSelected ? Themes.Dark.primary : Themes.Dark.bg100,
     fontWeight: "normal",
     cursor: "pointer",
     ":active": {
-      backgroundColor: Themes.Dark.bg0,
+      backgroundColor: Themes.Dark.bg100,
       color: "#000",
     },
   }),
@@ -31,7 +31,7 @@ const customStyles: Select["props"]["styles"] = {
     background: "transparent",
     cursor: "pointer",
     borderWidth: "2px",
-    borderColor: state.isFocused ? Themes.Dark.primary : Themes.Dark.bg0,
+    borderColor: state.isFocused ? Themes.Dark.primary : Themes.Dark.bg100,
     boxShadow: "0",
     fontWeight: "normal",
     ":hover": {
@@ -50,13 +50,13 @@ const customStyles: Select["props"]["styles"] = {
   }),
   menu: (provided) => ({
     ...provided,
-    background: Themes.Dark.bg1,
+    background: Themes.Dark.bg200,
   }),
 };
 const SelectLabel = styled.span`
   font-size: 95%;
   opacity: 0.5;
-  color: ${(p) => p.theme.txt1};
+  color: ${(p) => p.theme.txt200};
   position: absolute;
   top: 0.2rem;
   left: 0.5rem;
@@ -65,7 +65,7 @@ const SelectLabel = styled.span`
 `;
 const SelectMenuWrapper = styled.div`
   position: relative;
-  background: ${(p) => p.theme.bg0};
+  background: ${(p) => p.theme.bg100};
 `;
 export const SelectMenu: React.FC<Props> = ({ label, ...props }) => {
   return (

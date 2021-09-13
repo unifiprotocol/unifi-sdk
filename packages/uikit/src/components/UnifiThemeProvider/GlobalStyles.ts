@@ -4,8 +4,8 @@ import { Themed } from "../../themes/types";
 export const GlobalStyleFactory = () => createGlobalStyle<Themed>`
   body {
     margin: 0;
-    background-color: ${(p) => p.theme.bg1};
-    color: ${(p) => p.theme.txt0}
+    background-color: ${(p) => p.theme.bg100};
+    color: ${(p) => p.theme.txt100}
   }
   body, button, input {
     font-family: ${(p) => p.theme.fontFamily};

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const Progress = styled.div`
   position: relative;
@@ -43,7 +43,7 @@ export const NotificationWrapper = styled.div`
       height: 0%;
     }
   }
-  background: ${(props) => props.theme.bg0};
+  background: ${(props) => props.theme.bg100};
   color: #fff;
   box-shadow: 0 0 10px -3px #000;
   display: flex;
@@ -111,9 +111,9 @@ export const NotificationWrapper = styled.div`
   }
 `;
 
-export const Countdown = styled.div`
+export const Countdown = styled.div<{ duration?: number }>`
   animation-name: slideDown;
-  animation-duration: 5500ms;
+  animation-duration: ${(p) => (p.duration ? p.duration : 0)}ms;
   animation-play-state: running;
   animation-iteration-count: 1;
   background-color: rgba(0, 0, 0, 0.5);

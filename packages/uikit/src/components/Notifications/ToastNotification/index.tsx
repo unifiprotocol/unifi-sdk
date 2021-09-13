@@ -1,16 +1,23 @@
-import React from 'react';
+import React from "react";
 
-import { VscClose } from 'react-icons/vsc';
+import { VscClose } from "react-icons/vsc";
 import {
   HiOutlineCheckCircle as SuccessIcon,
   HiOutlineXCircle as ErrorIcon,
   HiOutlineInformationCircle as InfoIcon,
   HiOutlineExclamationCircle as WarningIcon,
-} from 'react-icons/hi';
-import { IconType } from 'react-icons';
-import { Countdown, NotificationWrapper, Progress, Icon, Content, Close } from './Style';
+} from "react-icons/hi";
+import { IconType } from "react-icons";
+import {
+  Countdown,
+  NotificationWrapper,
+  Progress,
+  Icon,
+  Content,
+  Close,
+} from "./Style";
 
-type Appearance = 'error' | 'info' | 'success' | 'warning';
+type Appearance = "error" | "info" | "success" | "warning";
 
 const apparanceIconMap: Record<Appearance, IconType> = {
   error: ErrorIcon,
@@ -22,19 +29,21 @@ const apparanceIconMap: Record<Appearance, IconType> = {
 interface ToastNotificationProps {
   onDismiss?: () => void;
   appearance: Appearance;
+  autoDismissTimeout?: number;
 }
 
 export const ToastNotification: React.FC<ToastNotificationProps> = ({
-  onDismiss = () => {},
-  appearance = 'info',
+  onDismiss,
+  appearance = "info",
   children,
+  autoDismissTimeout = 0,
 }) => {
   const TheIcon = apparanceIconMap[appearance];
 
   return (
     <NotificationWrapper className={appearance}>
       <Progress>
-        <Countdown />
+        <Countdown duration={autoDismissTimeout} />
       </Progress>
       <Icon>
         <TheIcon size={25} />
@@ -42,9 +51,11 @@ export const ToastNotification: React.FC<ToastNotificationProps> = ({
       <Content>
         <div>{children}</div>
       </Content>
-      <Close onClick={() => onDismiss()}>
-        <VscClose size={25} />
-      </Close>
+      {onDismiss && (
+        <Close onClick={() => onDismiss()}>
+          <VscClose size={25} />
+        </Close>
+      )}
     </NotificationWrapper>
   );
 };

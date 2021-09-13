@@ -17,7 +17,7 @@ const BrandedHeaderWrapper = styled.div<Themed & { fixed: boolean }>`
 
   display: flex;
   align-items: center;
-  background: ${(props) => props.theme.bg0};
+  background: ${(props) => props.theme.bg200};
   height: 3.5rem;
   overflow: hidden;
 `;

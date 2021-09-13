@@ -1,24 +1,36 @@
-import { blue100, red100, green0, green1, green2, grey0, grey1, grey2, yellow100, white100, white200 } from "./colors";
+import {
+  blue100,
+  red100,
+  green100,
+  green200,
+  green300,
+  grey200,
+  grey100,
+  grey300,
+  yellow100,
+  white100,
+  white200,
+} from "./colors";
 
 export const DarkTheme = {
   name: "DarkTheme",
   fontFamily:
     "'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif",
   // Colors
-  primary: green0,
-  primaryLight: green1,
-  primaryDark: green2,
+  primary: green100,
+  primaryLight: green200,
+  primaryDark: green300,
   danger: red100,
   info: blue100,
   warning: yellow100,
-  success: green2,
+  success: green300,
   // Fonts
-  txt0: white100,
-  txt2: white200,
+  txt100: white100,
+  txt200: white200,
   // Backgrounds
-  bg0: grey0,
-  bg1: grey1,
-  bg2: grey2,
+  bg100: grey100,
+  bg200: grey200,
+  bg300: grey300,
 
   // Borders and shadows
   borderRadius: "5px",
