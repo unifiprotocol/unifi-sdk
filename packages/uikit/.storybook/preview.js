@@ -3,4 +3,15 @@ import { UnifiThemeProvider } from "../src/components/UnifiThemeProvider";
 import { Themes } from "../src/themes";
 const themes = Object.values(Themes);
 
-export const decorators = [withThemesProvider(themes, DEFAULT_SETTINGS, UnifiThemeProvider)];
+const tokenLogoResolver = (address) =>
+  `https://icon-service.unifi.report/icon_bsc?token=${address}`;
+
+export const decorators = [
+  withThemesProvider(themes, DEFAULT_SETTINGS, ({ theme, children }) => {
+    return (
+      <UnifiThemeProvider theme={theme} options={{ tokenLogoResolver }}>
+        {children}
+      </UnifiThemeProvider>
+    );
+  }),
+];

@@ -12,6 +12,8 @@ import {
   white200,
 } from "./colors";
 
+import { breakpoints } from "./base";
+
 export const DarkTheme = {
   name: "DarkTheme",
   fontFamily:
@@ -35,4 +37,7 @@ export const DarkTheme = {
   // Borders and shadows
   borderRadius: "5px",
   boxShadow: "0 0 15px 0 rgb(0 0 0 / 15%)",
+
+  // Responsivenes
+  breakpoints,
 };

@@ -7,9 +7,11 @@ export const breakpointMap: { [key: string]: number } = {
   xxl: 1200,
 };
 
-const breakpoints = Object.values(breakpointMap).map((breakpoint) => `${breakpoint}px`);
+export const breakpoints = Object.values(breakpointMap).map(
+  (breakpoint) => `${breakpoint}px`
+);
 
-const mediaQueries = {
+export const mediaQueries = {
   xs: `@media screen and (min-width: ${breakpointMap.xs}px)`,
   sm: `@media screen and (min-width: ${breakpointMap.sm}px)`,
   md: `@media screen and (min-width: ${breakpointMap.md}px)`,

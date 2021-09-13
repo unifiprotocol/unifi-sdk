@@ -1,18 +1,27 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import { ThemeProvider } from "styled-components";
+import { UiResolverCtx, TokenLogoResolverFn } from "../../context/uiContext";
 import { Themed } from "../../themes/types";
 
 import { GlobalStyle, GlobalFont } from "./GlobalStyles";
 //import ResetCSS from "./ResetCSS";
 
-export const UnifiThemeProvider: React.FC<Themed> = ({ theme, children }) => {
+type Options = { tokenLogoResolver?: TokenLogoResolverFn };
+
+export const UnifiThemeProvider: React.FC<Themed & Options> = ({
+  theme,
+  children,
+  ...options
+}) => {
   return (
     <ThemeProvider theme={theme}>
-      {/*<ResetCSS />*/}
-      <GlobalFont />
-      <GlobalStyle />
-      {children}
+      <UiResolverCtx.Provider value={options}>
+        {/*<ResetCSS />*/}
+        <GlobalFont />
+        <GlobalStyle />
+        {children}
+      </UiResolverCtx.Provider>
     </ThemeProvider>
   );
 };
