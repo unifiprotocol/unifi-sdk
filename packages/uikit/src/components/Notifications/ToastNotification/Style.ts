@@ -43,7 +43,7 @@ export const NotificationWrapper = styled.div`
       height: 0%;
     }
   }
-  background: ${(props) => props.theme.bg100};
+  background: ${(props) => props.theme.bg200};
   color: #fff;
   box-shadow: 0 0 10px -3px #000;
   display: flex;
