@@ -1,7 +1,7 @@
 import { createGlobalStyle } from "styled-components";
 import { Themed } from "../../themes/types";
 
-export const GlobalStyleFactory = () => createGlobalStyle<Themed>`
+export const GlobalStyle = createGlobalStyle<Themed>`
   body {
     margin: 0;
     background-color: ${(p) => p.theme.bg100};
@@ -15,10 +15,19 @@ export const GlobalStyleFactory = () => createGlobalStyle<Themed>`
   }
 
 
+  a {
+    color: ${(p) => p.theme.txt100};
+    transition: 0.15s all;
+    &:hover{
+      color: ${(p) => p.theme.primary}
+    }
+  }
+
+
   
 `;
 
-export const GlobalFontFactory = () => createGlobalStyle<Themed>`
+export const GlobalFont = createGlobalStyle<Themed>`
 /* vietnamese */
 @font-face {
   font-family: 'Nunito Sans';
