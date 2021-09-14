@@ -1,58 +1,16 @@
 import React, { useCallback, useState } from "react";
-import styled from "styled-components";
-import { disableSelectionCss } from "../../util/DOM";
-import { Themed } from "../../themes/types";
+import { ShinyWrapper } from "../ShinyWrapper";
+import {
+  ActionButton,
+  Actions,
+  InputBox,
+  InputPrefix,
+  InputWrapper,
+} from "./Styles";
 
-const InputWrapper = styled.div<Themed<{ focused: boolean }>>`
-  display: flex;
-  align-items: center;
-  background: ${(p) => p.theme.bg200};
-  border-radius: ${(p) => p.theme.borderRadius};
-  border: 2px solid ${(p) => (p.focused ? p.theme.primaryLight : p.theme.bg200)};
-  padding: 0.6rem;
-  height: 3rem;
-  transition: 0.25s all;
-  gap: 0.5rem;
-`;
-
-export const IconAddon = styled.span`
-  svg {
-    vertical-align: middle;
-  }
-`;
-
-const InputBox = styled.input<Themed>`
-  outline: none;
-  background: transparent;
-  color: ${(p) => p.theme.txt100};
-  border-radius: ${(p) => p.theme.borderRadius};
-  border: none;
-  font-size: 1rem;
-  color: ${(p) => p.theme.txt100};
-  width: 100%;
-`;
-const InputPrefix = styled.div``;
-
-const Actions = styled.div``;
-const ActionButton = styled.button`
-  font-size: 0.9rem;
-  cursor: pointer;
-  color: ${(p) => p.theme.txt200};
-  border-radius: ${(props) => props.theme.borderRadius};
-  background: ${(props) => props.theme.bg300};
-  border: 2px solid transparent;
-  transition: 0.2s all;
-  font-weight: 300;
-  padding: 0.3rem;
-
-  &:hover {
-    border-color: ${(props) => props.theme.primary};
-    color: ${(props) => props.theme.primary};
-  }
-`;
 export type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
-  label?: React.ReactNode;
   prefixAddon?: React.ReactNode;
+  disableFocusEffect?: boolean;
   actions?: Array<{
     label: string;
     action: () => void;
@@ -65,42 +23,31 @@ const preventFocus = (action: () => void) => (evt: any) => {
 };
 
 export const Input: React.FC<InputProps> = ({
-  label,
   prefixAddon,
   actions,
+  disableFocusEffect = false,
   ...props
 }) => {
   const [ref, setRef] = useState<any>();
-  const [focused, setFocused] = useState(false);
   const focus = useCallback(() => {
     ref && ref.focus();
   }, [ref]);
-  const onFocus = useCallback((evt) => {
-    setFocused(true);
-    props.onFocus && props.onFocus(evt);
-  }, []);
-  const onBlur = useCallback((evt) => {
-    setFocused(false);
-    props.onBlur && props.onBlur(evt);
-  }, []);
+  const shinyMode = disableFocusEffect ? "manual" : "on-focus-within";
   return (
-    <InputWrapper focused={focused} onClick={focus}>
-      {prefixAddon && <InputPrefix>{prefixAddon}</InputPrefix>}
-      <InputBox
-        {...props}
-        onBlur={onBlur}
-        onFocus={onFocus}
-        ref={(input: any) => setRef(input)}
-      />
-      {actions && (
-        <Actions>
-          {actions.map(({ label, action }) => (
-            <ActionButton key={label} onClick={preventFocus(action)}>
-              {label}
-            </ActionButton>
-          ))}
-        </Actions>
-      )}
-    </InputWrapper>
+    <ShinyWrapper mode={shinyMode} size="2px">
+      <InputWrapper onClick={focus}>
+        {prefixAddon && <InputPrefix>{prefixAddon}</InputPrefix>}
+        <InputBox {...props} ref={(input: any) => setRef(input)} />
+        {actions && (
+          <Actions>
+            {actions.map(({ label, action }) => (
+              <ActionButton key={label} onClick={preventFocus(action)}>
+                {label}
+              </ActionButton>
+            ))}
+          </Actions>
+        )}
+      </InputWrapper>
+    </ShinyWrapper>
   );
 };

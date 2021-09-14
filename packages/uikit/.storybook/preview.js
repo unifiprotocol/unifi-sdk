@@ -9,6 +9,7 @@ const tokenLogoResolver = (address) =>
 
 const tokenLink = (address) => `https://bscscan.com/token/${address}`;
 const isNativeToken = (currency) => currency.address === "BNB";
+
 export const decorators = [
   withThemesProvider(themes, DEFAULT_SETTINGS, ({ theme, children }) => {
     return (

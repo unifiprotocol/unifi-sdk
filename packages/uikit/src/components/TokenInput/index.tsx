@@ -7,6 +7,9 @@ import { TokenLogo } from "../TokenLogo";
 import { BN, Currency } from "@unifiprotocol/utils";
 import { PrimaryButton } from "../Button";
 import { MdSearch } from "react-icons/md";
+import { kfShine } from "../../keyframes";
+import { InputWrapper } from "../Input/Styles";
+import { ShinyWrapper } from "../ShinyWrapper";
 
 const TokenInputWrapper = styled.div<Themed>`
   background: ${(p) => p.theme.bg200};
@@ -58,6 +61,9 @@ const Token = styled.div<Themed & { clickable: boolean }>`
 const TokenSymbol = styled.div``;
 const Amount = styled.div`
   width: 70%;
+  ${InputWrapper} {
+    border: none !important;
+  }
 `;
 export type TokenInputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   label: React.ReactNode;
@@ -85,41 +91,44 @@ export const TokenInput: React.FC<TokenInputProps> = ({
   }, [setAmount]);
 
   return (
-    <TokenInputWrapper>
-      <Head>
-        <Label>{label}</Label>
-        <Balance>Balance: {balance}</Balance>
-      </Head>
-      <AmountAndToken>
-        <Amount>
-          <Input
-            onChange={(evt) => setAmount(evt.target.value)}
-            value={amount}
-            actions={[{ label: "MAX", action: max }]}
-          />
-        </Amount>
-        {token && (
-          <Token
-            clickable={tokenChangeEnabled}
-            onClick={() =>
-              tokenChangeEnabled &&
-              onRequestChangeToken &&
-              onRequestChangeToken()
-            }
-          >
-            <TokenLogo token={token} />
-            <TokenSymbol>{token.symbol}</TokenSymbol>
-          </Token>
-        )}
-        {!token && tokenChangeEnabled && (
-          <PrimaryButton
-            onClick={() => onRequestChangeToken && onRequestChangeToken()}
-          >
-            <MdSearch size={20} />
-            Select
-          </PrimaryButton>
-        )}
-      </AmountAndToken>
-    </TokenInputWrapper>
+    <ShinyWrapper mode="on-focus-within">
+      <TokenInputWrapper>
+        <Head>
+          <Label>{label}</Label>
+          <Balance>Balance: {balance}</Balance>
+        </Head>
+        <AmountAndToken>
+          <Amount>
+            <Input
+              disableFocusEffect={true}
+              onChange={(evt) => setAmount(evt.target.value)}
+              value={amount}
+              actions={[{ label: "MAX", action: max }]}
+            />
+          </Amount>
+          {token && (
+            <Token
+              clickable={tokenChangeEnabled}
+              onClick={() =>
+                tokenChangeEnabled &&
+                onRequestChangeToken &&
+                onRequestChangeToken()
+              }
+            >
+              <TokenLogo token={token} />
+              <TokenSymbol>{token.symbol}</TokenSymbol>
+            </Token>
+          )}
+          {!token && tokenChangeEnabled && (
+            <PrimaryButton
+              onClick={() => onRequestChangeToken && onRequestChangeToken()}
+            >
+              <MdSearch size={20} />
+              Select
+            </PrimaryButton>
+          )}
+        </AmountAndToken>
+      </TokenInputWrapper>
+    </ShinyWrapper>
   );
 };

@@ -8,7 +8,8 @@ import { TokenListRow } from "./TokenListRow";
 import { BiSearch } from "react-icons/bi";
 import { CgSpinner } from "react-icons/cg";
 import { Currency } from "@unifiprotocol/utils";
-import { Input, IconAddon } from "../Input";
+import { Input } from "../Input";
+import { IconAddon } from "../Input/Styles";
 
 export interface TokenListItem {
   currency: Currency;

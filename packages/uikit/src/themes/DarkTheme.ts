@@ -33,6 +33,14 @@ export const DarkTheme = {
   bg100: grey100,
   bg200: grey200,
   bg300: grey300,
+  // Gradients
+  shinyGradient: `linear-gradient(
+    to right,
+    #00e676 20%,
+    #31ff9b 40%,
+    #8affc6 60%,
+    #00e676 80%
+  )`,
 
   // Borders and shadows
   borderRadius: "5px",
