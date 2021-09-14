@@ -12,6 +12,13 @@ const InputWrapper = styled.div<Themed<{ focused: boolean }>>`
   padding: 0.6rem;
   height: 3rem;
   transition: 0.25s all;
+  gap: 0.5rem;
+`;
+
+export const IconAddon = styled.span`
+  svg {
+    vertical-align: middle;
+  }
 `;
 
 const InputBox = styled.input<Themed>`
@@ -24,11 +31,8 @@ const InputBox = styled.input<Themed>`
   color: ${(p) => p.theme.txt100};
   width: 100%;
 `;
+const InputPrefix = styled.div``;
 
-const Label = styled.div`
-  margin-left: 0.5rem;
-  ${disableSelectionCss}
-`;
 const Actions = styled.div``;
 const ActionButton = styled.button`
   font-size: 0.9rem;
@@ -48,6 +52,7 @@ const ActionButton = styled.button`
 `;
 export type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   label?: React.ReactNode;
+  prefixAddon?: React.ReactNode;
   actions?: Array<{
     label: string;
     action: () => void;
@@ -59,7 +64,12 @@ const preventFocus = (action: () => void) => (evt: any) => {
   action();
 };
 
-export const Input: React.FC<InputProps> = ({ label, actions, ...props }) => {
+export const Input: React.FC<InputProps> = ({
+  label,
+  prefixAddon,
+  actions,
+  ...props
+}) => {
   const [ref, setRef] = useState<any>();
   const [focused, setFocused] = useState(false);
   const focus = useCallback(() => {
@@ -75,7 +85,7 @@ export const Input: React.FC<InputProps> = ({ label, actions, ...props }) => {
   }, []);
   return (
     <InputWrapper focused={focused} onClick={focus}>
-      {label && <Label>{label}</Label>}
+      {prefixAddon && <InputPrefix>{prefixAddon}</InputPrefix>}
       <InputBox
         {...props}
         onBlur={onBlur}

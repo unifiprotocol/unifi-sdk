@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useMemo, useState } from "react";
 import styled from "styled-components";
-import { UiResolverCtx } from "../../context/uiContext";
+import { UiContext } from "../../context/uiContext";
 import { UNKNOWN_TOKEN_LOGO } from "../../util/images";
 
 export const TokenLogoImg = styled.img`
@@ -13,7 +13,7 @@ type TokenLogoProps = {
 } & React.ImgHTMLAttributes<HTMLImageElement>;
 
 export const TokenLogo: React.FC<TokenLogoProps> = ({ token, ...imgProps }) => {
-  const { tokenLogoResolver } = useContext(UiResolverCtx);
+  const { tokenLogoResolver } = useContext(UiContext);
   const sources = useMemo(
     () =>
       [

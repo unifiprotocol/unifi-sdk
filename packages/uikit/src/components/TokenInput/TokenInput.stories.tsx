@@ -2,14 +2,7 @@ import React, { useState } from "react";
 import { storiesOf } from "@storybook/react";
 import { TokenInput, TokenInputProps } from ".";
 import { Currency } from "@unifiprotocol/utils";
-
-const _token = new Currency(
-  "0x728c5bac3c3e370e372fc4671f9ef6916b814d8b",
-  18,
-  "UNFI",
-  "UNFI",
-  ""
-);
+import { UNFI_TOKEN } from "../../__mocks__/token.mock";
 
 const ShowDemo = (props: Omit<TokenInputProps, "onChange">) => () => {
   const [state, setState] = useState<TokenInputProps["value"]>(props.value);
@@ -20,7 +13,7 @@ const ShowDemo = (props: Omit<TokenInputProps, "onChange">) => () => {
       <TokenInput
         {...props}
         token={token}
-        onRequestChangeToken={() => setToken(_token)}
+        onRequestChangeToken={() => setToken(UNFI_TOKEN)}
         onChange={(evt) => setState(evt.target.value)}
         value={state}
       />
@@ -30,7 +23,7 @@ const ShowDemo = (props: Omit<TokenInputProps, "onChange">) => () => {
 storiesOf("TokenInput", module)
   .add(
     "Token selected",
-    ShowDemo({ token: _token, amount: "10", balance: "100", label: "From" })
+    ShowDemo({ token: UNFI_TOKEN, amount: "10", balance: "100", label: "From" })
   )
   .add(
     "Token not selected",

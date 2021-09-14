@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "ES5",
-    "lib": ["dom", "DOM.Iterable", "ESNext"],
+    "lib": [
+      "dom",
+      "DOM.Iterable",
+      "ESNext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -15,6 +19,12 @@
     "noEmit": false,
     "jsx": "react"
   },
-  "include": ["src"],
-  "exclude": ["node_modules", "src/**/*.stories.tsx", "src/__tests__/**/*"]
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "node_modules",
+    "src/**/*.stories.tsx",
+    "src/__mocks__/*" "src/__tests__/**/*"
+  ]
 }
