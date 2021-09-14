@@ -1,7 +1,7 @@
 {
   "name": "@unifiprotocol/uikit",
   "version": "1.0.3",
-  "description": "Set of UI components for pancake projects",
+  "description": "Set of UI components for Unifi Protocol projects",
   "author": "Unifi Protocol",
   "repository": "git@github.com:unifiprotocol/unifi-sdk.git",
   "homepage": "https://github.com/unifiprotocol/unifi-sdk/tree/master/packages/uikit",
