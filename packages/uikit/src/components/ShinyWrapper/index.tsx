@@ -6,13 +6,14 @@ import { calcClassName } from "../../util/DOM";
 export interface ShinnyWrapperOpts {
   size?: string;
   active?: boolean;
+  inline?: boolean;
   mode: "on-focus-within" | "manual";
 }
 
-const ShinyInnerWrapper = styled.div<{ size: string }>`
+const ShinyInnerWrapper = styled.div<{ inline: boolean; size: string }>`
   padding: ${(p) => p.size};
   border-radius: ${(p) => p.theme.borderRadius};
-
+  display: ${(p) => (p.inline ? "inline-block" : "block")};
   &.onFocusWithin:focus-within,
   &.manual.active {
     animation: ${kfShine} 2s linear infinite;
@@ -27,8 +28,10 @@ export const ShinyWrapper: React.FC<ShinnyWrapperOpts> = ({
   mode,
   active,
   size = "2px",
+  inline = false,
 }) => (
   <ShinyInnerWrapper
+    inline={inline}
     size={size}
     className={calcClassName({
       manual: mode === "manual",
