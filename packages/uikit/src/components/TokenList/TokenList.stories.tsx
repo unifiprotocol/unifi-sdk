@@ -6,9 +6,11 @@ import { shortAddress } from "@unifiprotocol/utils";
 import { Card, CardBody, CardHeader } from "../Card";
 import { TokenOfficialBadge } from "../TokenBadges";
 import styled from "styled-components";
+
 const tokenListItems: TokenListItem[] = Tokens.map((currency) => ({
   currency,
 }));
+
 const tokenListItemsWithBalances = tokenListItems.map((t) => ({
   ...t,
   balance: `${Math.random() * 100}`,

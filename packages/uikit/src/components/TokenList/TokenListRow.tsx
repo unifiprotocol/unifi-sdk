@@ -27,6 +27,7 @@ export const TokenListRow: React.FC<TokenListRowProps> = ({
   balance: _balance,
 }) => {
   const { tokenLink, isNativeToken } = useContext(UiContext);
+
   const balance = useMemo(() => _balance && BN(_balance).toFixed(4), [
     _balance,
   ]);

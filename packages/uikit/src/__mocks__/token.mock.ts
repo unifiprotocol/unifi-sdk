@@ -16,6 +16,7 @@ export const Tokens = [
     "WBNB",
     "https://cloudflare-ipfs.com/ipfs/QmadCc9jqphZCygnw3tPk27ceXyY6dak6z1LG65psXMtzw"
   ),
+  UNFI_TOKEN,
   new Currency(
     "0xe9e7cea3dedca5984780bafc599bd69add087d56",
     18,
@@ -72,7 +73,6 @@ export const Tokens = [
     "REEF",
     "https://icon-service.unifi.report/icon_bsc?token=0xF21768cCBC73Ea5B6fd3C687208a7c2def2d966e&autoResolve=false"
   ),
-  UNFI_TOKEN,
   new Currency(
     "0xD084C5a4a621914eD2992310024d2438DFde5BfD",
     18,
