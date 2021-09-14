@@ -3,6 +3,9 @@ import { storiesOf } from "@storybook/react";
 import { Card, CardHeader, CardBody } from "../Card";
 import { Input } from "../Input";
 import { ShinnyWrapperOpts, ShinyWrapper } from ".";
+import { Switch } from "../Switch";
+import { SwitchChoice } from "../Switch/Types";
+import { Checkbox } from "../Checkbox";
 
 storiesOf("ShinyWrapper", module).add("Playground", () => {
   const [active, setActive] = useState(false);
@@ -10,38 +13,32 @@ storiesOf("ShinyWrapper", module).add("Playground", () => {
   const [mode, setMode] = useState<ShinnyWrapperOpts["mode"]>(
     "on-focus-within"
   );
-
+  const modeChoices: SwitchChoice[] = [
+    { value: "on-focus-within", label: "On focus within" },
+    { value: "manual", label: "Manual" },
+  ];
   return (
     <>
       <h1>Shiny wrapper</h1>
-      <div>
-        Mode:{" "}
-        <select onChange={(evt) => setMode(evt.target.value as any)}>
-          <option selected={mode === "manual"} value="manual">
-            Manual
-          </option>
-          <option selected={mode === "on-focus-within"} value="on-focus-within">
-            On focus within
-          </option>
-        </select>
-      </div>
-      <div>
-        Size:
-        <input
-          value={size}
-          onChange={(evt) => setSize(evt.target.value)}
-          type="number"
-        />{" "}
-      </div>
-      <div>
-        Activate:
-        <input
-          onChange={(evt) => setActive(evt.target.checked)}
-          type="checkbox"
-          disabled={mode !== "manual"}
-        />{" "}
-        (Only on manual mode)
-      </div>
+      <Card style={{ marginBottom: "2rem" }}>
+        <CardHeader>Config</CardHeader>
+        <CardBody>
+          <Switch choices={modeChoices} onChange={setMode} selected={mode} />
+          <br />
+          <Checkbox
+            onChange={setActive}
+            disabled={mode !== "manual"}
+            checked={active}
+            label="Activate (Only on manual mode)"
+          />
+          <br />
+          <Input
+            prefixAddon="Size"
+            value={size}
+            onChange={(evt) => setSize(evt.target.value)}
+          />
+        </CardBody>
+      </Card>
       <ShinyWrapper size={`${size}px`} mode={mode} active={active}>
         <Card>
           <CardHeader>
