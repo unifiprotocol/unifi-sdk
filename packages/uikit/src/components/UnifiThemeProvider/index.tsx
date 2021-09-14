@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 
 import { ThemeProvider } from "styled-components";
-import { UiContext, UiContextProps } from "../../context/uiContext";
+import { UiContext, UiContextProps } from "../../context/UiContext";
 import { Themed } from "../../themes/types";
 
 import { GlobalStyle, GlobalFont } from "./GlobalStyles";

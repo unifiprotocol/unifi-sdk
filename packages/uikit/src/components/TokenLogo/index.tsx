@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useMemo, useState } from "react";
 import styled from "styled-components";
-import { UiContext } from "../../context/uiContext";
+import { UiContext } from "../../context/UiContext";
 import { UNKNOWN_TOKEN_LOGO } from "../../util/images";
 
 export const TokenLogoImg = styled.img`
