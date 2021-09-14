@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { storiesOf } from "@storybook/react";
 import { TokenList, TokenListItem } from ".";
 import { Tokens } from "../../__mocks__/token.mock";
@@ -53,9 +53,28 @@ storiesOf("TokenList", module)
       onTokenSelected={() => {}}
     />
   ))
-  .add("Card", () => {
+  .add("Disabled search", () => (
+    <TokenList
+      disableSearch={true}
+      tokenList={tokenListItemsWithBadges}
+      onTokenSelected={() => {}}
+    />
+  ))
+  .add("Card with search", () => {
     const [token, setToken] = useState(undefined);
     const [searchString, setSearchString] = useState(undefined);
+    const [filteredTokenList, setFilteredTokenList] = useState(tokenListItems);
+    useEffect(() => {
+      setFilteredTokenList(
+        tokenListItems.filter(({ currency }) => {
+          const regExp = new RegExp(searchString, "i");
+          const matchSymbol = regExp.test(currency.symbol);
+          const matchName = regExp.test(currency.name);
+          const matchAddress = regExp.test(currency.address);
+          return matchSymbol || matchName || matchAddress;
+        })
+      );
+    }, [searchString]);
     return (
       <>
         <h1>Tokens</h1>
@@ -75,7 +94,7 @@ storiesOf("TokenList", module)
           <CardHeader>Token list</CardHeader>
           <CardBody>
             <TokenList
-              tokenList={tokenListItems}
+              tokenList={filteredTokenList}
               onSearch={setSearchString}
               onTokenSelected={setToken}
             />

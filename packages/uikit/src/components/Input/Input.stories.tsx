@@ -19,10 +19,7 @@ const ShowDemo = (props: Omit<InputProps, "onChange">) => () => {
 
 storiesOf("Input", module)
   .add("Basic", ShowDemo({ value: "Hello" }))
-  .add(
-    "With Label",
-    ShowDemo({ value: "hello", label: "You better check yo self " })
-  )
+  .add("With Label", () => <h1>TODO</h1>)
   .add("With actions", () => {
     const [state, setState] = useState<InputProps["value"]>(50);
     const max = useCallback(() => {
