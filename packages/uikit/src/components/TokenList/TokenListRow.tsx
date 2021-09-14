@@ -1,6 +1,6 @@
 import { BN, Currency, shortAddress } from "@unifiprotocol/utils";
 import React, { useContext, useMemo } from "react";
-import { UiContext } from "../../context/uiContext";
+import { UiContext } from "../../context/UiContext";
 import { TokenLogo } from "../TokenLogo";
 
 import {
@@ -13,16 +13,24 @@ import {
   TokenSymbolAndBadges,
 } from "./Styles";
 
-export const TokenListRow: React.FC<{
+interface TokenListRowProps {
   currency: Currency;
   balance?: string;
   badges?: React.ReactNode[];
   onClick: () => void;
-}> = ({ currency, badges = [], onClick, balance: _balance }) => {
+}
+
+export const TokenListRow: React.FC<TokenListRowProps> = ({
+  currency,
+  badges = [],
+  onClick,
+  balance: _balance,
+}) => {
   const { tokenLink, isNativeToken } = useContext(UiContext);
   const balance = useMemo(() => _balance && BN(_balance).toFixed(4), [
     _balance,
   ]);
+
   return (
     <TokenListRowWrapper onClick={onClick}>
       <div>

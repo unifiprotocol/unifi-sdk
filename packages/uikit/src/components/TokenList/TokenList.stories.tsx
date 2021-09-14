@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { storiesOf } from "@storybook/react";
 import { TokenList, TokenListItem } from ".";
-
+import { Tokens } from "../../__mocks__/token.mock";
 import { shortAddress } from "@unifiprotocol/utils";
 import { Card, CardBody, CardHeader } from "../Card";
 import { TokenOfficialBadge } from "../TokenBadges";
 import styled from "styled-components";
-const tokenListItems: TokenListItem[] = [].map((currency) => ({
+const tokenListItems: TokenListItem[] = Tokens.map((currency) => ({
   currency,
 }));
 const tokenListItemsWithBalances = tokenListItems.map((t) => ({
