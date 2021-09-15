@@ -17,6 +17,7 @@ export const Modal = styled.div<{ centered?: boolean }>`
   position: relative;
   max-width: 500px; // TODO: parametrize in ModalOptions
   margin: 1.75rem auto;
+  padding: 0 1rem;
   ${(p) =>
     p.centered &&
     `
