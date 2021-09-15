@@ -44,6 +44,10 @@ const LISTED_ITEMS: Array<{ name: string; href: string }> = [
     href: "https://unifiprotocol.com",
   },
   {
+    name: "ANALYTICS",
+    href: "https://unifi.report",
+  },
+  {
     name: "GOVERNANCE",
     href: "https://gov.unifiprotocol.com",
   },
