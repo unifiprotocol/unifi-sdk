@@ -1,8 +1,8 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
 const NavigationHeaderWrapper = styled.div`
-  background: #000;
+  background: #131313;
   height: 24px;
   display: flex;
   align-items: center;
@@ -19,22 +19,20 @@ const NavigationHeaderWrapper = styled.div`
 
     li {
       font-size: 80%;
-      opacity: 0.85;
       flex-shrink: 0;
       padding: 0 12px;
       line-height: 24px;
       cursor: pointer;
-      background: #000;
-      transition: opacity 0.3s, background 0.3s;
-
-      &:hover {
-        opacity: 1;
-        background: rgba(255, 255, 255, 0.1);
-      }
+      background: #131313;
+      transition: color 0.3s;
 
       a {
         color: #fff;
         text-decoration: none;
+
+        &:hover {
+          color: ${(props) => props.theme.primary};
+        }
       }
     }
   }
@@ -42,20 +40,20 @@ const NavigationHeaderWrapper = styled.div`
 
 const LISTED_ITEMS: Array<{ name: string; href: string }> = [
   {
-    name: 'UNIFI PROTOCOL',
-    href: 'https://unifiprotocol.com',
+    name: "UNIFI PROTOCOL",
+    href: "https://unifiprotocol.com",
   },
   {
-    name: 'GOVERNANCE',
-    href: 'https://gov.unifiprotocol.com',
+    name: "GOVERNANCE",
+    href: "https://gov.unifiprotocol.com",
   },
   {
-    name: 'UTRADE',
-    href: 'https://utrade.finance',
+    name: "UTRADE",
+    href: "https://utrade.finance",
   },
   {
-    name: 'USTAKE',
-    href: 'https://ustake.pages.dev',
+    name: "USTAKE",
+    href: "https://ustake.pages.dev",
   },
 ];
 
@@ -64,7 +62,7 @@ export const NavigationHeader: React.FC = () => (
     <ul>
       {LISTED_ITEMS.map((item, idx) => (
         <li key={idx}>
-          <a href={item.href} target='_blank' rel='noreferrer'>
+          <a href={item.href} target="_blank" rel="noreferrer">
             {item.name}
           </a>
         </li>
