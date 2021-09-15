@@ -3,7 +3,7 @@ import { PrimaryButton, SecondaryButton } from "../../../components/Button";
 import { useModal } from "../useModal";
 import { ModalProps } from "..";
 import { Card, CardHeader, CardBody } from "../../../components/Card";
-import { ModalWrapper } from "../Modal";
+import { Modal } from "../Modal";
 
 export default {
   title: "Widgets/Modal",
@@ -12,7 +12,7 @@ export default {
 
 const FirstModal: React.FC<ModalProps> = ({ close }) => {
   return (
-    <ModalWrapper>
+    <Modal>
       <Card>
         <CardHeader>First Modal</CardHeader>
         <CardBody>
@@ -23,7 +23,7 @@ const FirstModal: React.FC<ModalProps> = ({ close }) => {
           <SecondaryButton onClick={close}>Close me</SecondaryButton>
         </CardBody>
       </Card>
-    </ModalWrapper>
+    </Modal>
   );
 };
 
