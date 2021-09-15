@@ -5,16 +5,6 @@ import { Themed } from "../../themes/types";
 
 const BrandedHeaderWrapper = styled.div<Themed & { fixed: boolean }>`
   z-index: 999999;
-
-  ${(props) =>
-    props.fixed &&
-    css`
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-    `}
-
   display: flex;
   align-items: center;
   background: ${(props) => props.theme.bg200};
@@ -35,11 +25,8 @@ const BrandedHeaderLogo = styled.img`
   width: auto;
 `;
 
-export const BrandedHeader: React.FC<{ fixed?: boolean }> = ({
-  children,
-  fixed = false,
-}) => (
-  <BrandedHeaderWrapper fixed={fixed}>
+export const BrandedHeader: React.FC = ({ children }) => (
+  <BrandedHeaderWrapper>
     <BrandedHeaderContent>
       <BrandedHeaderLogo src={UnifiTextLogo} />
       {children}
