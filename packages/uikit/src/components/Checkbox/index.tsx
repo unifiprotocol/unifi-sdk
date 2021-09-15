@@ -12,10 +12,25 @@ const CheckboxWrapper = styled.div<Themed<{ disabled: boolean }>>`
 
 const Box = styled.div<Themed<{ disabled: boolean; checked: boolean }>>`
   display: inline-block;
-  width: 1.5rem;
-  height: 1.5rem;
-  background: ${(p) => (p.checked ? p.theme.primary : "transparent")};
-  border: 2px solid ${(p) => (p.disabled ? p.theme.muted : p.theme.primary)};
+  width: 1.4rem;
+  cursor: ${(p) => (p.disabled ? "not-allowed" : "pointer")};
+  height: 1.4rem;
+  background: ${(p) => {
+    if (p.checked) {
+      return p.disabled ? "transparent" : p.theme.primary;
+    }
+  }};
+
+  border: 2px solid transparent;
+  border-color: ${(p) => {
+    if (p.disabled) {
+      return p.theme.muted;
+    }
+    if (p.checked) {
+      return p.theme.primary;
+    }
+    return p.theme.bgContrast100;
+  }};
   border-radius: 1px;
   &,
   svg {
@@ -32,19 +47,20 @@ const Box = styled.div<Themed<{ disabled: boolean; checked: boolean }>>`
   `}
   svg {
     opacity: ${(p) => (p.checked ? 1 : 0.1)};
-    color: #fff;
+    color: ${(p) => (p.disabled ? p.theme.muted : p.theme.txt100)};
   }
 `;
-const Label = styled.div`
+const Label = styled.div<{ disabled: boolean }>`
   margin-left: 0.5rem;
   ${disableSelectionCss}
+  color:${(p) => (p.disabled ? p.theme.muted : p.theme.txt100)}
 `;
 
 export interface CheckboxProps {
   checked: boolean;
   disabled?: boolean;
   label?: React.ReactNode;
-  onChange: (value: boolean) => void;
+  onChange?: (value: boolean) => void;
 }
 export const Checkbox: React.FC<CheckboxProps> = ({
   checked,
@@ -60,12 +76,16 @@ export const Checkbox: React.FC<CheckboxProps> = ({
   return (
     <CheckboxWrapper
       disabled={disabled}
-      onClick={() => !disabled && onChange(!checked)}
+      onClick={() => !disabled && onChange && onChange(!checked)}
     >
       <Box disabled={disabled} checked={checked}>
-        <CgCheck size={22} />
+        <CgCheck size={20} />
       </Box>
-      {label && <Label onClick={dontCheckOnAnchorClick}>{label}</Label>}
+      {label && (
+        <Label disabled={disabled} onClick={dontCheckOnAnchorClick}>
+          {label}
+        </Label>
+      )}
     </CheckboxWrapper>
   );
 };

@@ -27,6 +27,10 @@ export const DarkTheme = {
   warning: yellow100,
   success: green300,
   muted: white200,
+  // Contracts
+  bgContrast100: white100,
+  bgContrast200: white200,
+  bgContrast300: white200,
   // Fonts
   txt100: white100,
   txt200: white200,
