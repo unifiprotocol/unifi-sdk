@@ -17,7 +17,7 @@ export const CardHeader = styled.div`
     margin: 0;
   }
   padding: 1.5rem;
-  margin: 0px 0px 1.5rem 0;
+  margin: 0;
 `;
 
 export const CardBody = styled.div`
