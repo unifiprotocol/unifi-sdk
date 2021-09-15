@@ -46,7 +46,10 @@ export const DarkTheme = {
   // Borders and shadows
   borderRadius: "5px",
   boxShadow: "0 0 15px 0 rgb(0 0 0 / 15%)",
-
+  // zIndexes
+  zIndex: {
+    modal: 900,
+  },
   // Responsivenes
   breakpoints,
 };

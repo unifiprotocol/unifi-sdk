@@ -10,3 +10,6 @@ export * from "./components/UnifiThemeProvider";
 
 // Theme
 export * from "./themes";
+
+// Widgets
+export * from "./widgets";
