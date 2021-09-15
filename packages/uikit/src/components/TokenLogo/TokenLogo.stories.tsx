@@ -3,7 +3,7 @@ import { TokenLogo } from ".";
 import { UNFI_TOKEN } from "../../__mocks__/token.mock";
 
 export default {
-  title: "Components/TokenLogo",
+  title: "Components/Tokens/TokenLogo",
 };
 
 export const Default = () => (

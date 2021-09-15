@@ -7,7 +7,7 @@ import { TokenOfficialBadge } from "../TokenBadges";
 import styled from "styled-components";
 
 export default {
-  title: 'Components/TokenList'
+  title: 'Components/Tokens/TokenList'
 }
 
 const tokenListItems: TokenListItem[] = Tokens.map((currency) => ({

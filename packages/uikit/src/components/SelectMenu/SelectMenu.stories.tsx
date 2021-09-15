@@ -2,7 +2,7 @@ import React from "react";
 import { SelectMenu } from ".";
 
 export default {
-  title: "Components/SelectMenu",
+  title: "Components/Forms/SelectMenu",
 };
 
 export const Default = () => (

@@ -4,7 +4,7 @@ import { Currency } from "@unifiprotocol/utils";
 import { UNFI_TOKEN } from "../../__mocks__/token.mock";
 
 export default {
-  title: "Components/TokenInput",
+  title: "Components/Tokens/TokenInput",
 };
 
 const ShowDemo = (props: Omit<TokenInputProps, "onChange">) => () => {

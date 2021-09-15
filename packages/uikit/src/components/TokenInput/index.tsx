@@ -7,7 +7,6 @@ import { TokenLogo } from "../TokenLogo";
 import { BN, Currency } from "@unifiprotocol/utils";
 import { PrimaryButton } from "../Button";
 import { MdSearch } from "react-icons/md";
-import { kfShine } from "../../keyframes";
 import { InputWrapper } from "../Input/Styles";
 import { ShinyWrapper } from "../ShinyWrapper";
 

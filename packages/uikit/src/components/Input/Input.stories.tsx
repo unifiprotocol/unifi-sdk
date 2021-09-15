@@ -2,7 +2,7 @@ import React, { useState, useCallback } from "react";
 
 import { Input, InputProps } from ".";
 export default {
-  title: "Components/Input",
+  title: "Components/Forms/Input",
 };
 
 const ShowDemo = (props: Omit<InputProps, "onChange">) => () => {

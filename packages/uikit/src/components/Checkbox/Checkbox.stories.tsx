@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { Checkbox, CheckboxProps } from ".";
 export default {
-  title: "Components/Checkbox",
+  title: "Components/Forms/Checkbox",
 };
 const ShowDemo = (props: Omit<CheckboxProps, "onChange">) => () => {
   const [state, setState] = useState(props.checked);
