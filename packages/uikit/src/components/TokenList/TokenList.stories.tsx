@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { storiesOf } from "@storybook/react";
 import { TokenList, TokenListItem } from ".";
 import { Tokens } from "../../__mocks__/token.mock";
 import { shortAddress } from "@unifiprotocol/utils";
 import { Card, CardBody, CardHeader } from "../Card";
 import { TokenOfficialBadge } from "../TokenBadges";
 import styled from "styled-components";
+
+export default {
+  title: 'Components/TokenList'
+}
 
 const tokenListItems: TokenListItem[] = Tokens.map((currency) => ({
   currency,
@@ -37,30 +40,29 @@ const tokenListItemsWithBadges = tokenListItemsWithBalances.map((t, i) => {
   };
 });
 
-storiesOf("TokenList", module)
-  .add("Basic", () => (
+export const Basic = () => (
     <TokenList tokenList={tokenListItems} onTokenSelected={() => {}} />
-  ))
-  .add("With Balances", () => (
+  )
+  export const WithBalances = ()=>(
     <TokenList
       tokenList={tokenListItemsWithBalances}
       onTokenSelected={() => {}}
     />
-  ))
-  .add("WithBadges", () => (
+  )
+  export const = WithBadges () => (
     <TokenList
       tokenList={tokenListItemsWithBadges}
       onTokenSelected={() => {}}
     />
-  ))
-  .add("Disabled search", () => (
+  )
+  export const DisabledSearch= () => (
     <TokenList
       disableSearch={true}
       tokenList={tokenListItemsWithBadges}
       onTokenSelected={() => {}}
     />
-  ))
-  .add("Card with search", () => {
+  )
+  export const CardWithSearch = ()=>{
     const [token, setToken] = useState(undefined);
     const [searchString, setSearchString] = useState(undefined);
     const [filteredTokenList, setFilteredTokenList] = useState(tokenListItems);
@@ -102,4 +104,4 @@ storiesOf("TokenList", module)
         </Card>
       </>
     );
-  });
+  };

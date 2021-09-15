@@ -4,11 +4,27 @@ import React from "react";
 import styled from "styled-components";
 import { calcClassName } from "../../util/DOM";
 import { TokenLogo } from "../TokenLogo";
+import { kfShine } from "../../keyframes";
 
-const TokenAmountWrapper = styled.div`
+const TokenAmountWrapper = styled.div<{ shiny: boolean }>`
   display: flex;
-  background: ${(props) => props.theme.bg200};
-  border-radius: ${(props) => props.theme.borderRadius};
+  animation: ${kfShine} 2s linear infinite;
+  background: ${(p) => p.theme.bg200};
+  ${(p) =>
+    p.shiny &&
+    `
+    *{
+      color: #000!important;
+      font-weight:bold!important;
+    }
+    img {
+      box-shadow: 0 0 0 2px #fff;
+    }
+background: ${p.theme.shinyGradient};
+background-size: 200% auto;}
+  `}
+
+  border-radius: ${(p) => p.theme.borderRadius};
   padding: 0.5rem;
   align-items: center;
   .logo {
@@ -58,15 +74,20 @@ interface TokenAmountProps {
   token: Currency;
   amount: string;
   compactOnXs?: boolean;
+  shiny?: boolean;
 }
 
 export const TokenAmount: React.FC<TokenAmountProps> = ({
   token,
   amount,
   compactOnXs = false,
+  shiny = false,
 }) => {
   return (
-    <TokenAmountWrapper className={calcClassName({ compactOnXs })}>
+    <TokenAmountWrapper
+      shiny={shiny}
+      className={calcClassName({ compactOnXs })}
+    >
       <div className="logo">
         <TokenLogo token={token} />
       </div>

@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { storiesOf } from "@storybook/react";
-import { Checkbox, CheckboxProps } from ".";
 
+import { Checkbox, CheckboxProps } from ".";
+export default {
+  title: "Components/Checkbox",
+};
 const ShowDemo = (props: Omit<CheckboxProps, "onChange">) => () => {
   const [state, setState] = useState(props.checked);
 
@@ -13,23 +15,20 @@ const ShowDemo = (props: Omit<CheckboxProps, "onChange">) => () => {
   );
 };
 
-storiesOf("Checkbox", module)
-  .add("Basic", ShowDemo({ checked: true }))
-  .add(
-    "With Label",
-    ShowDemo({ checked: true, label: "You better check yo self " })
-  )
-  .add(
-    "With link in label",
-    ShowDemo({
-      checked: true,
-      label: (
-        <>
-          You better check yo self after{" "}
-          <a target="_blank" href="#">
-            reading our policy
-          </a>{" "}
-        </>
-      ),
-    })
-  );
+export const Basic = ShowDemo({ checked: true });
+export const WithLabel = ShowDemo({
+  checked: true,
+  label: "You better check yo self ",
+});
+
+export const WithLinkInLabel = ShowDemo({
+  checked: true,
+  label: (
+    <>
+      You better check yo self after{" "}
+      <a target="_blank" href="#">
+        reading our policy
+      </a>{" "}
+    </>
+  ),
+});

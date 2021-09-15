@@ -1,8 +1,11 @@
-import React from 'react';
-import { storiesOf } from '@storybook/react';
-import { Card, CardHeader, CardBody } from '.';
+import React from "react";
+import { Card, CardHeader, CardBody } from ".";
 
-storiesOf('Card', module).add('Card', () => (
+export default {
+  title: "Components/Card",
+};
+
+export const Default = () => (
   <>
     <h1>Cards</h1>
 
@@ -13,4 +16,4 @@ storiesOf('Card', module).add('Card', () => (
       <CardBody>Content</CardBody>
     </Card>
   </>
-));
+);

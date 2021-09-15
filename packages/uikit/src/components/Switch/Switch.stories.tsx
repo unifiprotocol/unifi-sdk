@@ -1,9 +1,12 @@
 import React from "react";
-import { storiesOf } from "@storybook/react";
 import { Switch } from ".";
 import { SwitchChoice, SwitchProps } from "./Types";
 import { useState } from "@storybook/addons";
 import { RiRadioButtonFill } from "react-icons/ri";
+
+export default {
+  title: "Components/Switch",
+};
 
 const choices: SwitchChoice[] = [
   { value: "buy", label: "Buy" },
@@ -23,13 +26,9 @@ const showSwitch = (props: Omit<SwitchProps, "onChange">) => () => {
   );
 };
 
-storiesOf("Switch", module)
-  .add("Basic", showSwitch({ choices, selected: choices[0].value }))
-  .add(
-    "WithIcon",
-    showSwitch({
-      choices,
-      selected: choices[0].value,
-      checkIcon: RiRadioButtonFill,
-    })
-  );
+export const Basic = showSwitch({ choices, selected: choices[0].value });
+export const WithIcon = showSwitch({
+  choices,
+  selected: choices[0].value,
+  checkIcon: RiRadioButtonFill,
+});

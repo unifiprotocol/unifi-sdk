@@ -1,8 +1,11 @@
 import React, { useState } from "react";
-import { storiesOf } from "@storybook/react";
 import { TokenInput, TokenInputProps } from ".";
 import { Currency } from "@unifiprotocol/utils";
 import { UNFI_TOKEN } from "../../__mocks__/token.mock";
+
+export default {
+  title: "Components/TokenInput",
+};
 
 const ShowDemo = (props: Omit<TokenInputProps, "onChange">) => () => {
   const [state, setState] = useState<TokenInputProps["value"]>(props.value);
@@ -20,12 +23,14 @@ const ShowDemo = (props: Omit<TokenInputProps, "onChange">) => () => {
     </div>
   );
 };
-storiesOf("TokenInput", module)
-  .add(
-    "Token selected",
-    ShowDemo({ token: UNFI_TOKEN, amount: "10", balance: "100", label: "From" })
-  )
-  .add(
-    "Token not selected",
-    ShowDemo({ amount: "10", balance: "100", label: "From" })
-  );
+export const TokenSelected = ShowDemo({
+  token: UNFI_TOKEN,
+  amount: "10",
+  balance: "100",
+  label: "From",
+});
+export const TokenNotSelected = ShowDemo({
+  amount: "10",
+  balance: "100",
+  label: "From",
+});

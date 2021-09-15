@@ -1,10 +1,13 @@
-import React from 'react';
-import { storiesOf } from '@storybook/react';
-import { NavigationHeader } from '.';
+import React from "react";
+import { NavigationHeader } from ".";
 
-storiesOf('NavigationHeader', module).add('NavigationHeader', () => (
+export default {
+  title: "Components/NavigatonHeader",
+};
+
+export const Default = () => (
   <>
     <h1>NavigationHeader</h1>
     <NavigationHeader />
   </>
-));
+);
