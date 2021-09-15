@@ -12,7 +12,7 @@ import {
   white200,
 } from "./colors";
 
-import { breakpoints } from "./base";
+import { breakpointMap } from "./base";
 
 export const DarkTheme = {
   name: "DarkTheme",
@@ -55,5 +55,5 @@ export const DarkTheme = {
     modal: 900,
   },
   // Responsivenes
-  breakpoints,
+  breakpoints: breakpointMap,
 };

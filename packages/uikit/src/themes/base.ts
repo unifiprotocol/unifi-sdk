@@ -1,4 +1,4 @@
-export const breakpointMap: { [key: string]: number } = {
+export const breakpointMap: Record<string, number> = {
   xs: 370,
   sm: 576,
   md: 852,

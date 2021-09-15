@@ -7,8 +7,8 @@ import { TokenOfficialBadge } from "../TokenBadges";
 import styled from "styled-components";
 
 export default {
-  title: 'Components/Tokens/TokenList'
-}
+  title: "Components/Tokens/TokenList",
+};
 
 const tokenListItems: TokenListItem[] = Tokens.map((currency) => ({
   currency,
@@ -41,67 +41,64 @@ const tokenListItemsWithBadges = tokenListItemsWithBalances.map((t, i) => {
 });
 
 export const Basic = () => (
-    <TokenList tokenList={tokenListItems} onTokenSelected={() => {}} />
-  )
-  export const WithBalances = ()=>(
-    <TokenList
-      tokenList={tokenListItemsWithBalances}
-      onTokenSelected={() => {}}
-    />
-  )
-  export const = WithBadges () => (
-    <TokenList
-      tokenList={tokenListItemsWithBadges}
-      onTokenSelected={() => {}}
-    />
-  )
-  export const DisabledSearch= () => (
-    <TokenList
-      disableSearch={true}
-      tokenList={tokenListItemsWithBadges}
-      onTokenSelected={() => {}}
-    />
-  )
-  export const CardWithSearch = ()=>{
-    const [token, setToken] = useState(undefined);
-    const [searchString, setSearchString] = useState(undefined);
-    const [filteredTokenList, setFilteredTokenList] = useState(tokenListItems);
-    useEffect(() => {
-      setFilteredTokenList(
-        tokenListItems.filter(({ currency }) => {
-          const regExp = new RegExp(searchString, "i");
-          const matchSymbol = regExp.test(currency.symbol);
-          const matchName = regExp.test(currency.name);
-          const matchAddress = regExp.test(currency.address);
-          return matchSymbol || matchName || matchAddress;
-        })
-      );
-    }, [searchString]);
-    return (
-      <>
-        <h1>Tokens</h1>
-        <div>
-          <b>Selected token:</b>{" "}
-          {token && (
-            <>
-              {token.symbol} @{shortAddress(token.address)}
-            </>
-          )}{" "}
-          {!token && "None"}
-        </div>
-        <div>
-          <b>Search string:</b> {searchString}
-        </div>
-        <Card>
-          <CardHeader>Token list</CardHeader>
-          <CardBody>
-            <TokenList
-              tokenList={filteredTokenList}
-              onSearch={setSearchString}
-              onTokenSelected={setToken}
-            />
-          </CardBody>
-        </Card>
-      </>
+  <TokenList tokenList={tokenListItems} onTokenSelected={() => {}} />
+);
+export const WithBalances = () => (
+  <TokenList
+    tokenList={tokenListItemsWithBalances}
+    onTokenSelected={() => {}}
+  />
+);
+export const WithBadges = () => (
+  <TokenList tokenList={tokenListItemsWithBadges} onTokenSelected={() => {}} />
+);
+export const DisabledSearch = () => (
+  <TokenList
+    disableSearch={true}
+    tokenList={tokenListItemsWithBadges}
+    onTokenSelected={() => {}}
+  />
+);
+export const CardWithSearch = () => {
+  const [token, setToken] = useState(undefined);
+  const [searchString, setSearchString] = useState(undefined);
+  const [filteredTokenList, setFilteredTokenList] = useState(tokenListItems);
+  useEffect(() => {
+    setFilteredTokenList(
+      tokenListItems.filter(({ currency }) => {
+        const regExp = new RegExp(searchString, "i");
+        const matchSymbol = regExp.test(currency.symbol);
+        const matchName = regExp.test(currency.name);
+        const matchAddress = regExp.test(currency.address);
+        return matchSymbol || matchName || matchAddress;
+      })
     );
-  };
+  }, [searchString]);
+  return (
+    <>
+      <h1>Tokens</h1>
+      <div>
+        <b>Selected token:</b>{" "}
+        {token && (
+          <>
+            {token.symbol} @{shortAddress(token.address)}
+          </>
+        )}{" "}
+        {!token && "None"}
+      </div>
+      <div>
+        <b>Search string:</b> {searchString}
+      </div>
+      <Card>
+        <CardHeader>Token list</CardHeader>
+        <CardBody>
+          <TokenList
+            tokenList={filteredTokenList}
+            onSearch={setSearchString}
+            onTokenSelected={setToken}
+          />
+        </CardBody>
+      </Card>
+    </>
+  );
+};
