@@ -40,7 +40,7 @@ export const SecondaryButton = styled(BaseButton)`
 
 export const DangerButton = styled(BaseButton)`
   color: #fff;
-  background-color: ${(props) => props.theme.dangerColor};
+  background-color: ${(props) => props.theme.danger};
   svg {
     color: #fff;
   }
