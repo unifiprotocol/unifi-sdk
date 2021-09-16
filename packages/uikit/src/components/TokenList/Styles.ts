@@ -37,10 +37,11 @@ export const LoadingTokens = styled.div`
 `;
 
 export const TokenListRowsWrapper = styled.div`
-  padding-top: 0.5rem;
+  margin-top: 0.5rem;
   min-height: 20rem;
   max-height: 20rem;
   overflow-y: scroll;
+  border-radius: ${(props) => props.theme.borderRadius};
 `;
 
 export const TokenListRowWrapper = styled.div`
@@ -48,6 +49,7 @@ export const TokenListRowWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 0.5rem 2rem 0.5rem 1rem;
+  border-radius: ${(props) => props.theme.borderRadius};
   cursor: pointer;
 
   &:hover {

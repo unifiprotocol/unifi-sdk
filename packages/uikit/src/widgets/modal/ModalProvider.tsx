@@ -19,7 +19,7 @@ export const ModalProvider: React.FC = ({ children }) => {
   );
 
   const closeModal = useCallback(
-    (id) => {
+    (id: number) => {
       setModals((modals) => {
         const copy = [...modals];
         copy.splice(id, 1);

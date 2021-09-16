@@ -1,35 +1,34 @@
-import React, { useContext, ReactNode, useCallback, Component } from "react";
-import { ModalItem, ModalOptions } from ".";
+import React, { useContext, useCallback } from "react";
+import { ModalItem, ModalOptions, ModalProps, NewModalItem } from ".";
 import { ModalContext } from "./ModalContext";
 
+const defaultOptions = {
+  disableBackdropClick: true,
+};
 const setDefaults = (options: Partial<ModalOptions> = {}): ModalOptions => {
   return {
-    disableBackdropClick: false,
+    ...defaultOptions,
     ...options,
   };
 };
+type OpenFn = () => void;
+type CloseFn = () => void;
 
-interface ModalItemPartialized {
-  component: ModalItem["component"];
-  props?: ModalItem["props"];
-  options?: Partial<ModalItem["options"]>;
-}
-
-export const useModal = ({
+export const useModal = <T extends any>({
   component,
-  options = {},
-  props = {},
-}: ModalItemPartialized): [() => void, () => void] => {
-  const modal = {
+  props,
+  options = { ...defaultOptions },
+}: NewModalItem<T>): [OpenFn, CloseFn] => {
+  const modal: ModalItem = {
     component,
-    props,
+    props: { ...props, close: () => null },
     options: setDefaults(options),
   };
 
-  const { openModal, closeModal } = useContext(ModalContext);
+  const { openModal, closeModal, modals } = useContext(ModalContext);
 
   const open = useCallback(() => openModal(modal), [modal]);
-  const close = useCallback(() => closeModal(modal), [modal]);
+  const close = useCallback(() => closeModal(modals.length - 1), [modal]);
 
   // as array so you can easily rename on caller
   return [open, close];

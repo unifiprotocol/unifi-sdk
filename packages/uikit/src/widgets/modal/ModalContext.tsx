@@ -3,17 +3,26 @@ import React, { createContext, ReactNode } from "react";
 export interface ModalOptions {
   disableBackdropClick: boolean;
 }
+
 export interface ModalProps {
   close: () => void;
 }
-export interface ModalItem {
-  component: React.FC<ModalProps>;
-  props: Record<string, unknown>;
+
+export interface NewModalItem<T> {
+  component: React.FC<T>;
+  props: Omit<T, "close">;
+  options?: ModalOptions;
+}
+
+export interface ModalItem<T extends ModalProps = any> {
+  component: React.FC<T>;
+  props: T;
   options: ModalOptions;
 }
+
 export interface ModalContextProps {
   openModal: (modal: ModalItem) => void;
-  closeModal: (modal: ModalItem) => void;
+  closeModal: (id: number) => void;
   modals: ReactNode[];
 }
 

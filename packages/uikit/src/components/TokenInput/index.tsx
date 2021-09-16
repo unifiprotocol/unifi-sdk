@@ -7,8 +7,10 @@ import { TokenLogo } from "../TokenLogo";
 import { BN, Currency } from "@unifiprotocol/utils";
 import { PrimaryButton } from "../Button";
 import { MdSearch } from "react-icons/md";
-import { InputWrapper } from "../Input/Styles";
 import { ShinyWrapper } from "../ShinyWrapper";
+import { PrettyAmount } from "../PrettyAmount";
+import { CgSpinner } from "react-icons/cg";
+import { Spin } from "../Animations";
 
 const TokenInputWrapper = styled.div<Themed>`
   background: ${(p) => p.theme.bg200};
@@ -37,6 +39,7 @@ const AmountAndToken = styled.div`
   display: flex;
   align-items: center;
   gap: 0.25rem;
+  justify-content: space-between;
 `;
 
 const Token = styled.div<Themed & { clickable: boolean }>`
@@ -59,15 +62,14 @@ const Token = styled.div<Themed & { clickable: boolean }>`
 `;
 const TokenSymbol = styled.div``;
 const Amount = styled.div`
-  width: 70%;
-  ${InputWrapper} {
-    border: none !important;
-  }
+  flex-grow: 1;
 `;
-export type TokenInputProps = React.InputHTMLAttributes<HTMLInputElement> & {
+
+export type TokenInputProps = {
   label: React.ReactNode;
-  balance: string;
-  amount: string;
+  balance?: string;
+  balanceLoading?: boolean;
+  amount?: string;
   token?: Currency;
   maxPercentage?: string;
   disableTokenChange?: boolean;
@@ -76,10 +78,11 @@ export type TokenInputProps = React.InputHTMLAttributes<HTMLInputElement> & {
 
 export const TokenInput: React.FC<TokenInputProps> = ({
   token,
-  amount: _amount,
+  amount: _amount = "0",
   label,
-  balance,
+  balance = "0",
   maxPercentage = "0.99",
+  balanceLoading = false,
   disableTokenChange: tokenChangeEnabled = true,
   onRequestChangeToken,
 }) => {
@@ -94,7 +97,16 @@ export const TokenInput: React.FC<TokenInputProps> = ({
       <TokenInputWrapper>
         <Head>
           <Label>{label}</Label>
-          <Balance>Balance: {balance}</Balance>
+          {balance && (
+            <Balance>
+              {balanceLoading && (
+                <Spin>
+                  <CgSpinner />
+                </Spin>
+              )}{" "}
+              Balance: <PrettyAmount value={balance} animationDuration={500} />
+            </Balance>
+          )}
         </Head>
         <AmountAndToken>
           <Amount>
@@ -119,12 +131,14 @@ export const TokenInput: React.FC<TokenInputProps> = ({
             </Token>
           )}
           {!token && tokenChangeEnabled && (
-            <PrimaryButton
-              onClick={() => onRequestChangeToken && onRequestChangeToken()}
-            >
-              <MdSearch size={20} />
-              Select
-            </PrimaryButton>
+            <div>
+              <PrimaryButton
+                onClick={() => onRequestChangeToken && onRequestChangeToken()}
+              >
+                <MdSearch size={20} />
+                Select
+              </PrimaryButton>
+            </div>
           )}
         </AmountAndToken>
       </TokenInputWrapper>

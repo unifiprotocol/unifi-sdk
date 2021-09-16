@@ -16,7 +16,7 @@ export interface TokenListItem {
   balance?: string;
   badges?: React.ReactNode[];
 }
-interface TokenListProps {
+export interface TokenListProps {
   tokenList: Array<TokenListItem>;
   onTokenSelected: (currency: Currency) => void;
   searchPlaceholderTxt?: string;
