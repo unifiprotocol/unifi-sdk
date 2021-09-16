@@ -21,7 +21,6 @@ export interface TokenListProps {
   onTokenSelected: (currency: Currency) => void;
   searchPlaceholderTxt?: string;
   onSearch?: (searchString: string) => void;
-  disableSearch?: boolean;
   loadingTokens?: boolean;
   loadingTokensTxt?: string;
 }
@@ -32,7 +31,6 @@ export const TokenList: React.FC<TokenListProps> = ({
   onSearch,
   searchPlaceholderTxt = "",
   loadingTokensTxt = "",
-  disableSearch = false,
 }) => {
   const [searchString, setSearchString] = useState("");
   useEffect(() => onSearch && onSearch(searchString), [searchString]);
@@ -42,7 +40,7 @@ export const TokenList: React.FC<TokenListProps> = ({
       : [];
   return (
     <TokenListWrapper>
-      {!disableSearch && (
+      {onSearch && (
         <Input
           prefixAddon={
             <IconAddon>

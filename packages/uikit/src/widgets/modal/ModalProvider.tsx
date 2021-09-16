@@ -8,25 +8,46 @@ export const ModalProvider: React.FC = ({ children }) => {
   const theme = useTheme();
 
   const [modals, setModals] = useState<Array<ModalItem>>([]);
+  const [openedModals, setOpenedModals] = useState<number[]>([]);
 
-  const openModal = useCallback(
-    (modal: ModalItem) => {
-      setModals((modals) => {
-        return [...modals, modal];
+  const createOrUpdateModal = useCallback(
+    (newModal: ModalItem) => {
+      setModals((_modals) => {
+        let updated = false;
+
+        const modals = _modals.map((m) => {
+          // We are suposed to not stake the same modal twice
+          if (m.component === newModal.component) {
+            m.props = newModal.props;
+            updated = true;
+          }
+          return m;
+        });
+
+        if (updated) {
+          return modals;
+        }
+
+        return [...modals, newModal];
       });
     },
     [setModals]
   );
 
   const closeModal = useCallback(
-    (id: number) => {
-      setModals((modals) => {
-        const copy = [...modals];
-        copy.splice(id, 1);
-        return copy;
-      });
+    (closeId: number) => {
+      setOpenedModals((openedModals) =>
+        openedModals.filter((modalId) => modalId !== closeId)
+      );
     },
-    [setModals]
+    [setOpenedModals]
+  );
+
+  const openModal = useCallback(
+    (id: number) => {
+      setOpenedModals((openedModals) => [...openedModals, id]);
+    },
+    [setOpenedModals]
   );
 
   const onBackdropClick = useCallback(
@@ -49,6 +70,7 @@ export const ModalProvider: React.FC = ({ children }) => {
   return (
     <ModalContext.Provider
       value={{
+        createOrUpdateModal,
         openModal,
         closeModal,
         modals,
@@ -56,15 +78,19 @@ export const ModalProvider: React.FC = ({ children }) => {
     >
       {children}
 
-      {modals.map(({ component: ModalComponent, props }, idx) => (
-        <ModalOverlay
-          onClick={onBackdropClick}
-          key={idx}
-          style={{ zIndex: theme.zIndex.modal + idx }}
-        >
-          <ModalComponent {...props} close={() => closeModal(idx)} />
-        </ModalOverlay>
-      ))}
+      {openedModals.length > 0 &&
+        modals.map(
+          ({ component: ModalComponent, props }, idx) =>
+            openedModals.includes(idx) && (
+              <ModalOverlay
+                onClick={onBackdropClick}
+                key={idx}
+                style={{ zIndex: theme.zIndex.modal + idx }}
+              >
+                <ModalComponent {...props} close={() => closeModal(idx)} />
+              </ModalOverlay>
+            )
+        )}
     </ModalContext.Provider>
   );
 };

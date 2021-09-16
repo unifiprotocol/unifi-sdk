@@ -30,13 +30,19 @@ export const TokenInputWithSelector: React.FC<TokenInputWithSelectorProps> = ({
     [onTokenChange]
   );
 
-  const [open] = useModal({
-    component: TokenListModal,
-    props: {
+  const props = useMemo(
+    () => ({
       tokenList,
       onTokenSelected,
       onSearch,
-    },
+    }),
+    [tokenList, onTokenSelected, onSearch]
+  );
+
+  const [open] = useModal({
+    component: TokenListModal,
+    props,
+    options: { disableBackdropClick: false },
   });
 
   return (

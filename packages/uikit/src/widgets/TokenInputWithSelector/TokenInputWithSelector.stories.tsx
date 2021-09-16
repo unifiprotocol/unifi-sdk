@@ -17,6 +17,7 @@ const tokenListItemsWithBalances = tokenListItems.map((t) => ({
 }));
 
 export const Default = () => {
+  const [amount, setAmount] = useState("0");
   const [tokenList, setTokenList] = useState(tokenListItemsWithBalances);
   const [token, setToken] = useState<Currency | undefined>(undefined);
   const [balance, setBalance] = useState("0");
@@ -33,8 +34,17 @@ export const Default = () => {
 
   const onSearch = useCallback(
     (query: string) => {
+      if (query === "") {
+        setTokenList(tokenListItemsWithBalances);
+        return;
+      }
+      const re = new RegExp(query, "i");
       const newTokenList = tokenListItemsWithBalances.filter((token) => {
-        return query === token.currency.symbol;
+        return (
+          token.currency.symbol.match(re) ||
+          token.currency.address.match(re) ||
+          token.currency.name.match(re)
+        );
       });
       setTokenList(newTokenList);
     },
@@ -44,14 +54,20 @@ export const Default = () => {
   return (
     <>
       <h1>Modals</h1>
+      <div>
+        You have introduced {amount} of {token ? token.symbol : "Nothing"}
+      </div>
       <TokenInputWithSelector
         label="Desired token"
         token={token}
         balance={balance}
         balanceLoading={balanceLoading}
+        balanceLabel="Balance"
         tokenList={tokenList}
         onTokenChange={onTokenChange}
         onSearch={onSearch}
+        amount={amount}
+        onAmountChange={setAmount}
       />
     </>
   );

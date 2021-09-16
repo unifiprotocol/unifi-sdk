@@ -7,8 +7,8 @@ export default {
   title: "Components/Tokens/TokenInput",
 };
 
-const ShowDemo = (props: Omit<TokenInputProps, "onChange">) => () => {
-  const [state, setState] = useState<TokenInputProps["value"]>(props.value);
+const ShowDemo = (props: Omit<TokenInputProps, "onAmountChange">) => () => {
+  const [state, setState] = useState<TokenInputProps["amount"]>(props.amount);
   const [token, setToken] = useState<Currency | undefined>(props.token);
   return (
     <div style={{ width: "21rem" }}>
@@ -17,8 +17,8 @@ const ShowDemo = (props: Omit<TokenInputProps, "onChange">) => () => {
         {...props}
         token={token}
         onRequestChangeToken={() => setToken(UNFI_TOKEN)}
-        onChange={(evt) => setState(evt.target.value)}
-        value={state}
+        onAmountChange={(amount) => setState(amount)}
+        amount={state}
       />
     </div>
   );
@@ -28,9 +28,11 @@ export const TokenSelected = ShowDemo({
   amount: "10",
   balance: "100",
   label: "From",
+  balanceLabel: "Balance",
 });
 export const TokenNotSelected = ShowDemo({
   amount: "10",
   balance: "100",
   label: "From",
+  balanceLabel: "Balance",
 });

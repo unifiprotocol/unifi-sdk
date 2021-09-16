@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { PrimaryButton } from "../../components/Button";
 import { useModal } from "../modal";
 import { TokenListModal, TokenListModalProps } from ".";
@@ -21,13 +21,16 @@ const tokenListItemsWithBalances = tokenListItems.map((t) => ({
 
 export const Default = () => {
   const [token, setToken] = useState<Currency | undefined>(undefined);
-
-  const [open] = useModal<TokenListModalProps>({
-    component: TokenListModal,
-    props: {
+  const props = useMemo(
+    () => ({
       tokenList: tokenListItemsWithBalances,
       onTokenSelected: setToken,
-    },
+    }),
+    []
+  );
+  const [open] = useModal<TokenListModalProps>({
+    component: TokenListModal,
+    props,
   });
 
   return (

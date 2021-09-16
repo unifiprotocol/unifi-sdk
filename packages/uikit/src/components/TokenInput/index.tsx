@@ -69,28 +69,30 @@ export type TokenInputProps = {
   label: React.ReactNode;
   balance?: string;
   balanceLoading?: boolean;
+  balanceLabel: string;
   amount?: string;
   token?: Currency;
   maxPercentage?: string;
   disableTokenChange?: boolean;
   onRequestChangeToken?: () => void;
+  onAmountChange: (amount: string) => void;
 };
 
 export const TokenInput: React.FC<TokenInputProps> = ({
   token,
-  amount: _amount = "0",
+  amount = "0",
   label,
-  balance = "0",
   maxPercentage = "0.99",
+  balance = "0",
   balanceLoading = false,
+  balanceLabel,
   disableTokenChange: tokenChangeEnabled = true,
   onRequestChangeToken,
+  onAmountChange,
 }) => {
-  const [amount, setAmount] = useState(_amount);
-
   const max = useCallback(() => {
-    setAmount(BN(balance).multipliedBy(maxPercentage).toFixed());
-  }, [setAmount]);
+    onAmountChange(BN(balance).multipliedBy(maxPercentage).toFixed());
+  }, [onAmountChange, balance]);
 
   return (
     <ShinyWrapper mode="on-focus-within">
@@ -104,7 +106,8 @@ export const TokenInput: React.FC<TokenInputProps> = ({
                   <CgSpinner />
                 </Spin>
               )}{" "}
-              Balance: <PrettyAmount value={balance} animationDuration={500} />
+              {balanceLabel}{" "}
+              <PrettyAmount value={balance} animationDuration={500} />
             </Balance>
           )}
         </Head>
@@ -112,7 +115,7 @@ export const TokenInput: React.FC<TokenInputProps> = ({
           <Amount>
             <Input
               disableFocusEffect={true}
-              onChange={(evt) => setAmount(evt.target.value)}
+              onChange={(evt) => onAmountChange(evt.target.value)}
               value={amount}
               actions={[{ label: "MAX", action: max }]}
             />
