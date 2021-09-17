@@ -1,6 +1,8 @@
 import { IconType } from "react-icons/lib";
 
+export type SwitchVariant = "fill" | "outline" | "shiny";
 export interface SwitchProps {
+  variant?: SwitchVariant;
   selected: SwitchChoice["value"];
   choices: SwitchChoice[];
   disabled?: boolean;

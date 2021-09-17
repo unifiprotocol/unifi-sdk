@@ -1,4 +1,7 @@
 import styled from "styled-components";
+import { kfShine } from "../../keyframes";
+import { ShinyWrapper } from "../ShinyWrapper";
+import { SwitchVariant } from "./Types";
 
 export const SwitchWrapper = styled.div`
   display: inline-flex;
@@ -32,11 +35,31 @@ export const Choice = styled.div`
     opacity: 0;
   }
 
-  &.selected {
+  &.outline.selected {
     svg {
       opacity: 1;
     }
     border-color: ${(props) => props.theme.primary};
     color: ${(props) => props.theme.primary};
+  }
+
+  &.fill.selected {
+    svg {
+      opacity: 1;
+    }
+    border-color: ${(props) => props.theme.primary};
+    background: ${(props) => props.theme.primary};
+    color: ${(props) => props.theme.txt100};
+  }
+
+  &.shiny.selected {
+    svg {
+      opacity: 1;
+    }
+    border-color: ${(props) => props.theme.primary};
+    background: ${(p) => p.theme.shinyGradient};
+    color: ${(props) => props.theme.txt100};
+    animation: ${kfShine} 2s linear infinite;
+    background-size: 200% auto;
   }
 `;

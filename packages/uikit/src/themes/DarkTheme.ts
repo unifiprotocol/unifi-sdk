@@ -10,6 +10,8 @@ import {
   yellow100,
   white100,
   white200,
+  red200,
+  red300,
 } from "./colors";
 
 import { breakpointMap } from "./base";
@@ -22,7 +24,11 @@ export const DarkTheme = {
   primary: green100,
   primaryLight: green200,
   primaryDark: green300,
-  danger: red100,
+
+  dangerLight: red100,
+  danger: red200,
+  dangerDark: red300,
+
   info: blue100,
   warning: yellow100,
   success: green300,

@@ -18,7 +18,18 @@ const showSwitch = (props: Omit<SwitchProps, "onChange">) => () => {
   return (
     <>
       <h1>Switch</h1>
+      <h2>Outline</h2>
       <Switch {...props} selected={selected} onChange={setSelected} />
+      <p>
+        Selected value: <b>{selected}</b>
+      </p>
+      <h2>Fill</h2>
+      <Switch
+        variant="fill"
+        {...props}
+        selected={selected}
+        onChange={setSelected}
+      />
       <p>
         Selected value: <b>{selected}</b>
       </p>
