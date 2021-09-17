@@ -40,7 +40,17 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-router-dom": "^5.2.0",
-    "styled-components": "^5.2.0"
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-copy": "^3.4.0", 
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-typescript": "^8.2.1",
+    "@rollup/plugin-url": "^6.0.0",
+    "@storybook/addon-a11y": "^6.3.6",
+    "@storybook/addon-actions": "^6.3.6",
+    "@storybook/addon-essentials": "^6.3.6",
+    "@storybook/addon-links": "^6.3.6",
+    "@storybook/react": "^6.3.6",
+    "@types/styled-components": "^5.1.9"
   },
   "peerDependencies": {
     "@unifiprotocol/utils": "^1.2.0",
@@ -50,15 +60,7 @@
     "styled-components": "^5.2.3"
   },
   "dependencies": {
-    "@rollup/plugin-json": "^4.1.0",
-    "@rollup/plugin-typescript": "^8.2.1",
-    "@rollup/plugin-url": "^6.0.0",
-    "@storybook/addon-a11y": "^6.3.6",
-    "@storybook/addon-actions": "^6.3.6",
-    "@storybook/addon-essentials": "^6.3.6",
-    "@storybook/addon-links": "^6.3.6",
-    "@storybook/react": "^6.3.6",
-    "@types/styled-components": "^5.1.9",
+    "styled-components": "^5.2.0",
     "@unifiprotocol/utils": "^1.3.0",
     "animated-number-react": "^0.1.2",
     "lodash": "^4.17.20",
