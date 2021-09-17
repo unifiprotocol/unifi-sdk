@@ -3,15 +3,15 @@ import styled from "styled-components";
 const paddingBySize = { sm: "0.1rem 0.25rem", md: "0.35rem", xl: "0.5rem" };
 
 export const BaseButton = styled.button<{
-  variant: "outline" | "fill";
-  size: "sm" | "md" | "xl";
-  block: boolean;
+  variant?: "outline" | "fill";
+  size?: "sm" | "md" | "xl";
+  block?: boolean;
 }>`
-  display: inline-block;
+  display: ${(p) => (p.block ? "block" : "inline-block")};
   font-size: 0.9rem;
   vertical-align: middle;
   line-height: 1rem;
-  padding: ${(p) => paddingBySize[p.size]};
+  padding: ${(p) => paddingBySize[p.size!]};
   color: #fff;
   text-align: center;
   cursor: pointer;
@@ -31,6 +31,7 @@ export const BaseButton = styled.button<{
   svg {
     transition: 0.25s all;
     color: #fff;
+    vertical-align: middle;
     margin-right: 0.25rem;
   }
 `;

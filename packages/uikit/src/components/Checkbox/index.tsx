@@ -24,7 +24,7 @@ const Box = styled.div<Themed<{ disabled: boolean; checked: boolean }>>`
   border: 2px solid transparent;
   border-color: ${(p) => {
     if (p.disabled) {
-      return p.theme.muted;
+      return p.theme.txtMuted;
     }
     if (p.checked) {
       return p.theme.primary;
@@ -47,13 +47,13 @@ const Box = styled.div<Themed<{ disabled: boolean; checked: boolean }>>`
   `}
   svg {
     opacity: ${(p) => (p.checked ? 1 : 0.1)};
-    color: ${(p) => (p.disabled ? p.theme.muted : p.theme.txt100)};
+    color: ${(p) => (p.disabled ? p.theme.txtMuted : p.theme.txt100)};
   }
 `;
 const Label = styled.div<{ disabled: boolean }>`
   margin-left: 0.5rem;
   ${disableSelectionCss}
-  color:${(p) => (p.disabled ? p.theme.muted : p.theme.txt100)}
+  color:${(p) => (p.disabled ? p.theme.txtMuted : p.theme.txt100)}
 `;
 
 export interface CheckboxProps {

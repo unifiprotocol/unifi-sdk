@@ -59,7 +59,7 @@ export const Choice = styled.div`
     border-color: ${(props) => props.theme.primary};
     background: ${(p) => p.theme.shinyGradient};
     color: ${(props) => props.theme.txt100};
-    animation: ${kfShine} 2s linear infinite;
+    animation: ${kfShine} 3s linear infinite;
     background-size: 200% auto;
   }
 `;

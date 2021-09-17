@@ -1,8 +1,7 @@
 import React from "react";
 import { PrimaryButton } from "../../../components/Button";
 import { useModal } from "../useModal";
-import { Card, CardHeader, CardBody } from "../../../components/Card";
-import { Modal } from "../Modal";
+import { Modal, ModalHeader, ModalBody } from "../Modal";
 
 export default {
   title: "Widgets/Modal",
@@ -11,9 +10,9 @@ export default {
 
 const BigModal = () => (
   <Modal centered={true}>
-    <Card>
-      <CardHeader>Sorry for being to loooong</CardHeader>
-      <CardBody>
+    <Modal>
+      <ModalHeader>Sorry for being to loooong</ModalHeader>
+      <ModalBody>
         Unifi Protocol is a group of non-custodial, interoperable,
         decentralized, and multi-chain smart contracts providing the building
         blocks for the next generation of DeFi development. Unifi provides a
@@ -68,8 +67,8 @@ const BigModal = () => (
         redemption value of all previously minted UP tokens. This amount of base
         tokens is known as the Power UP Rate (PUR). This redemption value of UP
         is verifiable on-chain, and increases every time new UP token is minted.
-      </CardBody>
-    </Card>
+      </ModalBody>
+    </Modal>
   </Modal>
 );
 

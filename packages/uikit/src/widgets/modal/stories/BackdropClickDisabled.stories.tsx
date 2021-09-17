@@ -2,8 +2,7 @@ import React from "react";
 import { PrimaryButton, SecondaryButton } from "../../../components/Button";
 import { useModal } from "../useModal";
 import { ModalProps } from "..";
-import { Card, CardHeader, CardBody } from "../../../components/Card";
-import { Modal } from "../Modal";
+import { Modal, ModalHeader, ModalBody } from "../Modal";
 
 export default {
   title: "Widgets/Modal",
@@ -13,16 +12,16 @@ export default {
 const FirstModal: React.FC<ModalProps> = ({ close }) => {
   return (
     <Modal>
-      <Card>
-        <CardHeader>First Modal</CardHeader>
-        <CardBody>
+      <Modal>
+        <ModalHeader>First Modal</ModalHeader>
+        <ModalBody>
           <p>
             You can not close me clicking outside. You gotta click the button
             below
           </p>
           <SecondaryButton onClick={close}>Close me</SecondaryButton>
-        </CardBody>
-      </Card>
+        </ModalBody>
+      </Modal>
     </Modal>
   );
 };

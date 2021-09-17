@@ -16,7 +16,7 @@ const ShinyInnerWrapper = styled.div<{ inline: boolean; size: string }>`
   display: ${(p) => (p.inline ? "inline-block" : "block")};
   &.onFocusWithin:focus-within,
   &.manual.active {
-    animation: ${kfShine} 2s linear infinite;
+    animation: ${kfShine} 3s linear infinite;
 
     background: ${(p) => p.theme.shinyGradient};
     background-size: 200% auto;

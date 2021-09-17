@@ -7,7 +7,7 @@ const BrandedHeaderWrapper = styled.div<Themed>`
   z-index: 999999;
   display: flex;
   align-items: center;
-  background: ${(props) => props.theme.bg200};
+  background: ${(props) => props.theme.bg100};
   height: 3.5rem;
   overflow: hidden;
 `;

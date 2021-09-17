@@ -2,8 +2,7 @@ import React from "react";
 import { PrimaryButton, SecondaryButton } from "../../../components/Button";
 import { useModal } from "../useModal";
 import { ModalProps } from "..";
-import { Card, CardHeader, CardBody } from "../../../components/Card";
-import { Modal } from "../Modal";
+import { Modal, ModalHeader, ModalBody } from "../Modal";
 
 export default {
   title: "Widgets/Modal",
@@ -12,13 +11,13 @@ export default {
 
 const SecondModal: React.FC<ModalProps> = ({ close }) => (
   <Modal>
-    <Card>
-      <CardHeader>Second Modal</CardHeader>
-      <CardBody>
+    <Modal>
+      <ModalHeader>Second Modal</ModalHeader>
+      <ModalBody>
         <p>I am a staked modal!</p>
         <SecondaryButton onClick={close}>Close me</SecondaryButton>
-      </CardBody>
-    </Card>
+      </ModalBody>
+    </Modal>
   </Modal>
 );
 
@@ -26,13 +25,13 @@ const FirstModal: React.FC<ModalProps> = ({ close }) => {
   const [openChild] = useModal({ component: SecondModal });
   return (
     <Modal>
-      <Card>
-        <CardHeader>First Modal</CardHeader>
-        <CardBody>
+      <Modal>
+        <ModalHeader>First Modal</ModalHeader>
+        <ModalBody>
           <PrimaryButton onClick={openChild}>Open child</PrimaryButton>
           <SecondaryButton onClick={close}>Close me</SecondaryButton>
-        </CardBody>
-      </Card>
+        </ModalBody>
+      </Modal>
     </Modal>
   );
 };

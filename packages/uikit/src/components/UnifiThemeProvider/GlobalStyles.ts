@@ -4,7 +4,7 @@ import { Themed } from "../../themes/types";
 export const GlobalStyle = createGlobalStyle<Themed>`
   body {
     margin: 0;
-    background-color: ${(p) => p.theme.bg100};
+    background-color: ${(p) => p.theme.bgBody};
     color: ${(p) => p.theme.txt100}
   }
   body, button, input {

@@ -1,8 +1,7 @@
 import React from "react";
 import { PrimaryButton } from "../../../components/Button";
 import { useModal } from "../useModal";
-import { Card, CardBody } from "../../../components/Card";
-import { Modal } from "../Modal";
+import { Modal, ModalHeader, ModalBody } from "../Modal";
 
 export default {
   title: "Widgets/Modal",
@@ -11,9 +10,9 @@ export default {
 
 const CenteredModal = () => (
   <Modal centered={true}>
-    <Card>
-      <CardBody>I am centered! :)</CardBody>
-    </Card>
+    <Modal>
+      <ModalBody>I am centered! :)</ModalBody>
+    </Modal>
   </Modal>
 );
 

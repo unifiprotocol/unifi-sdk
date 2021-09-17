@@ -1,8 +1,7 @@
 import React from "react";
 import { PrimaryButton } from "../../../components/Button";
 import { useModal } from "../useModal";
-import { Card, CardBody } from "../../../components/Card";
-import { Modal } from "../Modal";
+import { Modal, ModalHeader, ModalBody } from "../Modal";
 import styled from "@emotion/styled-base";
 
 export default {
@@ -17,9 +16,9 @@ const ModalCustomWidth = styled(Modal)`
 const CustomWidthModal = () => {
   return (
     <ModalCustomWidth centered={true}>
-      <Card>
-        <CardBody>I am tiny! :)</CardBody>
-      </Card>
+      <Modal>
+        <ModalBody>I am tiny! :)</ModalBody>
+      </Modal>
     </ModalCustomWidth>
   );
 };

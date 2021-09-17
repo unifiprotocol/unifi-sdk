@@ -8,7 +8,7 @@ import { kfShine } from "../../keyframes";
 
 const TokenAmountWrapper = styled.div<{ shiny: boolean }>`
   display: flex;
-  animation: ${kfShine} 2s linear infinite;
+  animation: ${kfShine} 3s linear infinite;
   background: ${(p) => p.theme.bg200};
   ${(p) =>
     p.shiny &&

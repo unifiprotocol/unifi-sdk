@@ -5,6 +5,7 @@ import { ModalContext } from "./ModalContext";
 const defaultOptions = {
   disableBackdropClick: false,
 };
+const defaultProps: any = {};
 const setDefaults = (options: Partial<ModalOptions> = {}): ModalOptions => {
   return {
     ...defaultOptions,
@@ -14,9 +15,9 @@ const setDefaults = (options: Partial<ModalOptions> = {}): ModalOptions => {
 type OpenFn = () => void;
 type CloseFn = () => void;
 
-export const useModal = <T extends any>({
+export const useModal = <T extends any = void>({
   component,
-  props,
+  props = defaultProps,
   options = { ...defaultOptions },
 }: NewModalItem<T>): [OpenFn, CloseFn] => {
   const modal: ModalItem = useMemo(
