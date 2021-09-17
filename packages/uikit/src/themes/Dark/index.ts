@@ -20,10 +20,10 @@ import {
   blue300,
 } from "./colors";
 
-import { breakpointMap } from "./base";
+import { breakpointMap } from "../base";
 
-export const DarkTheme = {
-  name: "DarkTheme",
+export default {
+  name: "Dark",
   fontFamily:
     "'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif",
   // Colors
@@ -62,7 +62,7 @@ export const DarkTheme = {
   bg200: grey200,
   bg300: grey300,
 
-  inputBg: grey000,
+  inputBg: grey300,
   // Gradients
   shinyGradient: `linear-gradient(129deg, rgba(120,255,214,1) 0%, rgba(168,255,120,1) 51%, rgba(0,230,118,1) 100%)`,
   hotGradient: `linear-gradient(129deg, rgba(241,39,17,1) 0%, rgba(245,175,25,1) 51%, rgba(245,135,25,1) 76%)`,

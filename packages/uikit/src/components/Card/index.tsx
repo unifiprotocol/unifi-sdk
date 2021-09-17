@@ -4,7 +4,6 @@ export const Card = styled.div`
   background: ${(p) => p.theme.bg100};
 
   border-radius: ${(p) => p.theme.borderRadius};
-  box-shadow: ${(p) => p.theme.boxShadow};
 `;
 
 export const CardHeader = styled.div`

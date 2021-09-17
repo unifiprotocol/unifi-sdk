@@ -1,9 +1,8 @@
-import styled from "styled-components";
-import { DarkTheme } from "./DarkTheme";
+import styled, { useTheme } from "styled-components";
 import { UnifiTheme } from "./types";
 
 export default {
-  title: "Themes/Themes",
+  title: "Theme",
 };
 
 const Palette = styled.div`
@@ -51,108 +50,115 @@ const HGrid = styled.div`
   display: flex;
   gap: 1rem;
 `;
-const ThemeExpo = (theme: UnifiTheme) => (
-  <>
-    <h1>Theme: {theme.name}</h1>
-    <h2>Colors</h2>
-    <HGrid>
-      <Palette>
-        <PaletteName>Primary & Success</PaletteName>
-        {["primaryLight", "primary", "primaryDark"].map((name) => (
-          <Sample color={theme[name]}>
-            <SampleName>{name}</SampleName>
-            <SampleValue>{theme[name]}</SampleValue>
+const ThemeExpo = () => {
+  const theme = useTheme() as UnifiTheme;
+  return (
+    <>
+      <h1>Theme: {theme.name}</h1>
+      <p>
+        If you want to change the theme select it from the Themes tab in the
+        panel below
+      </p>
+      <h2>Colors</h2>
+      <HGrid>
+        <Palette>
+          <PaletteName>Primary & Success</PaletteName>
+          {["primaryLight", "primary", "primaryDark"].map((name) => (
+            <Sample color={theme[name]}>
+              <SampleName>{name}</SampleName>
+              <SampleValue>{theme[name]}</SampleValue>
+            </Sample>
+          ))}
+        </Palette>
+        <Palette>
+          <PaletteName>Warning</PaletteName>
+          {["warningLight", "warning", "warningDark"].map((name) => (
+            <Sample color={theme[name]}>
+              <SampleName>{name}</SampleName>
+              <SampleValue>{theme[name]}</SampleValue>
+            </Sample>
+          ))}
+        </Palette>
+        <Palette>
+          <PaletteName>Info</PaletteName>
+          {["infoLight", "info", "infoDark"].map((name) => (
+            <Sample color={theme[name]}>
+              <SampleName>{name}</SampleName>
+              <SampleValue>{theme[name]}</SampleValue>
+            </Sample>
+          ))}
+        </Palette>
+        <Palette>
+          <PaletteName>Danger</PaletteName>
+          {["dangerLight", "danger", "dangerDark"].map((name) => (
+            <Sample color={theme[name]}>
+              <SampleName>{name}</SampleName>
+              <SampleValue>{theme[name]}</SampleValue>
+            </Sample>
+          ))}
+        </Palette>
+      </HGrid>
+      <h2>Background & Text</h2>
+      <HGrid>
+        <Palette>
+          <PaletteName>Background</PaletteName>
+          <PaletteDesc>
+            Body BG should be reserved for the body and input backgrounds only.
+            Each background color is for different levels of depth
+          </PaletteDesc>
+          {["bgBody", "bg100", "bg200", "bg300"].map((name) => (
+            <Sample color={theme[name]}>
+              <SampleName>{name}</SampleName>
+              <SampleValue>{theme[name]}</SampleValue>
+            </Sample>
+          ))}
+        </Palette>
+        <Palette>
+          <PaletteName>Text</PaletteName>
+          <PaletteDesc>
+            Not to much to say, just colors that contrast with the background.
+            Muted color is for disabled elements.
+          </PaletteDesc>
+          {["txt100", "txt200", "txt300", "txtMuted"].map((name) => (
+            <Sample color={theme[name]}>
+              <SampleName>{name}</SampleName>
+              <SampleValue>{theme[name]}</SampleValue>
+            </Sample>
+          ))}
+        </Palette>
+        <Palette>
+          <PaletteName>Input background</PaletteName>
+          <PaletteDesc>
+            The input will have page background in order to have contrast with
+            all container backgrounds. Therefore, the input should not go
+            directly inside the body
+          </PaletteDesc>
+          <Sample color={theme.inputBg}>
+            <SampleName>inputBg</SampleName>
+            <SampleValue>{theme.inputBg}</SampleValue>
           </Sample>
-        ))}
-      </Palette>
-      <Palette>
-        <PaletteName>Warning</PaletteName>
-        {["warningLight", "warning", "warningDark"].map((name) => (
-          <Sample color={theme[name]}>
-            <SampleName>{name}</SampleName>
-            <SampleValue>{theme[name]}</SampleValue>
-          </Sample>
-        ))}
-      </Palette>
-      <Palette>
-        <PaletteName>Info</PaletteName>
-        {["infoLight", "info", "infoDark"].map((name) => (
-          <Sample color={theme[name]}>
-            <SampleName>{name}</SampleName>
-            <SampleValue>{theme[name]}</SampleValue>
-          </Sample>
-        ))}
-      </Palette>
-      <Palette>
-        <PaletteName>Danger</PaletteName>
-        {["dangerLight", "danger", "dangerDark"].map((name) => (
-          <Sample color={theme[name]}>
-            <SampleName>{name}</SampleName>
-            <SampleValue>{theme[name]}</SampleValue>
-          </Sample>
-        ))}
-      </Palette>
-    </HGrid>
-    <h2>Background & Text</h2>
-    <HGrid>
-      <Palette>
-        <PaletteName>Background</PaletteName>
-        <PaletteDesc>
-          Body BG should be reserved for the body and input backgrounds only.
-          Each background color is for different levels of depth
-        </PaletteDesc>
-        {["bgBody", "bg100", "bg200", "bg300"].map((name) => (
-          <Sample color={theme[name]}>
-            <SampleName>{name}</SampleName>
-            <SampleValue>{theme[name]}</SampleValue>
-          </Sample>
-        ))}
-      </Palette>
-      <Palette>
-        <PaletteName>Text</PaletteName>
-        <PaletteDesc>
-          Not to much to say, just colors that contrast with the background.
-          Muted color is for disabled elements.
-        </PaletteDesc>
-        {["txt100", "txt200", "txt300", "txtMuted"].map((name) => (
-          <Sample color={theme[name]}>
-            <SampleName>{name}</SampleName>
-            <SampleValue>{theme[name]}</SampleValue>
-          </Sample>
-        ))}
-      </Palette>
-      <Palette>
-        <PaletteName>Input background</PaletteName>
-        <PaletteDesc>
-          The input will have page background in order to have contrast with all
-          container backgrounds. Therefore, the input should not go directly
-          inside the body
-        </PaletteDesc>
-        <Sample color={theme.inputBg}>
-          <SampleName>inputBg</SampleName>
-          <SampleValue>{theme.inputBg}</SampleValue>
-        </Sample>
-      </Palette>
-    </HGrid>
-    <h2>Special backgrounds</h2>
-    <HGrid>
-      <Palette>
-        <PaletteName>Shiny</PaletteName>
+        </Palette>
+      </HGrid>
+      <h2>Special backgrounds</h2>
+      <HGrid>
+        <Palette>
+          <PaletteName>Shiny</PaletteName>
 
-        <Sample color={theme.shinyGradient}>
-          <SampleName>shinyGradient</SampleName>
-          <SampleValue>{theme.shinyGradient}</SampleValue>
-        </Sample>
-      </Palette>
-      <Palette>
-        <PaletteName>Hot</PaletteName>
-        <Sample color={theme.hotGradient}>
-          <SampleName>hotGradient</SampleName>
-          <SampleValue>{theme.hotGradient}</SampleValue>
-        </Sample>
-      </Palette>
-    </HGrid>
-  </>
-);
+          <Sample color={theme.shinyGradient}>
+            <SampleName>shinyGradient</SampleName>
+            <SampleValue>{theme.shinyGradient}</SampleValue>
+          </Sample>
+        </Palette>
+        <Palette>
+          <PaletteName>Hot</PaletteName>
+          <Sample color={theme.hotGradient}>
+            <SampleName>hotGradient</SampleName>
+            <SampleValue>{theme.hotGradient}</SampleValue>
+          </Sample>
+        </Palette>
+      </HGrid>
+    </>
+  );
+};
 
-export const Dark = () => ThemeExpo(DarkTheme);
+export const SelectedTheme = () => ThemeExpo();
