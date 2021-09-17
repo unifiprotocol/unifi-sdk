@@ -1,6 +1,12 @@
 import { Currency } from "@unifiprotocol/utils";
 import React, { useCallback } from "react";
-import { Modal, ModalBody, ModalClose, ModalHeader, ModalProps } from "..";
+import {
+  Modal,
+  ModalBody,
+  ModalClose,
+  ModalHeader,
+  ModalProps,
+} from "../modal";
 import { TokenList, TokenListProps } from "../../components/TokenList";
 
 export type TokenListModalProps = TokenListProps & ModalProps;
