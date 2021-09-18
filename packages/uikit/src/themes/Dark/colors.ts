@@ -1,6 +1,7 @@
-export const grey100 = "#000000";
-export const grey200 = "#19191f";
-export const grey300 = "#323A54";
+export const grey000 = "#12151b";
+export const grey100 = "#1e2027";
+export const grey200 = "#191a21";
+export const grey300 = "#303340";
 
 export const green100 = "#00e676";
 export const green200 = "#38f997";

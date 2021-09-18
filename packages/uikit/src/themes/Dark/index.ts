@@ -17,6 +17,7 @@ import {
   yellow300,
   blue200,
   blue300,
+  grey000,
 } from "./colors";
 
 import { breakpointMap } from "../base";
@@ -63,7 +64,7 @@ export default {
   bg: grey100,
   bgAlt: grey200,
   bgAlt2: grey300,
-  bgInput: grey100,
+  bgInput: grey000,
   // Cards
   cardShadow: "rgb(0 0 0 / 20%) 0px 0px 20px -5px",
 
