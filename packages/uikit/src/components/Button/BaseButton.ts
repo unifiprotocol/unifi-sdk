@@ -12,6 +12,7 @@ export const BaseButton = styled.button<{
   block?: boolean;
 }>`
   display: ${(p) => (p.block ? "block" : "inline-block")};
+  width: ${(p) => (p.block ? "100%" : "auto")};
   font-size: 0.9rem;
   vertical-align: middle;
   line-height: 1rem;
