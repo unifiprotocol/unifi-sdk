@@ -3,7 +3,7 @@ import styled from "styled-components";
 const paddingBySize = {
   sm: "0.1rem 0.25rem",
   md: "0.35rem 0.5rem",
-  xl: "0.6rem",
+  xl: "1rem 0.6rem",
 };
 
 export const BaseButton = styled.button<{
