@@ -24,12 +24,12 @@ export const PrimaryButton = styled(BaseButton)`
 
 export const SecondaryButton = styled(BaseButton)`
   background-color: ${(p) =>
-    p.variant === "outline" ? "transparent" : p.theme.bg300};
-  border-color: ${(p) => p.theme.bg300};
+    p.variant === "outline" ? "transparent" : p.theme.secondary};
+  border-color: ${(p) => p.theme.secondary};
   color: ${(p) => p.theme.txt100} !important;
   &:not(:disabled):hover {
-    background-color: ${(p) => p.theme.bg200};
-    border-color: ${(p) => p.theme.bg200};
+    background-color: ${(p) => p.theme.secondaryDark};
+    border-color: ${(p) => p.theme.secondaryDark};
   }
 `;
 

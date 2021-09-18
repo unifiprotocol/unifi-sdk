@@ -4,7 +4,6 @@ import {
   green100,
   green200,
   green300,
-  grey000,
   grey200,
   grey100,
   grey300,
@@ -30,6 +29,10 @@ export default {
   primary: green100,
   primaryLight: green200,
   primaryDark: green300,
+
+  secondary: "#2d3748",
+  secondaryLight: "#2d3748", //light
+  secondaryDark: "#1A202C",
 
   dangerLight: red100,
   danger: red200,
@@ -57,23 +60,27 @@ export default {
   txt300: white300,
   txtMuted: white300,
   // Backgrounds
-  bgBody: grey000,
-  bg100: grey100,
-  bg200: grey200,
-  bg300: grey300,
+  bg: grey100,
+  bgAlt: grey200,
+  bgAlt2: grey300,
+  bgInput: grey100,
+  // Cards
+  cardShadow: "rgb(0 0 0 / 20%) 0px 0px 20px -5px",
 
-  inputBg: grey300,
   // Gradients
-  shinyGradient: `linear-gradient(129deg, rgba(120,255,214,1) 0%, rgba(168,255,120,1) 51%, rgba(0,230,118,1) 100%)`,
-  hotGradient: `linear-gradient(129deg, rgba(241,39,17,1) 0%, rgba(245,175,25,1) 51%, rgba(245,135,25,1) 76%)`,
+  shinyGradient: `linear-gradient(129deg, rgba(120,255,214,1) 0%, rgba(0,230,118,1) 48%, rgba(168,255,120,1) 89%, rgba(120,255,214,1) 100%)`,
+  hotGradient: `linear-gradient(129deg, rgba(241,39,17,1) 0%, rgba(245,175,25,1) 41%, rgba(245,135,25,1) 75%, rgba(241,39,17,1) 100%)`,
 
   // Borders and shadows
   borderRadius: "5px",
   boxShadow: "0 0 15px 0 rgb(0 0 0 / 15%)",
+
   // zIndexes
   zIndex: {
     modal: 900,
   },
+  // Sizes
+  inputHeight: "3rem",
   // Responsivenes
   breakpoints: breakpointMap,
 };

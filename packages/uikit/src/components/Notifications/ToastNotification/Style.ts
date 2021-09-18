@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
 export const Progress = styled.div`
+  border-radius: ${(p) => p.theme.borderRadius} 0 0
+    ${(p) => p.theme.borderRadius};
   position: relative;
   display: flex;
   align-self: stretch;
@@ -43,9 +45,9 @@ export const NotificationWrapper = styled.div`
       height: 0%;
     }
   }
-  background: ${(props) => props.theme.bg200};
+  background: ${(props) => props.theme.bgAlt};
   color: #fff;
-  box-shadow: 0 0 10px -3px #000;
+  box-shadow: ${(props) => props.theme.boxShadow};
   display: flex;
 
   width: 22rem;

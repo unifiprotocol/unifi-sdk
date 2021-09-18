@@ -1,4 +1,4 @@
-import { DarkTheme } from "./DarkTheme";
+import DarkTheme from "./Dark";
 
 export type UnifiTheme = typeof DarkTheme;
 

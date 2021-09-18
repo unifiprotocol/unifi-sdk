@@ -1,23 +1,24 @@
 import React, { useMemo } from "react";
 import Select, { Props } from "react-select";
 import styled, { useTheme } from "styled-components";
+import { UnifiTheme } from "../../themes/types";
 
 const SelectLabel = styled.span`
-  font-size: 95%;
-  opacity: 0.5;
+  font-size: 85%;
   color: ${(p) => p.theme.txt200};
   position: absolute;
-  top: 0.2rem;
-  left: 0.5rem;
+  top: 0.1rem;
+  left: 0.6rem;
   cursor: pointer;
   z-index: 0;
 `;
 const SelectMenuWrapper = styled.div`
   position: relative;
-  background: ${(p) => p.theme.bg100};
+  height: ${(p) => p.theme.inputHeight};
+  background: ${(p) => p.theme.bgInput};
 `;
 export const SelectMenu: React.FC<Props> = ({ label, ...props }) => {
-  const theme = useTheme();
+  const theme = useTheme() as UnifiTheme;
   const customStyles: Select["props"]["styles"] = useMemo(
     () => ({
       indicatorSeparator: (provided, state) => ({
@@ -32,13 +33,23 @@ export const SelectMenu: React.FC<Props> = ({ label, ...props }) => {
       }),
       option: (provided, state) => ({
         ...provided,
-        color: state.isSelected ? "#000" : "#fff",
-        backgroundColor: state.isSelected ? theme.primary : theme.bg100,
+        color: state.isDisabled
+          ? theme.txtMuted
+          : state.isSelected
+          ? theme.primary
+          : theme.txt100,
+        backgroundColor:
+          state.isDisabled || state.isSelected
+            ? `${theme.bgAlt}!important`
+            : theme.bgAlt,
         fontWeight: "normal",
-        cursor: "pointer",
+        cursor: state.isDisabled ? "not-allowed" : "pointer",
+
         ":active": {
-          backgroundColor: theme.bg100,
-          color: "#000",
+          backgroundColor: theme.bgAlt,
+        },
+        ":hover": {
+          backgroundColor: theme.bg,
         },
       }),
       control: (provided, state) => ({
@@ -46,13 +57,13 @@ export const SelectMenu: React.FC<Props> = ({ label, ...props }) => {
         background: "transparent",
         cursor: "pointer",
         borderWidth: "2px",
-        borderColor: state.isFocused ? theme.primary : theme.bg100,
         boxShadow: "0",
         fontWeight: "normal",
+        borderColor: theme.bg,
         ":hover": {
           borderColor: theme.primary,
         },
-        padding: "1rem 0 0.3rem 0",
+        padding: "0.5rem 0 0 0",
       }),
       container: (provided) => ({
         ...provided,
@@ -61,11 +72,16 @@ export const SelectMenu: React.FC<Props> = ({ label, ...props }) => {
       }),
       singleValue: (provided) => ({
         ...provided,
-        color: "#fff",
+        color: theme.txt100,
+      }),
+      valueContainer: (provided) => ({
+        ...provided,
+        padding: "0.4rem 0.4rem 0 0.4rem",
       }),
       menu: (provided) => ({
         ...provided,
-        background: theme.bg200,
+        border: `2px solid ${theme.bg}`,
+        background: theme.bg,
       }),
     }),
     [theme]

@@ -1,6 +1,10 @@
 import styled from "styled-components";
 
-const paddingBySize = { sm: "0.1rem 0.25rem", md: "0.35rem", xl: "0.5rem" };
+const paddingBySize = {
+  sm: "0.1rem 0.25rem",
+  md: "0.35rem 0.5rem",
+  xl: "0.6rem",
+};
 
 export const BaseButton = styled.button<{
   variant?: "outline" | "fill";
@@ -31,8 +35,7 @@ export const BaseButton = styled.button<{
   svg {
     transition: 0.25s all;
     color: #fff;
-    vertical-align: middle;
-    margin-right: 0.25rem;
+    margin-right: 0.4rem;
   }
 `;
 

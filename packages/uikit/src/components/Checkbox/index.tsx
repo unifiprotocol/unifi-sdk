@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import styled from "styled-components";
-import { CgCheck } from "react-icons/cg";
+import { FaCheck as CheckIcon } from "react-icons/fa";
 import { disableSelectionCss } from "../../util/DOM";
 import { Themed } from "../../themes/types";
 
@@ -12,9 +12,12 @@ const CheckboxWrapper = styled.div<Themed<{ disabled: boolean }>>`
 
 const Box = styled.div<Themed<{ disabled: boolean; checked: boolean }>>`
   display: inline-block;
-  width: 1.4rem;
+  width: 1.3rem;
+  line-height: 1.3rem;
+  text-align: center;
+  height: 1.3rem;
   cursor: ${(p) => (p.disabled ? "not-allowed" : "pointer")};
-  height: 1.4rem;
+
   background: ${(p) => {
     if (p.checked) {
       return p.disabled ? "transparent" : p.theme.primary;
@@ -79,7 +82,7 @@ export const Checkbox: React.FC<CheckboxProps> = ({
       onClick={() => !disabled && onChange && onChange(!checked)}
     >
       <Box disabled={disabled} checked={checked}>
-        <CgCheck size={20} />
+        <CheckIcon size={11} />
       </Box>
       {label && (
         <Label disabled={disabled} onClick={dontCheckOnAnchorClick}>

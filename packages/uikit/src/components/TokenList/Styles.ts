@@ -53,7 +53,7 @@ export const TokenListRowWrapper = styled.div`
   cursor: pointer;
 
   &:hover {
-    background: ${(props) => props.theme.bg200};
+    background: ${(props) => props.theme.bg};
   }
 
   > div {

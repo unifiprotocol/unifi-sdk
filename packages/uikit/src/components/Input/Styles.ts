@@ -4,11 +4,11 @@ import { Themed } from "../../themes/types";
 export const InputWrapper = styled.div<Themed>`
   display: flex;
   align-items: center;
-  background: ${(p) => p.theme.inputBg};
+  background: ${(p) => p.theme.bgInput};
   border-radius: ${(p) => p.theme.borderRadius};
 
   padding: 0.6rem;
-  height: 3rem;
+  height: ${(p) => p.theme.inputHeight};
   transition: 0.25s all;
   gap: 0.5rem;
 `;
@@ -37,7 +37,7 @@ export const ActionButton = styled.button`
   cursor: pointer;
   color: ${(p) => p.theme.txt200};
   border-radius: ${(props) => props.theme.borderRadius};
-  background: ${(props) => props.theme.bg200};
+  background: ${(props) => props.theme.bgAlt};
   border: 2px solid transparent;
   transition: 0.2s all;
   font-weight: 300;

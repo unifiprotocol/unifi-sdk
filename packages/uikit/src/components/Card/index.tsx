@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 export const Card = styled.div`
-  background: ${(p) => p.theme.bg100};
-
+  background: ${(p) => p.theme.bgAlt};
+  box-shadow: ${(p) => p.theme.cardShadow};
   border-radius: ${(p) => p.theme.borderRadius};
 `;
 
@@ -15,10 +15,10 @@ export const CardHeader = styled.div`
   h6 {
     margin: 0;
   }
-  padding: 1.5rem;
+  padding: 1rem;
   margin: 0;
 `;
 
 export const CardBody = styled.div`
-  padding: 1.5rem;
+  padding: 1rem;
 `;

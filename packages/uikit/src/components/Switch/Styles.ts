@@ -11,7 +11,7 @@ export const SwitchWrapper = styled.div`
 
 export const SwitchChoicesWrapper = styled.div`
   padding: 0.3rem;
-  background: ${(props) => props.theme.bg100};
+  background: ${(props) => props.theme.bgAlt};
   border-radius: ${(props) => props.theme.borderRadius};
   display: flex;
   flex-wrap: wrap;
@@ -23,7 +23,7 @@ export const Choice = styled.div`
   cursor: pointer;
   padding: 0.3rem 0.4rem;
   border-radius: ${(props) => props.theme.borderRadius};
-  border: 2px solid ${(props) => props.theme.bg100};
+  border: 2px solid ${(props) => props.theme.bgAlt};
 
   > * {
     transition: 0.25s all;

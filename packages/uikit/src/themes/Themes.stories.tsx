@@ -106,7 +106,7 @@ const ThemeExpo = () => {
             Body BG should be reserved for the body and input backgrounds only.
             Each background color is for different levels of depth
           </PaletteDesc>
-          {["bgBody", "bg100", "bg200", "bg300"].map((name) => (
+          {["background", "bgAlt", "bgAlt2"].map((name) => (
             <Sample color={theme[name]}>
               <SampleName>{name}</SampleName>
               <SampleValue>{theme[name]}</SampleValue>
@@ -133,9 +133,9 @@ const ThemeExpo = () => {
             all container backgrounds. Therefore, the input should not go
             directly inside the body
           </PaletteDesc>
-          <Sample color={theme.inputBg}>
-            <SampleName>inputBg</SampleName>
-            <SampleValue>{theme.inputBg}</SampleValue>
+          <Sample color={theme.bgInput}>
+            <SampleName>bgInput</SampleName>
+            <SampleValue>{theme.bgInput}</SampleValue>
           </Sample>
         </Palette>
       </HGrid>

@@ -13,7 +13,7 @@ import { CgSpinner } from "react-icons/cg";
 import { Spin } from "../Animations";
 
 const TokenInputWrapper = styled.div<Themed>`
-  background: ${(p) => p.theme.inputBg};
+  background: ${(p) => p.theme.bgInput};
   border-radius: ${(p) => p.theme.borderRadius};
   padding: 0.6rem;
   transition: 0.25s all;
@@ -51,7 +51,7 @@ const Token = styled.div<Themed & { clickable: boolean }>`
   cursor: ${(p) => (p.clickable ? "pointer" : "default")};
   padding: 0.5rem;
   &:hover {
-    background: ${(p) => (p.clickable ? p.theme.bg200 : "transparent")};
+    background: ${(p) => (p.clickable ? p.theme.bgAlt2 : "transparent")};
   }
 
   img {

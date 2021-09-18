@@ -1,40 +1,34 @@
 import React, { useState, useCallback } from "react";
+import { Card, CardBody, CardHeader } from "../Card";
+import { Input as InputComponent, InputProps } from ".";
 
-import { Input, InputProps } from ".";
 export default {
   title: "Components/Forms/Input",
 };
 
-const ShowDemo = (props: Omit<InputProps, "onChange">) => () => {
-  const [state, setState] = useState<InputProps["value"]>(props.value);
-
-  return (
-    <>
-      <h1>Input</h1>
-      <Input
-        {...props}
-        onChange={(evt) => setState(evt.target.value)}
-        value={state}
-      />
-    </>
-  );
-};
-
-export const Basic = ShowDemo({ value: "Hello" });
-
-export const WithActions = () => {
+export const Input = () => {
   const [state, setState] = useState<InputProps["value"]>(50);
   const max = useCallback(() => {
     setState(100);
   }, [setState]);
   return (
-    <>
-      <h1>Input</h1>
-      <Input
-        onChange={(evt) => setState(evt.target.value)}
-        actions={[{ label: "MAX", action: max }]}
-        value={state}
-      />
-    </>
+    <Card>
+      <CardHeader>
+        <h1>Input</h1>
+      </CardHeader>
+      <CardBody>
+        <h3>Default</h3>
+        <InputComponent
+          onChange={(evt) => setState(evt.target.value)}
+          value={state}
+        />
+        <h3>With actions</h3>
+        <InputComponent
+          onChange={(evt) => setState(evt.target.value)}
+          actions={[{ label: "MAX", action: max }]}
+          value={state}
+        />
+      </CardBody>
+    </Card>
   );
 };

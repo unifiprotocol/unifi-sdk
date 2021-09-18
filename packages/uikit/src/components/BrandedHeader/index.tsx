@@ -3,11 +3,11 @@ import styled from "styled-components";
 import { UnifiLogoTextLight } from "../../assets/logos";
 import { Themed } from "../../themes/types";
 
-const BrandedHeaderWrapper = styled.div<Themed>`
+const BrandedHeaderWrapper = styled.div`
   z-index: 999999;
   display: flex;
   align-items: center;
-  background: ${(props) => props.theme.bg100};
+  background: ${(props) => props.theme.bgAlt};
   height: 3.5rem;
   overflow: hidden;
 `;

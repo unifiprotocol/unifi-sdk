@@ -10,8 +10,8 @@ const AlertBase = styled.div<AlertProps>`
   padding: 0.8rem;
   font-size: 0.95rem;
   color: #fff;
-  border: 3px solid ${(props) => props.theme.bg300};
-  background: ${(p) => (p.variant === "fill" ? p.theme.bg300 : "transparent")};
+  border: 3px solid ${(props) => props.theme.bgAlt2};
+  background: ${(p) => (p.variant === "fill" ? p.theme.bgAlt2 : "transparent")};
   margin-bottom: 1rem;
   border-radius: ${(props) => props.theme.borderRadius};
   text-align: justify;

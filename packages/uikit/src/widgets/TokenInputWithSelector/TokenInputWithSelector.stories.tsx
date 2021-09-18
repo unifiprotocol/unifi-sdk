@@ -1,8 +1,10 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { TokenListItem } from "../../components/TokenList";
 import { Tokens } from "../../__mocks__/token.mock";
 import { TokenInputWithSelector } from ".";
 import { Currency } from "@unifiprotocol/utils";
+import { Card, CardBody, CardHeader } from "../../components/Card";
+import { MessageAlert } from "../../components/Alert";
 export default {
   title: "Widgets/TokenInputWithSelector",
   argTypes: {},
@@ -53,22 +55,29 @@ export const Default = () => {
 
   return (
     <>
-      <h1>Modals</h1>
-      <div>
-        You have introduced {amount} of {token ? token.symbol : "Nothing"}
-      </div>
-      <TokenInputWithSelector
-        label="Desired token"
-        token={token}
-        balance={balance}
-        balanceLoading={balanceLoading}
-        balanceLabel="Balance"
-        tokenList={tokenList}
-        onTokenChange={onTokenChange}
-        onSearch={onSearch}
-        amount={amount}
-        onAmountChange={setAmount}
-      />
+      <h1>Token Input with Modal Selector</h1>
+      <Card>
+        <CardHeader>
+          <h2>Select a token</h2>
+        </CardHeader>
+        <CardBody>
+          <MessageAlert variant="fill">
+            You have introduced {amount} of {token ? token.symbol : "Nothing"}
+          </MessageAlert>
+          <TokenInputWithSelector
+            label="Desired token"
+            token={token}
+            balance={balance}
+            balanceLoading={balanceLoading}
+            balanceLabel="Balance"
+            tokenList={tokenList}
+            onTokenChange={onTokenChange}
+            onSearch={onSearch}
+            amount={amount}
+            onAmountChange={setAmount}
+          />
+        </CardBody>
+      </Card>
     </>
   );
 };
