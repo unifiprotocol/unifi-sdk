@@ -15,10 +15,10 @@ export const CardHeader = styled.div`
   h6 {
     margin: 0;
   }
-  padding: 1rem;
+  padding: 1.5rem;
   margin: 0;
 `;
 
 export const CardBody = styled.div`
-  padding: 1rem;
+  padding: 1.5rem;
 `;

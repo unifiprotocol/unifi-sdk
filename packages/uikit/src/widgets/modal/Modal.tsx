@@ -57,11 +57,15 @@ export const ModalClose: React.FC<{ onClick: () => void }> = ({ onClick }) => (
 );
 export const ModalHeader = styled.div`
   display: flex;
-
-  padding: 1rem;
+  background-color: ${(p) => p.theme.bgInput};
+  padding: 1.5rem;
   justify-content: space-between;
   align-items: center;
 `;
+export const ModalTitle = styled.div`
+  font-size: 1.4rem;
+  color: ${(p) => p.theme.primary};
+`;
 export const ModalBody = styled.div`
-  padding: 1rem;
+  padding: 1.5rem;
 `;

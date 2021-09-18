@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { UnifiLogoTextLight } from "../../assets/logos";
-import { Themed } from "../../themes/types";
 
 const BrandedHeaderWrapper = styled.div`
   z-index: 999999;
@@ -17,6 +16,7 @@ const BrandedHeaderContent = styled.div`
   height: 1.8rem;
   display: flex;
   align-items: center;
+  width: 100%;
   position: relative; // for the children 😉
 `;
 
