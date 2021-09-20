@@ -18,6 +18,7 @@ export * from "./components/TokenInput";
 export * from "./components/TokenList";
 export * from "./components/TokenLogo";
 export * from "./components/UnifiThemeProvider";
+export * from "./components/Table";
 
 // Theme
 export * from "./themes";
