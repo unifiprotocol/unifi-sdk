@@ -8,7 +8,7 @@ export const Table = styled.table`
 `;
 
 export const TableRow = styled.tr`
-  background: ${(p) => p.theme.bg};
+  background: ${(p) => p.theme.bgAlt};
   border-radius: ${(p) => p.theme.borderRadius};
   box-shadow: 0 0 20px -5px rgba(0, 0, 0, 0.2);
   transition: 250ms all;
