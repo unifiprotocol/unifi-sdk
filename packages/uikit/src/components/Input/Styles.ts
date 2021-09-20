@@ -40,7 +40,7 @@ export const ActionButton = styled.button`
   background: ${(props) => props.theme.bgAlt};
   border: 2px solid transparent;
   transition: 0.2s all;
-  font-weight: 300;
+  white-space: nowrap;
   padding: 0.3rem;
 
   &:hover {

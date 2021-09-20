@@ -12,7 +12,7 @@ export type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   prefixAddon?: React.ReactNode;
   disableFocusEffect?: boolean;
   actions?: Array<{
-    label: string;
+    label: React.ReactNode;
     action: () => void;
   }>;
 };
@@ -40,8 +40,8 @@ export const Input: React.FC<InputProps> = ({
         <InputBox {...props} ref={(input: any) => setRef(input)} />
         {actions && (
           <Actions>
-            {actions.map(({ label, action }) => (
-              <ActionButton key={label} onClick={preventFocus(action)}>
+            {actions.map(({ label, action }, key) => (
+              <ActionButton key={key} onClick={preventFocus(action)}>
                 {label}
               </ActionButton>
             ))}
