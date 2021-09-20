@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback } from "react";
 import styled from "styled-components";
 import { disableSelectionCss } from "../../util/DOM";
 import { Themed } from "../../themes/types";
@@ -85,10 +85,11 @@ export const TokenInput: React.FC<TokenInputProps> = ({
   balance = "0",
   balanceLoading = false,
   balanceLabel,
-  disableTokenChange: tokenChangeEnabled = true,
+  disableTokenChange = true,
   onRequestChangeToken,
   onAmountChange,
 }) => {
+  const tokenChangeEnabled = !disableTokenChange;
   const max = useCallback(() => {
     onAmountChange(BN(balance).multipliedBy(maxPercentage).toFixed());
   }, [onAmountChange, balance]);

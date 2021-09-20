@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import styled from "styled-components";
 
 const paddingBySize = {
@@ -5,15 +6,23 @@ const paddingBySize = {
   md: "0.35rem 0.5rem",
   xl: "1rem 0.6rem",
 };
+const fontSizeBySize = {
+  sm: "0.8rem",
+  md: "0.9rem",
+  xl: "1rem",
+};
 
 export const BaseButton = styled.button<{
   variant?: "outline" | "fill";
   size?: "sm" | "md" | "xl";
   block?: boolean;
 }>`
-  display: ${(p) => (p.block ? "block" : "inline-block")};
+  display: ${(p) => (p.block ? "flex" : "inline-flex")};
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
   width: ${(p) => (p.block ? "100%" : "auto")};
-  font-size: 0.9rem;
+  font-size: ${(p) => fontSizeBySize[p.size!]};
   vertical-align: middle;
   line-height: 1rem;
   padding: ${(p) => paddingBySize[p.size!]};
