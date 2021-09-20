@@ -10,7 +10,7 @@ export const ModalOverlay = styled.div<Themed>`
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.6);
   overflow-x: hidden;
   overflow-y: auto;
   padding: 0 1rem;
