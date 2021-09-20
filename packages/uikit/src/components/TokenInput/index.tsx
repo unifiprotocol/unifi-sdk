@@ -29,7 +29,6 @@ const Head = styled.div`
   align-items: center;
   justify-content: space-between;
   font-size: 0.85rem;
-  margin-bottom: 0.75rem;
   color: ${(p) => p.theme.txt200};
 `;
 
