@@ -32,7 +32,7 @@ export default {
   primaryDark: green300,
 
   secondary: "#2d3748",
-  secondaryLight: "#2d3748", //light
+  secondaryLight: grey300, //light
   secondaryDark: "#1A202C",
 
   dangerLight: red100,

@@ -19,6 +19,7 @@ export * from "./components/TokenList";
 export * from "./components/TokenLogo";
 export * from "./components/UnifiThemeProvider";
 export * from "./components/Table";
+export * from "./components/CollapsibleCard";
 
 // Theme
 export * from "./themes";

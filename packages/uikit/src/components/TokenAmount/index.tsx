@@ -1,7 +1,7 @@
 import { PrettyAmount } from "../PrettyAmount";
 import { Currency } from "@unifiprotocol/utils";
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { calcClassName } from "../../util/DOM";
 import { TokenLogo } from "../TokenLogo";
 import { kfShine } from "../../keyframes";
@@ -12,16 +12,16 @@ const TokenAmountWrapper = styled.div<{ shiny: boolean }>`
   background: ${(p) => p.theme.bgInput};
   ${(p) =>
     p.shiny &&
-    `
-    *{
-      color: #000!important;
-      font-weight:bold!important;
-    }
-    img {
-      box-shadow: 0 0 0 2px #fff;
-    }
-background: ${p.theme.shinyGradient};
-background-size: 200% auto;}
+    css`
+      *{
+        color: #000!important;
+        font-weight:bold!important;
+      }
+      img {
+        box-shadow: 0 0 0 2px #fff;
+      }
+      background: ${p.theme.shinyGradient};
+      background-size: 200% auto;}
   `}
 
   border-radius: ${(p) => p.theme.borderRadius};
