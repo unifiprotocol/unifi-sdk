@@ -4,7 +4,7 @@ export const TokenListWrapper = styled.div`
   border-radius: ${(props) => props.theme.borderRadius};
   color: #fff;
 
-  @media (${(props) => props.theme.breakpoints.xs}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.xs}) {
     min-width: 100% !important;
     max-width: 100% !important;
   }

@@ -8,13 +8,17 @@ const HIDE_DETAILS_DEFAULT = "hide details";
 
 const CollapsibleCardWrapper = styled(Card)`
   margin: 0.5rem;
-  max-width: 25rem;
-  min-width: 25rem;
+  max-width: 18rem;
+  min-width: 18rem;
   padding: 0.5rem;
 
   @media (max-width: ${(props) => props.theme.breakpoints.sm}px) {
     min-width: 100% !important;
     max-width: 100% !important;
+  }
+
+  @media (max-width: ${(props) => props.theme.breakpoints.xs}px) {
+    margin: 0.5rem 0;
   }
 `;
 
@@ -59,7 +63,7 @@ export const CollapsibleCard: React.FC<{
 
   return (
     <CollapsibleCardWrapper>
-      {children}
+      <div onClick={() => setCollapsed((st) => !st)}>{children}</div>
       {details && (
         <>
           <CollapsibleToggle onClick={() => setCollapsed((st) => !st)}>
