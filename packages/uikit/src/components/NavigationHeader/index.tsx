@@ -57,7 +57,7 @@ const LISTED_ITEMS: Array<{ name: string; href: string }> = [
   },
   {
     name: "USTAKE",
-    href: "https://ustake.pages.dev",
+    href: "https://ustake.unifiprotocol.com",
   },
 ];
 
