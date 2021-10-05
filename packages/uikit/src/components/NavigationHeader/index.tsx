@@ -8,7 +8,7 @@ const NavigationHeaderWrapper = styled.div`
   align-items: center;
   flex-wrap: nowrap;
 
-  @media (max-width: ${(props) => props.theme.breakpoints.xs}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.sm}px) {
     overflow-x: scroll;
 
     ::-webkit-scrollbar {
