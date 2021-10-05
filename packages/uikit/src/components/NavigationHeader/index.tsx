@@ -8,6 +8,24 @@ const NavigationHeaderWrapper = styled.div`
   align-items: center;
   flex-wrap: nowrap;
 
+  @media (max-width: ${(props) => props.theme.breakpoints.xs}) {
+    overflow-x: scroll;
+
+    ::-webkit-scrollbar {
+      width: 0;
+      height: 0;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: unset;
+      border-radius: unset;
+    }
+    ::-webkit-scrollbar-track {
+      background: unset;
+      border-radius: unset;
+      box-shadow: unset;
+    }
+  }
+
   ul {
     list-style-position: outside;
     list-style-type: none;
