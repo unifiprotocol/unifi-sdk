@@ -2,7 +2,7 @@ import React from "react";
 import { NavigationHeader } from ".";
 
 export default {
-  title: "Components/NavigatonHeader",
+  title: "Components/Navigation/NavigatonHeader",
 };
 
 export const Default = () => (

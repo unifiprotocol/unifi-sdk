@@ -7,6 +7,7 @@ export * from "./components/Card";
 export * from "./components/Checkbox";
 export * from "./components/Input";
 export * from "./components/NavigationHeader";
+export * from "./components/UniversalNavigationHeader";
 export * from "./components/Notifications";
 export * from "./components/PrettyAmount";
 export * from "./components/SelectMenu";
