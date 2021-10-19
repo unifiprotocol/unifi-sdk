@@ -1,15 +1,17 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 
 declare global {
   interface Window {
     UnifiTopMenu?: {
-      $el: HTMLElement;
+      $el: HTMLElement | undefined;
       insert: () => void;
     };
   }
 }
 
 export const UniversalNavigationHeader: React.FC = () => {
+  const $bar = useRef<HTMLDivElement | null>(null);
+
   useEffect(() => {
     if (window.UnifiTopMenu?.$el) return;
     const script = document.createElement("script");
@@ -19,12 +21,16 @@ export const UniversalNavigationHeader: React.FC = () => {
 
     return () => {
       document.body.removeChild(script);
+      if ($bar.current) document.body.removeChild($bar.current);
     };
   }, []);
 
   return (
-    <>
-      <div id="unfi-network-menu" data-theme="light" data-uselogo="false"></div>
-    </>
+    <div
+      ref={$bar}
+      id="unfi-network-menu"
+      data-theme="light"
+      data-uselogo="false"
+    ></div>
   );
 };
