@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 declare global {
   interface Window {
@@ -10,27 +10,22 @@ declare global {
 }
 
 export const UniversalNavigationHeader: React.FC = () => {
+  const [loaded, setLoaded] = useState(false);
   const $bar = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    if (window.UnifiTopMenu?.$el) return;
     const script = document.createElement("script");
     script.src = "https://unifi-top-menu.pages.dev/bundle.min.js";
     script.async = true;
+    script.addEventListener("load", () => setLoaded(true));
     document.body.appendChild(script);
-
-    return () => {
-      document.body.removeChild(script);
-      if ($bar.current) document.body.removeChild($bar.current);
-    };
   }, []);
 
-  return (
-    <div
-      ref={$bar}
-      id="unfi-network-menu"
-      data-theme="light"
-      data-uselogo="false"
-    ></div>
-  );
+  useEffect(() => {
+    if (!$bar.current || !loaded || !window.UnifiTopMenu) return;
+    $bar.current.id = "unfi-network-menu";
+    window.UnifiTopMenu.insert();
+  }, [$bar, loaded]);
+
+  return <div ref={$bar} data-theme="light" data-uselogo="false"></div>;
 };
