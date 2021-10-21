@@ -1,6 +1,7 @@
-import React, { useContext } from "react";
+import React from "react";
 
 import { ThemeProvider } from "styled-components";
+import { ModalProvider } from "../..";
 import { UiContext, UiContextProps } from "../../context/UiContext";
 import { Themed } from "../../themes/types";
 
@@ -15,10 +16,12 @@ export const UnifiThemeProvider: React.FC<Themed & UiContextProps> = ({
   return (
     <ThemeProvider theme={theme}>
       <UiContext.Provider value={options}>
-        {/*<ResetCSS />*/}
-        <GlobalFont />
-        <GlobalStyle />
-        {children}
+        <ModalProvider>
+          {/*<ResetCSS />*/}
+          <GlobalFont />
+          <GlobalStyle />
+          {children}
+        </ModalProvider>
       </UiContext.Provider>
     </ThemeProvider>
   );
