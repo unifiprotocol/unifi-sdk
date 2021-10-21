@@ -1,6 +1,6 @@
 {
   "name": "@unifiprotocol/uikit",
-  "version": "1.6.4",
+  "version": "1.6.5",
   "description": "Set of UI components for Unifi Protocol projects",
   "author": "Unifi Protocol",
   "repository": "git@github.com:unifiprotocol/unifi-sdk.git",
@@ -61,7 +61,7 @@
     "styled-components": "^5.2.3"
   },
   "dependencies": {
-    "@unifiprotocol/utils": "^1.4.1",
+    "@unifiprotocol/utils": "^1.4.2",
     "animated-number-react": "^0.1.2",
     "lodash": "^4.17.20",
     "react-icons": "^4.2.0",
