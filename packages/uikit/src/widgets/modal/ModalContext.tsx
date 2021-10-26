@@ -18,12 +18,13 @@ export interface ModalItem<T extends ModalProps = any> {
   component: React.FC<T>;
   props: T;
   options: ModalOptions;
+  id: string;
 }
 
 export interface ModalContextProps {
   createOrUpdateModal: (modal: ModalItem) => void;
-  openModal: (id: number) => void;
-  closeModal: (id: number) => void;
+  openModal: (id: string) => void;
+  closeModal: (id: string) => void;
   modals: ReactNode[];
 }
 

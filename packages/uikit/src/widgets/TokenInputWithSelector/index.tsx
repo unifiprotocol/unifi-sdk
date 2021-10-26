@@ -1,7 +1,6 @@
 import { useModal } from "../modal";
-import { TokenListItem } from "../../components/TokenList";
 import { TokenListModal, TokenListModalProps } from "../TokenListModal";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { Currency } from "@unifiprotocol/utils";
 import { TokenInput, TokenInputProps } from "../../components/TokenInput";
 
@@ -42,7 +41,7 @@ export const TokenInputWithSelector: React.FC<TokenInputWithSelectorProps> = ({
   const [open] = useModal({
     component: TokenListModal,
     props,
-    options: { disableBackdropClick: false },
+    options: { disableBackdropClick: true },
   });
 
   return (

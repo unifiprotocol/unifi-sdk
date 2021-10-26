@@ -1,6 +1,6 @@
 import React from "react";
 import { CgClose } from "react-icons/cg";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { Themed } from "../../themes/types";
 
 export const ModalOverlay = styled.div<Themed>`
@@ -25,15 +25,15 @@ export const Modal = styled.div<{ centered?: boolean }>`
 
   ${(p) =>
     p.centered &&
-    `
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: calc(100% - (1.75rem * 2));
-  & > * {
-    width: 100%;
-  }`}
+    css`
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: calc(100% - (1.75rem * 2));
+      & > * {
+        width: 100%;
+      }
+    `}
 `;
 
 const ModalCloseWraper = styled.div`

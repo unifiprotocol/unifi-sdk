@@ -20,25 +20,27 @@ export const useModal = <T extends any = void>({
   props = defaultProps,
   options = { ...defaultOptions },
 }: NewModalItem<T>): [OpenFn, CloseFn] => {
+  const id = useMemo(() => Math.random().toString(36).substr(2, 5), []);
   const modal: ModalItem = useMemo(
     () => ({
       component,
       props: { ...props },
       options: setDefaults(options),
+      id,
     }),
     [component, props]
   );
 
-  const { createOrUpdateModal, openModal, closeModal, modals } = useContext(
+  const { createOrUpdateModal, openModal, closeModal } = useContext(
     ModalContext
   );
 
   useEffect(() => {
     createOrUpdateModal(modal);
-  }, [modal.component, modal.props]);
+  }, [modal.component, modal.props, modal.id]);
 
-  const open = useCallback(() => openModal(modals.length), [modal]);
-  const close = useCallback(() => closeModal(modals.length), [modal]);
+  const open = useCallback(() => openModal(modal.id), [modal.id]);
+  const close = useCallback(() => closeModal(modal.id), [modal.id]);
 
   // as array so you can easily rename on caller
   return [open, close];

@@ -6,36 +6,23 @@ import { ModalOverlay } from "./Modal";
 
 export const ModalProvider: React.FC = ({ children }) => {
   const theme = useTheme();
-
   const [modals, setModals] = useState<Array<ModalItem>>([]);
-  const [openedModals, setOpenedModals] = useState<number[]>([]);
+  const [openedModals, setOpenedModals] = useState<string[]>([]);
 
   const createOrUpdateModal = useCallback(
     (newModal: ModalItem) => {
       setModals((_modals) => {
-        let updated = false;
-
-        const modals = _modals.map((m) => {
-          // We are suposed to not stake the same modal twice
-          if (m.component === newModal.component) {
-            m.props = newModal.props;
-            updated = true;
-          }
-          return m;
-        });
-
-        if (updated) {
-          return modals;
+        if (_modals.find((m) => m.id === newModal.id)) {
+          return _modals;
         }
-
-        return [...modals, newModal];
+        return [..._modals, newModal];
       });
     },
     [setModals]
   );
 
   const closeModal = useCallback(
-    (closeId: number) => {
+    (closeId: string) => {
       setOpenedModals((openedModals) =>
         openedModals.filter((modalId) => modalId !== closeId)
       );
@@ -44,27 +31,26 @@ export const ModalProvider: React.FC = ({ children }) => {
   );
 
   const openModal = useCallback(
-    (id: number) => {
-      setOpenedModals((openedModals) => [...openedModals, id]);
+    (id: string) => {
+      setOpenedModals((st) => [...st, id]);
     },
-    [setOpenedModals]
+    [setOpenedModals, openedModals]
   );
 
   const onBackdropClick = useCallback(
-    (evt: SyntheticEvent) => {
+    (evt: SyntheticEvent, id: ModalItem["id"]) => {
+      const modal = modals.find((m) => m.id === id);
+      if (!modal) return;
       const clickingOverlay = evt.currentTarget === evt.target;
       const clickingWrapper =
         evt.currentTarget === (evt.target as any).parentElement;
       const clickingBackdrop = clickingOverlay || clickingWrapper;
-
-      const lastModalHasBackdropEnabled = !modals[modals.length - 1].options
-        .disableBackdropClick;
-
-      if (clickingBackdrop && lastModalHasBackdropEnabled) {
-        closeModal(modals.length - 1);
+      const modalHasBackdropEnabled = modal.options.disableBackdropClick;
+      if (clickingBackdrop && modalHasBackdropEnabled) {
+        closeModal(modal.id);
       }
     },
-    [modals]
+    [closeModal, modals]
   );
 
   return (
@@ -79,18 +65,19 @@ export const ModalProvider: React.FC = ({ children }) => {
       {children}
 
       {openedModals.length > 0 &&
-        modals.map(
-          ({ component: ModalComponent, props }, idx) =>
-            openedModals.includes(idx) && (
+        modals.map(({ component: ModalComponent, props, id }, idx) => {
+          return (
+            openedModals.includes(id) && (
               <ModalOverlay
-                onClick={onBackdropClick}
-                key={idx}
+                onClick={(evt: SyntheticEvent) => onBackdropClick(evt, id)}
+                key={id}
                 style={{ zIndex: theme.zIndex.modal + idx }}
               >
-                <ModalComponent {...props} close={() => closeModal(idx)} />
+                <ModalComponent {...props} close={() => closeModal(id)} />
               </ModalOverlay>
             )
-        )}
+          );
+        })}
     </ModalContext.Provider>
   );
 };
