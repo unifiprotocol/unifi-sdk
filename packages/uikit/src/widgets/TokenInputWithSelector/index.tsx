@@ -1,6 +1,6 @@
 import { useModal } from "../modal";
 import { TokenListModal, TokenListModalProps } from "../TokenListModal";
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Currency } from "@unifiprotocol/utils";
 import { TokenInput, TokenInputProps } from "../../components/TokenInput";
 
@@ -20,6 +20,10 @@ export const TokenInputWithSelector: React.FC<TokenInputWithSelectorProps> = ({
   const [token, setToken] = useState<Currency | undefined>(
     tokenInputProps.token
   );
+
+  useEffect(() => {
+    setToken(tokenInputProps.token);
+  }, [tokenInputProps.token]);
 
   const onTokenSelected = useCallback(
     (token: Currency) => {
