@@ -12,8 +12,12 @@ export const ModalProvider: React.FC = ({ children }) => {
   const createOrUpdateModal = useCallback(
     (newModal: ModalItem) => {
       setModals((_modals) => {
-        if (_modals.find((m) => m.id === newModal.id)) {
-          return _modals;
+        const findModal = _modals.find((m) => m.id === newModal.id);
+        if (findModal) {
+          // update props by ref
+          findModal.props = newModal.props;
+          findModal.options = newModal.options;
+          return [..._modals];
         }
         return [..._modals, newModal];
       });
