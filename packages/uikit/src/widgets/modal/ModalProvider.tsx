@@ -69,17 +69,18 @@ export const ModalProvider: React.FC = ({ children }) => {
       {children}
 
       {openedModals.length > 0 &&
-        modals.map(({ component: ModalComponent, props, id }, idx) => {
+        openedModals.map((id, idx) => {
+          const modal = modals.find((m) => m.id === id);
+          if (!modal) return null;
+          const { props, component: ModalComponent } = modal;
           return (
-            openedModals.includes(id) && (
-              <ModalOverlay
-                onClick={(evt: SyntheticEvent) => onBackdropClick(evt, id)}
-                key={id}
-                style={{ zIndex: theme.zIndex.modal + idx }}
-              >
-                <ModalComponent {...props} close={() => closeModal(id)} />
-              </ModalOverlay>
-            )
+            <ModalOverlay
+              onClick={(evt: SyntheticEvent) => onBackdropClick(evt, id)}
+              key={id}
+              style={{ zIndex: theme.zIndex.modal + idx }}
+            >
+              <ModalComponent {...props} close={() => closeModal(id)} />
+            </ModalOverlay>
           );
         })}
     </ModalContext.Provider>
