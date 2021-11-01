@@ -40,7 +40,10 @@ export const useModal = <T extends any = void>({
   }, [modal.component, modal.props, modal.id]);
 
   const open = useCallback(() => openModal(modal.id), [modal.id]);
-  const close = useCallback(() => closeModal(modal.id), [modal.id]);
+  const close = useCallback(() => {
+    options.onClose && options.onClose();
+    closeModal(modal.id);
+  }, [modal.id]);
 
   // as array so you can easily rename on caller
   return [open, close];

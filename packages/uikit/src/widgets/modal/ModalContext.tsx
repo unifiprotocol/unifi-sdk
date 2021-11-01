@@ -1,7 +1,8 @@
 import React, { createContext, ReactNode } from "react";
 
 export interface ModalOptions {
-  disableBackdropClick: boolean;
+  disableBackdropClick?: boolean;
+  onClose?: () => void;
 }
 
 export interface ModalProps {

@@ -51,6 +51,7 @@ export const ModalProvider: React.FC = ({ children }) => {
       const clickingBackdrop = clickingOverlay || clickingWrapper;
       const modalHasBackdropEnabled = modal.options.disableBackdropClick;
       if (clickingBackdrop && modalHasBackdropEnabled) {
+        modal.options.onClose && modal.options.onClose();
         closeModal(modal.id);
       }
     },
