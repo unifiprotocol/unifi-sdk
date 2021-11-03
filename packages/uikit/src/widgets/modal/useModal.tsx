@@ -14,6 +14,7 @@ const setDefaults = (options: Partial<ModalOptions> = {}): ModalOptions => {
 };
 type OpenFn = () => void;
 type CloseFn = () => void;
+type DeleteFn = () => void;
 
 export const useModal = <T extends any = void>({
   component,
@@ -31,13 +32,23 @@ export const useModal = <T extends any = void>({
     [component, props]
   );
 
-  const { createOrUpdateModal, openModal, closeModal } = useContext(
-    ModalContext
-  );
+  const {
+    createOrUpdateModal,
+    openModal,
+    closeModal,
+    deleteModal,
+  } = useContext(ModalContext);
 
   useEffect(() => {
     createOrUpdateModal(modal);
-  }, [modal.component, modal.props, modal.id]);
+    return () => {
+      deleteModal(modal.id);
+    };
+  }, []);
+
+  useEffect(() => {
+    createOrUpdateModal(modal);
+  }, [modal.props]);
 
   const open = useCallback(() => openModal(modal.id), [modal.id]);
   const close = useCallback(() => {

@@ -13,11 +13,15 @@ export const ModalProvider: React.FC = ({ children }) => {
     (newModal: ModalItem) => {
       setModals((_modals) => {
         const findModal = _modals.find((m) => m.id === newModal.id);
-        if (findModal) {
-          // update props by ref
+        if (
+          findModal &&
+          JSON.stringify(findModal) !== JSON.stringify(newModal)
+        ) {
           findModal.props = newModal.props;
           findModal.options = newModal.options;
           return [..._modals];
+        } else if (findModal) {
+          return _modals;
         }
         return [..._modals, newModal];
       });
@@ -32,6 +36,13 @@ export const ModalProvider: React.FC = ({ children }) => {
       );
     },
     [setOpenedModals]
+  );
+
+  const deleteModal = useCallback(
+    (closeId: string) => {
+      setModals((modals) => modals.filter((m) => m.id !== closeId));
+    },
+    [setModals]
   );
 
   const openModal = useCallback(
@@ -64,6 +75,7 @@ export const ModalProvider: React.FC = ({ children }) => {
         createOrUpdateModal,
         openModal,
         closeModal,
+        deleteModal,
         modals,
       }}
     >

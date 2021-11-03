@@ -26,6 +26,7 @@ export interface ModalContextProps {
   createOrUpdateModal: (modal: ModalItem) => void;
   openModal: (id: string) => void;
   closeModal: (id: string) => void;
+  deleteModal: (id: string) => void;
   modals: ReactNode[];
 }
 
