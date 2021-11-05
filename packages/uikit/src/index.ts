@@ -12,6 +12,7 @@ export * from "./components/Notifications";
 export * from "./components/PrettyAmount";
 export * from "./components/SelectMenu";
 export * from "./components/ShinyWrapper";
+export * from "./components/ShinyHeader";
 export * from "./components/Switch";
 export * from "./components/TokenAmount";
 export * from "./components/TokenBadges";
