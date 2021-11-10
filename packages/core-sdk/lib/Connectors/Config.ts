@@ -17,6 +17,7 @@ import { iconexWalletMetadata } from "./Wallet/IconexWallet/IconexWalletMetadata
 import { iconMetadata } from "./Offline/Icon/IconMetadata";
 import { binanceMetadata } from "./Offline/Binance/BinanceMetadata";
 import { binanceTestnetMetadata } from "./Offline/Binance/BinanceTestnetMetadata";
+import { avalancheMetadata } from "./Offline/Avalanche/AvalancheMetadata";
 
 const ethereumWallets = [
   mathWalletMetadata,
@@ -30,10 +31,7 @@ export const blockchainWalletConnectors = Object.freeze({
     binanceWalletMetadata,
     otherEthWalletMetadata,
   ],
-  [Blockchains.BinanceTestnet]: [
-    ...ethereumWallets,
-    otherEthWalletMetadata,
-  ],
+  [Blockchains.BinanceTestnet]: [...ethereumWallets, otherEthWalletMetadata],
   [Blockchains.Ethereum]: [...ethereumWallets, otherEthWalletMetadata],
   [Blockchains.EthereumRopsten]: [...ethereumWallets, otherEthWalletMetadata],
   [Blockchains.Iotex]: [metamaskWalletMetadata, otherEthWalletMetadata],
@@ -45,6 +43,7 @@ export const blockchainWalletConnectors = Object.freeze({
   ],
   [Blockchains.Polygon]: [metamaskWalletMetadata],
   [Blockchains.Icon]: [iconexWalletMetadata],
+  [Blockchains.Avalanche]: [metamaskWalletMetadata, otherEthWalletMetadata],
 });
 
 export const blockchainOfflineConnectors = Object.freeze({
@@ -57,4 +56,5 @@ export const blockchainOfflineConnectors = Object.freeze({
   [Blockchains.Tron]: [tronGridMetadata],
   [Blockchains.Polygon]: [polygonMetadata],
   [Blockchains.Icon]: [iconMetadata],
+  [Blockchains.Avalanche]: [avalancheMetadata],
 });
