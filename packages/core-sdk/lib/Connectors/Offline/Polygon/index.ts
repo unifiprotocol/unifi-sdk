@@ -15,7 +15,7 @@ export class PolygonConnector extends OfflineConnector {
     // TODO network cannot be hardcoded here
     this.adapter.setProvider(
       new ethers.providers.StaticJsonRpcProvider(
-        "https://rpc-mainnet.maticvigil.com/",
+        "https://polygon-rpc.com",
         EthChainIds.Polygon
       )
     );
