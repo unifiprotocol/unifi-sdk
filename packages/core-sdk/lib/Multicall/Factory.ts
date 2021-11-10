@@ -1,6 +1,7 @@
 import { IAdapter } from "../Adapters";
 import { InvalidBlockchainError } from "../Errors";
 import { Blockchains } from "../Types";
+import { AvalancheMulticallAdapter } from "./Adapters/AvalancheMulticallAdapter";
 import { BinanceTestnetMulticallAdapter } from "./Adapters/BinanceTestnetMulticallAdapter";
 import { EthMulticallAdapter } from "./Adapters/EthMulticallAdapter";
 import { HarmonyMulticallAdapter } from "./Adapters/HarmonyMulticallAdapter";
@@ -20,6 +21,7 @@ export const multicallAdapterFactory = (
     [Blockchains.Iotex]: () => IotexMulticallAdapter,
     [Blockchains.Tron]: () => MulticallFallbackAdapter,
     [Blockchains.Icon]: () => MulticallFallbackAdapter,
+    [Blockchains.Avalanche]: () => AvalancheMulticallAdapter,
     [Blockchains.Harmony]: (adapter: IAdapter) => {
       if (
         adapter.getProvider().isOneWallet ||

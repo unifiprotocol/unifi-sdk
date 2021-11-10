@@ -17,6 +17,7 @@ import {
   TronGridConnector,
 } from "./Offline";
 import { AlchemyConnector } from "./Offline/Alchemy";
+import { AvalancheConnector } from "./Offline/Avalanche";
 import { HarmonyConnector } from "./Offline/Harmony";
 import { IconConnector } from "./Offline/Icon";
 import {
@@ -60,6 +61,7 @@ export const connectorFactory = (
     [OfflineConnectors.Iotex]: IotexConnector,
     [OfflineConnectors.BinanceTestnet]: BinanceTestnetConnector,
     [OfflineConnectors.Icon]: IconConnector,
+    [OfflineConnectors.Avalanche]: AvalancheConnector,
   }[connectorName];
 
   return new ConnectorClass(blockchain);
