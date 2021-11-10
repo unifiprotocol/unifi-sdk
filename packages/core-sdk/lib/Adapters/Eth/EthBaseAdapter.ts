@@ -111,6 +111,12 @@ export abstract class EthBaseAdapter extends BaseAdapter<
           params
         );
 
+        // prevent waste gas!
+        await contract[method].call.apply(
+          null,
+          computeInvocationParams(params, { gasLimit })
+        );
+
         const contractCall = await contract[method].apply(
           null,
           computeInvocationParams(params, { gasLimit })
