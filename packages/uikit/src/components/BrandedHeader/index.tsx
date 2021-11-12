@@ -9,6 +9,7 @@ const BrandedHeaderWrapper = styled.div`
   background: ${(props) => props.theme.bgAlt};
   height: 3.5rem;
   overflow: hidden;
+  width: 100%;
 `;
 
 const BrandedHeaderContent = styled.div`
@@ -18,6 +19,10 @@ const BrandedHeaderContent = styled.div`
   align-items: center;
   width: 100%;
   position: relative; // for the children 😉
+
+  @media (max-width: ${(props) => props.theme.breakpoints.sm}px) {
+    padding: 0.7rem 0.7rem;
+  }
 `;
 
 const BrandedHeaderLogo = styled.img`
@@ -25,9 +30,12 @@ const BrandedHeaderLogo = styled.img`
   width: auto;
 `;
 
-export const BrandedHeader: React.FC = ({ children }) => (
+export const BrandedHeader: React.FC<{
+  leftControls?: React.FC;
+}> = ({ children, leftControls: LeftControls }) => (
   <BrandedHeaderWrapper>
     <BrandedHeaderContent>
+      {LeftControls && <LeftControls />}
       <BrandedHeaderLogo src={UnifiLogoTextLight} />
       {children}
     </BrandedHeaderContent>

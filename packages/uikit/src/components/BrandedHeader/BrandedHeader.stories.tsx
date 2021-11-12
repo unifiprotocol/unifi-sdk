@@ -1,12 +1,17 @@
 import React from "react";
 import { BrandedHeader } from ".";
+import { AiOutlineMenu as OpenSidebarIcon } from "react-icons/ai";
 
 export default {
   title: "Components/BrandedHeader",
 };
-export const Default = () => (
-  <>
-    <BrandedHeader />
-    <h1>BrandedHeader</h1>
-  </>
-);
+export const Default = () => {
+  const leftControls = () => <OpenSidebarIcon />;
+
+  return (
+    <>
+      <BrandedHeader {...{ leftControls }} />
+      <h1>BrandedHeader</h1>
+    </>
+  );
+};
