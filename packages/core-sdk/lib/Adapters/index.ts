@@ -7,6 +7,7 @@ export * from "./Polygon/PolygonAdapter";
 export * from "./Iotex/IotexAdapter";
 export * from "./Harmony/HarmonyWeb3Adapter";
 export * from "./Harmony/HarmonyAdapter";
+export * from "./Avalanche/AvalancheAdapter";
 export * from "./Icon/IconAdapter";
 export * from "./Icon/IconexAdapter";
 export * from "./BaseAdapter";

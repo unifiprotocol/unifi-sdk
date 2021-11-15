@@ -5,3 +5,4 @@ export * from "./EtherScan";
 export * from "./Polygon";
 export * from "./Iotex";
 export * from "./Icon";
+export * from "./Avalanche";
