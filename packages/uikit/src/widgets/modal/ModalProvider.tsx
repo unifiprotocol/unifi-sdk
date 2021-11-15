@@ -3,6 +3,7 @@ import { useTheme } from "styled-components";
 import { ModalItem } from ".";
 import { ModalContext } from "./ModalContext";
 import { ModalOverlay } from "./Modal";
+import { stringify } from "flatted";
 
 export const ModalProvider: React.FC = ({ children }) => {
   const theme = useTheme();
@@ -13,10 +14,7 @@ export const ModalProvider: React.FC = ({ children }) => {
     (newModal: ModalItem) => {
       setModals((_modals) => {
         const findModal = _modals.find((m) => m.id === newModal.id);
-        if (
-          findModal &&
-          JSON.stringify(findModal) !== JSON.stringify(newModal)
-        ) {
+        if (findModal && stringify(findModal) !== stringify(newModal)) {
           findModal.props = newModal.props;
           findModal.options = newModal.options;
           return [..._modals];

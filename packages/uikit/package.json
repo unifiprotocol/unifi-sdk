@@ -63,6 +63,7 @@
   "dependencies": {
     "@unifiprotocol/utils": "^1.4.2",
     "animated-number-react": "^0.1.2",
+    "flatted": "^3.2.4",
     "lodash": "^4.17.20",
     "react-icons": "^4.2.0",
     "react-popper": "^2.2.5",
