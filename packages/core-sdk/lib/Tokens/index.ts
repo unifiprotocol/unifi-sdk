@@ -5,3 +5,4 @@ export * from "./ONENativeToken";
 export * from "./TRXNativeToken";
 export * from "./MATICNativeToken";
 export * from "./ICXNativeToken";
+export * from "./AVAXNativeToken";

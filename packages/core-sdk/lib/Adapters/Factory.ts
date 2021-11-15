@@ -1,6 +1,7 @@
 import { Web3NotSupportedError } from "../Errors";
 import { Blockchains } from "../Types";
 import { Constructor } from "../Utils/Typings";
+import { AvalancheAdapter } from "./Avalanche/AvalancheAdapter";
 import { BscAdapter } from "./Bsc/BscAdapter";
 import { BscTestnetAdapter } from "./Bsc/BscTestnetAdapter";
 import { EthAdapter } from "./Eth/EthAdapter";
@@ -21,6 +22,7 @@ export const web3AdapterFactory = (blockchain: Blockchains): IAdapter => {
     [Blockchains.Tron]: TronAdapter,
     [Blockchains.Polygon]: PolygonAdapter,
     [Blockchains.Harmony]: HarmonyWeb3Adapter,
+    [Blockchains.Avalanche]: AvalancheAdapter,
   };
 
   const adapterClass = adapterClassMap[blockchain];
