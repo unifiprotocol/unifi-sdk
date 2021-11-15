@@ -22,7 +22,7 @@ export enum OfflineConnectors {
   Polygon = "polygon",
   Iotex = "iotex",
   Icon = "icon",
-  Avalanche = "Avalanche",
+  Avalanche = "avalanche",
 }
 
 export enum WalletConnectors {
