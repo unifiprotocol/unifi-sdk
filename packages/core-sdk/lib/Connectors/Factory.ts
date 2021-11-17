@@ -19,7 +19,7 @@ import {
 import { AlchemyConnector } from "./Offline/Alchemy";
 import { AvalancheConnector } from "./Offline/Avalanche";
 import { HarmonyConnector } from "./Offline/Harmony";
-import { IconConnector } from "./Offline/Icon";
+
 import {
   MathWalletConnector,
   MetamaskConnector,
@@ -28,7 +28,6 @@ import {
   TrustWalletConnector,
   OtherEthWalletConnector,
   HarmonyOneWalletConnector,
-  IconexWalletConnector,
 } from "./Wallet";
 
 export const connectorFactory = (
@@ -49,7 +48,7 @@ export const connectorFactory = (
     [WalletConnectors.TrustWallet]: TrustWalletConnector,
     [WalletConnectors.Binance]: BinanceChainWalletConnector,
     [WalletConnectors.OtherEthWallet]: OtherEthWalletConnector,
-    [WalletConnectors.IconexWallet]: IconexWalletConnector,
+
     [WalletConnectors.HarmonyOneWallet]: HarmonyOneWalletConnector,
     [OfflineConnectors.Cloudflare]: CloudflareConnector,
     [OfflineConnectors.Binance]: BinanceConnector,
@@ -60,7 +59,7 @@ export const connectorFactory = (
     [OfflineConnectors.Polygon]: PolygonConnector,
     [OfflineConnectors.Iotex]: IotexConnector,
     [OfflineConnectors.BinanceTestnet]: BinanceTestnetConnector,
-    [OfflineConnectors.Icon]: IconConnector,
+
     [OfflineConnectors.Avalanche]: AvalancheConnector,
   }[connectorName];
 

@@ -20,7 +20,7 @@ export const multicallAdapterFactory = (
     [Blockchains.EthereumRopsten]: () => EthMulticallAdapter,
     [Blockchains.Iotex]: () => IotexMulticallAdapter,
     [Blockchains.Tron]: () => MulticallFallbackAdapter,
-    [Blockchains.Icon]: () => MulticallFallbackAdapter,
+    [Blockchains.EthereumRinkeby]: () => EthMulticallAdapter,
     [Blockchains.Avalanche]: () => AvalancheMulticallAdapter,
     [Blockchains.Harmony]: (adapter: IAdapter) => {
       if (

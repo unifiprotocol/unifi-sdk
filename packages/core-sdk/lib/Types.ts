@@ -2,12 +2,13 @@ export enum Blockchains {
   Binance = "BSC",
   Ethereum = "ETH",
   EthereumRopsten = "ETHRopsten",
+  EthereumRinkeby = "ETHRinkeby",
   BinanceTestnet = "BSCTestnet",
   Iotex = "IOTX",
   Tron = "TRX",
   Harmony = "Harmony",
   Polygon = "Polygon",
-  Icon = "Icon",
+
   Avalanche = "Avalanche",
 }
 
@@ -21,12 +22,10 @@ export enum OfflineConnectors {
   Harmony = "harmony",
   Polygon = "polygon",
   Iotex = "iotex",
-  Icon = "icon",
   Avalanche = "avalanche",
 }
 
 export enum WalletConnectors {
-  IconexWallet = "IconexWallet",
   HarmonyOneWallet = "HarmonyOneWallet",
   Binance = "binance",
   Metamask = "metamask",
@@ -39,6 +38,7 @@ export enum WalletConnectors {
 export enum EthChainIds {
   Eth = 1,
   EthRopsten = 3,
+  EthRinkeby = 4,
   Bsc = 56,
   BscTestnet = 97,
   Iotex = 4689,

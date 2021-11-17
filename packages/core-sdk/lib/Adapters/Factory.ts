@@ -1,3 +1,4 @@
+import { EthRinkebyAdapter } from ".";
 import { Web3NotSupportedError } from "../Errors";
 import { Blockchains } from "../Types";
 import { Constructor } from "../Utils/Typings";
@@ -18,6 +19,7 @@ export const web3AdapterFactory = (blockchain: Blockchains): IAdapter => {
     [Blockchains.BinanceTestnet]: BscTestnetAdapter,
     [Blockchains.Ethereum]: EthAdapter,
     [Blockchains.EthereumRopsten]: EthRopstenAdapter,
+    [Blockchains.EthereumRinkeby]: EthRinkebyAdapter,
     [Blockchains.Iotex]: IotexAdapter,
     [Blockchains.Tron]: TronAdapter,
     [Blockchains.Polygon]: PolygonAdapter,

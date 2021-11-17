@@ -13,8 +13,6 @@ import { tronGridMetadata } from "./Offline/TronGrid/TronGridMetadata";
 import { polygonMetadata } from "./Offline/Polygon/PolygonMetadata";
 import { iotexMetadata } from "./Offline/Iotex/IotexMetadata";
 import { harmonyOneWalletMetadata } from "./Wallet/HarmonyOneWallet/HarmonyOneWalletMetadata";
-import { iconexWalletMetadata } from "./Wallet/IconexWallet/IconexWalletMetadata";
-import { iconMetadata } from "./Offline/Icon/IconMetadata";
 import { binanceMetadata } from "./Offline/Binance/BinanceMetadata";
 import { binanceTestnetMetadata } from "./Offline/Binance/BinanceTestnetMetadata";
 import { avalancheMetadata } from "./Offline/Avalanche/AvalancheMetadata";
@@ -34,6 +32,7 @@ export const blockchainWalletConnectors = Object.freeze({
   [Blockchains.BinanceTestnet]: [...ethereumWallets, otherEthWalletMetadata],
   [Blockchains.Ethereum]: [...ethereumWallets, otherEthWalletMetadata],
   [Blockchains.EthereumRopsten]: [...ethereumWallets, otherEthWalletMetadata],
+  [Blockchains.EthereumRinkeby]: [...ethereumWallets, otherEthWalletMetadata],
   [Blockchains.Iotex]: [metamaskWalletMetadata, otherEthWalletMetadata],
   [Blockchains.Tron]: [tronLinkWalletMetadata],
   [Blockchains.Harmony]: [
@@ -42,7 +41,6 @@ export const blockchainWalletConnectors = Object.freeze({
     mathWalletMetadata,
   ],
   [Blockchains.Polygon]: [metamaskWalletMetadata],
-  [Blockchains.Icon]: [iconexWalletMetadata],
   [Blockchains.Avalanche]: [metamaskWalletMetadata, otherEthWalletMetadata],
 });
 
@@ -52,9 +50,9 @@ export const blockchainOfflineConnectors = Object.freeze({
   [Blockchains.Harmony]: [harmonyMetadata],
   [Blockchains.Ethereum]: [cloudflareMetadata, alchemyMetadata],
   [Blockchains.EthereumRopsten]: [etherScanMetadata, alchemyMetadata],
+  [Blockchains.EthereumRinkeby]: [etherScanMetadata, alchemyMetadata],
   [Blockchains.Iotex]: [iotexMetadata],
   [Blockchains.Tron]: [tronGridMetadata],
   [Blockchains.Polygon]: [polygonMetadata],
-  [Blockchains.Icon]: [iconMetadata],
   [Blockchains.Avalanche]: [avalancheMetadata],
 });

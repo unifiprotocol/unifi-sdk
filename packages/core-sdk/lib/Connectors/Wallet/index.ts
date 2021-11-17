@@ -5,4 +5,3 @@ export * from "./Binance";
 export * from "./TrustWallet";
 export * from "./OtherEthWallet";
 export * from "./HarmonyOneWallet";
-export * from "./IconexWallet";
