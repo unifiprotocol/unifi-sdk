@@ -1,10 +1,10 @@
 export const breakpointMap: Record<string, number> = {
   xs: 370,
   sm: 576,
-  md: 852,
-  lg: 968,
-  xl: 1080,
-  xxl: 1200,
+  md: 768,
+  lg: 992,
+  xl: 1200,
+  xxl: 1400,
 };
 
 export const breakpoints = Object.values(breakpointMap).map(
@@ -13,9 +13,9 @@ export const breakpoints = Object.values(breakpointMap).map(
 
 export const mediaQueries = {
   xs: `@media (max-width: ${breakpointMap.xs}px)`,
-  sm: `@media  (max-width: ${breakpointMap.sm}px)`,
-  md: `@media  (max-width: ${breakpointMap.md}px)`,
-  lg: `@media  (max-width: ${breakpointMap.lg}px)`,
-  xl: `@media  (max-width: ${breakpointMap.xl}px)`,
-  xxl: `@media  (max-width: ${breakpointMap.xxl}px)`,
+  sm: `@media  (min-width: ${breakpointMap.sm}px)`,
+  md: `@media  (min-width: ${breakpointMap.md}px)`,
+  lg: `@media  (min-width: ${breakpointMap.lg}px)`,
+  xl: `@media  (min-width: ${breakpointMap.xl}px)`,
+  xxl: `@media  (min-width: ${breakpointMap.xxl}px)`,
 };
