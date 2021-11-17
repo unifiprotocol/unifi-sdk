@@ -13,6 +13,7 @@ const fontSizeBySize = {
 };
 
 export const BaseButton = styled.button<{
+  onlyIcon?: boolean;
   variant?: "outline" | "fill";
   size?: "sm" | "md" | "xl";
   block?: boolean;
@@ -45,7 +46,7 @@ export const BaseButton = styled.button<{
   svg {
     transition: 0.25s all;
     color: #fff;
-    margin-right: 0.4rem;
+    margin-right: ${(p) => (p.onlyIcon ? "0" : "0.4rem")};
   }
 `;
 
@@ -53,4 +54,5 @@ BaseButton.defaultProps = {
   variant: "fill",
   size: "md",
   block: false,
+  onlyIcon: false,
 };
