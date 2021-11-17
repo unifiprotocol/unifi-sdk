@@ -20,7 +20,7 @@ import {
   grey000,
 } from "./colors";
 
-import { breakpointMap } from "../base";
+import { breakpointMap, mediaQueries } from "../base";
 
 export default {
   name: "Dark",
@@ -84,4 +84,5 @@ export default {
   inputHeight: "3rem",
   // Responsivenes
   breakpoints: breakpointMap,
+  mediaQueries,
 };

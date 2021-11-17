@@ -1,7 +1,7 @@
 import React from "react";
 
 import { ThemeProvider } from "styled-components";
-import { ModalProvider } from "../..";
+import { ModalProvider } from "../../widgets/modal";
 import { UiContext, UiContextProps } from "../../context/UiContext";
 import { Themed } from "../../themes/types";
 

@@ -68,7 +68,6 @@ export const SelectMenu: React.FC<Props> = ({ label, ...props }) => {
       container: (provided) => ({
         ...provided,
         width: "100%",
-        zIndex: 2,
       }),
       singleValue: (provided) => ({
         ...provided,

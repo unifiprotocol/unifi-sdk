@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { DefaultTheme, StyledComponent } from "styled-components";
 import { BaseButton } from "./BaseButton";
 
 export const PrimaryButton = styled(BaseButton)`
@@ -53,21 +53,33 @@ export const DangerButton = styled(BaseButton)`
     }
   }
 `;
+type LinkButton = StyledComponent<
+  "a",
+  DefaultTheme,
+  {
+    variant?: "outline" | "fill" | undefined;
+    size?: "sm" | "md" | "xl" | undefined;
+    block?: boolean | undefined;
+  } & {
+    as: string;
+  },
+  "as"
+>;
 
-export const PrimaryLinkButton = styled(PrimaryButton).attrs({
+export const PrimaryLinkButton: LinkButton = styled(PrimaryButton).attrs({
   as: "a",
 })`
   text-decoration: none;
-`;
+` as any;
 
-export const SecondaryLinkButton = styled(SecondaryButton).attrs({
+export const SecondaryLinkButton: LinkButton = styled(SecondaryButton).attrs({
   as: "a",
 })`
   text-decoration: none;
-`;
+` as any;
 
-export const DangerLinkButton = styled(DangerButton).attrs({
+export const DangerLinkButton: LinkButton = styled(DangerButton).attrs({
   as: "a",
 })`
   text-decoration: none;
-`;
+` as any;

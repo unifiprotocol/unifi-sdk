@@ -20,7 +20,7 @@ const ButtonsGrid = styled.div`
   gap: 1rem;
 `;
 
-const ButtonShow = (Primary, Secondary, Danger, variant) => {
+const ButtonShow = (Primary, Secondary, Danger, variant, link?: string) => {
   const [icons, setIcons] = useState(false);
   const [disabled, setDisabled] = useState(false);
   return (
@@ -37,15 +37,30 @@ const ButtonShow = (Primary, Secondary, Danger, variant) => {
           <h4>Size {size.toUpperCase()}</h4>
           <h5>Enabled</h5>
           <ButtonsGrid>
-            <Primary size={size} variant={variant} disabled={disabled}>
+            <Primary
+              size={size}
+              variant={variant}
+              disabled={disabled}
+              href={link}
+            >
               {icons && <FaBeer size={12} />}
               Primary
             </Primary>
-            <Secondary size={size} variant={variant} disabled={disabled}>
+            <Secondary
+              size={size}
+              variant={variant}
+              disabled={disabled}
+              href={link}
+            >
               {icons && <FaBeer size={12} />}
               Secondary
             </Secondary>
-            <Danger size={size} variant={variant} disabled={disabled}>
+            <Danger
+              size={size}
+              variant={variant}
+              disabled={disabled}
+              href={link}
+            >
               {icons && <FaBeer size={12} />}
               Danger
             </Danger>
@@ -63,12 +78,19 @@ export const OutlinedButton = () =>
   ButtonShow(PrimaryButton, SecondaryButton, DangerButton, "outline");
 
 export const FilledLinkButton = () =>
-  ButtonShow(PrimaryLinkButton, SecondaryLinkButton, DangerLinkButton, "fill");
+  ButtonShow(
+    PrimaryLinkButton,
+    SecondaryLinkButton,
+    DangerLinkButton,
+    "fill",
+    "https://google.es"
+  );
 
 export const OutlinedLinkButton = () =>
   ButtonShow(
     PrimaryLinkButton,
     SecondaryLinkButton,
     DangerLinkButton,
-    "outline"
+    "outline",
+    "https://google.es"
   );

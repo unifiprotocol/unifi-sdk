@@ -22,6 +22,24 @@ export const Default = () => (
             { label: "Stake", value: "stake" },
           ]}
         />
+        <SelectMenu
+          disabled={true}
+          label="Sort by"
+          options={[
+            { label: "APY", value: "apy" },
+            { label: "APR", value: "apr", isDisabled: true },
+            { label: "Stake", value: "stake" },
+          ]}
+        />
+        <SelectMenu
+          disabled={true}
+          label="Sort by"
+          options={[
+            { label: "APY", value: "apy" },
+            { label: "APR", value: "apr", isDisabled: true },
+            { label: "Stake", value: "stake" },
+          ]}
+        />
       </CardBody>
     </Card>
   </>
