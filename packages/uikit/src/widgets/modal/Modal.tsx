@@ -1,7 +1,7 @@
 import React from "react";
 import { CgClose } from "react-icons/cg";
 import styled, { css } from "styled-components";
-import { Themed } from "../../themes/types";
+import { Themed } from "../../themes";
 
 export const ModalOverlay = styled.div<Themed>`
   z-index: ${(p) => p.theme.zIndex.modal};

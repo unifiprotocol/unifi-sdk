@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import Select, { Props } from "react-select";
 import styled, { useTheme } from "styled-components";
-import { UnifiTheme } from "../../themes/types";
+import { UnifiTheme } from "../../themes";
 
 const SelectLabel = styled.span`
   font-size: 85%;

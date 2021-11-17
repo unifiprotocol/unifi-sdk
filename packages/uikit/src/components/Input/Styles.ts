@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Themed } from "../../themes/types";
+import { Themed } from "../../themes";
 
 export const InputWrapper = styled.div<Themed>`
   display: flex;

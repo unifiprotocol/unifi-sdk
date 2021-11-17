@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import styled from "styled-components";
 import { disableSelectionCss } from "../../util/DOM";
-import { Themed } from "../../themes/types";
+import { Themed } from "../../themes";
 import { Input } from "../Input";
 import { TokenLogo } from "../TokenLogo";
 import { BN, Currency } from "@unifiprotocol/utils";

@@ -3,7 +3,7 @@ import React from "react";
 import { ThemeProvider } from "styled-components";
 import { ModalProvider } from "../../widgets/modal";
 import { UiContext, UiContextProps } from "../../context/UiContext";
-import { Themed } from "../../themes/types";
+import { Themed } from "../../themes";
 
 import { GlobalStyle, GlobalFont } from "./GlobalStyles";
 //import ResetCSS from "./ResetCSS";

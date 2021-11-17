@@ -2,7 +2,7 @@ import React, { useCallback } from "react";
 import styled from "styled-components";
 import { FaCheck as CheckIcon } from "react-icons/fa";
 import { disableSelectionCss } from "../../util/DOM";
-import { Themed } from "../../themes/types";
+import { Themed } from "../../themes";
 
 const CheckboxWrapper = styled.div<Themed<{ disabled: boolean }>>`
   cursor: ${(p) => (p.disabled ? "default" : "pointer")};

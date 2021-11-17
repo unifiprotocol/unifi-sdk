@@ -1,9 +1,12 @@
 import Dark from "./Dark";
-import { Themed as _Themed } from "./types";
 
 export const Themes = {
   Dark,
 };
 
-export type Themed = _Themed;
+export type UnifiTheme = typeof Dark;
+export type Themed<T extends Record<string, any> = Record<string, any>> = {
+  theme: UnifiTheme;
+} & T;
+
 export * from "./base";
