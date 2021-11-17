@@ -4,6 +4,8 @@ import { SwitchProps } from "./Types";
 import { Choice, SwitchChoicesWrapper, SwitchWrapper } from "./Styles";
 import { calcClassName } from "../../util/DOM";
 
+export * from "./Types";
+
 export const Switch: React.FC<SwitchProps> = ({
   choices,
   selected,

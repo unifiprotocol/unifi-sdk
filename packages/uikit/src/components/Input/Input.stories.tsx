@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { Card, CardBody, CardHeader } from "../Card";
 import { Input as InputComponent, InputProps } from ".";
-
+import { ImCool } from "react-icons/im";
 export default {
   title: "Components/Forms/Input",
 };
@@ -22,10 +22,33 @@ export const Input = () => {
           onChange={(evt) => setState(evt.target.value)}
           value={state}
         />
-        <h3>With actions</h3>
+        <h3>Prefix</h3>
+        <InputComponent
+          prefixAddon={<ImCool />}
+          onChange={(evt) => setState(evt.target.value)}
+          value={state}
+        />
+        <h3>With one action</h3>
         <InputComponent
           onChange={(evt) => setState(evt.target.value)}
           actions={[{ label: "MAX", action: max }]}
+          value={state}
+        />
+        <h3>With one action and prefix</h3>
+        <InputComponent
+          prefixAddon={<ImCool />}
+          onChange={(evt) => setState(evt.target.value)}
+          actions={[{ label: "MAX", action: max }]}
+          value={state}
+        />
+        <h3>With multiple action</h3>
+        <InputComponent
+          onChange={(evt) => setState(evt.target.value)}
+          actions={[
+            { label: "MAX", action: max },
+            { label: "MIN", action: max },
+            { label: "AVG", action: max },
+          ]}
           value={state}
         />
       </CardBody>

@@ -3,6 +3,7 @@ import { Themed } from "../../themes";
 
 export const InputWrapper = styled.div<Themed>`
   display: flex;
+
   align-items: center;
   background: ${(p) => p.theme.bgInput};
   border-radius: ${(p) => p.theme.borderRadius};
@@ -27,11 +28,14 @@ export const InputBox = styled.input<Themed>`
   border: none;
   font-size: 1rem;
   color: ${(p) => p.theme.txt100};
-  width: 100%;
+  flex-grow: 1;
 `;
 export const InputPrefix = styled.div``;
 
-export const Actions = styled.div``;
+export const Actions = styled.div`
+  gap: 0.5rem;
+  display: flex;
+`;
 export const ActionButton = styled.button`
   font-size: 0.9rem;
   cursor: pointer;
