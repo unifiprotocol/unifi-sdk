@@ -8,10 +8,10 @@ export const InputWrapper = styled.div<Themed>`
   background: ${(p) => p.theme.bgInput};
   border-radius: ${(p) => p.theme.borderRadius};
 
-  padding: 0.6rem;
+  padding: 0.5rem;
   height: ${(p) => p.theme.inputHeight};
   transition: 0.25s all;
-  gap: 0.5rem;
+  gap: 0rem;
 `;
 
 export const IconAddon = styled.span`
@@ -22,6 +22,7 @@ export const IconAddon = styled.span`
 
 export const InputBox = styled.input<Themed>`
   outline: none;
+  display: inline-block;
   background: transparent;
   color: ${(p) => p.theme.txt100};
   border-radius: ${(p) => p.theme.borderRadius};
@@ -29,6 +30,7 @@ export const InputBox = styled.input<Themed>`
   font-size: 1rem;
   color: ${(p) => p.theme.txt100};
   flex-grow: 1;
+  width: 100%;
 `;
 export const InputPrefix = styled.div``;
 

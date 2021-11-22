@@ -64,6 +64,17 @@ const Amount = styled.div`
   flex-grow: 1;
 `;
 
+const SelectTokenButtonWrapper = styled.div`
+  ${(p) => p.theme.mediaQueries.xs} {
+    span {
+      display: none;
+    }
+    svg {
+      margin: 0;
+    }
+  }
+`;
+
 export type TokenInputProps = {
   label: React.ReactNode;
   balance?: string;
@@ -134,14 +145,14 @@ export const TokenInput: React.FC<TokenInputProps> = ({
             </Token>
           )}
           {!token && tokenChangeEnabled && (
-            <div>
+            <SelectTokenButtonWrapper>
               <PrimaryButton
                 onClick={() => onRequestChangeToken && onRequestChangeToken()}
               >
                 <MdSearch size={20} />
-                Select
+                <span>Select</span>
               </PrimaryButton>
-            </div>
+            </SelectTokenButtonWrapper>
           )}
         </AmountAndToken>
       </TokenInputWrapper>
