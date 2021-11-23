@@ -77,6 +77,10 @@ const LISTED_ITEMS: Array<{ name: string; href: string }> = [
     name: "USTAKE",
     href: "https://ustake.unifiprotocol.com",
   },
+  {
+    name: "NFT",
+    href: "https://nft.unifiprotocol.com",
+  },
 ];
 
 export const NavigationHeader: React.FC = () => (
