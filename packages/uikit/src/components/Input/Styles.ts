@@ -28,7 +28,6 @@ export const InputBox = styled.input<Themed>`
   border-radius: ${(p) => p.theme.borderRadius};
   border: none;
   font-size: 1rem;
-  color: ${(p) => p.theme.txt100};
   flex-grow: 1;
   width: 100%;
 `;

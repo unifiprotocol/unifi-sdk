@@ -19,6 +19,7 @@ export * from "./components/TokenBadges";
 export * from "./components/TokenInput";
 export * from "./components/TokenList";
 export * from "./components/TokenLogo";
+export * from "./components/Textarea";
 export * from "./components/UnifiThemeProvider";
 export * from "./components/Table";
 export * from "./components/CollapsibleCard";

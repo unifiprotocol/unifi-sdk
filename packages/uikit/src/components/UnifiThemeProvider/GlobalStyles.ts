@@ -7,7 +7,7 @@ export const GlobalStyle = createGlobalStyle<Themed>`
     background-color: ${(p) => p.theme.bg};
     color: ${(p) => p.theme.txt100}
   }
-  body, button, input {
+  body, button, input, textarea {
     font-family: ${(p) => p.theme.fontFamily};
   }
   * {
