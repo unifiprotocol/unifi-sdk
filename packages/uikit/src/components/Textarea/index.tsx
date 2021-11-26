@@ -4,19 +4,15 @@ import { TextareaElement } from "./Styles";
 
 type TextareaProps = {
   onChange?: (v: string) => void;
-  width?: string;
-  height?: string;
+  cols?: string;
+  rows?: string;
 };
 
-export const Textarea: React.FC<TextareaProps> = ({
-  onChange,
-  height,
-  width,
-}) => {
+export const Textarea: React.FC<TextareaProps> = ({ onChange, rows, cols }) => {
   return (
     <ShinyWrapper inline={true} mode={"on-focus-within"} size="2px">
       <TextareaElement
-        {...{ height, width }}
+        {...{ rows, cols: cols ?? "999999" }}
         onChange={(evt: React.ChangeEvent<HTMLTextAreaElement>) =>
           onChange && onChange(evt.currentTarget.value)
         }

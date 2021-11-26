@@ -11,4 +11,5 @@ export const TextareaElement = styled.textarea<Themed>`
   color: ${(p) => p.theme.txt100};
   background: ${(p) => p.theme.bgInput};
   border-radius: ${(p) => p.theme.borderRadius};
+  width: 100%;
 `;
