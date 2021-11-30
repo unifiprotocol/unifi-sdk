@@ -5,6 +5,7 @@
     "rootDir": "./lib",
   },
   "exclude": [
+    "_lib",
     "node_modules",
     "dist"
   ]
