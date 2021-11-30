@@ -1,14 +1,14 @@
 import { IBlockchainConfig, OfflineConnectors } from "../../../Types";
 import { Web3BaseConnector } from "../../../Connectors";
 
-export class BscDataSeedConnector extends Web3BaseConnector {
+export class IotexConnector extends Web3BaseConnector {
   constructor(config: IBlockchainConfig) {
     super(
-      "https://bsc-dataseed.binance.org/",
+      "https://babel-api.mainnet.iotex.io",
       {
-        displayName: "Bsc Dataseed",
+        displayName: "Iotex",
         isWallet: false,
-        name: OfflineConnectors.BscDataseed,
+        name: OfflineConnectors.Iotex,
       },
       config
     );

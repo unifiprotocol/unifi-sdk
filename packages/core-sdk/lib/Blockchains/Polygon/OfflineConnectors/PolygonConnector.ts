@@ -1,14 +1,14 @@
 import { IBlockchainConfig, OfflineConnectors } from "../../../Types";
 import { Web3BaseConnector } from "../../../Connectors";
 
-export class BscDataSeedConnector extends Web3BaseConnector {
+export class PolygonConnector extends Web3BaseConnector {
   constructor(config: IBlockchainConfig) {
     super(
-      "https://bsc-dataseed.binance.org/",
+      "https://polygon-rpc.com",
       {
-        displayName: "Bsc Dataseed",
+        displayName: "Polygon",
         isWallet: false,
-        name: OfflineConnectors.BscDataseed,
+        name: OfflineConnectors.Polygon,
       },
       config
     );

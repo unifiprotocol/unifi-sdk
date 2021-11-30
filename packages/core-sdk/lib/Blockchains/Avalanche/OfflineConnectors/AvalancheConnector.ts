@@ -1,14 +1,14 @@
 import { IBlockchainConfig, OfflineConnectors } from "../../../Types";
 import { Web3BaseConnector } from "../../../Connectors";
 
-export class BscDataSeedConnector extends Web3BaseConnector {
+export class AvalancheConnector extends Web3BaseConnector {
   constructor(config: IBlockchainConfig) {
     super(
-      "https://bsc-dataseed.binance.org/",
+      "https://api.avax.network/ext/bc/C/rpc",
       {
-        displayName: "Bsc Dataseed",
+        displayName: "Avalanche",
         isWallet: false,
-        name: OfflineConnectors.BscDataseed,
+        name: OfflineConnectors.Avalanche,
       },
       config
     );
