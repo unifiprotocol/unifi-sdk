@@ -2,7 +2,6 @@ import { ETHNativeToken } from "./NativeToken";
 import { Blockchains, EthChainIds } from "../../Types/Enums";
 import { MetamaskConnector } from "../../Connectors/Wallets/MetamaskConnector";
 import { MathWalletConnector } from "../../Connectors/Wallets/MathWalletConnector";
-import { AlchemyConnector } from "../../Connectors/Offline/AlchemyConnector";
 import { EtherScanConnector } from "../../Connectors/Offline/EtherScanConnector";
 import { blockchainConfigFactory } from "../utils";
 import { TrustWalletConnector } from "../../Connectors/Wallets/TrustWalletConnector";
@@ -34,7 +33,6 @@ export const EthereumRinkebyConfig = blockchainConfigFactory(
     TrustWalletConnector,
     MathWalletConnector,
     MetamaskCompatibleConnector,
-    AlchemyConnector,
     EtherScanConnector,
   ]
 );
