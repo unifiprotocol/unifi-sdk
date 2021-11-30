@@ -34,3 +34,12 @@ export const getBlockchainConnectors = (
   const config = getBlockchainConfig(blockchain);
   return [...config.wallets, ...config.offlineConnectors];
 };
+
+export const getBlockchainConnectorByName = (
+  blockchain: Blockchains,
+  connectorName: string
+): IConnector => {
+  return getBlockchainConnectors(blockchain).find(
+    (connector) => connector.name === connectorName
+  );
+};

@@ -1,6 +1,3 @@
-import { Blockchains } from "../Types";
-import { Currency } from "@unifiprotocol/utils";
-
 import { BigNumberish } from "@ethersproject/bignumber";
 import { IBlockchainConfig } from "./IBlockchainConfig";
 

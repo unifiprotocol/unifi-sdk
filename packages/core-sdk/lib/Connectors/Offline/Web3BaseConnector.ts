@@ -1,11 +1,11 @@
-import { IAdapter } from "../../Types/IAdapter";
 import { ConnectorEvent } from "../../Types";
 import EventEmitter from "eventemitter3";
 import { IBlockchainConfig } from "../../Types/IBlockchainConfig";
-import { IConnectorMetadata } from "../../Types";
+import { IConnectorMetadata, IConnectorAdapters } from "../../Types";
 import { BaseConnector } from "../BaseConnector";
 import { ethers } from "ethers";
 import { Web3BaseAdapter } from "../../Adapters/Web3BaseAdapter";
+import { Web3MulticallAdapter } from "../../Adapters";
 
 export class Web3BaseConnector extends BaseConnector {
   protected emitter = new EventEmitter<ConnectorEvent>();
@@ -20,7 +20,7 @@ export class Web3BaseConnector extends BaseConnector {
   ) {
     super(metadata, config);
   }
-  async connect(): Promise<IAdapter> {
+  async connect(): Promise<IConnectorAdapters> {
     const adapter = new Web3BaseAdapter(this.config);
     adapter.setProvider(
       new ethers.providers.StaticJsonRpcProvider(
@@ -28,6 +28,7 @@ export class Web3BaseConnector extends BaseConnector {
         this.config.chainId
       )
     );
-    return adapter;
+    const multicall = new Web3MulticallAdapter(adapter);
+    return { adapter, multicall };
   }
 }

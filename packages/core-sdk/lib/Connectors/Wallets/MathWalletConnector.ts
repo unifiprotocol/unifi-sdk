@@ -7,7 +7,8 @@ import { BaseConnector } from "../BaseConnector";
 import { hexToDec } from "@unifiprotocol/utils";
 import { Web3BaseAdapter } from "../../Adapters/Web3BaseAdapter";
 import { IBlockchainConfig } from "../../Types/IBlockchainConfig";
-import { Blockchains } from "../../Types";
+import { Blockchains, IConnectorAdapters } from "../../Types";
+import { Web3MulticallAdapter } from "../../Adapters";
 
 declare global {
   interface Window {
@@ -28,7 +29,7 @@ export class MathWalletConnector extends BaseConnector {
     );
   }
 
-  async connect(): Promise<IAdapter> {
+  async connect(): Promise<IConnectorAdapters> {
     const ethAgent = this.getAgent();
     if (!(await this.isAvailable())) {
       throw new WalletNotDetectedError(this.metadata.name);
@@ -42,6 +43,7 @@ export class MathWalletConnector extends BaseConnector {
     const chainIdStr = `${chainId}`;
 
     const adapter = new Web3BaseAdapter(this.config);
+    const multicall = new Web3MulticallAdapter(adapter);
 
     const isValidNetwork = await adapter.isValidNetwork(chainIdStr);
 
@@ -56,7 +58,10 @@ export class MathWalletConnector extends BaseConnector {
     adapter.setAddress(address);
     adapter.setProvider(provider);
 
-    return adapter;
+    return {
+      adapter,
+      multicall,
+    };
   }
 
   async isAvailable(): Promise<boolean> {

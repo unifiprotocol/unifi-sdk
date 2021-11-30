@@ -1,5 +1,4 @@
-import { IAdapter } from "../Types/IAdapter";
-import { ConnectorEvent } from "../Types";
+import { ConnectorEvent, IConnectorAdapters } from "../Types";
 import EventEmitter from "eventemitter3";
 import { IConnector } from "../Types/IConnector";
 import { Callback } from "../Utils/Typings";
@@ -14,7 +13,7 @@ export abstract class BaseConnector implements IConnector {
     public readonly config: IBlockchainConfig
   ) {}
 
-  abstract connect(): Promise<IAdapter>;
+  abstract connect(): Promise<IConnectorAdapters>;
 
   async disconnect(): Promise<void> {
     this.emitter.emit("Disconnect", {});

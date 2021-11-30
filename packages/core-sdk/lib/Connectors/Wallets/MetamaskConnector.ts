@@ -1,12 +1,12 @@
-import { IAdapter } from "../../Types/IAdapter";
-
 import { InvalidNetworkError, WalletNotDetectedError } from "../../Errors";
 
 import { ethers } from "ethers";
 import { BaseConnector } from "../BaseConnector";
 import { hexToDec } from "@unifiprotocol/utils";
 import { Web3BaseAdapter } from "../../Adapters/Web3BaseAdapter";
-import { IBlockchainConfig } from "../../Types/IBlockchainConfig";
+
+import { Web3MulticallAdapter } from "../../Adapters";
+import { IConnectorAdapters, IBlockchainConfig, IAdapter } from "../../Types";
 
 declare global {
   interface Window {
@@ -26,7 +26,7 @@ export class MetamaskConnector extends BaseConnector {
     );
   }
 
-  async connect(): Promise<IAdapter> {
+  async connect(): Promise<IConnectorAdapters> {
     const ethAgent = this.getAgent();
     if (!(await this.isAvailable())) {
       throw new WalletNotDetectedError(this.metadata.name);
@@ -54,7 +54,8 @@ export class MetamaskConnector extends BaseConnector {
     adapter.setAddress(address);
     adapter.setProvider(provider);
 
-    return adapter;
+    const multicall = new Web3MulticallAdapter(adapter);
+    return { adapter, multicall };
   }
 
   async isAvailable(): Promise<boolean> {

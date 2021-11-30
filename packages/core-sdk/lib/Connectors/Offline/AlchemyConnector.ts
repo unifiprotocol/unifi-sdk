@@ -1,7 +1,12 @@
 import { ethers } from "ethers";
+import { Web3MulticallAdapter } from "../../Adapters";
 
 import { Web3BaseAdapter } from "../../Adapters/Web3BaseAdapter";
-import { EthChainIds, IAdapter, IBlockchainConfig } from "../../Types";
+import {
+  EthChainIds,
+  IConnectorAdapters,
+  IBlockchainConfig,
+} from "../../Types";
 import { BaseConnector } from "../BaseConnector";
 
 const API_KEY = "DPREQ9e0Op53wPlvBiUOyPIBFcs8wlPo";
@@ -31,11 +36,12 @@ export class AlchemyConnector extends BaseConnector {
     }
   }
 
-  async connect(): Promise<IAdapter> {
+  async connect(): Promise<IConnectorAdapters> {
     const adapter = new Web3BaseAdapter(this.config);
     adapter.setProvider(
       new ethers.providers.AlchemyProvider(this.config.chainId, API_KEY)
     );
-    return adapter;
+    const multicall = new Web3MulticallAdapter(adapter);
+    return { adapter, multicall };
   }
 }

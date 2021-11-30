@@ -21,15 +21,23 @@ export abstract class ContractUseCase<
   }
 
   execute(adapter: IAdapter): Promise<ExecutionResponse<ResponseValue>> {
-    return adapter.execute<ResponseValue>(
-      this.contractAddress,
-      this.method,
-      {
-        args: this.getArgs(),
-        callValue: this.getCallValue(),
-      },
-      this.isWrite
-    );
+    return adapter
+      .execute<ResponseValue>(
+        this.contractAddress,
+        this.method,
+        {
+          args: this.getArgs(),
+          callValue: this.getCallValue(),
+        },
+        this.isWrite
+      )
+      .then(this.formatResponse.bind(this));
+  }
+
+  formatResponse(
+    response: ExecutionResponse<any>
+  ): ExecutionResponse<ResponseValue> {
+    return response;
   }
 }
 
