@@ -30,7 +30,7 @@ export class CloudflareConnector extends BaseConnector {
 
     if (!this.supportedChainIds.includes(this.config.chainId)) {
       throw new Error(
-        `Alchemy does not support the blockchain "${this.config.blockchain}(${this.config.chainId})`
+        `Cloudflare does not support the blockchain "${this.config.blockchain}(${this.config.chainId})`
       );
     }
   }

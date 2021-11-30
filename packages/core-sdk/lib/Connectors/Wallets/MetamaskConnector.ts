@@ -1,5 +1,4 @@
 import { InvalidNetworkError, WalletNotDetectedError } from "../../Errors";
-
 import { ethers } from "ethers";
 import { BaseConnector } from "../BaseConnector";
 import { hexToDec } from "@unifiprotocol/utils";
@@ -10,6 +9,7 @@ import {
   IConnectorAdapters,
   IBlockchainConfig,
   IAdapter,
+  IConnectorMetadata,
   WalletConnectors,
 } from "../../Types";
 
@@ -20,15 +20,15 @@ declare global {
 }
 
 export class MetamaskConnector extends BaseConnector {
-  constructor(config: IBlockchainConfig) {
-    super(
-      {
-        name: WalletConnectors.Metamask,
-        displayName: WalletConnectors.Metamask,
-        isWallet: true,
-      },
-      config
-    );
+  constructor(
+    config: IBlockchainConfig,
+    metadata: IConnectorMetadata = {
+      name: WalletConnectors.Metamask,
+      displayName: "Metamask",
+      isWallet: true,
+    }
+  ) {
+    super(metadata, config);
   }
 
   async connect(): Promise<IConnectorAdapters> {

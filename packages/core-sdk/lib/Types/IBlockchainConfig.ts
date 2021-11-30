@@ -1,22 +1,22 @@
 import { Currency } from "@unifiprotocol/utils";
-import { BaseConnector } from "../Connectors/BaseConnector";
-import { Blockchains, EthChainIds } from "../Types";
+
+import {
+  Blockchains,
+  EthChainIds,
+  IConnector,
+  IBlockchainExplorer,
+} from "../Types";
 
 export interface IBlockchainConfig {
   blockchain: Blockchains;
 
   nativeToken: Currency;
   chainId: EthChainIds;
-  wallets: BaseConnector[];
-  offlineConnectors: BaseConnector[];
+  wallets: IConnector[];
+  offlineConnectors: IConnector[];
   multicall?: {
     supported: boolean;
     address?: string;
   };
-  explorer: {
-    baseUrl: string;
-    address(address: string): string;
-    token(address: string): string;
-    tx(hash: string): string;
-  };
+  explorer: IBlockchainExplorer;
 }

@@ -26,8 +26,8 @@ export enum EthChainIds {
 export enum OfflineConnectors {
   Cloudflare = "cloudflare",
   EtherScan = "etherscan",
-  Binance = "bscdataseed",
-  BinanceTestnet = "binance-testnet",
+  BscDataseed = "bscdataseed",
+  BscDataseedTestnet = "binance-testnet",
   TronGrid = "trongrid",
   Alchemy = "alchemy",
   Harmony = "harmony",
@@ -43,7 +43,7 @@ export enum WalletConnectors {
   MathWallet = "mathwallet",
   TronLink = "tronlink",
   TrustWallet = "trustwallet",
-  OtherEthWallet = "otherwallet",
+  MetamaskCompatible = "metamaskCompatible",
 }
 
 export type Connectors = WalletConnectors | OfflineConnectors;

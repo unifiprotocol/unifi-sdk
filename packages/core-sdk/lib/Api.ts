@@ -1,5 +1,10 @@
 import { blockchainConfigMap } from "./Blockchains";
-import { Blockchains, IBlockchainConfig, IConnector } from "./Types";
+import {
+  Blockchains,
+  IBlockchainConfig,
+  IConnector,
+  IBlockchainExplorer,
+} from "./Types";
 
 export const getBlockchainConfig = (
   blockchain: Blockchains
@@ -38,4 +43,10 @@ export const getBlockchainConnectorByName = (
   return getBlockchainConnectors(blockchain).find(
     (connector) => connector.name === connectorName
   );
+};
+
+export const getBlockchainExplorer = (
+  blockchain: Blockchains
+): IBlockchainExplorer => {
+  return getBlockchainConfig(blockchain).explorer;
 };

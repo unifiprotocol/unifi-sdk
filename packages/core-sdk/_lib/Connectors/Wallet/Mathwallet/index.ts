@@ -48,7 +48,6 @@ export class MathWalletConnector extends MetamaskBaseConnector {
   }
 
   async connect(): Promise<IAdapter> {
-    debugger;
     if (this.blockchain !== Blockchains.Harmony) {
       return super.connect();
     }

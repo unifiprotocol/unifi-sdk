@@ -22,7 +22,7 @@ export class MathWalletConnector extends BaseConnector {
     super(
       {
         name: WalletConnectors.MathWallet,
-        displayName: WalletConnectors.MathWallet,
+        displayName: "Mathwallet",
         isWallet: true,
       },
       blockchainConfig

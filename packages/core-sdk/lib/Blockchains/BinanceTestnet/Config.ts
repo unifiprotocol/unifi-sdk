@@ -1,25 +1,26 @@
-import { ETHNativeToken } from "./NativeToken";
 import { Blockchains, EthChainIds } from "../../Types/Enums";
-import { IBlockchainConfig } from "../../Types/IBlockchainConfig";
 import { MetamaskConnector } from "../../Connectors/Wallets/MetamaskConnector";
 import { MathWalletConnector } from "../../Connectors/Wallets/MathWalletConnector";
 import { AlchemyConnector } from "../../Connectors/Offline/AlchemyConnector";
 import { EtherScanConnector } from "../../Connectors/Offline/EtherScanConnector";
 import { blockchainConfigFactory } from "../utils";
 import { CloudflareConnector } from "../../Connectors/Offline/CloudflareConnector";
+import { BinanceChainWalletConnector } from "../Binance/Wallets/BinanceChainWalletConnector";
 import { TrustWalletConnector } from "../../Connectors/Wallets/TrustWalletConnector";
 import { MetamaskCompatibleConnector } from "../../Connectors/Wallets/MetamaskCompatibleConnector";
+import { BNBNativeToken } from "../Binance/NativeToken";
+import { BscTesnetDataSeedConnector } from "./OfflineConnectors/BscDataSeedConnector";
 
-export const EthereumConfig = blockchainConfigFactory(
+export const BinanceTesnetConfig = blockchainConfigFactory(
   {
-    blockchain: Blockchains.Ethereum,
-    chainId: EthChainIds.Eth,
-    nativeToken: ETHNativeToken,
+    blockchain: Blockchains.BinanceTestnet,
+    chainId: EthChainIds.BscTestnet,
+    nativeToken: BNBNativeToken,
     multicall: {
       supported: true,
     },
     explorer: {
-      baseUrl: "https://etherscan.io",
+      baseUrl: "https://testnet.bscscan.com",
       address: function (address: string) {
         return `${this.explorerBaseUrl}/address/${address}`;
       },
@@ -33,11 +34,10 @@ export const EthereumConfig = blockchainConfigFactory(
   },
   [
     MetamaskConnector,
+    BinanceChainWalletConnector,
     TrustWalletConnector,
     MathWalletConnector,
     MetamaskCompatibleConnector,
-    CloudflareConnector,
-    AlchemyConnector,
-    EtherScanConnector,
+    BscTesnetDataSeedConnector,
   ]
 );

@@ -1,15 +1,22 @@
 import { BaseConnector } from "../Connectors/BaseConnector";
 import { IBlockchainConfig } from "../Types";
 
-export const addConnectors = (
-  config: IBlockchainConfig,
+export const blockchainConfigFactory = (
+  params: Omit<IBlockchainConfig, "wallets" | "offlineConnectors">,
   connectorClasses: Array<new (config: IBlockchainConfig) => BaseConnector>
-): void => {
+): IBlockchainConfig => {
+  const config: IBlockchainConfig = {
+    ...params,
+    wallets: [],
+    offlineConnectors: [],
+  };
+
   connectorClasses.forEach((connectorClass) => {
     const connector = new connectorClass(config);
     if (connector.isWallet) {
-      config.wallets.push(connector);
+      return config.wallets.push(connector);
     }
     config.offlineConnectors.push(connector);
   });
+  return config;
 };
