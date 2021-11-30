@@ -6,11 +6,15 @@ import { MathWalletConnector } from "../../Connectors/Wallets/MathWalletConnecto
 import { AlchemyConnector } from "../../Connectors/Offline/AlchemyConnector";
 import { EtherScanConnector } from "../../Connectors/Offline/EtherScanConnector";
 import { addConnectors } from "../utils";
+import { CloudflareConnector } from "../../Connectors/Offline/CloudflareConnector";
 
 export const EthereumConfig: IBlockchainConfig = {
   blockchain: Blockchains.Ethereum,
   chainId: EthChainIds.Eth,
   nativeToken: ETHNativeToken,
+  multicall: {
+    supported: false,
+  },
   explorer: {
     baseUrl: "https://etherscan.io",
     address: function (address: string) {
@@ -30,6 +34,7 @@ export const EthereumConfig: IBlockchainConfig = {
 addConnectors(EthereumConfig, [
   MetamaskConnector,
   MathWalletConnector,
+  CloudflareConnector,
   AlchemyConnector,
   EtherScanConnector,
 ]);

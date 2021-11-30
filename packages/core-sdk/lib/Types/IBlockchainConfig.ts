@@ -11,7 +11,7 @@ export interface IBlockchainConfig {
   offlineConnectors: BaseConnector[];
   multicall?: {
     supported: boolean;
-    address: string;
+    address?: string;
   };
   explorer: {
     baseUrl: string;

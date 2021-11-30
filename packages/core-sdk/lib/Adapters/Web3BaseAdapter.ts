@@ -7,19 +7,10 @@ import {
   ExecutionResponse,
   TransactionResult,
 } from "../Types";
-import {
-  CallReturnContext,
-  ContractCallContext,
-  ContractCallResults,
-  Multicall,
-} from "ethereum-multicall";
 
 import { nonSuccessResponse, successResponse } from "./Helpers";
 import { ERC20ABI } from "../Abis/ERC20";
 import { BaseAdapter } from "./BaseAdapter";
-
-import { IBlockchainConfig } from "../Types/IBlockchainConfig";
-import { GenericUseCase } from "..";
 
 export class Web3BaseAdapter extends BaseAdapter<
   ContractInterface,
@@ -30,19 +21,6 @@ export class Web3BaseAdapter extends BaseAdapter<
   protected stablePairs: string[] = [];
   protected lastGasLimit = "30000";
   protected abi: Record<string, ContractInterface> = {};
-  protected multicall?: Multicall;
-
-  constructor(blockchainConfig: IBlockchainConfig) {
-    super(blockchainConfig);
-    const multicallConfig = blockchainConfig.multicall;
-    if (multicallConfig?.supported) {
-      this.multicall = new Multicall({
-        multicallCustomContractAddress: blockchainConfig.multicall?.address,
-        ethersProvider: this.getProvider(),
-        tryAggregate: false,
-      });
-    }
-  }
 
   setProvider(providerClass: ethers.providers.BaseProvider): void {
     this.etherClient = providerClass;
@@ -133,14 +111,16 @@ export class Web3BaseAdapter extends BaseAdapter<
           null,
           computeInvocationParams(params)
         );
-        if (contractCall) {
-          const value = contractCall.toString();
-          return successResponse({
-            value,
-            method,
-            params,
-          });
-        }
+
+        const value = Array.isArray(contractCall)
+          ? contractCall.map((v) => v.toString())
+          : contractCall.toString();
+
+        return successResponse({
+          value,
+          method,
+          params,
+        });
       }
       return nonSuccessResponse({ method, params });
     } catch (err) {

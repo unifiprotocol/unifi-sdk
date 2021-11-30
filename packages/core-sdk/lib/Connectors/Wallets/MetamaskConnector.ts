@@ -6,7 +6,12 @@ import { hexToDec } from "@unifiprotocol/utils";
 import { Web3BaseAdapter } from "../../Adapters/Web3BaseAdapter";
 
 import { Web3MulticallAdapter } from "../../Adapters";
-import { IConnectorAdapters, IBlockchainConfig, IAdapter } from "../../Types";
+import {
+  IConnectorAdapters,
+  IBlockchainConfig,
+  IAdapter,
+  WalletConnectors,
+} from "../../Types";
 
 declare global {
   interface Window {
@@ -18,8 +23,8 @@ export class MetamaskConnector extends BaseConnector {
   constructor(config: IBlockchainConfig) {
     super(
       {
-        name: "Metamask",
-        displayName: "Metamask",
+        name: WalletConnectors.Metamask,
+        displayName: WalletConnectors.Metamask,
         isWallet: true,
       },
       config

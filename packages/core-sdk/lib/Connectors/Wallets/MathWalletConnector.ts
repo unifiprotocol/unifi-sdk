@@ -7,7 +7,7 @@ import { BaseConnector } from "../BaseConnector";
 import { hexToDec } from "@unifiprotocol/utils";
 import { Web3BaseAdapter } from "../../Adapters/Web3BaseAdapter";
 import { IBlockchainConfig } from "../../Types/IBlockchainConfig";
-import { Blockchains, IConnectorAdapters } from "../../Types";
+import { Blockchains, IConnectorAdapters, WalletConnectors } from "../../Types";
 import { Web3MulticallAdapter } from "../../Adapters";
 
 declare global {
@@ -21,8 +21,8 @@ export class MathWalletConnector extends BaseConnector {
   constructor(blockchainConfig: IBlockchainConfig) {
     super(
       {
-        name: "MathWallet",
-        displayName: "MathWallet",
+        name: WalletConnectors.MathWallet,
+        displayName: WalletConnectors.MathWallet,
         isWallet: true,
       },
       blockchainConfig

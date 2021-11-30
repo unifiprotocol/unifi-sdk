@@ -10,20 +10,20 @@ import {
 } from "../../Types";
 import { BaseConnector } from "../BaseConnector";
 
-export class EtherScanConnector extends BaseConnector {
+export class CloudflareConnector extends BaseConnector {
   public readonly supportedChainIds = [
     EthChainIds.Eth,
+    EthChainIds.Polygon,
     EthChainIds.EthRopsten,
-    EthChainIds.EthRinkeby,
     // ...more
   ];
 
   constructor(config: IBlockchainConfig) {
     super(
       {
-        displayName: OfflineConnectors.EtherScan,
+        displayName: OfflineConnectors.Cloudflare,
         isWallet: false,
-        name: OfflineConnectors.EtherScan,
+        name: OfflineConnectors.Cloudflare,
       },
       config
     );
@@ -38,7 +38,7 @@ export class EtherScanConnector extends BaseConnector {
   async connect(): Promise<IConnectorAdapters> {
     const adapter = new Web3BaseAdapter(this.config);
     adapter.setProvider(
-      new ethers.providers.EtherscanProvider(this.config.chainId)
+      new ethers.providers.CloudflareProvider(this.config.chainId)
     );
     const multicall = new Web3MulticallAdapter(adapter);
     return { adapter, multicall };

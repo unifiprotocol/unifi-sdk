@@ -6,6 +6,7 @@ import {
   EthChainIds,
   IConnectorAdapters,
   IBlockchainConfig,
+  OfflineConnectors,
 } from "../../Types";
 import { BaseConnector } from "../BaseConnector";
 
@@ -22,9 +23,9 @@ export class AlchemyConnector extends BaseConnector {
   constructor(config: IBlockchainConfig) {
     super(
       {
-        displayName: "Alchemy",
+        displayName: OfflineConnectors.Alchemy,
         isWallet: false,
-        name: "Alchemy",
+        name: OfflineConnectors.Alchemy,
       },
       config
     );
