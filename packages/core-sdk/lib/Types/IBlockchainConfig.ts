@@ -17,6 +17,7 @@ export interface IBlockchainConfig {
   multicall?: {
     supported: boolean;
     address?: string;
+    tryAggregate?: boolean;
   };
   explorer: IBlockchainExplorer;
 }

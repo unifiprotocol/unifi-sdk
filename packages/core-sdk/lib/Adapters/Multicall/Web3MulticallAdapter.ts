@@ -24,11 +24,13 @@ export class Web3MulticallAdapter extends MulticallBaseAdapter {
     super(adapter);
 
     if (this.isMulticallSupported) {
+      const tryAggregate =
+        this.adapter.blockchainConfig.multicall?.tryAggregate;
       this.multicall = new Multicall({
         multicallCustomContractAddress:
           this.adapter.blockchainConfig.multicall?.address,
         ethersProvider: this.adapter.getProvider(),
-        tryAggregate: true,
+        tryAggregate: typeof tryAggregate === "undefined" ? true : tryAggregate,
       });
     }
   }
