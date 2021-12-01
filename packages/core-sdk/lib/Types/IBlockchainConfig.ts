@@ -14,7 +14,7 @@ export interface IBlockchainConfig {
   chainId: EthChainIds;
   wallets: IConnector[];
   offlineConnectors: IConnector[];
-  multicall?: {
+  multicall: {
     supported: boolean;
     address?: string;
     tryAggregate?: boolean;

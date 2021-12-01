@@ -43,6 +43,8 @@ export class MathWalletConnector extends BaseConnector {
     const chainIdStr = `${chainId}`;
 
     const adapter = new Web3BaseAdapter(this.config);
+    this.initEventController(adapter);
+
     const multicall = new Web3MulticallAdapter(adapter);
 
     const isValidNetwork = await adapter.isValidNetwork(chainIdStr);
@@ -50,8 +52,6 @@ export class MathWalletConnector extends BaseConnector {
     if (!isValidNetwork) {
       throw new InvalidNetworkError(chainIdStr);
     }
-
-    this.initEventController(adapter);
 
     const address = ethers.utils.getAddress(accounts[0]);
 

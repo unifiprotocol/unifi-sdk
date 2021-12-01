@@ -18,6 +18,8 @@ export const BinanceTesnetConfig = blockchainConfigFactory(
     nativeToken: BNBNativeToken,
     multicall: {
       supported: true,
+      address: "0xae11c5b5f29a6a25e955f0cb8ddcc416f522af5c",
+      tryAggregate: false,
     },
     explorer: {
       baseUrl: "https://testnet.bscscan.com",

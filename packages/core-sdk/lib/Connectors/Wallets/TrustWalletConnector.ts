@@ -16,10 +16,6 @@ export class TrustWalletConnector extends MetamaskConnector {
     });
   }
 
-  protected getAgent(): any {
-    return window.ethereum;
-  }
-
   async isAvailable(): Promise<boolean> {
     return !!this.getAgent() && this.getAgent().isTrust;
   }
