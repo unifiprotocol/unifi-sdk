@@ -6,7 +6,7 @@ import { UNKNOWN_TOKEN_LOGO } from "../../util/images";
 export const TokenLogoImg = styled.img`
   border-radius: 100%;
 `;
-type TokenData = { address: string; symbol: string; logoURI: string };
+type TokenData = { address: string; symbol: string };
 
 type TokenLogoProps = {
   token: TokenData;
@@ -17,7 +17,6 @@ export const TokenLogo: React.FC<TokenLogoProps> = ({ token, ...imgProps }) => {
   const sources = useMemo(
     () =>
       [
-        token.logoURI,
         tokenLogoResolver && tokenLogoResolver(token.address),
         UNKNOWN_TOKEN_LOGO,
       ].filter((v) => !!v),
