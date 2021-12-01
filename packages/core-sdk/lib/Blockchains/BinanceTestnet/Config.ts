@@ -1,15 +1,11 @@
-import { Blockchains, EthChainIds } from "../../Types/Enums";
+import { Blockchains, EthChainIds, OfflineConnectors } from "../../Types";
 import { MetamaskConnector } from "../../Connectors/Wallets/MetamaskConnector";
 import { MathWalletConnector } from "../../Connectors/Wallets/MathWalletConnector";
-import { AlchemyConnector } from "../../Connectors/Offline/AlchemyConnector";
-import { EtherScanConnector } from "../../Connectors/Offline/EtherScanConnector";
-import { blockchainConfigFactory } from "../utils";
-import { CloudflareConnector } from "../../Connectors/Offline/CloudflareConnector";
+import { blockchainConfigFactory, web3ConnectorFactory } from "../utils";
 import { BinanceChainWalletConnector } from "../Binance/Wallets/BinanceChainWalletConnector";
 import { TrustWalletConnector } from "../../Connectors/Wallets/TrustWalletConnector";
 import { MetamaskCompatibleConnector } from "../../Connectors/Wallets/MetamaskCompatibleConnector";
 import { BNBNativeToken } from "../Binance/NativeToken";
-import { BscTesnetDataSeedConnector } from "./OfflineConnectors/BscDataSeedConnector";
 
 export const BinanceTesnetConfig = blockchainConfigFactory(
   {
@@ -40,6 +36,11 @@ export const BinanceTesnetConfig = blockchainConfigFactory(
     TrustWalletConnector,
     MathWalletConnector,
     MetamaskCompatibleConnector,
-    BscTesnetDataSeedConnector,
+  ],
+  [
+    web3ConnectorFactory(
+      OfflineConnectors.BscDataseed,
+      "https://bsc-dataseed.binance.org"
+    ),
   ]
 );

@@ -1,12 +1,9 @@
 import { ETHNativeToken } from "./NativeToken";
-import { Blockchains, EthChainIds } from "../../Types/Enums";
-import { IBlockchainConfig } from "../../Types/IBlockchainConfig";
+import { Blockchains, EthChainIds, OfflineConnectors } from "../../Types";
 import { MetamaskConnector } from "../../Connectors/Wallets/MetamaskConnector";
 import { MathWalletConnector } from "../../Connectors/Wallets/MathWalletConnector";
 import { AlchemyConnector } from "../../Connectors/Offline/AlchemyConnector";
-import { EtherScanConnector } from "../../Connectors/Offline/EtherScanConnector";
-import { blockchainConfigFactory } from "../utils";
-import { CloudflareConnector } from "../../Connectors/Offline/CloudflareConnector";
+import { blockchainConfigFactory, web3ConnectorFactory } from "../utils";
 import { TrustWalletConnector } from "../../Connectors/Wallets/TrustWalletConnector";
 import { MetamaskCompatibleConnector } from "../../Connectors/Wallets/MetamaskCompatibleConnector";
 
@@ -36,8 +33,16 @@ export const EthereumConfig = blockchainConfigFactory(
     TrustWalletConnector,
     MathWalletConnector,
     MetamaskCompatibleConnector,
-    CloudflareConnector,
     AlchemyConnector,
-    EtherScanConnector,
+  ],
+  [
+    web3ConnectorFactory(
+      OfflineConnectors.EtherScan,
+      "https://api.etherscan.io"
+    ),
+    web3ConnectorFactory(
+      OfflineConnectors.Cloudflare,
+      "https://cloudflare-eth.com/"
+    ),
   ]
 );

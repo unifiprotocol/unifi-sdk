@@ -1,8 +1,6 @@
 export * from "./BaseConnector";
 
 export * from "./Offline/AlchemyConnector";
-export * from "./Offline/EtherScanConnector";
-export * from "./Offline/CloudflareConnector";
 export * from "./Offline/Web3BaseConnector";
 
 export * from "./Wallets/MathWalletConnector";

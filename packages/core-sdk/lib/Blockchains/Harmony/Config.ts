@@ -1,10 +1,9 @@
 import { ONENativeToken } from "./NativeToken";
-import { Blockchains, EthChainIds } from "../../Types/Enums";
+import { Blockchains, EthChainIds, OfflineConnectors } from "../../Types";
 import { MetamaskConnector } from "../../Connectors/Wallets/MetamaskConnector";
 import { MathWalletConnector } from "../../Connectors/Wallets/MathWalletConnector";
-import { blockchainConfigFactory } from "../utils";
+import { blockchainConfigFactory, web3ConnectorFactory } from "../utils";
 import { OneWalletConnector } from "./Wallets/OneWalletConnector";
-import { HarmonyConnector } from "./OfflineConnectors/HarmonyConnector";
 
 export const HarmonyConfig = blockchainConfigFactory(
   {
@@ -29,5 +28,6 @@ export const HarmonyConfig = blockchainConfigFactory(
       },
     },
   },
-  [MetamaskConnector, OneWalletConnector, MathWalletConnector, HarmonyConnector]
+  [MetamaskConnector, OneWalletConnector, MathWalletConnector],
+  [web3ConnectorFactory(OfflineConnectors.Harmony, "https://api.harmony.one")]
 );

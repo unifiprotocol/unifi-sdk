@@ -1,12 +1,11 @@
 import { BNBNativeToken } from "./NativeToken";
-import { Blockchains, EthChainIds } from "../../Types/Enums";
+import { Blockchains, EthChainIds, OfflineConnectors } from "../../Types";
 import { MetamaskConnector } from "../../Connectors/Wallets/MetamaskConnector";
 import { MathWalletConnector } from "../../Connectors/Wallets/MathWalletConnector";
-import { blockchainConfigFactory } from "../utils";
+import { blockchainConfigFactory, web3ConnectorFactory } from "../utils";
 import { BinanceChainWalletConnector } from "./Wallets/BinanceChainWalletConnector";
 import { TrustWalletConnector } from "../../Connectors/Wallets/TrustWalletConnector";
 import { MetamaskCompatibleConnector } from "../../Connectors/Wallets/MetamaskCompatibleConnector";
-import { BscDataSeedConnector } from "./OfflineConnectors/BscDataSeedConnector";
 
 export const BinanceConfig = blockchainConfigFactory(
   {
@@ -35,6 +34,11 @@ export const BinanceConfig = blockchainConfigFactory(
     TrustWalletConnector,
     MathWalletConnector,
     MetamaskCompatibleConnector,
-    BscDataSeedConnector,
+  ],
+  [
+    web3ConnectorFactory(
+      OfflineConnectors.BscDataseed,
+      "https://bsc-dataseed.binance.org/"
+    ),
   ]
 );

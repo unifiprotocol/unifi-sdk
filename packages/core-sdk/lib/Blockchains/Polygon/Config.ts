@@ -1,9 +1,8 @@
 import { MATICNativeToken } from "./NativeToken";
-import { Blockchains, EthChainIds } from "../../Types/Enums";
+import { Blockchains, EthChainIds, OfflineConnectors } from "../../Types";
 import { MetamaskConnector } from "../../Connectors/Wallets/MetamaskConnector";
-import { blockchainConfigFactory } from "../utils";
+import { blockchainConfigFactory, web3ConnectorFactory } from "../utils";
 import { MetamaskCompatibleConnector } from "../../Connectors/Wallets/MetamaskCompatibleConnector";
-import { PolygonConnector } from "./OfflineConnectors/PolygonConnector";
 
 export const PolygonConfig = blockchainConfigFactory(
   {
@@ -28,5 +27,6 @@ export const PolygonConfig = blockchainConfigFactory(
       },
     },
   },
-  [MetamaskConnector, MetamaskCompatibleConnector, PolygonConnector]
+  [MetamaskConnector, MetamaskCompatibleConnector],
+  [web3ConnectorFactory(OfflineConnectors.Polygon, "https://polygon-rpc.com")]
 );

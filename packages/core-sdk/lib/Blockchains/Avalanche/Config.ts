@@ -1,9 +1,8 @@
 import { AVAXNativeToken } from "./NativeToken";
-import { Blockchains, EthChainIds } from "../../Types/Enums";
+import { Blockchains, EthChainIds, OfflineConnectors } from "../../Types";
 import { MetamaskConnector } from "../../Connectors/Wallets/MetamaskConnector";
-import { blockchainConfigFactory } from "../utils";
+import { blockchainConfigFactory, web3ConnectorFactory } from "../utils";
 import { MetamaskCompatibleConnector } from "../../Connectors/Wallets/MetamaskCompatibleConnector";
-import { AvalancheConnector } from "./OfflineConnectors/AvalancheConnector";
 
 export const AvalancheConfig = blockchainConfigFactory(
   {
@@ -28,5 +27,11 @@ export const AvalancheConfig = blockchainConfigFactory(
       },
     },
   },
-  [MetamaskConnector, MetamaskCompatibleConnector, AvalancheConnector]
+  [MetamaskConnector, MetamaskCompatibleConnector],
+  [
+    web3ConnectorFactory(
+      OfflineConnectors.Avalanche,
+      "https://api.avax.network/ext/bc/C/rpc"
+    ),
+  ]
 );

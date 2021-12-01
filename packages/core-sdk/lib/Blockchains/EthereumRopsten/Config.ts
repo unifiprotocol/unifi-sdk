@@ -1,9 +1,8 @@
 import { ETHNativeToken } from "./NativeToken";
-import { Blockchains, EthChainIds } from "../../Types/Enums";
+import { Blockchains, EthChainIds, OfflineConnectors } from "../../Types";
 import { MetamaskConnector } from "../../Connectors/Wallets/MetamaskConnector";
 import { MathWalletConnector } from "../../Connectors/Wallets/MathWalletConnector";
-import { EtherScanConnector } from "../../Connectors/Offline/EtherScanConnector";
-import { blockchainConfigFactory } from "../utils";
+import { blockchainConfigFactory, web3ConnectorFactory } from "../utils";
 import { TrustWalletConnector } from "../../Connectors/Wallets/TrustWalletConnector";
 import { MetamaskCompatibleConnector } from "../../Connectors/Wallets/MetamaskCompatibleConnector";
 
@@ -33,6 +32,11 @@ export const EthereumRopstenConfig = blockchainConfigFactory(
     TrustWalletConnector,
     MathWalletConnector,
     MetamaskCompatibleConnector,
-    EtherScanConnector,
+  ],
+  [
+    web3ConnectorFactory(
+      OfflineConnectors.EtherScan,
+      "https://api-ropsten.etherscan.io"
+    ),
   ]
 );

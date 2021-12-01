@@ -27,7 +27,6 @@ export enum OfflineConnectors {
   Cloudflare = "cloudflare",
   EtherScan = "etherscan",
   BscDataseed = "bscdataseed",
-  BscDataseedTestnet = "binance-testnet",
   TronGrid = "trongrid",
   Alchemy = "alchemy",
   Harmony = "harmony",

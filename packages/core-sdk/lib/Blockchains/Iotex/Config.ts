@@ -1,9 +1,8 @@
 import { IOTXNativeToken } from "./NativeToken";
-import { Blockchains, EthChainIds } from "../../Types/Enums";
+import { Blockchains, EthChainIds, OfflineConnectors } from "../../Types";
 import { MetamaskConnector } from "../../Connectors/Wallets/MetamaskConnector";
-import { blockchainConfigFactory } from "../utils";
+import { blockchainConfigFactory, web3ConnectorFactory } from "../utils";
 import { MetamaskCompatibleConnector } from "../../Connectors/Wallets/MetamaskCompatibleConnector";
-import { IotexConnector } from "./OfflineConnectors/IotexConnector";
 
 export const IotexConfig = blockchainConfigFactory(
   {
@@ -28,5 +27,11 @@ export const IotexConfig = blockchainConfigFactory(
       },
     },
   },
-  [MetamaskConnector, MetamaskCompatibleConnector, IotexConnector]
+  [MetamaskConnector, MetamaskCompatibleConnector],
+  [
+    web3ConnectorFactory(
+      OfflineConnectors.Iotex,
+      "https://babel-api.mainnet.iotex.io"
+    ),
+  ]
 );
