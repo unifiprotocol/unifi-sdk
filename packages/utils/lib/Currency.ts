@@ -7,15 +7,8 @@ export class Currency {
   public readonly symbol: string;
   public readonly name: string;
   public readonly address: string;
-  public readonly logoURI: string;
 
-  constructor(
-    address: string,
-    decimals: number,
-    symbol: string,
-    name: string,
-    logoURI: string
-  ) {
+  constructor(address: string, decimals: number, symbol: string, name: string) {
     if (!BN(decimals).isInteger() || BN(decimals).isGreaterThan(18)) {
       throw Error("Wrong currency decimals");
     }
@@ -23,7 +16,6 @@ export class Currency {
     this.symbol = symbol;
     this.name = name;
     this.address = address;
-    this.logoURI = logoURI;
   }
 
   toFactorized(amount: BigNumber.Value, decimalPlaces = this.decimals): string {
