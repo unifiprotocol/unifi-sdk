@@ -39,12 +39,19 @@ export class MetamaskConnector extends BaseConnector {
     const accounts: string[] = await ethAgent.request({
       method: "eth_requestAccounts",
     });
+    const address = ethers.utils.getAddress(accounts[0]);
+
     const provider = new ethers.providers.Web3Provider(ethAgent);
 
     const { chainId } = await provider.getNetwork();
     const chainIdStr = `${chainId}`;
 
     const adapter = new Web3BaseAdapter(this.config);
+
+    adapter.setAddress(address);
+    adapter.setProvider(provider);
+
+    const multicall = new Web3MulticallAdapter(adapter);
     this.initEventController(adapter);
 
     const isValidNetwork = await adapter.isValidNetwork(chainIdStr);
@@ -53,12 +60,6 @@ export class MetamaskConnector extends BaseConnector {
       throw new InvalidNetworkError(chainIdStr);
     }
 
-    const address = ethers.utils.getAddress(accounts[0]);
-
-    adapter.setAddress(address);
-    adapter.setProvider(provider);
-
-    const multicall = new Web3MulticallAdapter(adapter);
     return { adapter, multicall };
   }
 
