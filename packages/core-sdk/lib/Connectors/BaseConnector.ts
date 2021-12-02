@@ -1,43 +1,46 @@
-import { IAdapter } from "../Adapters";
-import { Blockchains, ConnectorEvent } from "../Types";
+import { ConnectorEvent, IConnectorAdapters } from "../Types";
 import EventEmitter from "eventemitter3";
-import { IConnector } from "./IConnector";
-import { ConnectorMetadata } from "../Entities";
+import { IConnector } from "../Types/IConnector";
+import { Callback } from "../Utils/Typings";
+import { IBlockchainConfig } from "../Types/IBlockchainConfig";
+import { IConnectorMetadata } from "../Types";
 
-type Callback = (...args: any[]) => void;
 export abstract class BaseConnector implements IConnector {
   protected emitter = new EventEmitter<ConnectorEvent>();
-  protected adapter: IAdapter;
+
   constructor(
-    protected blockchain: Blockchains,
-    protected metadata: ConnectorMetadata
+    public readonly metadata: IConnectorMetadata,
+    public readonly config: IBlockchainConfig
   ) {}
 
-  abstract connect(): Promise<IAdapter>;
+  abstract connect(): Promise<IConnectorAdapters>;
+
   async disconnect(): Promise<void> {
-    this.adapter.setAddress("");
-    this.adapter.resetContracts();
     this.emitter.emit("Disconnect", {});
     this.emitter.removeAllListeners();
   }
 
-  isWallet(): boolean {
+  get isWallet(): boolean {
     return this.metadata.isWallet;
   }
 
-  async isAvailable() {
+  get name(): string {
+    return this.metadata.name;
+  }
+
+  get displayName(): string {
+    return this.metadata.displayName;
+  }
+
+  async isAvailable(): Promise<boolean> {
     return true;
   }
 
-  getMedatata() {
-    return this.metadata;
-  }
-
-  on(event: ConnectorEvent, callback: Callback) {
+  on(event: ConnectorEvent, callback: Callback): void {
     this.emitter.on(event, callback);
   }
 
-  off(event: ConnectorEvent, callback: Callback) {
+  off(event: ConnectorEvent, callback: Callback): void {
     this.emitter.off(event, callback);
   }
 }

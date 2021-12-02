@@ -1,5 +1,7 @@
-export * from "./Offline";
-export * from "./Wallet";
-export * from "./IConnector";
-export * from "./Factory";
-export * from "./Helpers";
+export * from "./BaseConnector";
+
+export * from "./Offline/AlchemyConnector";
+export * from "./Offline/Web3BaseConnector";
+
+export * from "./Wallets/MathWalletConnector";
+export * from "./Wallets/MetamaskConnector";

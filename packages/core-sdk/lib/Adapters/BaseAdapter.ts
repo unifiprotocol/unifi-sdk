@@ -1,43 +1,18 @@
-import { Currency } from "../Entities";
-import { Blockchains } from "../Types";
-import { IAdapter } from "./IAdapter";
+import { IBlockchainConfig } from "../Types/IBlockchainConfig";
+import { IAdapter } from "../Types/IAdapter";
 import {
   ExecutionParams,
   ExecutionResponse,
   AdapterBalance,
   Address,
-} from "./Types";
-
-declare global {
-  interface Window {
-    adapterExecuteStats: any;
-  }
-}
+} from "../Types";
 
 export abstract class BaseAdapter<ContractInterface, ProviderType>
   implements IAdapter<ContractInterface>
 {
   protected address: Address = "";
 
-  constructor(
-    public blockchain: Blockchains,
-    public nativeToken: Currency,
-    public explorerUrl: string
-  ) {}
-
-  protected gatherExecuteStats(contractMethod: string, args: any): void {
-    if (!window.adapterExecuteStats) {
-      window.adapterExecuteStats = {};
-    }
-    if (!window.adapterExecuteStats[contractMethod]) {
-      window.adapterExecuteStats[contractMethod] = {
-        count: 0,
-        calls: [],
-      };
-    }
-    window.adapterExecuteStats[contractMethod].count++;
-    window.adapterExecuteStats[contractMethod].calls.push(args);
-  }
+  constructor(public readonly blockchainConfig: IBlockchainConfig) {}
 
   abstract setProvider(provider: ProviderType): void;
   abstract getProvider(): ProviderType;
@@ -60,13 +35,6 @@ export abstract class BaseAdapter<ContractInterface, ProviderType>
     isWrite?: boolean
   ): Promise<ExecutionResponse<T>>;
 
-  abstract signTransaction(tx: any): Promise<any>;
-  abstract sendTransaction<T = any>(tx: any): Promise<ExecutionResponse<T>>;
-
-  signAndSendTransaction<T = any>(tx: any): Promise<ExecutionResponse<T>> {
-    return this.signTransaction(tx).then(this.sendTransaction.bind(this));
-  }
-
   abstract waitForTransaction(
     transactionHash: string
   ): Promise<"SUCCESS" | "FAILED">;
@@ -75,9 +43,18 @@ export abstract class BaseAdapter<ContractInterface, ProviderType>
   abstract getBalance(): Promise<AdapterBalance>;
 
   abstract isValidNetwork(network: string): Promise<boolean>;
-  abstract getTxLink(hash: string): string;
-  abstract getAddressLink(hash: string): string;
-  abstract getTokenLink(hash: string): string;
+
+  getTxLink(hash: string): string {
+    return this.blockchainConfig.explorer.tx(hash);
+  }
+
+  getAddressLink(hash: string): string {
+    return this.blockchainConfig.explorer.address(hash);
+  }
+
+  getTokenLink(hash: string): string {
+    return this.blockchainConfig.explorer.token(hash);
+  }
 
   setAddress(address: Address): void {
     this.address = address;
