@@ -1,4 +1,4 @@
-import { Blockchains } from ".";
+import { Blockchains } from "./Enums";
 import { toChecksumAddress } from "./utils";
 
 function normalizedToChecksumAddress(hash: string) {
