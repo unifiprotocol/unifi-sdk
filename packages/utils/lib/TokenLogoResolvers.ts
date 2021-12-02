@@ -1,3 +1,4 @@
+import { Blockchains } from ".";
 import { toChecksumAddress } from "./utils";
 
 function normalizedToChecksumAddress(hash: string) {
@@ -9,36 +10,51 @@ function normalizedToChecksumAddress(hash: string) {
   }
 }
 
-export const TokenLogoResolvers: Record<string, (address: string) => string> = {
-  Binance: (hash: string) =>
+export const TokenLogoResolvers: Record<
+  Blockchains,
+  (address: string) => string
+> = {
+  [Blockchains.Binance]: (hash: string) =>
     `https://icon-service.unifi.report/icon_bsc?token=${normalizedToChecksumAddress(
       hash
     )}&autoResolve=false`,
-  BinanceTestnet: (hash: string) =>
+  [Blockchains.BinanceTestnet]: (hash: string) =>
     `https://icon-service.unifi.report/icon_bsc?token=${normalizedToChecksumAddress(
       hash
     )}&autoResolve=false`,
-  Polygon: (hash: string) =>
+  [Blockchains.Polygon]: (hash: string) =>
     `https://icon-service.unifi.report/icon_matic?token=${normalizedToChecksumAddress(
       hash
     )}&autoResolve=false`,
 
-  Ethereum: (hash: string) =>
+  [Blockchains.Ethereum]: (hash: string) =>
     `https://icon-service.unifi.report/icon_eth?token=${normalizedToChecksumAddress(
       hash
     )}&autoResolve=false`,
-  Ropsten: (hash: string) =>
+  [Blockchains.EthereumRinkeby]: (hash: string) =>
+    `https://icon-service.unifi.report/icon_eth?token=${normalizedToChecksumAddress(
+      hash
+    )}&autoResolve=false`,
+  [Blockchains.EthereumRopsten]: (hash: string) =>
     `https://icon-service.unifi.report/icon_eth?token=${normalizedToChecksumAddress(
       hash
     )}&autoResolve=false`,
 
-  Harmony: (hash: string) =>
+  [Blockchains.Harmony]: (hash: string) =>
     `https://icon-service.unifi.report/icon_one?token=${normalizedToChecksumAddress(
       hash
     )}&autoResolve=false`,
 
-  Iotex: (hash: string) =>
+  [Blockchains.Iotex]: (hash: string) =>
     `https://icon-service.unifi.report/icon_iotx?token=${normalizedToChecksumAddress(
+      hash
+    )}&autoResolve=false`,
+  [Blockchains.Tron]: (hash: string) =>
+    `https://icon-service.unifi.report/icon_tron?token=${normalizedToChecksumAddress(
+      hash
+    )}&autoResolve=false`,
+  [Blockchains.Avalanche]: (hash: string) =>
+    `https://icon-service.unifi.report/icon_avax?token=${normalizedToChecksumAddress(
       hash
     )}&autoResolve=false`,
 };

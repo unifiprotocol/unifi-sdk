@@ -1,3 +1,4 @@
+// todo get from utils
 export enum Blockchains {
   Binance = "Binance",
   Ethereum = "Ethereum",
