@@ -40,7 +40,7 @@ export const BinanceTesnetConfig = blockchainConfigFactory(
   [
     web3ConnectorFactory(
       OfflineConnectors.BscDataseed,
-      "https://bsc-dataseed.binance.org"
+      "https://data-seed-prebsc-1-s1.binance.org:8545/"
     ),
   ]
 );
