@@ -6,7 +6,8 @@ import { TokenInput, TokenInputProps } from "../../components/TokenInput";
 
 type PropsFromInput = Omit<TokenInputProps, "onRequestChangeToken">;
 type PropsFromTokenList = Pick<TokenListModalProps, "tokenList" | "onSearch">;
-type TokenInputWithSelectorProps = PropsFromInput &
+
+export type TokenInputWithSelectorProps = PropsFromInput &
   PropsFromTokenList & {
     onTokenChange: (token: Currency) => void;
   };
