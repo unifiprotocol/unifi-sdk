@@ -1,5 +1,5 @@
 export const breakpointMap: Record<string, number> = {
-  xs: 370,
+  xs: 576,
   sm: 576,
   md: 768,
   lg: 992,
@@ -11,6 +11,7 @@ export const breakpoints = Object.values(breakpointMap).map(
   (breakpoint) => `${breakpoint}px`
 );
 
+// https://getbootstrap.com/docs/5.0/layout/breakpoints/
 export const mediaQueries = {
   xs: `@media (max-width: ${breakpointMap.xs}px)`,
   sm: `@media  (min-width: ${breakpointMap.sm}px)`,
