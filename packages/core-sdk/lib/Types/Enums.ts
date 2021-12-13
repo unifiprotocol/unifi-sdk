@@ -10,6 +10,7 @@ export enum Blockchains {
   Harmony = "Harmony",
   Polygon = "Polygon",
   Avalanche = "Avalanche",
+  BTTC = "BTTC",
 }
 
 export enum EthChainIds {
@@ -22,6 +23,7 @@ export enum EthChainIds {
   Harmony = 1666600000,
   Polygon = 137,
   Avalanche = 43114,
+  BTTC = 199,
 }
 
 export enum OfflineConnectors {
@@ -34,6 +36,7 @@ export enum OfflineConnectors {
   Polygon = "polygon",
   Iotex = "iotex",
   Avalanche = "avalanche",
+  BTTC = "bttc",
 }
 
 export enum WalletConnectors {
