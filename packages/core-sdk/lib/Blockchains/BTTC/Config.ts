@@ -10,8 +10,8 @@ export const BttcConfig = blockchainConfigFactory(
     chainId: EthChainIds.BTTC,
     nativeToken: BTTCNativeToken,
     multicall: {
-      supported: false,
-      // address: "0x11ce4B23bD875D7F5C6a31084f55fDe1e9A87507",
+      supported: true,
+      address: "0x9F80bb4f2eEEdf82d6Cc39c84184E34FC7F198eE",
       tryAggregate: false,
     },
     explorer: {
