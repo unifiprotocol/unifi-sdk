@@ -9,4 +9,5 @@ export enum Blockchains {
   Harmony = "Harmony",
   Polygon = "Polygon",
   Avalanche = "Avalanche",
+  BTTC = "BTTC",
 }

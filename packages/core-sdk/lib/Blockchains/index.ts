@@ -2,7 +2,7 @@ import { Blockchains, IBlockchainConfig } from "../Types";
 import { AvalancheConfig } from "./Avalanche";
 import { BinanceConfig } from "./Binance";
 import { BinanceTesnetConfig } from "./BinanceTestnet";
-import { BttcConfig } from "./BTTC";
+import { BttcConfig } from "./Bttc";
 import { EthereumConfig } from "./Ethereum";
 import { EthereumRinkebyConfig } from "./EthereumRinkeby";
 import { EthereumRopstenConfig } from "./EthereumRopsten";
