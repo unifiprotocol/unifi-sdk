@@ -23,6 +23,7 @@ export * from "./components/Textarea";
 export * from "./components/UnifiThemeProvider";
 export * from "./components/Table";
 export * from "./components/CollapsibleCard";
+export * from './components/Tooltip';
 
 // Theme
 export * from "./themes";
