@@ -1,6 +1,6 @@
 {
   "name": "@unifiprotocol/uikit",
-  "version": "1.9.2",
+  "version": "1.10.0",
   "description": "Set of UI components for Unifi Protocol projects",
   "author": "Unifi Protocol",
   "repository": "git@github.com:unifiprotocol/unifi-sdk.git",
@@ -36,11 +36,11 @@
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-typescript": "^8.2.1",
     "@rollup/plugin-url": "^6.0.0",
-    "@storybook/addon-a11y": "^6.3.12",
-    "@storybook/addon-actions": "^6.3.12",
-    "@storybook/addon-essentials": "^6.3.12",
-    "@storybook/addon-links": "^6.3.12",
-    "@storybook/react": "^6.3.12",
+    "@storybook/addon-a11y": "^6.4.9",
+    "@storybook/addon-actions": "^6.4.9",
+    "@storybook/addon-essentials": "^6.4.9",
+    "@storybook/addon-links": "^6.4.9",
+    "@storybook/react": "^6.4.9",
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.2.5",
     "@types/react-dom": "^17.0.5",
@@ -71,6 +71,6 @@
     "react-select": "^4.3.1",
     "rollup": "^2.47.0",
     "styled-components": "^5.2.0",
-    "themeprovider-storybook": "^1.7.2"
+    "themeprovider-storybook": "^1.8.0"
   }
 }
