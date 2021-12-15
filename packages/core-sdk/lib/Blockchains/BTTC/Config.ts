@@ -28,5 +28,5 @@ export const BttcConfig = blockchainConfigFactory(
     },
   },
   [MetamaskConnector, MetamaskCompatibleConnector],
-  [web3ConnectorFactory(OfflineConnectors.Polygon, "https://rpc.bt.io")]
+  [web3ConnectorFactory(OfflineConnectors.BTTC, "https://rpc.bt.io")]
 );
