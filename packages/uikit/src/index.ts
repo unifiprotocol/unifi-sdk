@@ -24,9 +24,7 @@ export * from "./components/UnifiThemeProvider";
 export * from "./components/Table";
 export * from "./components/CollapsibleCard";
 export * from './components/Tooltip';
-
-// Icons
-export * from './icons'
+export * from './components/Icons';
 
 // Theme
 export * from "./themes";
