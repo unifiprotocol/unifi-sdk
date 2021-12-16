@@ -1,4 +1,4 @@
-dependencies=( "react" "react-dom" "react-icons" )
+dependencies=( "react" "react-dom" )
 
 cd node_modules
 for dep in ${dependencies[@]}; do
