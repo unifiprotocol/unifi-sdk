@@ -25,6 +25,7 @@
     "storybook": "start-storybook -p 6006",
     "storybook:build": "build-storybook -o ./dist/storybook",
     "test": "jest",
+    "link-deps":"bash ./scripts/createLinks.sh",
     "prepublishOnly": "yarn build"
   },
   "jest": {
