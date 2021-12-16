@@ -25,6 +25,9 @@ export * from "./components/Table";
 export * from "./components/CollapsibleCard";
 export * from './components/Tooltip';
 
+// Icons
+export * from './icons'
+
 // Theme
 export * from "./themes";
 
