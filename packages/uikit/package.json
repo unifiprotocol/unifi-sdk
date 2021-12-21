@@ -48,12 +48,11 @@
     "@types/react-select": "^4.0.17",
     "@types/styled-components": "^5.1.9",
     "jest-styled-components": "^7.0.3",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "react-router-dom": "^5.2.0",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-copy": "^3.4.0",
-    "typescript": "^4.4.4"
+    "typescript": "^4.4.4",
+    "themeprovider-storybook": "^1.8.0",
+    "rollup": "^2.47.0"
   },
   "peerDependencies": {
     "@unifiprotocol/utils": "^2.2.1",
@@ -66,12 +65,8 @@
     "@unifiprotocol/utils": "^2.2.1",
     "animated-number-react": "^0.1.2",
     "flatted": "^3.2.4",
-    "lodash": "^4.17.20",
     "react-icons": "^4.2.0",
-    "react-popper": "^2.2.5",
     "react-select": "^4.3.1",
-    "rollup": "^2.47.0",
-    "styled-components": "^5.2.0",
-    "themeprovider-storybook": "^1.8.0"
+    "styled-components": "^5.2.0"
   }
 }
