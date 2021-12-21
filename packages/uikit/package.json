@@ -1,6 +1,6 @@
 {
   "name": "@unifiprotocol/uikit",
-  "version": "1.11.1",
+  "version": "1.11.2",
   "description": "Set of UI components for Unifi Protocol projects",
   "author": "Unifi Protocol",
   "repository": "git@github.com:unifiprotocol/unifi-sdk.git",
@@ -48,11 +48,11 @@
     "@types/react-select": "^4.0.17",
     "@types/styled-components": "^5.1.9",
     "jest-styled-components": "^7.0.3",
+    "rollup": "^2.47.0",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-copy": "^3.4.0",
-    "typescript": "^4.4.4",
     "themeprovider-storybook": "^1.8.0",
-    "rollup": "^2.47.0"
+    "typescript": "^4.4.4"
   },
   "peerDependencies": {
     "@unifiprotocol/utils": "^2.2.1",
