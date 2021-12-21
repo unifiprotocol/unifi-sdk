@@ -4,6 +4,11 @@ import pkg from "./package.json";
 import commonjs from "rollup-plugin-commonjs";
 import copy from "rollup-plugin-copy";
 
+const external = [
+  ...Object.keys(pkg.dependencies || {}),
+  ...Object.keys(pkg.peerDependencies || {}),
+];
+
 export default {
   input: "src/index.ts",
   output: [
@@ -18,8 +23,5 @@ export default {
       targets: [{ src: "README.MD", dest: "dist" }],
     }),
   ],
-  external: {
-    react: "react",
-    "styled-components": "styled-components",
-  },
+  external,
 };
