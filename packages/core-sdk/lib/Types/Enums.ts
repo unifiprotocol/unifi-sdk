@@ -1,17 +1,4 @@
-// todo get from utils
-export enum Blockchains {
-  Binance = "Binance",
-  Ethereum = "Ethereum",
-  EthereumRopsten = "Ropsten",
-  EthereumRinkeby = "Rinkeby",
-  BinanceTestnet = "BinanceTesnet",
-  Iotex = "Iotex",
-  Tron = "Tron",
-  Harmony = "Harmony",
-  Polygon = "Polygon",
-  Avalanche = "Avalanche",
-  BTTC = "BTTC",
-}
+export { Blockchains } from "@unifiprotocol/utils";
 
 export enum EthChainIds {
   Eth = 1,
