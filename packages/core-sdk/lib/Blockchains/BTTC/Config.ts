@@ -8,6 +8,7 @@ export const BttcConfig = blockchainConfigFactory(
   {
     blockchain: Blockchains.BTTC,
     chainId: EthChainIds.BTTC,
+    publicRpc: "https://rpc.bt.io",
     nativeToken: BTTCNativeToken,
     multicall: {
       supported: true,

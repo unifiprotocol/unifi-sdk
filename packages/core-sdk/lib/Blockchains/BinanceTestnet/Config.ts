@@ -11,6 +11,7 @@ export const BinanceTesnetConfig = blockchainConfigFactory(
   {
     blockchain: Blockchains.BinanceTestnet,
     chainId: EthChainIds.BscTestnet,
+    publicRpc: "https://data-seed-prebsc-1-s1.binance.org:8545/",
     nativeToken: BNBNativeToken,
     multicall: {
       supported: true,

@@ -9,7 +9,7 @@ import {
 
 export interface IBlockchainConfig {
   blockchain: Blockchains;
-
+  publicRpc: string;
   nativeToken: Currency;
   chainId: EthChainIds;
   wallets: IConnector[];

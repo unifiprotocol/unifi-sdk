@@ -8,6 +8,7 @@ export const AvalancheConfig = blockchainConfigFactory(
   {
     blockchain: Blockchains.Avalanche,
     chainId: EthChainIds.Avalanche,
+    publicRpc: "https://api.avax.network/ext/bc/C/rpc",
     nativeToken: AVAXNativeToken,
     multicall: {
       supported: true,

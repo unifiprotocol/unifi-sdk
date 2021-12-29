@@ -11,6 +11,7 @@ export const BinanceConfig = blockchainConfigFactory(
   {
     blockchain: Blockchains.Binance,
     chainId: EthChainIds.Bsc,
+    publicRpc: "https://bsc-dataseed.binance.org/",
     nativeToken: BNBNativeToken,
     multicall: {
       supported: true,

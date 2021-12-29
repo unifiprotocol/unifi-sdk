@@ -10,6 +10,7 @@ export const EthereumRinkebyConfig = blockchainConfigFactory(
   {
     blockchain: Blockchains.EthereumRinkeby,
     chainId: EthChainIds.EthRinkeby,
+    publicRpc: "https://api-rinkeby.etherscan.io",
     nativeToken: ETHNativeToken,
     multicall: {
       supported: true,

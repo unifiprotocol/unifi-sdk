@@ -10,6 +10,7 @@ export const EthereumRopstenConfig = blockchainConfigFactory(
   {
     blockchain: Blockchains.EthereumRopsten,
     chainId: EthChainIds.EthRopsten,
+    publicRpc: "https://api-ropsten.etherscan.io",
     nativeToken: ETHNativeToken,
     multicall: {
       supported: true,

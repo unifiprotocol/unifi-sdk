@@ -11,6 +11,7 @@ export const EthereumConfig = blockchainConfigFactory(
   {
     blockchain: Blockchains.Ethereum,
     chainId: EthChainIds.Eth,
+    publicRpc: "https://cloudflare-eth.com/",
     nativeToken: ETHNativeToken,
     multicall: {
       supported: true,

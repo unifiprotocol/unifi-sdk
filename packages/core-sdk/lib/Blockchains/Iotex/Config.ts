@@ -8,6 +8,7 @@ export const IotexConfig = blockchainConfigFactory(
   {
     blockchain: Blockchains.Iotex,
     chainId: EthChainIds.Iotex,
+    publicRpc: "https://babel-api.mainnet.iotex.io",
     nativeToken: IOTXNativeToken,
     multicall: {
       supported: true,

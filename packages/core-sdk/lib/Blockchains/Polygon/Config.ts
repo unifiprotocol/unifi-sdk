@@ -8,6 +8,7 @@ export const PolygonConfig = blockchainConfigFactory(
   {
     blockchain: Blockchains.Polygon,
     chainId: EthChainIds.Polygon,
+    publicRpc: "https://polygon-rpc.com",
     nativeToken: MATICNativeToken,
     multicall: {
       supported: true,

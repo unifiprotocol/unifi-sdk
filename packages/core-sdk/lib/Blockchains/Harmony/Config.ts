@@ -9,6 +9,7 @@ export const HarmonyConfig = blockchainConfigFactory(
   {
     blockchain: Blockchains.Harmony,
     chainId: EthChainIds.Harmony,
+    publicRpc: "https://api.harmony.one",
     nativeToken: ONENativeToken,
     multicall: {
       supported: true,
