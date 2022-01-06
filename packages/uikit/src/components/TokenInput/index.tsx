@@ -1,8 +1,8 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import styled from "styled-components";
 import { disableSelectionCss } from "../../util/DOM";
 import { Themed } from "../../themes";
-import { Input } from "../Input";
+import { Input, InputProps } from "../Input";
 import { TokenLogo } from "../TokenLogo";
 import { BN, Currency } from "@unifiprotocol/utils";
 import { PrimaryButton } from "../Button";
@@ -83,7 +83,10 @@ export type TokenInputProps = {
   amount?: string;
   token?: Currency;
   maxPercentage?: string;
+  disableAmountChange?: boolean;
   disableTokenChange?: boolean;
+  actions?: InputProps["actions"];
+  disableMaxAction?: boolean;
   onRequestChangeToken?: () => void;
   onAmountChange: (amount: string) => void;
 };
@@ -99,11 +102,22 @@ export const TokenInput: React.FC<TokenInputProps> = ({
   disableTokenChange = false,
   onRequestChangeToken,
   onAmountChange,
+  disableAmountChange = false,
+  actions = [],
+  disableMaxAction = false,
 }) => {
   const tokenChangeEnabled = !disableTokenChange;
   const max = useCallback(() => {
     onAmountChange(BN(balance).multipliedBy(maxPercentage).toFixed());
   }, [onAmountChange, balance]);
+
+  const combinedActions = useMemo(() => {
+    const _actions = [...actions];
+    if (!disableMaxAction) {
+      _actions.push({ label: "MAX", action: max });
+    }
+    return _actions;
+  }, [disableMaxAction, actions]);
 
   return (
     <ShinyWrapper mode="on-focus-within">
@@ -125,10 +139,11 @@ export const TokenInput: React.FC<TokenInputProps> = ({
         <AmountAndToken>
           <Amount>
             <Input
+              disabled={disableAmountChange}
               disableFocusEffect={true}
               onChange={(evt) => onAmountChange(evt.target.value)}
               value={amount}
-              actions={[{ label: "MAX", action: max }]}
+              actions={combinedActions}
             />
           </Amount>
           {token && (
