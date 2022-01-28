@@ -64,7 +64,8 @@ export const NotificationWrapper = styled.div`
       color: ${(props) => props.theme.warning};
     }
     > ${Content} {
-      b {
+      b,
+      a:hover {
         color: ${(props) => props.theme.warning};
       }
     }
@@ -78,7 +79,8 @@ export const NotificationWrapper = styled.div`
       color: ${(props) => props.theme.danger};
     }
     > ${Content} {
-      b {
+      b,
+      a:hover {
         color: ${(props) => props.theme.danger};
       }
     }
@@ -92,7 +94,8 @@ export const NotificationWrapper = styled.div`
       color: ${(props) => props.theme.info};
     }
     > ${Content} {
-      b {
+      b,
+      a:hover {
         color: ${(props) => props.theme.info};
       }
     }
@@ -106,7 +109,8 @@ export const NotificationWrapper = styled.div`
       color: ${(props) => props.theme.success};
     }
     > ${Content} {
-      b {
+      b,
+      a:hover {
         color: ${(props) => props.theme.success};
       }
     }

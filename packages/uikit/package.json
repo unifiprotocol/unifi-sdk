@@ -62,6 +62,7 @@
     "styled-components": "^5.2.3"
   },
   "dependencies": {
+    "react-hot-toast": "^2.2.0",
     "@unifiprotocol/utils": "^2.2.1",
     "animated-number-react": "^0.1.2",
     "flatted": "^3.2.4",
