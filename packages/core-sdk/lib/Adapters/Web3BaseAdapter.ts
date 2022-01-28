@@ -93,10 +93,12 @@ export class Web3BaseAdapter extends BaseAdapter<
           params
         );
 
-        const contractCall = await contract[method].apply(
-          null,
-          computeInvocationParams(params, { gasLimit })
-        );
+        const computedParams = computeInvocationParams(params, { gasLimit });
+
+        // use callStatic to check if tx might fail before calling spending gas
+        await contract.callStatic[method].apply(null, computedParams);
+
+        const contractCall = await contract[method].apply(null, computedParams);
 
         if (contractCall && contractCall.hash) {
           return successResponse({
