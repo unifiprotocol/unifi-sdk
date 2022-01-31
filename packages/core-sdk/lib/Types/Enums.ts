@@ -11,6 +11,7 @@ export enum EthChainIds {
   Polygon = 137,
   Avalanche = 43114,
   BTTC = 199,
+  OntologyTestnet = 5851,
 }
 
 export enum OfflineConnectors {
@@ -24,6 +25,7 @@ export enum OfflineConnectors {
   Iotex = "iotex",
   Avalanche = "avalanche",
   BTTC = "bttc",
+  OntologyTestnet = "ontologytestnet",
 }
 
 export enum WalletConnectors {
