@@ -1,4 +1,5 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
+import { kfEnter, kfLeave } from "../../../keyframes";
 
 export const Progress = styled.div`
   border-radius: ${(p) => p.theme.borderRadius} 0 0
@@ -15,6 +16,7 @@ export const Close = styled.div`
   padding: 0 0.5rem 0 0;
   transition: 0.25s all;
   margin-left: auto;
+  text-overflow: none;
   &:hover {
     opacity: 1;
   }
@@ -36,15 +38,8 @@ export const Content = styled.div`
     color: #fff;
   }
 `;
+
 export const NotificationWrapper = styled.div`
-  @keyframes slideDown {
-    from {
-      height: 100%;
-    }
-    to {
-      height: 0%;
-    }
-  }
   background: ${(props) => props.theme.bgAlt};
   color: #fff;
   box-shadow: ${(props) => props.theme.boxShadow};
@@ -55,7 +50,12 @@ export const NotificationWrapper = styled.div`
   margin-bottom: 0.75rem;
   align-items: center;
   min-height: 60px;
-
+  &.animate-enter {
+    animation: ${kfEnter} 0.2s ease-out;
+  }
+  &.animate-leave {
+    animation: ${kfLeave} 0.2s ease-in forwards;
+  }
   &.warning {
     > ${Progress} {
       background: ${(props) => props.theme.warning};
@@ -117,8 +117,17 @@ export const NotificationWrapper = styled.div`
   }
 `;
 
+const kfSlideDown = keyframes`
+    from {
+      height: 100%;
+    }
+    to {
+      height: 0%;
+    }
+`;
 export const Countdown = styled.div<{ duration?: number }>`
-  animation-name: slideDown;
+  animation-name: ${kfSlideDown};
+  animation-timing-function: linear;
   animation-duration: ${(p) => (p.duration ? p.duration : 0)}ms;
   animation-play-state: running;
   animation-iteration-count: 1;

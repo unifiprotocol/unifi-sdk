@@ -1,7 +1,7 @@
 import React from "react";
 import { ToastNotification } from "../../components/Notifications";
 import { useCallback } from "react";
-import toastr from "react-hot-toast";
+import toastr, { ToasterProps } from "react-hot-toast";
 
 import { Notification } from "./Types";
 
@@ -11,17 +11,34 @@ type UseNotificationHook = () => {
 
 export const useNotifications: UseNotificationHook = () => {
   const notify = useCallback((notification: Notification) => {
+    const toastrOptions: ToasterProps["toastOptions"] = {
+      position: notification.position,
+      duration: notification.disableAutoClose
+        ? Infinity
+        : notification.duration,
+    };
+
     toastr.custom((t) => {
-      const onDismiss = () => toastr.dismiss(t.id);
+      const onDismiss = () => {
+        if (notification.onClose) {
+          notification.onClose();
+        }
+        toastr.dismiss(t.id);
+      };
+
       return (
         <ToastNotification
+          autoDismissTimeout={
+            notification.disableAutoClose ? 0 : notification.duration
+          }
           appearance={notification.appearance}
+          animation={t.visible ? "enter" : "leave"}
           onDismiss={onDismiss}
         >
           {notification.content}
         </ToastNotification>
       );
-    });
+    }, toastrOptions);
   }, []);
 
   return {

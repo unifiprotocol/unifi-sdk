@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { ThemeProvider } from "styled-components";
 import { ModalProvider } from "../../widgets/modal";
