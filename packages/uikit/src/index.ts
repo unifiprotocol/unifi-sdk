@@ -23,8 +23,8 @@ export * from "./components/Textarea";
 export * from "./components/UnifiThemeProvider";
 export * from "./components/Table";
 export * from "./components/CollapsibleCard";
-export * from './components/Tooltip';
-export * from './components/Icons';
+export * from "./components/Tooltip";
+export * from "./components/Icons";
 
 // Theme
 export * from "./themes";
@@ -33,6 +33,7 @@ export * from "./themes";
 export * from "./widgets/modal";
 export * from "./widgets/TokenInputWithSelector";
 export * from "./widgets/TokenListModal";
+export * from "./widgets/Notifications";
 
 // Assets
 import * as Logos from "./assets/logos";

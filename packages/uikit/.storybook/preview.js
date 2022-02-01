@@ -12,14 +12,13 @@ const tokenLink = (address) => `https://bscscan.com/token/${address}`;
 const isNativeToken = (currency) => currency.address === "BNB";
 
 export const decorators = [
-  (StoryFn) => (
-    <StoryFn />
-  ),
+  (StoryFn) => <StoryFn />,
   withThemesProvider(themes, DEFAULT_SETTINGS, ({ theme, children }) => {
     return (
       <UnifiThemeProvider
         theme={theme}
         options={{ tokenLogoResolver, tokenLink, isNativeToken }}
+        notifications={{ position: "top-right" }}
       >
         {children}
       </UnifiThemeProvider>
