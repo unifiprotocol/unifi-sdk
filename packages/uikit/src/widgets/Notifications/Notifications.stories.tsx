@@ -8,6 +8,7 @@ import {
 import { useNotifications } from "./useNotifications";
 import { Checkbox } from "../../components/Checkbox";
 import { Input } from "../../components/Input";
+import { NotificationPosition } from "./Types";
 
 export default {
   title: "Widgets/Notifications",
@@ -34,7 +35,7 @@ export const Default = () => {
 
   const [autoClose, setAutoClose] = useState(true);
   const [duration, setDuration] = useState(1000);
-  const [position, setPosition] = useState<any>("top-right");
+  const [position, setPosition] = useState<NotificationPosition>("top-right");
 
   const success = useCallback(
     () =>
@@ -42,8 +43,8 @@ export const Default = () => {
         appearance: "success",
         disableAutoClose: !autoClose,
         content: "You are great ❤️",
-        position,
         duration,
+        position,
       }),
     [duration, position, autoClose]
   );

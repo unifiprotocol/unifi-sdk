@@ -28,9 +28,7 @@ export const useNotifications: UseNotificationHook = () => {
 
       return (
         <ToastNotification
-          autoDismissTimeout={
-            notification.disableAutoClose ? 0 : notification.duration
-          }
+          autoDismissTimeout={notification.disableAutoClose ? 0 : t.duration}
           appearance={notification.appearance}
           animation={t.visible ? "enter" : "leave"}
           onDismiss={onDismiss}
