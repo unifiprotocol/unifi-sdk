@@ -1,6 +1,6 @@
 {
   "name": "@unifiprotocol/uikit",
-  "version": "1.12.1",
+  "version": "1.13.0",
   "description": "Set of UI components for Unifi Protocol projects",
   "author": "Unifi Protocol",
   "repository": "git@github.com:unifiprotocol/unifi-sdk.git",
@@ -62,12 +62,12 @@
     "styled-components": "^5.2.3"
   },
   "dependencies": {
-    "react-hot-toast": "^2.2.0",
     "@unifiprotocol/utils": "^2.2.1",
     "animated-number-react": "^0.1.2",
     "flatted": "^3.2.4",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-hot-toast": "^2.2.0",
     "react-icons": "^4.2.0",
     "react-router-dom": "^5.2.0",
     "react-select": "^4.3.1",
