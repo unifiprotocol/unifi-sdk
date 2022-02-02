@@ -38,7 +38,7 @@
     "ethers": "^5.2.0",
     "eventemitter3": "^4.0.7",
     "promise-parallel-throttle": "^3.3.0",
-    "tronweb": "^3.2.7",
+    "tronweb": "^4.1.0",
     "tslib": "^2.1.0"
   },
   "devDependencies": {
