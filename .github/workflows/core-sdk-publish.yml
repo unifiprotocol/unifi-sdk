@@ -16,6 +16,7 @@ jobs:
         with:
           node-version: "16"
           registry-url: "https://registry.npmjs.org"
+          scope: "@unifiprotocol"
       - name: install root deps
         run: yarn install
       - name: install dependencies
