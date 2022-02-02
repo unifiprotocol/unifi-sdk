@@ -39,7 +39,7 @@ export class TronLinkConnector extends BaseConnector {
     super(metadata, config);
   }
 
-  async connect(): Promise<IConnectorAdapters> {
+  async _connect(): Promise<IConnectorAdapters> {
     const agent = this.getAgent();
     if (!(await this.isAvailable())) {
       throw new WalletNotDetectedError(this.metadata.name);
