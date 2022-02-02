@@ -42,9 +42,6 @@ export abstract class BaseConnector implements IConnector {
   }
 
   get adapter(): IConnectorAdapters | undefined {
-    if (!this._adapter) {
-      throw new AdapterNotConnectedError();
-    }
     return this._adapter;
   }
 
