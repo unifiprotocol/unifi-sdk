@@ -61,4 +61,8 @@ export const TokenLogoResolvers: Record<
     `https://icon-service.unifi.report/icon_bttc?token=${normalizedToChecksumAddress(
       hash
     )}&autoResolve=false`,
+  [Blockchains.OntologyTestnet]: (hash: string) =>
+    `https://icon-service.unifi.report/icon_bttc?token=${normalizedToChecksumAddress(
+      hash
+    )}&autoResolve=false`,
 };

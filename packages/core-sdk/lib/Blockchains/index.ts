@@ -8,6 +8,7 @@ import { EthereumRinkebyConfig } from "./EthereumRinkeby";
 import { EthereumRopstenConfig } from "./EthereumRopsten";
 import { HarmonyConfig } from "./Harmony";
 import { IotexConfig } from "./Iotex";
+import { OntologyTestnetConfig } from "./OntologyTestnet";
 import { PolygonConfig } from "./Polygon";
 
 export const blockchainConfigMap: Partial<
@@ -23,4 +24,5 @@ export const blockchainConfigMap: Partial<
   [Blockchains.Polygon]: PolygonConfig,
   [Blockchains.Iotex]: IotexConfig,
   [Blockchains.BTTC]: BttcConfig,
+  [Blockchains.OntologyTestnet]: OntologyTestnetConfig,
 };
