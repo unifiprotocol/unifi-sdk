@@ -1,4 +1,4 @@
-import { BN, hexToDec } from "@unifiprotocol/utils";
+import { BN } from "@unifiprotocol/utils";
 import { ContractInterface, ethers, utils } from "ethers";
 import {
   AdapterBalance,

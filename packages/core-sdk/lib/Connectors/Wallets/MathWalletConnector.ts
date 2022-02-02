@@ -1,14 +1,7 @@
-import { hexToDec } from "@unifiprotocol/utils";
-
 import { InvalidNetworkError, WalletNotDetectedError } from "../../Errors";
 import { MetamaskConnector } from "./MetamaskConnector";
 import { IBlockchainConfig } from "../../Types/IBlockchainConfig";
-import {
-  IAdapter,
-  Blockchains,
-  IConnectorAdapters,
-  WalletConnectors,
-} from "../../Types";
+import { Blockchains, IConnectorAdapters, WalletConnectors } from "../../Types";
 import { MulticallBaseAdapter } from "../../Adapters/Multicall";
 import { HarmonyAdapter } from "../../Blockchains/Harmony/Adapters/HarmonyAdapter";
 
@@ -28,7 +21,7 @@ export class MathWalletConnector extends MetamaskConnector {
     });
   }
 
-  async connect(): Promise<IConnectorAdapters> {
+  async _connect(): Promise<IConnectorAdapters> {
     if (this.config.blockchain !== Blockchains.Harmony) {
       return super.connect();
     }

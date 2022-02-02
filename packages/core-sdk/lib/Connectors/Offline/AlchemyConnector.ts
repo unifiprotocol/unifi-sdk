@@ -37,7 +37,7 @@ export class AlchemyConnector extends BaseConnector {
     }
   }
 
-  async connect(): Promise<IConnectorAdapters> {
+  async _connect(): Promise<IConnectorAdapters> {
     const adapter = new Web3BaseAdapter(this.config);
     adapter.setProvider(
       new ethers.providers.AlchemyProvider(this.config.chainId, API_KEY)

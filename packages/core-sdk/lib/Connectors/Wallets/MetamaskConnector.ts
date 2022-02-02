@@ -31,7 +31,7 @@ export class MetamaskConnector extends BaseConnector {
     super(metadata, config);
   }
 
-  async connect(): Promise<IConnectorAdapters> {
+  async _connect(): Promise<IConnectorAdapters> {
     const ethAgent = this.getAgent();
     if (!(await this.isAvailable())) {
       throw new WalletNotDetectedError(this.metadata.name);

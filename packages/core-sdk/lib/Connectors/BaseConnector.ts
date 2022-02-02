@@ -4,20 +4,29 @@ import { IConnector } from "../Types/IConnector";
 import { Callback } from "../Utils/Typings";
 import { IBlockchainConfig } from "../Types/IBlockchainConfig";
 import { IConnectorMetadata } from "../Types";
+import { AdapterNotConnectedError } from "../Errors/AdapterNotConnectedError";
 
 export abstract class BaseConnector implements IConnector {
   protected emitter = new EventEmitter<ConnectorEvent>();
+  _adapter: IConnectorAdapters | undefined;
 
   constructor(
     public readonly metadata: IConnectorMetadata,
     public readonly config: IBlockchainConfig
   ) {}
 
-  abstract connect(): Promise<IConnectorAdapters>;
+  protected abstract _connect(): Promise<IConnectorAdapters>;
+
+  async connect(): Promise<IConnectorAdapters> {
+    const connector = await this._connect();
+    this.adapter = connector;
+    return connector;
+  }
 
   async disconnect(): Promise<void> {
     this.emitter.emit("Disconnect", {});
     this.emitter.removeAllListeners();
+    this.adapter = undefined;
   }
 
   get isWallet(): boolean {
@@ -30,6 +39,17 @@ export abstract class BaseConnector implements IConnector {
 
   get displayName(): string {
     return this.metadata.displayName;
+  }
+
+  get adapter(): IConnectorAdapters | undefined {
+    if (!this._adapter) {
+      throw new AdapterNotConnectedError();
+    }
+    return this._adapter;
+  }
+
+  set adapter(adapter: IConnectorAdapters | undefined) {
+    this._adapter = adapter;
   }
 
   async isAvailable(): Promise<boolean> {
