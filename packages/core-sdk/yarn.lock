@@ -910,10 +910,10 @@
   dependencies:
     "@types/node" "*"
 
-"@unifiprotocol/utils@^2.2.1":
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/@unifiprotocol/utils/-/utils-2.2.1.tgz#ee4ecbfee35bcbbe470da27f8de6d88258753e82"
-  integrity sha512-6uKEtnIvLkfy+qMhltmpOGBEL3LFVN1KJt0kb7Ef5K+dT71mGtWbLjXxqOU1B9FlZ6XyW67LXwvAH747d45XGw==
+"@unifiprotocol/utils@^2.2.2":
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/@unifiprotocol/utils/-/utils-2.2.2.tgz#91962263351487c8889fbd54173df6d57ae3d60d"
+  integrity sha512-VsTT2O6drm05j3Ve3kz2Y1aOkqEVy2b+d9O7jNBZ5VKjJXtSC3EjqOF+6g1FRj16/dOJZEwhjhyd/Msc7fg0mw==
   dependencies:
     bignumber.js "^9.0.1"
     keccak "^3.0.2"
