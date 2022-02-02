@@ -12,7 +12,7 @@ export interface IConnector {
   isWallet: boolean;
   name: string;
   displayName: string;
-  _adapter: IConnectorAdapters | undefined;
+  adapter: IConnectorAdapters | undefined;
 
   connect(): Promise<IConnectorAdapters>;
   disconnect(): Promise<void>;
