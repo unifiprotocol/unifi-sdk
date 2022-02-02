@@ -16,7 +16,7 @@ jobs:
         run: yarn install
         working-directory: ./packages/utils
       - name: publish package
-        run: yarn publish
+        run: npm publish
         working-directory: ./packages/utils
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
