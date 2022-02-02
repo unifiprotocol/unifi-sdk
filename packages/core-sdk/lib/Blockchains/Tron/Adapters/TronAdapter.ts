@@ -5,18 +5,15 @@ import {
   Address,
   ExecutionParams,
   ExecutionResponse,
-  EthChainIds,
 } from "../../../Types";
-import { ContractInterface } from "ethers";
 import { BaseAdapter } from "../../../Adapters/BaseAdapter";
 import { Opt } from "../../../Utils/Typings";
 import { nonSuccessResponse, successResponse } from "../../../Adapters/Helpers";
 import { hexlify } from "ethers/lib/utils";
 import { BN } from "@unifiprotocol/utils";
-import { timeStamp } from "console";
 import { TronChainId } from "../TronChainIds";
 
-type TronContractInterface = any[];
+type TronContractInterface = Array<any>;
 type TronProvider = TronWeb;
 type Contract = any;
 
@@ -186,7 +183,7 @@ export class TronAdapter extends BaseAdapter<
 
   async initializeToken(
     tokenAddress: Address,
-    abi: ContractInterface = ERC20ABI
+    abi: TronContractInterface = ERC20ABI
   ): Promise<void> {
     this.initializeContract(tokenAddress, abi);
   }
