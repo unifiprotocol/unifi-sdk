@@ -26,7 +26,7 @@ export class OneWalletConnector extends BaseConnector {
     );
   }
 
-  async connect(): Promise<IConnectorAdapters> {
+  async _connect(): Promise<IConnectorAdapters> {
     if (!(await this.isAvailable())) {
       throw new WalletNotDetectedError(this.displayName);
     }

@@ -15,10 +15,12 @@ export const web3ConnectorFactory =
       config
     );
 
+type OfflineConnector = (config: IBlockchainConfig) => Web3BaseConnector;
+
 export const blockchainConfigFactory = (
   params: Omit<IBlockchainConfig, "wallets" | "offlineConnectors">,
   connectorClasses: Array<new (config: IBlockchainConfig) => BaseConnector>,
-  web3offlineConnectors: Array<(config: IBlockchainConfig) => Web3BaseConnector>
+  web3offlineConnectors: [OfflineConnector, ...OfflineConnector[]]
 ): IBlockchainConfig => {
   const config: IBlockchainConfig = {
     ...params,

@@ -29,6 +29,13 @@ export const getBlockchainOfflineConnectors = (
   return config.offlineConnectors;
 };
 
+export const getBlockchainOfflineConnector = (
+  blockchain: Blockchains
+): IConnector => {
+  const config = getBlockchainConfig(blockchain);
+  return config.offlineConnectors[0];
+};
+
 export const getBlockchainConnectors = (
   blockchain: Blockchains
 ): IConnector[] => {
