@@ -18,13 +18,13 @@ export const AvalancheConfig = blockchainConfigFactory(
     explorer: {
       baseUrl: "https://snowtrace.io",
       address: function (address: string) {
-        return `${this.explorerBaseUrl}/address/${address}`;
+        return `${this.baseUrl}/address/${address}`;
       },
       token: function (address: string) {
-        return `${this.explorerBaseUrl}/token/${address}`;
+        return `${this.baseUrl}/token/${address}`;
       },
       tx: function (address: string) {
-        return `${this.explorerBaseUrl}/tx/${address}`;
+        return `${this.baseUrl}/tx/${address}`;
       },
     },
   },

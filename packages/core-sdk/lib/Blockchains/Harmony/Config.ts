@@ -19,13 +19,13 @@ export const HarmonyConfig = blockchainConfigFactory(
     explorer: {
       baseUrl: "https://explorer.harmony.one/#",
       address: function (address: string) {
-        return `${this.explorerBaseUrl}/address/${address}`;
+        return `${this.baseUrl}/address/${address}`;
       },
       token: function (address: string) {
-        return `${this.explorerBaseUrl}/tokens/${address}`;
+        return `${this.baseUrl}/tokens/${address}`;
       },
       tx: function (address: string) {
-        return `${this.explorerBaseUrl}/tx/${address}`;
+        return `${this.baseUrl}/tx/${address}`;
       },
     },
   },

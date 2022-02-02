@@ -18,13 +18,13 @@ export const BttcConfig = blockchainConfigFactory(
     explorer: {
       baseUrl: "https://scan.bt.io",
       address: function (address: string) {
-        return `${this.explorerBaseUrl}/#/address/${address}`;
+        return `${this.baseUrl}/#/address/${address}`;
       },
       token: function (address: string) {
-        return `${this.explorerBaseUrl}/#/token20/${address}`;
+        return `${this.baseUrl}/#/token20/${address}`;
       },
       tx: function (address: string) {
-        return `${this.explorerBaseUrl}/#/transaction/${address}`;
+        return `${this.baseUrl}/#/transaction/${address}`;
       },
     },
   },
