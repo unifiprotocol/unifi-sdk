@@ -2,7 +2,7 @@ import { BNBNativeToken } from "./NativeToken";
 import { Blockchains, EthChainIds, OfflineConnectors } from "../../Types";
 import { MetamaskConnector } from "../../Connectors/Wallets/MetamaskConnector";
 import { MathWalletConnector } from "../../Connectors/Wallets/MathWalletConnector";
-import { blockchainConfigFactory, web3ConnectorFactory } from "../utils";
+import { blockchainConfigFactory, web3ConnectorFactory } from "../Utils";
 import { BinanceChainWalletConnector } from "./Wallets/BinanceChainWalletConnector";
 import { TrustWalletConnector } from "../../Connectors/Wallets/TrustWalletConnector";
 import { MetamaskCompatibleConnector } from "../../Connectors/Wallets/MetamaskCompatibleConnector";

@@ -3,7 +3,7 @@ import { Blockchains, EthChainIds, OfflineConnectors } from "../../Types";
 import { MetamaskConnector } from "../../Connectors/Wallets/MetamaskConnector";
 import { MathWalletConnector } from "../../Connectors/Wallets/MathWalletConnector";
 import { AlchemyConnector } from "../../Connectors/Offline/AlchemyConnector";
-import { blockchainConfigFactory, web3ConnectorFactory } from "../utils";
+import { blockchainConfigFactory, web3ConnectorFactory } from "../Utils";
 import { TrustWalletConnector } from "../../Connectors/Wallets/TrustWalletConnector";
 import { MetamaskCompatibleConnector } from "../../Connectors/Wallets/MetamaskCompatibleConnector";
 

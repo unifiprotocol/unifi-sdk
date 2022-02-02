@@ -1,7 +1,7 @@
 import { AVAXNativeToken } from "./NativeToken";
 import { Blockchains, EthChainIds, OfflineConnectors } from "../../Types";
 import { MetamaskConnector } from "../../Connectors/Wallets/MetamaskConnector";
-import { blockchainConfigFactory, web3ConnectorFactory } from "../utils";
+import { blockchainConfigFactory, web3ConnectorFactory } from "../Utils";
 import { MetamaskCompatibleConnector } from "../../Connectors/Wallets/MetamaskCompatibleConnector";
 
 export const AvalancheConfig = blockchainConfigFactory(
