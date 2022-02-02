@@ -1,0 +1,63 @@
+{
+  "name": "@unifiprotocol/shell",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@craco/craco": "^6.4.3",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^12.0.0",
+    "@testing-library/user-event": "^13.2.1",
+    "@types/jest": "^27.0.1",
+    "@types/node": "^16.7.13",
+    "@types/react": "^17.0.20",
+    "@types/react-dom": "^17.0.9",
+    "@unifiprotocol/core-sdk": "^5.3.2",
+    "@unifiprotocol/uikit": "^1.12.1",
+    "assert": "^2.0.0",
+    "bech32": "^2.0.0",
+    "crypto-browserify": "^3.12.0",
+    "crypto-js": "^4.1.1",
+    "https-browserify": "^1.0.0",
+    "os-browserify": "^0.3.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-i18next": "^11.15.3",
+    "react-router-dom": "^6.2.1",
+    "react-scripts": "5.0.0",
+    "react-toast-notifications": "^2.5.1",
+    "recoil": "^0.5.2",
+    "stream-browserify": "^3.0.0",
+    "stream-http": "^3.2.0",
+    "styled-components": "^5.3.3",
+    "typescript": "^4.4.2",
+    "web-vitals": "^2.1.0"
+  },
+  "scripts": {
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@types/crypto-js": "^4.1.0",
+    "@types/styled-components": "^5.1.21"
+  }
+}
