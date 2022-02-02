@@ -11,7 +11,7 @@
     "@types/node": "^16.7.13",
     "@types/react": "^17.0.20",
     "@types/react-dom": "^17.0.9",
-    "@unifiprotocol/core-sdk": "^5.3.2",
+    "@unifiprotocol/core-sdk": "^5.3.3",
     "@unifiprotocol/uikit": "^1.12.1",
     "assert": "^2.0.0",
     "bech32": "^2.0.0",

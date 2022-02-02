@@ -112,6 +112,7 @@ export const useAdapter = () => {
   };
 
   return {
+    adapter: connector.adapter,
     connector,
     activeChain,
     connect,
