@@ -8,7 +8,7 @@ export const OntologyTestnetConfig = blockchainConfigFactory(
   {
     blockchain: Blockchains.OntologyTestnet,
     chainId: EthChainIds.OntologyTestnet,
-    publicRpc: "http://polaris1.ont.io",
+    publicRpc: "https://cached-proxy-lvlxd.ondigitalocean.app/ont-testnet",
     nativeToken: ONGNativeToken,
     multicall: {
       supported: false,
@@ -26,11 +26,11 @@ export const OntologyTestnetConfig = blockchainConfigFactory(
       },
     },
   },
-  [MetamaskConnector],
+  [MetamaskConnector, MetamaskCompatibleConnector],
   [
     web3ConnectorFactory(
       OfflineConnectors.OntologyTestnet,
-      "http://polaris1.ont.io"
+      "https://cached-proxy-lvlxd.ondigitalocean.app/ont-testnet"
     ),
   ]
 );

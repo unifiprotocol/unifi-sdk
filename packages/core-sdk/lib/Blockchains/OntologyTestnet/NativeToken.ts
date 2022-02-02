@@ -1,3 +1,3 @@
 import { Currency } from "@unifiprotocol/utils";
 
-export const ONGNativeToken = new Currency("ONG", 9, "ONG", "ONG");
+export const ONGNativeToken = new Currency("ONG", 18, "ONG", "ONG");
