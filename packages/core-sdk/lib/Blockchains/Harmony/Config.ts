@@ -2,7 +2,7 @@ import { ONENativeToken } from "./NativeToken";
 import { Blockchains, EthChainIds, OfflineConnectors } from "../../Types";
 import { MetamaskConnector } from "../../Connectors/Wallets/MetamaskConnector";
 import { MathWalletConnector } from "../../Connectors/Wallets/MathWalletConnector";
-import { blockchainConfigFactory, web3ConnectorFactory } from "../utils";
+import { blockchainConfigFactory, web3ConnectorFactory } from "../Utils";
 import { OneWalletConnector } from "./Wallets/OneWalletConnector";
 
 export const HarmonyConfig = blockchainConfigFactory(
