@@ -4,7 +4,7 @@ import { blockchainConfigFactory } from "../utils";
 import { TronLinkConnector } from "./Connectors/Wallets/TronLinkConnector";
 import { TronGridConnector } from "./Connectors/Offline/TronGridConnector";
 
-export const BinanceConfig = blockchainConfigFactory(
+export const TronConfig = blockchainConfigFactory(
   {
     blockchain: Blockchains.Tron,
     chainId: EthChainIds.Na,
@@ -26,6 +26,5 @@ export const BinanceConfig = blockchainConfigFactory(
       },
     },
   },
-  [TronLinkConnector, TronGridConnector],
-  []
+  [TronLinkConnector, TronGridConnector]
 );
