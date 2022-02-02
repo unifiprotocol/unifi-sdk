@@ -11,7 +11,9 @@ export const OntologyTestnetConfig = blockchainConfigFactory(
     publicRpc: "https://cached-proxy-lvlxd.ondigitalocean.app/ont-testnet",
     nativeToken: ONGNativeToken,
     multicall: {
-      supported: false,
+      supported: true,
+      address: "0x814D299c9081085C6b99208f1387738EeD3D638F",
+      tryAggregate: false,
     },
     explorer: {
       baseUrl: `https://explorer.ont.io/testnet`,
