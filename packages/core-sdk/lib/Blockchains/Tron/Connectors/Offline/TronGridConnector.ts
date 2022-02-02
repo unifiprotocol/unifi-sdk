@@ -24,7 +24,7 @@ export class TronGridConnector extends BaseConnector {
     );
   }
 
-  async connect(): Promise<IConnectorAdapters> {
+  async _connect(): Promise<IConnectorAdapters> {
     const adapter = new TronAdapter(this.config);
     const provider = new TronWeb({
       fullHost: "https://api.trongrid.io/",
