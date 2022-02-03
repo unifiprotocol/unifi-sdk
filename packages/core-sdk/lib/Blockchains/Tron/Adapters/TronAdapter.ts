@@ -13,7 +13,7 @@ import { hexlify } from "ethers/lib/utils";
 import { BN } from "@unifiprotocol/utils";
 import { TronChainId } from "../TronChainIds";
 
-type TronContractInterface = Array<any>;
+type TronContractInterface = Array<typeof ERC20ABI[0]>;
 type TronProvider = TronWeb;
 type Contract = any;
 
@@ -102,7 +102,12 @@ export class TronAdapter extends BaseAdapter<
           });
         }
       } else {
-        const contractCall = await contract[method].apply(null, args).call();
+        /*const _isConstant = (contract.abi as TronContractInterface).find(
+          (m) => m.name === method && m.inputs.length === args.length
+        )?.constant;*/
+        const contractCall = await contract[method]
+          .apply(null, args)
+          .call({ _isConstant: true });
         if (contractCall) {
           const value = Array.isArray(contractCall)
             ? contractCall.map((v) => v.toString())

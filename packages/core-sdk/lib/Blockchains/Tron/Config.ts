@@ -1,6 +1,6 @@
 import { TronNativeToken } from "./NativeToken";
 import { Blockchains, EthChainIds, IBlockchainConfig } from "../../Types";
-import { blockchainConfigFactory } from "../utils";
+import { blockchainConfigFactory } from "../Utils";
 import { TronLinkConnector } from "./Connectors/Wallets/TronLinkConnector";
 import { TronGridConnector } from "./Connectors/Offline/TronGridConnector";
 
