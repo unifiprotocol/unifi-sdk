@@ -3,7 +3,6 @@ import {
   getBlockchainConnectorByName,
   getBlockchainOfflineConnectors,
   IConnector,
-  IConnectorAdapters,
 } from "@unifiprotocol/core-sdk";
 import { createContext, Dispatch, useContext, useReducer } from "react";
 import Config, { IConfig } from "../Config";
@@ -17,7 +16,7 @@ export enum AdapterActionKind {
 
 export interface AdapterAction {
   type: AdapterActionKind;
-  payload: IConnectorAdapters | IConfig;
+  payload: IConnector | IConfig;
 }
 
 export interface AdapterState {
@@ -29,8 +28,10 @@ const reducer = (state: AdapterState, action: AdapterAction) => {
   const { type, payload } = action;
   switch (type) {
     case AdapterActionKind.CONNECT:
+      const connector = payload as IConnector;
       return {
         ...state,
+        connector,
       };
     case AdapterActionKind.DISCONNECT:
       state.connector.disconnect();
@@ -82,16 +83,24 @@ export const useAdapter = () => {
     const offlineConnector = getBlockchainOfflineConnectors(
       activeChain.blockchain
     )[0];
-    const successConnection = (adapter: IConnectorAdapters) => {
-      dispatch({ type: AdapterActionKind.CONNECT, payload: adapter });
+    const successConnection = (payload: IConnector) => {
+      dispatch({ type: AdapterActionKind.CONNECT, payload });
     };
     try {
       await Promise.race([
         timedReject(10_000),
-        walletConnector.connect().then(successConnection),
-      ]).catch(() => offlineConnector.connect().then(successConnection));
+        walletConnector
+          .connect()
+          .then(() => successConnection(walletConnector)),
+      ]).catch(() =>
+        offlineConnector
+          .connect()
+          .then(() => successConnection(offlineConnector))
+      );
     } catch (err) {
-      offlineConnector.connect().then(successConnection);
+      offlineConnector
+        .connect()
+        .then(() => successConnection(offlineConnector));
     }
   };
 
@@ -99,9 +108,11 @@ export const useAdapter = () => {
     const offlineConnector = getBlockchainOfflineConnectors(
       activeChain.blockchain
     )[0];
-    offlineConnector.connect().then((adapter) => {
-      dispatch({ type: AdapterActionKind.CONNECT, payload: adapter });
-    });
+    offlineConnector
+      .connect()
+      .then(() =>
+        dispatch({ type: AdapterActionKind.CONNECT, payload: offlineConnector })
+      );
   };
 
   const updateChain = (cfg: IConfig) => {

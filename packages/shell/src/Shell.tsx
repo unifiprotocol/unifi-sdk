@@ -10,27 +10,32 @@ import { ConnectionAction } from "./Components/ConnectionAction";
 import { AdapterProvider, useAdapter } from "./Adapter";
 import { BlockchainAction } from "./Components/BlockchainAction";
 import { Updater } from "./Components/Updater";
+import { BalancesProvider, BalancesState, useBalances } from "./Balances";
 
-export type ShellWrappedComp = React.FC<{
-  connection: IConnector;
-}>;
+export type ShellWrappedComp = React.FC<
+  {
+    connection: IConnector;
+  } & BalancesState
+>;
 
 export const Shell: React.FC<{
   Wrapped?: ShellWrappedComp;
   sidebar?: React.FC<any>[];
 }> = ({ Wrapped, sidebar = [] }) => {
   return (
-    <AdapterProvider>
-      <UnifiThemeProvider theme={Themes.Dark}>
-        <NavigationHeader />
-        <BrandedHeader>
-          <BlockchainAction />
-          <ConnectionAction />
-        </BrandedHeader>
-        <Updater />
-        {Wrapped && <ConnectedComp Wrapped={Wrapped} />}
-      </UnifiThemeProvider>
-    </AdapterProvider>
+    <BalancesProvider>
+      <AdapterProvider>
+        <UnifiThemeProvider theme={Themes.Dark}>
+          <NavigationHeader />
+          <BrandedHeader>
+            <BlockchainAction />
+            <ConnectionAction />
+          </BrandedHeader>
+          <Updater />
+          {Wrapped && <ConnectedComp Wrapped={Wrapped} />}
+        </UnifiThemeProvider>
+      </AdapterProvider>
+    </BalancesProvider>
   );
 };
 
@@ -38,7 +43,8 @@ const ConnectedComp: React.FC<{ Wrapped: ShellWrappedComp }> = ({
   Wrapped,
 }) => {
   const { connector } = useAdapter();
-  return <Wrapped connection={connector} />;
+  const { balances } = useBalances();
+  return <Wrapped connection={connector} balances={balances} />;
 };
 
 export default Shell;
