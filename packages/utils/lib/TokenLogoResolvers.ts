@@ -50,9 +50,7 @@ export const TokenLogoResolvers: Record<
       hash
     )}&autoResolve=false`,
   [Blockchains.Tron]: (hash: string) =>
-    `https://icon-service.unifi.report/icon_tron?token=${normalizedToChecksumAddress(
-      hash
-    )}&autoResolve=false`,
+    `https://icon-service.unifi.report/icon_trc20.php?token=${hash}&autoResolve=false`,
   [Blockchains.Avalanche]: (hash: string) =>
     `https://icon-service.unifi.report/icon_avax?token=${normalizedToChecksumAddress(
       hash
