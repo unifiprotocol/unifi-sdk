@@ -5,6 +5,7 @@ import {
   useContext,
   useReducer,
 } from "react";
+import { Currency } from "@unifiprotocol/utils";
 
 export enum BalancesActionKind {
   ADD_TOKEN,
@@ -12,31 +13,29 @@ export enum BalancesActionKind {
 }
 
 export interface BalancesState {
-  balances: { [address: string]: string };
+  balances: { currency: Currency; balance: string }[];
 }
 
 export interface BalancesAction {
   type: BalancesActionKind;
-  payload: string | BalancesState["balances"];
+  payload: Currency | BalancesState["balances"];
 }
 
 const reducer = (state: BalancesState, action: BalancesAction) => {
   const { type, payload } = action;
   switch (type) {
     case BalancesActionKind.ADD_TOKEN:
-      if (typeof payload !== "string") return state;
+      if (!(payload instanceof Currency)) return state;
+      if (state.balances.find((c) => c.currency.equals(payload))) return state;
       return {
         ...state,
-        balances: { ...state.balances, [payload]: "0" },
+        balances: [...state.balances, { currency: payload, balance: "0" }],
       };
     case BalancesActionKind.UPDATE_BALANCES:
-      if (typeof payload === "string") return state;
+      if (payload instanceof Currency) return state;
       return {
         ...state,
-        balances: {
-          ...state.balances,
-          ...payload,
-        },
+        balances: [...payload],
       };
     default:
       return state;
@@ -44,7 +43,7 @@ const reducer = (state: BalancesState, action: BalancesAction) => {
 };
 
 const initialState: BalancesState = {
-  balances: {},
+  balances: [],
 };
 
 const BalancesContext = createContext<{
@@ -67,11 +66,17 @@ export const useBalances = () => {
   const { balances } = state;
 
   const updateBalances = useCallback(
-    (balances: BalancesState["balances"]) => {
-      dispatch({ type: BalancesActionKind.UPDATE_BALANCES, payload: balances });
+    (balances: BalancesState["balances"]) =>
+      dispatch({ type: BalancesActionKind.UPDATE_BALANCES, payload: balances }),
+    [dispatch]
+  );
+
+  const addToken = useCallback(
+    (token: Currency) => {
+      dispatch({ type: BalancesActionKind.ADD_TOKEN, payload: token });
     },
     [dispatch]
   );
 
-  return { balances, updateBalances };
+  return { balances, updateBalances, addToken };
 };
