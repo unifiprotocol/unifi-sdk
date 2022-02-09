@@ -3,8 +3,11 @@ import { ContractInterface, ethers, utils } from "ethers";
 import {
   AdapterBalance,
   Address,
+  BlockTag,
   ExecutionParams,
   ExecutionResponse,
+  IBlock,
+  IBlockWithTransactions,
   TransactionResult,
 } from "../Types";
 
@@ -16,6 +19,12 @@ export class Web3BaseAdapter extends BaseAdapter<
   ContractInterface,
   ethers.providers.BaseProvider
 > {
+  getBlockWithTxs(height: BlockTag): Promise<IBlockWithTransactions> {
+    return this.getProvider().getBlockWithTransactions(height);
+  }
+  getBlock(height: BlockTag): Promise<IBlock> {
+    return this.getProvider().getBlock(height);
+  }
   protected etherClient: ethers.providers.BaseProvider;
   protected contracts: { [nameContract: string]: ethers.Contract } = {};
   protected stablePairs: string[] = [];

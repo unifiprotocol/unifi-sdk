@@ -3029,6 +3029,11 @@ to-regex-range@^5.0.1:
   dependencies:
     is-number "^7.0.0"
 
+tron-format-address@^0.1.8:
+  version "0.1.8"
+  resolved "https://registry.yarnpkg.com/tron-format-address/-/tron-format-address-0.1.8.tgz#e25226dc00822fc91b0efeeae0fbf555584379fa"
+  integrity sha512-oTtzUM43OZhQiv1p2aOVqbnev6mmJHXQrMpS3nn7zVAI/+ffA/aF+Y/vugHtYotckkromRLPEl/SR1HfJjAYQA==
+
 tronweb@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/tronweb/-/tronweb-4.1.0.tgz#a79d3ac8e1d4a78d9d69067e2bc3e6cede6e83c9"

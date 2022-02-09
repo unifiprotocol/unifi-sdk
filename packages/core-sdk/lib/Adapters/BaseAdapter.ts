@@ -5,7 +5,9 @@ import {
   ExecutionResponse,
   AdapterBalance,
   Address,
+  BlockTag,
 } from "../Types";
+import { IBlock, IBlockWithTransactions } from "../Types/BlockAndTxs";
 
 export abstract class BaseAdapter<ContractInterface, ProviderType>
   implements IAdapter<ContractInterface>
@@ -59,6 +61,9 @@ export abstract class BaseAdapter<ContractInterface, ProviderType>
   setAddress(address: Address): void {
     this.address = address;
   }
+
+  abstract getBlock(height: BlockTag): Promise<IBlock>;
+  abstract getBlockWithTxs(height: string): Promise<IBlockWithTransactions>;
 
   getAddress(): string {
     return this.address;

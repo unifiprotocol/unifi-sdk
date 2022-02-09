@@ -1,10 +1,10 @@
 import { Web3BaseConnector } from "../Connectors";
 import { BaseConnector } from "../Connectors/BaseConnector";
-import { IBlockchainConfig, OfflineConnectors } from "../Types";
+import { IBlockchainConfig, OfflineConnectors, IConnector } from "../Types";
 
 export const web3ConnectorFactory =
   (name: OfflineConnectors, jsonRpcUrl: string) =>
-  (config: IBlockchainConfig): Web3BaseConnector =>
+  (config: IBlockchainConfig): IConnector =>
     new Web3BaseConnector(
       jsonRpcUrl,
       {
@@ -15,7 +15,7 @@ export const web3ConnectorFactory =
       config
     );
 
-type OfflineConnector = (config: IBlockchainConfig) => BaseConnector;
+type OfflineConnector = (config: IBlockchainConfig) => IConnector;
 
 export const blockchainConfigFactory = (
   params: Omit<IBlockchainConfig, "wallets" | "offlineConnectors">,

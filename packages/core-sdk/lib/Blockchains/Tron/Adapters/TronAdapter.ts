@@ -12,6 +12,13 @@ import { nonSuccessResponse, successResponse } from "../../../Adapters/Helpers";
 import { hexlify } from "ethers/lib/utils";
 import { BN } from "@unifiprotocol/utils";
 import { TronChainId } from "../TronChainIds";
+import {
+  IBlock,
+  IBlockWithTransactions,
+  BlockTag,
+  ITransactionReceipt,
+} from "../../../Types/BlockAndTxs";
+import * as TronAddressFormat from "tron-format-address";
 
 type TronContractInterface = Array<typeof ERC20ABI[0]>;
 type TronProvider = TronWeb;
@@ -186,6 +193,31 @@ export class TronAdapter extends BaseAdapter<
     return this.blockchainConfig.explorer.tx(`${hash}`);
   }
 
+  getBlock(height: BlockTag): Promise<IBlock> {
+    if (height === "latest") {
+      return this._provider.trx
+        .getCurrentBlock()
+        .then(mapTrxBlockToGlobalInterface);
+    }
+    return this._provider.trx
+      .getBlockByNumber(height)
+      .then(mapTrxBlockToGlobalInterface);
+  }
+
+  async getBlockWithTxs(height: BlockTag): Promise<IBlockWithTransactions> {
+    const [_block, txs] = await Promise.all([
+      this.getBlock(height),
+      this._provider.trx.getTransactionFromBlock(height, undefined),
+    ]);
+
+    const block: IBlockWithTransactions = {
+      ..._block,
+      transactions: txs.map((tx: any) => mapTronTxToGlobal(block, tx)),
+    };
+
+    return block;
+  }
+
   async initializeToken(
     tokenAddress: Address,
     abi: TronContractInterface = ERC20ABI
@@ -196,4 +228,42 @@ export class TronAdapter extends BaseAdapter<
   toHexAddress(address: string): string {
     return this._provider.address.toHex(address);
   }
+}
+
+function mapTrxBlockToGlobalInterface(block: any): IBlock {
+  const hash = block.blockID;
+  const parentHash = block.block_header.raw_data.parentHash;
+  const number = block.block_header.raw_data.number;
+  const timestamp = block.block_header.raw_data.timestamp;
+
+  return {
+    hash,
+    parentHash,
+    number,
+    timestamp,
+    transactions: block.transactions.map((tx: any) => tx.txID),
+  };
+}
+
+function mapTronTxToGlobal(
+  block: IBlockWithTransactions,
+  tronTx: any
+): ITransactionReceipt {
+  const scData = tronTx.raw_data.contract[0].parameter.value;
+  console.log(tronTx.txID, tronTx.raw_data.contract[0]);
+
+  return {
+    hash: tronTx.txID, // string
+
+    // Only if a transaction has been mined
+    blockNumber: block.number, // ?:number
+    blockHash: block.hash, // ?:string
+    timestamp: block.timestamp, // ?:number
+
+    from: TronAddressFormat.fromHex(scData.owner_address), // string
+    to: TronAddressFormat.fromHex(
+      scData.contract_address || scData.to_address || scData.account_address
+    ),
+    raw: tronTx.raw_data_hex, // ?:string
+  };
 }

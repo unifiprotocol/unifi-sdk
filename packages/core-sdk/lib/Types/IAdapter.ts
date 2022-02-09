@@ -1,4 +1,6 @@
 import { BigNumberish } from "@ethersproject/bignumber";
+import { BlockTag } from "./BlockAndTxs";
+import { IBlock, IBlockWithTransactions } from "./BlockAndTxs";
 import { IBlockchainConfig } from "./IBlockchainConfig";
 
 export type AdapterBalance = { name: string; balance: string };
@@ -59,6 +61,9 @@ export interface IAdapter<ContractInterface = any> {
   getTxLink(hash: string): string;
   getAddressLink(hash: string): string;
   getTokenLink(hash: string): string;
+
+  getBlock(height: BlockTag): Promise<IBlock>;
+  getBlockWithTxs(height: BlockTag): Promise<IBlockWithTransactions>;
 
   setAddress(address: Address): void;
   getAddress(): Address;

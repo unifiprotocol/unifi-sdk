@@ -10,6 +10,7 @@ import {
   ExecutionParams,
   ExecutionResponse,
   EthChainIds,
+  ITransactionReceipt,
 } from "../../../Types";
 import { ContractInterface } from "ethers";
 import { BaseAdapter } from "../../../Adapters/BaseAdapter";
@@ -17,6 +18,11 @@ import { Opt } from "../../../Utils/Typings";
 import { nonSuccessResponse, successResponse } from "../../../Adapters/Helpers";
 import { hexlify } from "ethers/lib/utils";
 import { BN } from "@unifiprotocol/utils";
+import {
+  IBlock,
+  IBlockWithTransactions,
+  BlockTag,
+} from "../../../Types/BlockAndTxs";
 
 export type HarmonyProvider = ExtensionInterface & {
   network: { chain_id: number };
@@ -222,6 +228,23 @@ export class HarmonyAdapter extends BaseAdapter<
     }
     return new HarmonyAddress(address).basicHex;
   }
+
+  getBlock(height: BlockTag): Promise<IBlock> {
+    return this.harmonyClient.blockchain
+      .getBlockByHash({ blockHash: height })
+      .then(mapHmyBlockToGlobal);
+  }
+
+  async getBlockWithTxs(height: BlockTag): Promise<IBlockWithTransactions> {
+    const hmyBlockResult = await this.harmonyClient.blockchain.getBlockByHash({
+      blockHash: height,
+    });
+    const block = mapHmyBlockToGlobal(hmyBlockResult);
+    block.transactions = hmyBlockResult.result.transactions.map((tx: any) =>
+      mapHmyTxToGlobal(block, tx)
+    );
+    return block;
+  }
 }
 
 function decodeValue(value: any): any {
@@ -232,4 +255,26 @@ function decodeValue(value: any): any {
     return value.toString();
   }
   return value;
+}
+
+function mapHmyTxToGlobal(block: IBlock, hmyTx: any): ITransactionReceipt {
+  return {
+    hash: hmyTx.hash,
+    blockNumber: block.number,
+    blockHash: block.hash,
+    timestamp: block.timestamp,
+    from: hmyTx.from,
+    to: hmyTx.to,
+    raw: hmyTx.input,
+  };
+}
+
+function mapHmyBlockToGlobal({ result }: { result: any }) {
+  return {
+    hash: result.hash,
+    parentHash: result.parentHash,
+    number: Number(hexToNumber(result.number)),
+    timestamp: Number(hexToNumber(result.timestamp)),
+    transactions: result.transactions.map((tx: any) => tx.hash),
+  };
 }

@@ -1,8 +1,8 @@
 import { TronNativeToken } from "./NativeToken";
-import { Blockchains, EthChainIds, IBlockchainConfig } from "../../Types";
+import { Blockchains, EthChainIds, OfflineConnectors } from "../../Types";
 import { blockchainConfigFactory } from "../Utils";
 import { TronLinkConnector } from "./Connectors/Wallets/TronLinkConnector";
-import { TronGridConnector } from "./Connectors/Offline/TronGridConnector";
+import { tronConnectorFactory } from "./Connectors/Utils";
 
 export const TronConfig = blockchainConfigFactory(
   {
@@ -27,5 +27,5 @@ export const TronConfig = blockchainConfigFactory(
     },
   },
   [TronLinkConnector],
-  [(config: IBlockchainConfig) => new TronGridConnector(config)]
+  [tronConnectorFactory(OfflineConnectors.TronGrid, "https://api.trongrid.io")]
 );

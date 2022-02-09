@@ -5,6 +5,7 @@ import {
   IConnector,
   IBlockchainExplorer,
 } from "./Types";
+import { randomItem } from "./Utils/Array";
 
 export const getBlockchainConfig = (
   blockchain: Blockchains
@@ -30,10 +31,14 @@ export const getBlockchainOfflineConnectors = (
 };
 
 export const getBlockchainOfflineConnector = (
-  blockchain: Blockchains
+  blockchain: Blockchains,
+  _options: { random?: boolean } = {}
 ): IConnector => {
+  const { random } = { random: false, ..._options };
   const config = getBlockchainConfig(blockchain);
-  return config.offlineConnectors[0];
+  return random
+    ? randomItem(config.offlineConnectors)
+    : config.offlineConnectors[0];
 };
 
 export const getBlockchainConnectors = (

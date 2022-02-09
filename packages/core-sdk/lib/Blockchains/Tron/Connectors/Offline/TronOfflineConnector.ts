@@ -1,10 +1,7 @@
-import { ethers } from "ethers";
-
 import {
-  EthChainIds,
   IConnectorAdapters,
   IBlockchainConfig,
-  OfflineConnectors,
+  IConnectorMetadata,
 } from "../../../../Types";
 import { BaseConnector } from "../../../../Connectors/BaseConnector";
 import { TronAdapter } from "../../Adapters/TronAdapter";
@@ -12,22 +9,22 @@ import { TronAdapter } from "../../Adapters/TronAdapter";
 import { MulticallBaseAdapter } from "../../../../Adapters/Multicall/MulticallBaseAdapter";
 import TronWeb from "tronweb";
 
-export class TronGridConnector extends BaseConnector {
-  constructor(config: IBlockchainConfig) {
-    super(
-      {
-        displayName: OfflineConnectors.TronGrid,
-        isWallet: false,
-        name: OfflineConnectors.TronGrid,
-      },
-      config
-    );
+interface TronOfflineConnectorParams {
+  fullHost: string;
+}
+export class TronOfflineConnector extends BaseConnector {
+  constructor(
+    private params: TronOfflineConnectorParams,
+    metadata: IConnectorMetadata,
+    config: IBlockchainConfig
+  ) {
+    super(metadata, config);
   }
 
   async _connect(): Promise<IConnectorAdapters> {
     const adapter = new TronAdapter(this.config);
     const provider = new TronWeb({
-      fullHost: "https://api.trongrid.io/",
+      fullHost: this.params.fullHost,
     });
     provider.setAddress("TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t");
     adapter.setProvider(provider);
