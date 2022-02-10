@@ -96,7 +96,15 @@ export class Web3BaseAdapter extends BaseAdapter<
         const computedParams = computeInvocationParams(params, { gasLimit });
 
         // use callStatic to check if tx might fail before calling spending gas
-        await contract.callStatic[method].apply(null, computedParams);
+        await contract.callStatic[method]
+          .apply(null, computedParams)
+          .catch((err: any) => {
+            if (err.code && /UNPREDICTABLE_GAS_LIMIT/i.test(err.code)) {
+              // ignore this error
+              return;
+            }
+            throw err;
+          });
 
         const contractCall = await contract[method].apply(null, computedParams);
 
