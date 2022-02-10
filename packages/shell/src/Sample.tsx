@@ -1,17 +1,17 @@
-import React, { useEffect } from "react";
+import { PrimaryButton } from "@unifiprotocol/uikit";
+import { useCallback } from "react";
 import { useAdapter } from "./Adapter";
 import { useBalances } from "./Balances";
 import { ShellWrappedComp } from "./Shell";
 
-export const Sample: ShellWrappedComp = ({ connection }) => {
-  const { balances, addToken } = useBalances();
-  console.log("🚀 ~ file: Sample.tsx ~ line 8 ~ balances", balances);
+export const Sample: ShellWrappedComp = ({ connection, eventBus }) => {
+  const { balances } = useBalances();
   const { activeChain } = useAdapter();
 
-  useEffect(() => {
-    addToken(activeChain.wrappedToken);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const onAddWrappedToken = useCallback(() => {
+    eventBus.emit("ADD_CURRENCY", activeChain.wrappedToken);
+    setTimeout(() => eventBus.emit("REFRESH_BALANCES"));
+  }, [activeChain.wrappedToken, eventBus]);
 
   const address = connection?.adapter?.adapter.isConnected() ? (
     <h1>{connection?.adapter?.adapter.getAddress()}</h1>
@@ -22,6 +22,11 @@ export const Sample: ShellWrappedComp = ({ connection }) => {
   return (
     <div>
       {address}
+      <div>
+        <PrimaryButton onClick={onAddWrappedToken}>
+          Add Wrapped Token
+        </PrimaryButton>
+      </div>
       <div>Balances</div>
       <pre>{JSON.stringify(balances, null, 4)}</pre>
     </div>

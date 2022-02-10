@@ -1,8 +1,4 @@
-import {
-  ContractUseCase,
-  ExecutionResponse,
-  IAdapter,
-} from "@unifiprotocol/core-sdk";
+import { ContractUseCase } from "@unifiprotocol/core-sdk";
 import { ERC20ContractMethods } from "./Types";
 
 export interface BalanceOfParams {

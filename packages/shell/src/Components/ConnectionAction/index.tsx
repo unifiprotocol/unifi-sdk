@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { PrimaryButton } from "@unifiprotocol/uikit";
 import { ConnectionModal } from "../ConnectionModal";
 import { useAdapter } from "../../Adapter";
+import { shortAddress } from "@unifiprotocol/utils";
+import { ConnectedModal } from "../ConnectedModal";
 
 export const ConnectionAction = () => {
   const { adapter } = useAdapter();
@@ -10,14 +12,18 @@ export const ConnectionAction = () => {
   return (
     <>
       <ConnectionModal
-        isOpen={isModalOpen}
+        isOpen={!adapter?.adapter.isConnected() && isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onConnect={() => setIsModalOpen(false)}
         onConnectionError={() => setIsModalOpen(false)}
       />
+      <ConnectedModal
+        isOpen={!!adapter?.adapter.isConnected() && isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
       <PrimaryButton onClick={() => setIsModalOpen(true)}>
         {adapter && adapter.adapter.isConnected()
-          ? adapter.adapter.getAddress()
+          ? shortAddress(adapter.adapter.getAddress(), 6)
           : "Connect"}
       </PrimaryButton>
     </>

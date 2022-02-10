@@ -10,6 +10,7 @@ import { Currency } from "@unifiprotocol/utils";
 export enum BalancesActionKind {
   ADD_TOKEN,
   UPDATE_BALANCES,
+  WIPE,
 }
 
 export interface BalancesState {
@@ -18,7 +19,7 @@ export interface BalancesState {
 
 export interface BalancesAction {
   type: BalancesActionKind;
-  payload: Currency | BalancesState["balances"];
+  payload: Currency | BalancesState["balances"] | undefined;
 }
 
 const reducer = (state: BalancesState, action: BalancesAction) => {
@@ -26,17 +27,45 @@ const reducer = (state: BalancesState, action: BalancesAction) => {
   switch (type) {
     case BalancesActionKind.ADD_TOKEN:
       if (!(payload instanceof Currency)) return state;
-      if (state.balances.find((c) => c.currency.equals(payload))) return state;
+      if (state.balances.some((c) => c.currency.equals(payload))) return state;
       return {
         ...state,
         balances: [...state.balances, { currency: payload, balance: "0" }],
       };
+
     case BalancesActionKind.UPDATE_BALANCES:
-      if (payload instanceof Currency) return state;
+      if (!Array.isArray(payload)) return state;
+      const balances = state.balances.reduce(
+        (balances: BalancesState["balances"], b) => {
+          const newBalance = payload.find((pb) =>
+            pb.currency.equals(b.currency)
+          );
+          if (newBalance) {
+            balances.push(newBalance);
+          } else {
+            balances.push(b);
+          }
+          return balances;
+        },
+        []
+      );
+      const unmatchedBalances = payload.reduce(
+        (unmatchedBalances: BalancesState["balances"], b) => {
+          if (!balances.some((x) => x.currency.equals(b.currency))) {
+            unmatchedBalances.push(b);
+          }
+          return unmatchedBalances;
+        },
+        []
+      );
       return {
         ...state,
-        balances: [...payload],
+        balances: [...balances, ...unmatchedBalances],
       };
+
+    case BalancesActionKind.WIPE:
+      return initialState;
+
     default:
       return state;
   }
@@ -78,5 +107,9 @@ export const useBalances = () => {
     [dispatch]
   );
 
-  return { balances, updateBalances, addToken };
+  const wipe = useCallback(() => {
+    dispatch({ type: BalancesActionKind.WIPE, payload: undefined });
+  }, [dispatch]);
+
+  return { balances, updateBalances, addToken, wipe };
 };

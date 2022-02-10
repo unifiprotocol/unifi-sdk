@@ -4,8 +4,15 @@ import {
   getBlockchainOfflineConnectors,
   IConnector,
 } from "@unifiprotocol/core-sdk";
-import { createContext, Dispatch, useContext, useReducer } from "react";
+import {
+  createContext,
+  Dispatch,
+  useCallback,
+  useContext,
+  useReducer,
+} from "react";
 import Config, { IConfig } from "../Config";
+import ShellBus from "../Services/ShellBus";
 import { timedReject } from "../Utils";
 
 export enum AdapterActionKind {
@@ -104,7 +111,7 @@ export const useAdapter = () => {
     }
   };
 
-  const connectOffline = () => {
+  const connectOffline = useCallback(() => {
     const offlineConnector = getBlockchainOfflineConnectors(
       activeChain.blockchain
     )[0];
@@ -113,7 +120,7 @@ export const useAdapter = () => {
       .then(() =>
         dispatch({ type: AdapterActionKind.CONNECT, payload: offlineConnector })
       );
-  };
+  }, [activeChain.blockchain, dispatch]);
 
   const updateChain = (cfg: IConfig) => {
     dispatch({
@@ -122,12 +129,22 @@ export const useAdapter = () => {
     });
   };
 
+  const disconnect = useCallback(async () => {
+    if (!connector) {
+      return;
+    }
+    await connector.disconnect();
+    ShellBus.emit("WIPE");
+    connectOffline();
+  }, [connectOffline, connector]);
+
   return {
     adapter: connector.adapter,
     connector,
     activeChain,
     connect,
     connectOffline,
+    disconnect,
     updateChain,
   };
 };

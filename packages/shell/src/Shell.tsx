@@ -1,20 +1,20 @@
 import React from "react";
 import {
-  BrandedHeader,
   UnifiThemeProvider,
   Themes,
   NavigationHeader,
 } from "@unifiprotocol/uikit";
 import { IConnector } from "@unifiprotocol/core-sdk";
-import { ConnectionAction } from "./Components/ConnectionAction";
 import { AdapterProvider, useAdapter } from "./Adapter";
-import { BlockchainAction } from "./Components/BlockchainAction";
 import { Updater } from "./Components/Updater";
 import { BalancesProvider, BalancesState, useBalances } from "./Balances";
+import ShellBus from "./Services/ShellBus";
+import { TopHeader } from "./Components/TopHeader";
 
 export type ShellWrappedComp = React.FC<
   {
     connection: IConnector;
+    eventBus: typeof ShellBus;
   } & BalancesState
 >;
 
@@ -27,10 +27,7 @@ export const Shell: React.FC<{
       <AdapterProvider>
         <UnifiThemeProvider theme={Themes.Dark}>
           <NavigationHeader />
-          <BrandedHeader>
-            <BlockchainAction />
-            <ConnectionAction />
-          </BrandedHeader>
+          <TopHeader />
           <Updater />
           {Wrapped && <ConnectedComp Wrapped={Wrapped} />}
         </UnifiThemeProvider>
@@ -44,7 +41,9 @@ const ConnectedComp: React.FC<{ Wrapped: ShellWrappedComp }> = ({
 }) => {
   const { connector } = useAdapter();
   const { balances } = useBalances();
-  return <Wrapped connection={connector} balances={balances} />;
+  return (
+    <Wrapped eventBus={ShellBus} connection={connector} balances={balances} />
+  );
 };
 
 export default Shell;

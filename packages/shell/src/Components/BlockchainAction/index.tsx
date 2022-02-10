@@ -3,6 +3,19 @@ import { SecondaryButton } from "@unifiprotocol/uikit";
 import { useAdapter } from "../../Adapter";
 import { BlockchainModal } from "../BlockchainModal";
 import { IConfig } from "../../Config";
+import styled from "styled-components";
+
+const ActionButtonWrapped = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const ChainLogo = styled.img`
+  margin-right: 0.5rem;
+  width: 20px;
+  height: auto;
+`;
 
 export const BlockchainAction = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -19,7 +32,10 @@ export const BlockchainAction = () => {
   return (
     <>
       <SecondaryButton onClick={() => setIsModalOpen(true)}>
-        {activeChain.blockchain}
+        <ActionButtonWrapped>
+          <ChainLogo src={activeChain.logoURI} alt={activeChain.blockchain} />
+          <span>{activeChain.blockchain}</span>
+        </ActionButtonWrapped>
       </SecondaryButton>
       <BlockchainModal
         isOpen={isModalOpen}
