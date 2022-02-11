@@ -4,6 +4,9 @@ import { useAdapter } from "../../Adapter";
 import { BlockchainModal } from "../BlockchainModal";
 import { IConfig } from "../../Config";
 import styled from "styled-components";
+import { NetworkChanged } from "../../EventBus/Events/AdapterEvents";
+import { ShellEventBus } from "../../EventBus";
+import { Wipe } from "../../EventBus/Events/BalancesEvents";
 
 const ActionButtonWrapped = styled.div`
   display: flex;
@@ -24,6 +27,8 @@ export const BlockchainAction = () => {
   const onNetworkChange = useCallback(
     (cfg: IConfig) => {
       updateChain(cfg);
+      ShellEventBus.emit(new NetworkChanged(cfg.chainId));
+      ShellEventBus.emit(new Wipe());
       setIsModalOpen(false);
     },
     [updateChain]

@@ -12,7 +12,8 @@ import {
   useReducer,
 } from "react";
 import Config, { IConfig } from "../Config";
-import ShellBus from "../Services/ShellBus";
+import { ShellEventBus } from "../EventBus";
+import { Wipe } from "../EventBus/Events/BalancesEvents";
 import { timedReject } from "../Utils";
 
 export enum AdapterActionKind {
@@ -134,7 +135,7 @@ export const useAdapter = () => {
       return;
     }
     await connector.disconnect();
-    ShellBus.emit("WIPE");
+    ShellEventBus.emit(new Wipe());
     connectOffline();
   }, [connectOffline, connector]);
 

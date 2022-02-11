@@ -2,6 +2,7 @@ import { PrimaryButton } from "@unifiprotocol/uikit";
 import { useCallback } from "react";
 import { useAdapter } from "./Adapter";
 import { useBalances } from "./Balances";
+import { AddCurrency, RefreshBalances } from "./EventBus/Events/BalancesEvents";
 import { ShellWrappedComp } from "./Shell";
 
 export const Sample: ShellWrappedComp = ({ connection, eventBus }) => {
@@ -9,8 +10,8 @@ export const Sample: ShellWrappedComp = ({ connection, eventBus }) => {
   const { activeChain } = useAdapter();
 
   const onAddWrappedToken = useCallback(() => {
-    eventBus.emit("ADD_CURRENCY", activeChain.wrappedToken);
-    setTimeout(() => eventBus.emit("REFRESH_BALANCES"));
+    eventBus.emit(new AddCurrency(activeChain.wrappedToken));
+    setTimeout(() => eventBus.emit(new RefreshBalances()));
   }, [activeChain.wrappedToken, eventBus]);
 
   const address = connection?.adapter?.adapter.isConnected() ? (

@@ -8,13 +8,13 @@ import { IConnector } from "@unifiprotocol/core-sdk";
 import { AdapterProvider, useAdapter } from "./Adapter";
 import { Updater } from "./Components/Updater";
 import { BalancesProvider, BalancesState, useBalances } from "./Balances";
-import ShellBus from "./Services/ShellBus";
+import { ShellEventBus } from "./EventBus";
 import { TopHeader } from "./Components/TopHeader";
 
 export type ShellWrappedComp = React.FC<
   {
     connection: IConnector;
-    eventBus: typeof ShellBus;
+    eventBus: typeof ShellEventBus;
   } & BalancesState
 >;
 
@@ -42,7 +42,11 @@ const ConnectedComp: React.FC<{ Wrapped: ShellWrappedComp }> = ({
   const { connector } = useAdapter();
   const { balances } = useBalances();
   return (
-    <Wrapped eventBus={ShellBus} connection={connector} balances={balances} />
+    <Wrapped
+      eventBus={ShellEventBus}
+      connection={connector}
+      balances={balances}
+    />
   );
 };
 

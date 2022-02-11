@@ -4,8 +4,14 @@ import { useBalances } from ".";
 import { useAdapter } from "../Adapter";
 import { BalanceOf } from "../Contracts/ERC20/balanceOf";
 import Clocks from "../Services/Clocks";
-import ShellBus from "../Services/ShellBus";
 import { GenericUseCase } from "@unifiprotocol/core-sdk";
+import { ShellEventBus } from "../EventBus";
+import {
+  AddCurrency,
+  AddCurrencyEvent,
+  RefreshBalancesEvent,
+  WipeEvent,
+} from "../EventBus/Events/BalancesEvents";
 
 export const BalancesUpdater = () => {
   const [initialTrigger, setInitialTrigger] = useState(false);
@@ -73,17 +79,18 @@ export const BalancesUpdater = () => {
   }, [update, refreshing]);
 
   useEffect(() => {
-    ShellBus.on("ADD_CURRENCY", addToken);
+    const fn = (event: AddCurrency) => addToken(event.payload);
+    ShellEventBus.on(AddCurrencyEvent, fn);
     return () => {
-      ShellBus.off("ADD_CURRENCY", addToken);
+      ShellEventBus.off(AddCurrencyEvent, fn);
     };
   }, [addToken]);
 
   useEffect(() => {
     const fn = () => !refreshing && update();
-    ShellBus.on("REFRESH_BALANCES", fn);
+    ShellEventBus.on(RefreshBalancesEvent, fn);
     return () => {
-      ShellBus.off("REFRESH_BALANCES", fn);
+      ShellEventBus.off(RefreshBalancesEvent, fn);
     };
   }, [refreshing, update]);
 
@@ -92,9 +99,9 @@ export const BalancesUpdater = () => {
       wipe();
       setInitialTrigger(false);
     };
-    ShellBus.on("WIPE", fn);
+    ShellEventBus.on(WipeEvent, fn);
     return () => {
-      ShellBus.off("WIPE", fn);
+      ShellEventBus.off(WipeEvent, fn);
     };
   }, [refreshing, update, wipe]);
 
