@@ -34,4 +34,5 @@ export const ScanExplorers: Record<string, ScanExplorer> = {
   IotexScan: new ScanExplorer("https://iotexscan.io", { txPath: "action" }),
   PolygonScan: new ScanExplorer("https://polygonscan.com"),
   RopstenScan: new ScanExplorer("http://ropsten.etherscan.io"),
+  FtmScan: new ScanExplorer("https://ftmscan.com"),
 };
