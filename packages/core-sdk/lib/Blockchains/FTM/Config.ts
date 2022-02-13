@@ -5,7 +5,7 @@ import { MathWalletConnector } from "../../Connectors/Wallets/MathWalletConnecto
 import { blockchainConfigFactory, web3ConnectorFactory } from "../Utils";
 import { MetamaskCompatibleConnector } from "../../Connectors/Wallets/MetamaskCompatibleConnector";
 
-export const HarmonyConfig = blockchainConfigFactory(
+export const FTMConfig = blockchainConfigFactory(
   {
     blockchain: Blockchains.FTM,
     chainId: EthChainIds.FTM,
