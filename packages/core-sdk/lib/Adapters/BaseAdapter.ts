@@ -6,8 +6,13 @@ import {
   AdapterBalance,
   Address,
   BlockTag,
+  GetDecodedTransactionWithLogsOptions,
 } from "../Types";
-import { IBlock, IBlockWithTransactions } from "../Types/BlockAndTxs";
+import {
+  IBlock,
+  IBlockWithTransactions,
+  ITransactionWithLogs,
+} from "../Types/BlockAndTxs";
 
 export abstract class BaseAdapter<ContractInterface, ProviderType>
   implements IAdapter<ContractInterface>
@@ -40,7 +45,6 @@ export abstract class BaseAdapter<ContractInterface, ProviderType>
   abstract waitForTransaction(
     transactionHash: string
   ): Promise<"SUCCESS" | "FAILED">;
-
   abstract getContractInterface(contractAddress: string): ContractInterface;
   abstract getBalance(): Promise<AdapterBalance>;
 
@@ -64,6 +68,10 @@ export abstract class BaseAdapter<ContractInterface, ProviderType>
 
   abstract getBlock(height: BlockTag): Promise<IBlock>;
   abstract getBlockWithTxs(height: string): Promise<IBlockWithTransactions>;
+  abstract getDecodedTransactionWithLogs(
+    transactionHash: string,
+    options: GetDecodedTransactionWithLogsOptions<ContractInterface>
+  ): Promise<ITransactionWithLogs>;
 
   getAddress(): string {
     return this.address;

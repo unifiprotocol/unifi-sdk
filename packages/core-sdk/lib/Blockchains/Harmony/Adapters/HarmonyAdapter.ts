@@ -22,6 +22,7 @@ import {
   IBlock,
   IBlockWithTransactions,
   BlockTag,
+  ITransactionWithLogs,
 } from "../../../Types/BlockAndTxs";
 
 export type HarmonyProvider = ExtensionInterface & {
@@ -213,6 +214,10 @@ export class HarmonyAdapter extends BaseAdapter<
   }
   getTxLink(hash: string | number): string {
     return this.blockchainConfig.explorer.tx(`${hash}`);
+  }
+
+  getDecodedTransactionWithLogs(): Promise<ITransactionWithLogs> {
+    throw new Error("Method not implemented. Use Harmony Web3 Adapter ");
   }
 
   async initializeToken(

@@ -1,24 +1,27 @@
 import TronWeb from "tronweb";
 import { ERC20ABI } from "../../../Abis/ERC20";
+// TODO REMOVE AND USE tronweb.address.toHex/fromHex
+import * as TronAddressFormat from "tron-format-address";
 import {
   AdapterBalance,
   Address,
   ExecutionParams,
   ExecutionResponse,
-} from "../../../Types";
-import { BaseAdapter } from "../../../Adapters/BaseAdapter";
-import { Opt } from "../../../Utils/Typings";
-import { nonSuccessResponse, successResponse } from "../../../Adapters/Helpers";
-import { hexlify } from "ethers/lib/utils";
-import { BN } from "@unifiprotocol/utils";
-import { TronChainId } from "../TronChainIds";
-import {
+  GetDecodedTransactionWithLogsOptions,
   IBlock,
   IBlockWithTransactions,
   BlockTag,
   ITransactionReceipt,
-} from "../../../Types/BlockAndTxs";
-import * as TronAddressFormat from "tron-format-address";
+  ITransactionWithLogs,
+  ITransactionLog,
+} from "../../../Types";
+import { BaseAdapter } from "../../../Adapters/BaseAdapter";
+import { Opt } from "../../../Utils/Typings";
+import { nonSuccessResponse, successResponse } from "../../../Adapters/Helpers";
+import { BN } from "@unifiprotocol/utils";
+import { TronChainId } from "../TronChainIds";
+import { ContractInterface } from "ethers";
+import { decodeTx } from "../Utils/TxDecoder";
 
 type TronContractInterface = Array<typeof ERC20ABI[0]>;
 type TronProvider = TronWeb;
@@ -64,21 +67,15 @@ export class TronAdapter extends BaseAdapter<
     this.contracts[contractAddress] = contract;
   }
 
-  protected prepareExecuteArgs(args: any[]): string[] {
-    return args.map((v) => {
-      if (typeof v === "string") return v;
-      if (Array.isArray(v)) {
-        return this.prepareExecuteArgs(v as any[]) as any;
-      }
-      return hexlify(v as any);
-    });
-  }
   async execute<T = any>(
     contractAddress: string,
     method: string,
     values: Partial<ExecutionParams>,
     isWrite?: boolean
   ): Promise<ExecutionResponse<T>> {
+    console.error(
+      "DO NOT USE PRIVATE TRON NODE ON PKG, REMOVE BEFORE PUBLISHING"
+    );
     const { args, callValue } = values;
     try {
       const contract = this.contracts[contractAddress];
@@ -94,36 +91,31 @@ export class TronAdapter extends BaseAdapter<
       }
 
       if (isWrite) {
-        const contractCall = await contract[method].apply(null, args).send({
+        const response = await contract[method].apply(null, args).send({
           feeLimit: 100_000_000,
           callValue: callValue || 0,
           shouldPollResponse: false,
           keepTxID: true,
         });
 
-        if (contractCall) {
+        if (response) {
           return successResponse({
             method,
-            hash: contractCall,
+            hash: response,
             value: "",
           });
         }
       } else {
-        /*const _isConstant = (contract.abi as TronContractInterface).find(
-          (m) => m.name === method && m.inputs.length === args.length
-        )?.constant;*/
-        const contractCall = await contract[method]
+        const contractResponse = await contract[method]
           .apply(null, args)
           .call({ _isConstant: true });
-        if (contractCall) {
-          const value = Array.isArray(contractCall)
-            ? contractCall.map((v) => v.toString())
-            : contractCall.toString();
 
+        if (contractResponse) {
+          const abi = this.getContractInterface(contractAddress);
           return successResponse({
             method,
-            hash: contractCall,
-            value,
+            hash: contractResponse,
+            value: normalizeResponse(method, abi, args, contractResponse),
           });
         }
       }
@@ -160,8 +152,15 @@ export class TronAdapter extends BaseAdapter<
       checkTx();
     });
   }
-  getContractInterface(contractAddress: string): TronContractInterface {
-    return this.contracts[this.toHexAddress(contractAddress)].abi;
+  getContractInterface(_contractAddress: string): TronContractInterface {
+    const contractAddress = _contractAddress.startsWith("0x")
+      ? TronAddressFormat.fromHex(_contractAddress)
+      : _contractAddress;
+    const contract = this.contracts[contractAddress];
+    if (!contract) {
+      throw new Error(`Contract ${contractAddress} not initialized`);
+    }
+    return contract.abi;
   }
   async getBalance(address: Address = this.address): Promise<AdapterBalance> {
     const balance = await this._provider.trx.getBalance(address);
@@ -193,7 +192,7 @@ export class TronAdapter extends BaseAdapter<
     return this.blockchainConfig.explorer.tx(`${hash}`);
   }
 
-  getBlock(height: BlockTag): Promise<IBlock> {
+  getBlock(height: BlockTag = "latest"): Promise<IBlock> {
     if (height === "latest") {
       return this._provider.trx
         .getCurrentBlock()
@@ -212,8 +211,10 @@ export class TronAdapter extends BaseAdapter<
 
     const block: IBlockWithTransactions = {
       ..._block,
-      transactions: txs.map((tx: any) => mapTronTxToGlobal(block, tx)),
+      transactions: [],
     };
+
+    block.transactions = txs.map((tx: any) => mapTronTxToGlobal(block, tx));
 
     return block;
   }
@@ -228,13 +229,68 @@ export class TronAdapter extends BaseAdapter<
   toHexAddress(address: string): string {
     return this._provider.address.toHex(address);
   }
-}
 
+  async getDecodedTransactionWithLogs(
+    transactionHash: string,
+    { abis }: GetDecodedTransactionWithLogsOptions<ContractInterface>
+  ): Promise<ITransactionWithLogs> {
+    const [_tx, _txInfo, _txEvents] = await Promise.all([
+      this.getProvider().trx.getTransaction(transactionHash),
+      this.getProvider().trx.getTransactionInfo(transactionHash),
+      this.getProvider().getEventByTransactionID(transactionHash),
+    ]);
+
+    const tx = mapTronTxToGlobal(
+      {
+        number: _txInfo.blockNumber,
+        timestamp: Math.floor(_txInfo.blockTimeStamp / 1000),
+      },
+      _tx
+    );
+
+    const initializedAbis = Object.values(this.contracts).map((contract) =>
+      this.getContractInterface(contract.address)
+    );
+
+    const { args, method, signature } = decodeTx(_tx, [
+      ...initializedAbis,
+      ...abis,
+    ]);
+    const logs: ITransactionLog[] = _txEvents.map((event: any) => ({
+      address: event.contract,
+      name: event.name,
+      signature: event.name,
+      tx_hash: transactionHash,
+      topic: event.name,
+      args: removeNumericKeys(event.result),
+    }));
+    return {
+      ...tx,
+      smartContractCall: {
+        method,
+        signature,
+        args,
+      },
+      logs,
+    };
+  }
+}
+function removeNumericKeys(obj: Record<string, any>): Record<string, any> {
+  const argKeys = Object.keys(obj).filter((key) => isNaN(Number(key)));
+  const args: Record<string, any> = {};
+  argKeys.forEach((key) => {
+    args[key] = obj[key];
+  });
+  return args;
+}
+// todo move to ResponseNormalizer file
 function mapTrxBlockToGlobalInterface(block: any): IBlock {
   const hash = block.blockID;
   const parentHash = block.block_header.raw_data.parentHash;
   const number = block.block_header.raw_data.number;
-  const timestamp = block.block_header.raw_data.timestamp;
+  const timestamp = Math.floor(
+    Number(block.block_header.raw_data.timestamp / 1000)
+  );
 
   return {
     hash,
@@ -246,24 +302,68 @@ function mapTrxBlockToGlobalInterface(block: any): IBlock {
 }
 
 function mapTronTxToGlobal(
-  block: IBlockWithTransactions,
+  block: { number: number; timestamp: number },
   tronTx: any
 ): ITransactionReceipt {
   const scData = tronTx.raw_data.contract[0].parameter.value;
-  console.log(tronTx.txID, tronTx.raw_data.contract[0]);
+  try {
+    const receiver =
+      scData.contract_address ||
+      scData.to_address ||
+      scData.account_address ||
+      scData.receiver_address;
 
-  return {
-    hash: tronTx.txID, // string
+    return {
+      hash: tronTx.txID, // string
+      // status: tx[0].ret[0].contractRet === "SUCCESS" ? TransactionStatus.Success : TransactionStatus.Failed,
+      // Only if a transaction has been mined
+      blockNumber: block.number, // ?:number
+      timestamp: block.timestamp, // ?:number
 
-    // Only if a transaction has been mined
-    blockNumber: block.number, // ?:number
-    blockHash: block.hash, // ?:string
-    timestamp: block.timestamp, // ?:number
+      from: TronAddressFormat.fromHex(scData.owner_address), // string
+      to: receiver ? TronAddressFormat.fromHex(receiver) : undefined,
+      raw: tronTx.raw_data_hex, // ?:string
+    };
+  } catch (error) {
+    // TODO REMOVE
+    debugger;
+    throw error;
+  }
+}
 
-    from: TronAddressFormat.fromHex(scData.owner_address), // string
-    to: TronAddressFormat.fromHex(
-      scData.contract_address || scData.to_address || scData.account_address
-    ),
-    raw: tronTx.raw_data_hex, // ?:string
+function normalizeResponse(
+  method: string,
+  abi: TronContractInterface,
+  args: any[],
+  res: any
+) {
+  const methodDef = findMethodDefinitionOnAbi(abi, method, args);
+  const isArrayResponse = methodDef.outputs.length > 1;
+
+  if (!methodDef) {
+    return res;
+  }
+
+  const responseNormalizer = methodOutputNormalizer(methodDef);
+
+  return isArrayResponse
+    ? res.map(responseNormalizer)
+    : responseNormalizer(res, 0);
+}
+
+function findMethodDefinitionOnAbi(
+  abi: TronContractInterface,
+  method: string,
+  args: any[]
+) {
+  return abi.find((m) => m.name === method && m.inputs.length === args.length);
+}
+
+function methodOutputNormalizer(methodDef: TronContractInterface[0]) {
+  return (value: any, index: number) => {
+    const mapper = {
+      address: TronAddressFormat.fromHex,
+    }[methodDef.outputs[index].type];
+    return mapper ? mapper(value) : value.toString();
   };
 }

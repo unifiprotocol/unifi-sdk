@@ -8,12 +8,17 @@ import {
   ExecutionResponse,
   IBlock,
   IBlockWithTransactions,
+  ITransactionWithLogs,
+  ITransactionLog,
   TransactionResult,
+  GetDecodedTransactionWithLogsOptions,
+  TransactionStatus,
 } from "../Types";
 
 import { nonSuccessResponse, successResponse } from "./Helpers";
 import { ERC20ABI } from "../Abis/ERC20";
 import { BaseAdapter } from "./BaseAdapter";
+import { LogDecoder, TxDecoder } from "@maticnetwork/eth-decoder";
 
 export class Web3BaseAdapter extends BaseAdapter<
   ContractInterface,
@@ -185,6 +190,97 @@ export class Web3BaseAdapter extends BaseAdapter<
     return this.etherClient.waitForTransaction(transactionHash).then((res) => {
       return res.status && res.status === 1 ? "SUCCESS" : "FAILED";
     });
+  }
+
+  async getDecodedTransactionWithLogs(
+    transactionHash: string,
+    { abis = [] }: GetDecodedTransactionWithLogsOptions<ContractInterface>
+  ): Promise<ITransactionWithLogs> {
+    const [res, receipt] = await Promise.all([
+      this.web3Provider.getTransaction(transactionHash),
+      this.web3Provider.getTransactionReceipt(transactionHash),
+    ]);
+
+    const initializedAbis = Object.values(this.contracts).map((contract) =>
+      this.getContractInterface(contract.address)
+    );
+    const ABIs = [...initializedAbis, ...abis] as any;
+    const logsDecoder = new LogDecoder(ABIs);
+    const txDecoder = new TxDecoder(ABIs);
+    const { args, method, signature } = this.decodeTxDetails(res, txDecoder);
+
+    const logs: ITransactionLog[] = this.decodeTxLogs(receipt, logsDecoder);
+    return {
+      from: res.from,
+      hash: transactionHash,
+      blockHash: res.blockHash,
+      blockNumber: res.blockNumber,
+      raw: res.raw,
+      timestamp: res.timestamp,
+      to: receipt.to,
+      smartContractCall: {
+        signature,
+        method,
+        args,
+      }, // todo: create nested object called: contractCall?
+      logs,
+    };
+  }
+
+  private decodeTxLogs(
+    txReceipt: ethers.providers.TransactionReceipt,
+    decoder: LogDecoder
+  ): ITransactionLog[] {
+    // TODO tx with data = 0x seems to be a native tx
+    const decodedLogs = decoder.decodeLogs(txReceipt.logs);
+    return decodedLogs.map((rawLog: any) => {
+      const log = rawLog;
+      const args = log.eventFragment.inputs.reduce(
+        (t: any, curr: any, i: number) => {
+          const argName: string = curr.name;
+          t[argName] = log.args[i].toString();
+          return t;
+        },
+        {} as Record<string, any>
+      );
+
+      return {
+        tx_hash: txReceipt.transactionHash,
+        name: log.name,
+        signature: log.signature,
+        topic: log.topic,
+        address: log.address,
+        args,
+      };
+    });
+  }
+
+  private decodeTxDetails(
+    txRes: ethers.providers.TransactionResponse,
+    decoder: TxDecoder
+  ) {
+    try {
+      const decodedTx = decoder.decodeTx(txRes);
+
+      const args = decodedTx.functionFragment.inputs.reduce((t, curr, i) => {
+        const argName: string = curr.name;
+        t[argName] = decodedTx.args[i].toString();
+        return t;
+      }, {} as Record<string, any>);
+
+      return {
+        method: decodedTx.name,
+        signature: decodedTx.signature,
+
+        args,
+      };
+    } catch (error) {
+      return {
+        method: "unknown",
+        signature: "external",
+        args: {},
+      };
+    }
   }
 
   protected reduceParams(

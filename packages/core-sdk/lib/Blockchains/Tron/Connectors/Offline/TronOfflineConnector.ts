@@ -9,8 +9,10 @@ import { TronAdapter } from "../../Adapters/TronAdapter";
 import { MulticallBaseAdapter } from "../../../../Adapters/Multicall/MulticallBaseAdapter";
 import TronWeb from "tronweb";
 
-interface TronOfflineConnectorParams {
+export interface TronOfflineConnectorParams {
   fullHost: string;
+  apiKey?: string;
+  headers?: Record<string, string>;
 }
 export class TronOfflineConnector extends BaseConnector {
   constructor(
@@ -25,6 +27,8 @@ export class TronOfflineConnector extends BaseConnector {
     const adapter = new TronAdapter(this.config);
     const provider = new TronWeb({
       fullHost: this.params.fullHost,
+      apiKey: this.params.apiKey,
+      headers: this.params.headers,
     });
     provider.setAddress("TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t");
     adapter.setProvider(provider);

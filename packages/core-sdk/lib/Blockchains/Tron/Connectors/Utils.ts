@@ -3,13 +3,16 @@ import {
   IConnector,
   IBlockchainConfig,
 } from "../../../Types";
-import { TronOfflineConnector } from "./Offline/TronOfflineConnector";
+import {
+  TronOfflineConnector,
+  TronOfflineConnectorParams,
+} from "./Offline/TronOfflineConnector";
 
 export const tronConnectorFactory =
-  (name: OfflineConnectors, fullHost: string) =>
+  (name: OfflineConnectors, tronWebParams: TronOfflineConnectorParams) =>
   (config: IBlockchainConfig): IConnector =>
     new TronOfflineConnector(
-      { fullHost },
+      tronWebParams,
       {
         name,
         displayName: name,

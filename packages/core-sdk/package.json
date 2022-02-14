@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "@harmony-js/account": "^0.1.57",
+    "@maticnetwork/eth-decoder": "git+https://github.com/deblanco/eth-decoder.git",
     "@harmony-js/core": "^0.1.57",
     "@harmony-js/utils": "^0.1.56",
     "@unifiprotocol/utils": "^2.2.5",
