@@ -10,5 +10,6 @@ export enum Blockchains {
   Polygon = "Polygon",
   Avalanche = "Avalanche",
   BTTC = "BTTC",
+  FTM = "FTM",
   OntologyTestnet = "OntologyTestnet",
 }

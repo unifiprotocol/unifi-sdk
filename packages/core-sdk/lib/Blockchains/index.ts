@@ -10,6 +10,7 @@ import { HarmonyConfig } from "./Harmony";
 import { IotexConfig } from "./Iotex";
 import { OntologyTestnetConfig } from "./OntologyTestnet";
 import { PolygonConfig } from "./Polygon";
+import { FTMConfig } from "./FTM";
 
 export const blockchainConfigMap: Partial<
   Record<Blockchains, IBlockchainConfig>
@@ -25,4 +26,5 @@ export const blockchainConfigMap: Partial<
   [Blockchains.Iotex]: IotexConfig,
   [Blockchains.BTTC]: BttcConfig,
   [Blockchains.OntologyTestnet]: OntologyTestnetConfig,
+  [Blockchains.FTM]: FTMConfig,
 };
