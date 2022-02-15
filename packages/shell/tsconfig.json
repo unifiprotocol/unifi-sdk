@@ -20,7 +20,8 @@
     "jsx": "react",
     "declaration": true,
     "outDir": "build",
-    "declarationDir": "."
+    "declarationDir": ".",
+    "importHelpers": true
   },
   "include": [
     "src",
