@@ -1,6 +1,7 @@
 module.exports = {
     webpack: {
         configure: {
+            entry: './src/App.tsx',
             resolve: {
                 fallback: {
                     path: require.resolve("path-browserify"),

@@ -8,7 +8,7 @@ import json from '@rollup/plugin-json'
 const packageJson = require("./package.json");
 
 const config = {
-    input: "src/entry.ts",
+    input: "src/index.ts",
     output: [
         {
             file: packageJson.main,
