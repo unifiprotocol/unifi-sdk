@@ -29,6 +29,9 @@ declare module "tronweb" {
 
   export class TronWeb {
     constructor(...args: any[]);
+    fullNode: any;
+    eventServer: any;
+    solidityNode: any;
     contract(abi: any[], contractAddress: string): Promise<any>;
     currentProvider(): any;
     currentProviders(): any;

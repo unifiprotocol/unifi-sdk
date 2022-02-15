@@ -8,11 +8,13 @@ import { TronAdapter } from "../../Adapters/TronAdapter";
 
 import { MulticallBaseAdapter } from "../../../../Adapters/Multicall/MulticallBaseAdapter";
 import TronWeb from "tronweb";
+import { AxiosConcurrencyHandler } from "../../../../Utils/AxiosRateLimiter";
 
 export interface TronOfflineConnectorParams {
   fullHost: string;
-  apiKey?: string;
+  privateKey?: string;
   headers?: Record<string, string>;
+  rateLimiter?: AxiosConcurrencyHandler;
 }
 export class TronOfflineConnector extends BaseConnector {
   constructor(
@@ -25,14 +27,18 @@ export class TronOfflineConnector extends BaseConnector {
 
   async _connect(): Promise<IConnectorAdapters> {
     const adapter = new TronAdapter(this.config);
-    const provider = new TronWeb({
-      fullHost: this.params.fullHost,
-      apiKey: this.params.apiKey,
-      headers: this.params.headers,
-    });
+    const { rateLimiter, ...params } = this.params;
+    const provider = new TronWeb(params);
     provider.setAddress("TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t");
     adapter.setProvider(provider);
+    if (rateLimiter) {
+      rateLimiter.setLimiterOn(provider.fullNode.instance);
+      rateLimiter.setLimiterOn(provider.eventServer.instance);
+      rateLimiter.setLimiterOn(provider.solidityNode.instance);
+    }
+
     const multicall = new MulticallBaseAdapter(adapter);
+
     return { adapter, multicall };
   }
 }

@@ -3,6 +3,11 @@ import { Blockchains, EthChainIds, OfflineConnectors } from "../../Types";
 import { blockchainConfigFactory } from "../Utils";
 import { TronLinkConnector } from "./Connectors/Wallets/TronLinkConnector";
 import { tronConnectorFactory } from "./Connectors/Utils";
+import { AxiosConcurrencyHandler } from "../../Utils/AxiosRateLimiter";
+
+const tronGridApiKey = "a2a267ee-3e71-430c-b51a-342aabd68deb";
+// share rate limiter across all offline connectors to limit requests globally
+const tronGridRateLimiter = new AxiosConcurrencyHandler(10, 1000);
 
 export const TronConfig = blockchainConfigFactory(
   {
@@ -30,8 +35,8 @@ export const TronConfig = blockchainConfigFactory(
   [
     tronConnectorFactory(OfflineConnectors.TronGrid, {
       fullHost: "https://api.trongrid.io",
-      headers: { "TRON-PRO-API-KEY": "affc4df2-9d03-49a8-8397-a2928977f1fe" },
-      apiKey: "affc4df2-9d03-49a8-8397-a2928977f1fe",
+      headers: { "TRON-PRO-API-KEY": tronGridApiKey },
+      rateLimiter: tronGridRateLimiter,
     }),
   ]
 );
