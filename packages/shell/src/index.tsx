@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Shell from "./Shell";
 import reportWebVitals from "./reportWebVitals";
+import Shell from "./Shell";
 import { Sample } from "./Sample";
 
 import "./index.css";
