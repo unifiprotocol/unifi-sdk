@@ -11,6 +11,7 @@ import {
   ExecutionResponse,
   EthChainIds,
   ITransactionReceipt,
+  GetTransactionsFromEventsOptions,
 } from "../../../Types";
 import { ContractInterface } from "ethers";
 import { BaseAdapter } from "../../../Adapters/BaseAdapter";
@@ -157,12 +158,7 @@ export class HarmonyAdapter extends BaseAdapter<
       });
     }
   }
-  signTransaction(tx: any): Promise<any> {
-    throw new Error("Method not implemented.");
-  }
-  sendTransaction<T = any>(tx: any): Promise<ExecutionResponse<T>> {
-    throw new Error("Method not implemented.");
-  }
+
   async waitForTransaction(txnHash: string): Promise<"SUCCESS" | "FAILED"> {
     return new Promise<"FAILED" | "SUCCESS">((resolve) => {
       const checkTx = () => {
@@ -217,6 +213,9 @@ export class HarmonyAdapter extends BaseAdapter<
   }
 
   getDecodedTransactionWithLogs(): Promise<ITransactionWithLogs> {
+    throw new Error("Method not implemented. Use Harmony Web3 Adapter ");
+  }
+  getTransactionsFromEvents(): Promise<string[]> {
     throw new Error("Method not implemented. Use Harmony Web3 Adapter ");
   }
 

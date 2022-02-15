@@ -7,13 +7,38 @@
 
 /// <reference types="node" />
 declare module "tronweb" {
+  type GetEventResultOptions = Partial<{
+    sinceTimestamp: number; //	Filter for events since certain timestamp. The sequence of the result is according to the 'sort' field.
+    eventName: string; //	Name of the event to filter by.
+    blockNumber: number; //	Specific block number to query
+    size: number; //	maximum number returned
+    onlyConfirmed: boolean; //	If set to true, only returns confirmed transactions.
+    onlyUnconfirmed: boolean; //	If set to true, only returns unconfirmed transactions.
+    fingerprint: string; //	The fingerprint field appears in the last data of the previous query. After specifying the corresponding field content this time, subsequent data will be returned. If there is no this field in the last data of the query, it means that there is no more data
+    sort: string; //	Can be 'block_timestamp' for time sequence or '-block_timestamp' for the reverse. Default is '-block_timestamp'.
+  }>;
+  interface EventResult {
+    block: number;
+    timestamp: number;
+    contract: "string";
+    name: "string";
+    transaction: "string";
+    result: Record<string, any>;
+    resourceNode: "string";
+  }
+
   export class TronWeb {
     constructor(...args: any[]);
-    contract(...args: any[]): any;
+    contract(abi: any[], contractAddress: string): Promise<any>;
     currentProvider(): any;
     currentProviders(): any;
     getEventByTransactionID(transactionID: string, callback?: any): any;
-    getEventResult(...args: any[]): any;
+    getEventResult(
+      contractAddress: string,
+      options?: GetEventResultOptions,
+      callback?: () => any
+    ): Promise<EventResult[]>;
+
     isConnected(callback?: any): any;
     isValidProvider(provider: any): any;
     setAddress(address: any): void;

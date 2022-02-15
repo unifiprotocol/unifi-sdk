@@ -22,6 +22,11 @@ export interface ExecutionResponse<T = any> {
 export interface GetDecodedTransactionWithLogsOptions<ContractInterface> {
   abis?: ContractInterface[];
 }
+export type GetTransactionsFromEventsOptions = {
+  abi?: any[];
+  fromBlock?: number;
+  toBlock?: number;
+};
 export interface ExecutionParams {
   args: Array<string | number | undefined | string[] | BigNumberish>;
   callValue: string | number | undefined;
@@ -74,7 +79,11 @@ export interface IAdapter<ContractInterface = any> {
   // Block methods
   getBlock(height?: BlockTag): Promise<IBlock>;
   getBlockWithTxs(height?: BlockTag): Promise<IBlockWithTransactions>;
-
+  // Event methods
+  getTransactionsFromEvents(
+    contractAddress: string,
+    options: GetTransactionsFromEventsOptions
+  ): Promise<string[]>;
   // Address methods
   setAddress(address: Address): void;
   getAddress(): Address;

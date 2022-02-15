@@ -7,6 +7,7 @@ import {
   Address,
   BlockTag,
   GetDecodedTransactionWithLogsOptions,
+  GetTransactionsFromEventsOptions,
 } from "../Types";
 import {
   IBlock,
@@ -47,8 +48,19 @@ export abstract class BaseAdapter<ContractInterface, ProviderType>
   ): Promise<"SUCCESS" | "FAILED">;
   abstract getContractInterface(contractAddress: string): ContractInterface;
   abstract getBalance(): Promise<AdapterBalance>;
-
   abstract isValidNetwork(network: string): Promise<boolean>;
+  abstract getBlock(height: BlockTag): Promise<IBlock>;
+  abstract getBlockWithTxs(height: string): Promise<IBlockWithTransactions>;
+  abstract getDecodedTransactionWithLogs(
+    transactionHash: string,
+    options: GetDecodedTransactionWithLogsOptions<ContractInterface>
+  ): Promise<ITransactionWithLogs>;
+  abstract getTransactionsFromEvents(
+    contractAddress: string,
+    options?: GetTransactionsFromEventsOptions
+  ): Promise<string[]>;
+
+  abstract isValidAddress(address: Address): boolean;
 
   getTxLink(hash: string): string {
     return this.blockchainConfig.explorer.tx(hash);
@@ -66,16 +78,7 @@ export abstract class BaseAdapter<ContractInterface, ProviderType>
     this.address = address;
   }
 
-  abstract getBlock(height: BlockTag): Promise<IBlock>;
-  abstract getBlockWithTxs(height: string): Promise<IBlockWithTransactions>;
-  abstract getDecodedTransactionWithLogs(
-    transactionHash: string,
-    options: GetDecodedTransactionWithLogsOptions<ContractInterface>
-  ): Promise<ITransactionWithLogs>;
-
   getAddress(): string {
     return this.address;
   }
-
-  abstract isValidAddress(address: Address): boolean;
 }

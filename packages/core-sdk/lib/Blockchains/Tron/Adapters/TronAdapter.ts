@@ -11,9 +11,9 @@ import {
   IBlock,
   IBlockWithTransactions,
   BlockTag,
-  ITransactionReceipt,
   ITransactionWithLogs,
   ITransactionLog,
+  GetTransactionsFromEventsOptions,
 } from "../../../Types";
 import { BaseAdapter } from "../../../Adapters/BaseAdapter";
 import { Opt } from "../../../Utils/Typings";
@@ -22,6 +22,15 @@ import { BN } from "@unifiprotocol/utils";
 import { TronChainId } from "../TronChainIds";
 import { ContractInterface } from "ethers";
 import { decodeTx } from "../Utils/TxDecoder";
+import {
+  mapTronTxToGlobal,
+  mapTrxBlockToGlobalInterface,
+  normalizeResponse,
+  removeNumericKeys,
+} from "../Utils/ResponseNormalizer";
+import { onlyUnique } from "../../../Utils/Array";
+
+const MAX_EVENT_PAGE_SIZE = 200;
 
 type TronContractInterface = Array<typeof ERC20ABI[0]>;
 type TronProvider = TronWeb;
@@ -274,96 +283,21 @@ export class TronAdapter extends BaseAdapter<
       logs,
     };
   }
-}
-function removeNumericKeys(obj: Record<string, any>): Record<string, any> {
-  const argKeys = Object.keys(obj).filter((key) => isNaN(Number(key)));
-  const args: Record<string, any> = {};
-  argKeys.forEach((key) => {
-    args[key] = obj[key];
-  });
-  return args;
-}
-// todo move to ResponseNormalizer file
-function mapTrxBlockToGlobalInterface(block: any): IBlock {
-  const hash = block.blockID;
-  const parentHash = block.block_header.raw_data.parentHash;
-  const number = block.block_header.raw_data.number;
-  const timestamp = Math.floor(
-    Number(block.block_header.raw_data.timestamp / 1000)
-  );
+  async getTransactionsFromEvents(
+    contractAddress: string,
+    { fromBlock, toBlock }: GetTransactionsFromEventsOptions
+  ): Promise<string[]> {
+    const events = await this.getProvider().getEventResult(contractAddress, {
+      size: MAX_EVENT_PAGE_SIZE,
+    });
 
-  return {
-    hash,
-    parentHash,
-    number,
-    timestamp,
-    transactions: block.transactions.map((tx: any) => tx.txID),
-  };
-}
-
-function mapTronTxToGlobal(
-  block: { number: number; timestamp: number },
-  tronTx: any
-): ITransactionReceipt {
-  const scData = tronTx.raw_data.contract[0].parameter.value;
-  try {
-    const receiver =
-      scData.contract_address ||
-      scData.to_address ||
-      scData.account_address ||
-      scData.receiver_address;
-
-    return {
-      hash: tronTx.txID, // string
-      // status: tx[0].ret[0].contractRet === "SUCCESS" ? TransactionStatus.Success : TransactionStatus.Failed,
-      // Only if a transaction has been mined
-      blockNumber: block.number, // ?:number
-      timestamp: block.timestamp, // ?:number
-
-      from: TronAddressFormat.fromHex(scData.owner_address), // string
-      to: receiver ? TronAddressFormat.fromHex(receiver) : undefined,
-      raw: tronTx.raw_data_hex, // ?:string
-    };
-  } catch (error) {
-    // TODO REMOVE
-    debugger;
-    throw error;
+    return events
+      .filter((event) => {
+        const min = !fromBlock || fromBlock >= event.block;
+        const max = !toBlock || toBlock <= event.block;
+        return min && max;
+      })
+      .map((event) => event.transaction)
+      .filter(onlyUnique);
   }
-}
-
-function normalizeResponse(
-  method: string,
-  abi: TronContractInterface,
-  args: any[],
-  res: any
-) {
-  const methodDef = findMethodDefinitionOnAbi(abi, method, args);
-  const isArrayResponse = methodDef.outputs.length > 1;
-
-  if (!methodDef) {
-    return res;
-  }
-
-  const responseNormalizer = methodOutputNormalizer(methodDef);
-
-  return isArrayResponse
-    ? res.map(responseNormalizer)
-    : responseNormalizer(res, 0);
-}
-
-function findMethodDefinitionOnAbi(
-  abi: TronContractInterface,
-  method: string,
-  args: any[]
-) {
-  return abi.find((m) => m.name === method && m.inputs.length === args.length);
-}
-
-function methodOutputNormalizer(methodDef: TronContractInterface[0]) {
-  return (value: any, index: number) => {
-    const mapper = {
-      address: TronAddressFormat.fromHex,
-    }[methodDef.outputs[index].type];
-    return mapper ? mapper(value) : value.toString();
-  };
 }

@@ -30,7 +30,6 @@ export const TronConfig = blockchainConfigFactory(
   [
     tronConnectorFactory(OfflineConnectors.TronGrid, {
       fullHost: "https://api.trongrid.io",
-      //"http://104.248.61.75:8090",
       headers: { "TRON-PRO-API-KEY": "affc4df2-9d03-49a8-8397-a2928977f1fe" },
       apiKey: "affc4df2-9d03-49a8-8397-a2928977f1fe",
     }),

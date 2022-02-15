@@ -12,13 +12,14 @@ import {
   ITransactionLog,
   TransactionResult,
   GetDecodedTransactionWithLogsOptions,
-  TransactionStatus,
+  GetTransactionsFromEventsOptions,
 } from "../Types";
 
 import { nonSuccessResponse, successResponse } from "./Helpers";
 import { ERC20ABI } from "../Abis/ERC20";
 import { BaseAdapter } from "./BaseAdapter";
 import { LogDecoder, TxDecoder } from "@maticnetwork/eth-decoder";
+import { onlyUnique } from "../Utils/Array";
 
 export class Web3BaseAdapter extends BaseAdapter<
   ContractInterface,
@@ -329,6 +330,30 @@ export class Web3BaseAdapter extends BaseAdapter<
     } catch (error) {
       return false;
     }
+  }
+  async getTransactionsFromEvents(
+    contractAddress: string,
+    { abi: givenAbi, fromBlock, toBlock }: GetTransactionsFromEventsOptions
+  ): Promise<string[]> {
+    const abi = givenAbi || this.getContractInterface(contractAddress);
+    if (!abi) {
+      throw new Error("You need to pass the contract ABI or initialize it");
+    }
+
+    const contract = new ethers.Contract(
+      contractAddress,
+      abi,
+      this.getProvider()
+    );
+
+    const events = await contract.queryFilter(
+      {
+        address: contract.address,
+      },
+      fromBlock,
+      toBlock
+    );
+    return events.map((event) => event.transactionHash).filter(onlyUnique);
   }
 }
 
