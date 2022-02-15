@@ -22,7 +22,7 @@ export const TronConfig = blockchainConfigFactory(
         return `${this.baseUrl}/#/token20/${address}`;
       },
       tx: function (address: string) {
-        return `${this.baseUrl}/transaction/${address}`;
+        return `${this.baseUrl}/#/transaction/${address}`;
       },
     },
   },
