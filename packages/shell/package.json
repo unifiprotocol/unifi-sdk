@@ -38,13 +38,13 @@
   "module": "build/index.esm.js",
   "types": "build/index.d.ts",
   "files": [
-    "src"
+    "build"
   ],
   "publishConfig": {
     "access": "public"
   },
   "scripts": {
-    "prepublish": "yarn clean && yarn compile",
+    "prepublishOnly": "yarn clean && yarn compile",
     "start": "craco start",
     "build": "craco build",
     "compile": "rollup -c",
