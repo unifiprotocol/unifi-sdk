@@ -5,10 +5,10 @@ import {
   NavigationHeader,
 } from "@unifiprotocol/uikit";
 import { IConnector } from "@unifiprotocol/core-sdk";
+import { ShellEventBus } from "./EventBus";
 import { AdapterProvider, useAdapter } from "./Adapter";
 import { Updater } from "./Components/Updater";
 import { BalancesProvider, BalancesState, useBalances } from "./Balances";
-import { ShellEventBus } from "./EventBus";
 import { TopHeader } from "./Components/TopHeader";
 
 export type ShellWrappedComp = React.FC<
@@ -23,16 +23,16 @@ export const Shell: React.FC<{
   sidebar?: React.FC<any>[];
 }> = ({ Wrapped, sidebar = [] }) => {
   return (
-    <BalancesProvider>
-      <AdapterProvider>
-        <UnifiThemeProvider theme={Themes.Dark}>
+    <UnifiThemeProvider theme={Themes.Dark}>
+      <BalancesProvider>
+        <AdapterProvider>
+          <Updater />
           <NavigationHeader />
           <TopHeader />
-          <Updater />
           {Wrapped && <ConnectedComp Wrapped={Wrapped} />}
-        </UnifiThemeProvider>
-      </AdapterProvider>
-    </BalancesProvider>
+        </AdapterProvider>
+      </BalancesProvider>
+    </UnifiThemeProvider>
   );
 };
 

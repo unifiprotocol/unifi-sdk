@@ -1,9 +1,10 @@
 import { useEffect } from "react";
 import { Connectors } from "@unifiprotocol/core-sdk";
 import { useAdapter } from "../../Adapter";
+import Clocks from "../../Services/Clocks";
 import { getStorageKey } from "../../Utils/ChainStorage";
 import { BalancesUpdater } from "../../Balances/Balances";
-import Clocks from "../../Services/Clocks";
+import { Notifications } from "../Notifications";
 
 export const Updater = () => {
   const { connectOffline, connect, activeChain } = useAdapter();
@@ -25,6 +26,7 @@ export const Updater = () => {
   return (
     <>
       <BalancesUpdater />
+      <Notifications />
     </>
   );
 };

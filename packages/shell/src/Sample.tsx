@@ -1,8 +1,9 @@
-import { PrimaryButton } from "@unifiprotocol/uikit";
 import { useCallback } from "react";
+import { PrimaryButton } from "@unifiprotocol/uikit";
 import { useAdapter } from "./Adapter";
 import { useBalances } from "./Balances";
 import { AddCurrency, RefreshBalances } from "./EventBus/Events/BalancesEvents";
+import { ShowNotification } from "./EventBus/Events/NotificationEvents";
 import { ShellWrappedComp } from "./Shell";
 
 export const Sample: ShellWrappedComp = ({ connection, eventBus }) => {
@@ -13,6 +14,15 @@ export const Sample: ShellWrappedComp = ({ connection, eventBus }) => {
     eventBus.emit(new AddCurrency(activeChain.wrappedToken));
     setTimeout(() => eventBus.emit(new RefreshBalances()));
   }, [activeChain.wrappedToken, eventBus]);
+
+  const onShowNotification = useCallback(() => {
+    eventBus.emit(
+      new ShowNotification({
+        content: "Hola!",
+        appearance: "success",
+      })
+    );
+  }, [eventBus]);
 
   const address = connection?.adapter?.adapter.isConnected() ? (
     <h1>{connection?.adapter?.adapter.getAddress()}</h1>
@@ -26,6 +36,11 @@ export const Sample: ShellWrappedComp = ({ connection, eventBus }) => {
       <div>
         <PrimaryButton onClick={onAddWrappedToken}>
           Add Wrapped Token
+        </PrimaryButton>
+      </div>
+      <div>
+        <PrimaryButton onClick={onShowNotification}>
+          Show Notification
         </PrimaryButton>
       </div>
       <div>Balances</div>

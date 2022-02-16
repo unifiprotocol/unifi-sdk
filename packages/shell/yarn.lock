@@ -2707,16 +2707,17 @@
     tronweb "^3.2.7"
     tslib "^2.1.0"
 
-"@unifiprotocol/uikit@^1.12.1":
-  version "1.12.1"
-  resolved "https://registry.yarnpkg.com/@unifiprotocol/uikit/-/uikit-1.12.1.tgz#42ff4b58cddf77eba5a0d9243aa139c95b56ac89"
-  integrity sha512-GlM3P2iHLohqm2akBHUiDNoi8+r/CWAwFZBUXkGuFEMjcpKP44gRRt2IJz/CWs3FXdBe/joXjt4rdIszyMuF5Q==
+"@unifiprotocol/uikit@^1.13.0":
+  version "1.13.0"
+  resolved "https://registry.yarnpkg.com/@unifiprotocol/uikit/-/uikit-1.13.0.tgz#e9a280b3a157c1df21a78e646623ad0e948f53be"
+  integrity sha512-U4Wxwa/Q3+k5FrWPQeXGKDXmZm2glrD58/n6zk24mrHC8KhhLOyxAL1JEexsT6xUhoE1FBTtVcSPdjodm7s3BQ==
   dependencies:
     "@unifiprotocol/utils" "^2.2.1"
     animated-number-react "^0.1.2"
     flatted "^3.2.4"
     react "^17.0.2"
     react-dom "^17.0.2"
+    react-hot-toast "^2.2.0"
     react-icons "^4.2.0"
     react-router-dom "^5.2.0"
     react-select "^4.3.1"
@@ -6571,6 +6572,11 @@ glogg@^1.0.0:
   dependencies:
     sparkles "^1.0.0"
 
+goober@^2.1.1:
+  version "2.1.8"
+  resolved "https://registry.yarnpkg.com/goober/-/goober-2.1.8.tgz#e592c04d093cb38f77b38cfcb012b7811c85765e"
+  integrity sha512-S0C85gCzcfFCMSdjD/CxyQMt1rbf2qEg6hmDzxk2FfD7+7Ogk55m8ZFUMtqNaZM4VVX/qaU9AzSORG+Gf4ZpAQ==
+
 graceful-fs@4.X, graceful-fs@^4.1.2, graceful-fs@^4.1.4, graceful-fs@^4.1.6, graceful-fs@^4.2.0, graceful-fs@^4.2.4, graceful-fs@^4.2.6, graceful-fs@^4.2.9:
   version "4.2.9"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.9.tgz#041b05df45755e587a24942279b9d113146e1c96"
@@ -10232,6 +10238,13 @@ react-error-overlay@^6.0.10:
   version "6.0.10"
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-6.0.10.tgz#0fe26db4fa85d9dbb8624729580e90e7159a59a6"
   integrity sha512-mKR90fX7Pm5seCOfz8q9F+66VCc1PGsWSBxKbITjfKVQHMNF2zudxHnMdJiB1fRCb+XsbQV9sO9DCkgsMQgBIA==
+
+react-hot-toast@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/react-hot-toast/-/react-hot-toast-2.2.0.tgz#ab6f4caed4214b9534f94bb8cfaaf21b051e62b9"
+  integrity sha512-248rXw13uhf/6TNDVzagX+y7R8J183rp7MwUMNkcrBRyHj/jWOggfXTGlM8zAOuh701WyVW+eUaWG2LeSufX9g==
+  dependencies:
+    goober "^2.1.1"
 
 react-i18next@^11.15.3:
   version "11.15.3"
