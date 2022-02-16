@@ -5,3 +5,6 @@ export type { ShellWrappedComp } from "./Shell";
 export * from "./EventBus/Events/AdapterEvents";
 export * from "./EventBus/Events/BalancesEvents";
 export * from "./EventBus/index";
+
+// TEST
+export * as UIKit from "@unifiprotocol/uikit";
