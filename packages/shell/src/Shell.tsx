@@ -38,7 +38,6 @@ export const Shell: React.FC<{
 
 const ConnectedComp: React.FC<{ Wrapped: ShellWrappedComp }> = ({
   Wrapped,
-  ...props
 }) => {
   const { connector } = useAdapter();
   const { balances } = useBalances();
@@ -47,7 +46,6 @@ const ConnectedComp: React.FC<{ Wrapped: ShellWrappedComp }> = ({
       eventBus={ShellEventBus}
       connection={connector}
       balances={balances}
-      {...props}
     />
   );
 };
