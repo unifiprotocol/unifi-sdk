@@ -8,6 +8,11 @@ import alias from '@rollup/plugin-alias'
 
 const packageJson = require("./package.json");
 
+const external = [
+    ...Object.keys(packageJson.dependencies || {}),
+    ...Object.keys(packageJson.peerDependencies || {}),
+];
+
 const config = {
     input: "src/index.ts",
     output: [
@@ -34,7 +39,8 @@ const config = {
         resolve({ preferBuiltins: false }),
         typescript({ tsconfig: './tsconfig.json' }),
         commonjs(),
-    ]
+    ],
+    external
 };
 
 export default config
