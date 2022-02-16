@@ -64,7 +64,7 @@ export const TokenLogoResolvers: Record<
       hash
     )}&autoResolve=false`,
   [Blockchains.FTM]: (hash: string) =>
-    `https://icon-service.unifi.report/icon_bttc?token=${normalizedToChecksumAddress(
+    `https://icon-service.unifi.report/icon_ftm?token=${normalizedToChecksumAddress(
       hash
     )}&autoResolve=false`,
 };
