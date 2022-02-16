@@ -30,5 +30,5 @@ export const FTMConfig = blockchainConfigFactory(
     },
   },
   [MetamaskConnector, MathWalletConnector, MetamaskCompatibleConnector],
-  [web3ConnectorFactory(OfflineConnectors.FTM, "https://rpc.fantom.network")]
+  [web3ConnectorFactory(OfflineConnectors.FTM, "https://rpc.FTM.tools")]
 );
