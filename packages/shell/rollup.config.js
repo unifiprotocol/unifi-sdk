@@ -4,6 +4,7 @@ import commonjs from "@rollup/plugin-commonjs";
 import typescript from "@rollup/plugin-typescript";
 import url from "@rollup/plugin-url";
 import json from '@rollup/plugin-json'
+import alias from '@rollup/plugin-alias'
 
 const packageJson = require("./package.json");
 
@@ -25,7 +26,12 @@ const config = {
         peerDepsExternal(),
         url(),
         json(),
-        resolve(),
+        alias({
+            entries: [
+                { find: 'readable-stream', replacement: 'stream' }
+            ]
+        }),
+        resolve({ preferBuiltins: false }),
         typescript({ tsconfig: './tsconfig.json' }),
         commonjs(),
     ]
