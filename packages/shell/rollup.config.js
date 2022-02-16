@@ -17,7 +17,7 @@ const config = {
         },
         {
             file: packageJson.module,
-            format: "esm",
+            format: "es",
             sourcemap: true
         }
     ],
