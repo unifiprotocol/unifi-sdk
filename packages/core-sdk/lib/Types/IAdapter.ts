@@ -4,6 +4,7 @@ import {
   IBlockWithTransactions,
   BlockTag,
   ITransactionWithLogs,
+  TransactionStatus,
 } from "./BlockAndTxs";
 import { IBlockchainConfig } from "./IBlockchainConfig";
 
@@ -34,7 +35,9 @@ export interface ExecutionParams {
 
 export type ExecutionValueProps = Partial<ExecutionParams>;
 
-export type TransactionResult = "SUCCESS" | "FAILED";
+export type TransactionResult =
+  | TransactionStatus.Success
+  | TransactionStatus.Failed;
 
 export interface IAdapter<ContractInterface = any> {
   readonly blockchainConfig: IBlockchainConfig;
@@ -65,7 +68,7 @@ export interface IAdapter<ContractInterface = any> {
   isValidNetwork(network: string): Promise<boolean>;
 
   // Transaction methods
-  waitForTransaction(transactionHash: string): Promise<"SUCCESS" | "FAILED">;
+  waitForTransaction(transactionHash: string): Promise<TransactionStatus>;
   getDecodedTransactionWithLogs(
     transactionHash: string,
     options?: GetDecodedTransactionWithLogsOptions<ContractInterface>

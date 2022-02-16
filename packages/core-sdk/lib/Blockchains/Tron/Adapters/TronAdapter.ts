@@ -14,13 +14,14 @@ import {
   ITransactionWithLogs,
   ITransactionLog,
   GetTransactionsFromEventsOptions,
+  TransactionStatus,
 } from "../../../Types";
 import { BaseAdapter } from "../../../Adapters/BaseAdapter";
 import { Opt } from "../../../Utils/Typings";
 import { nonSuccessResponse, successResponse } from "../../../Adapters/Helpers";
 import { BN } from "@unifiprotocol/utils";
 import { TronChainId } from "../TronChainIds";
-import { ContractInterface } from "ethers";
+import { ContractInterface, ethers } from "ethers";
 import { decodeTx } from "../Utils/TxDecoder";
 import {
   mapTronTxToGlobal,
@@ -32,7 +33,7 @@ import { onlyUnique } from "../../../Utils/Array";
 
 const MAX_EVENT_PAGE_SIZE = 200;
 
-type TronContractInterface = Array<typeof ERC20ABI[0]>;
+type TronContractInterface = ethers.ContractInterface;
 type TronProvider = TronWeb;
 type Contract = any;
 
@@ -71,7 +72,7 @@ export class TronAdapter extends BaseAdapter<
       return;
     }
 
-    const contract = await this._provider.contract(abi, contractAddress);
+    const contract = await this._provider.contract(abi as any, contractAddress);
 
     this.contracts[contractAddress] = contract;
   }
@@ -140,20 +141,24 @@ export class TronAdapter extends BaseAdapter<
     }
   }
 
-  async waitForTransaction(txnHash: string): Promise<"SUCCESS" | "FAILED"> {
-    return new Promise<"FAILED" | "SUCCESS">((resolve) => {
+  async waitForTransaction(txnHash: string): Promise<TransactionStatus> {
+    return new Promise<TransactionStatus>((resolve) => {
       const ignoreNotFoundErrors = () => {
         return;
       };
       const isSuccess = (res: any) =>
-        res.ret.some((r: any) => r.contractRet === "SUCCESS");
+        res.ret.some((r: any) => r.contractRet === TransactionStatus.Success);
       const checkTx = () => {
         return this._provider.trx
           .getConfirmedTransaction(txnHash)
           .catch(ignoreNotFoundErrors)
           .then((res: any) => {
             if (typeof res === "object") {
-              return resolve(isSuccess(res) ? "SUCCESS" : "FAILED");
+              return resolve(
+                isSuccess(res)
+                  ? TransactionStatus.Success
+                  : TransactionStatus.Failed
+              );
             }
             setTimeout(checkTx, 1500);
           });
@@ -241,7 +246,7 @@ export class TronAdapter extends BaseAdapter<
 
   async getDecodedTransactionWithLogs(
     transactionHash: string,
-    { abis }: GetDecodedTransactionWithLogsOptions<ContractInterface>
+    { abis = [] }: GetDecodedTransactionWithLogsOptions<ContractInterface> = {}
   ): Promise<ITransactionWithLogs> {
     const [_tx, _txInfo, _txEvents] = await Promise.all([
       this.getProvider().trx.getTransaction(transactionHash),
@@ -257,31 +262,58 @@ export class TronAdapter extends BaseAdapter<
       _tx
     );
 
-    const initializedAbis = Object.values(this.contracts).map((contract) =>
-      this.getContractInterface(contract.address)
-    );
-
-    const { args, method, signature } = decodeTx(_tx, [
-      ...initializedAbis,
-      ...abis,
-    ]);
     const logs: ITransactionLog[] = _txEvents.map((event: any) => ({
       address: event.contract,
       name: event.name,
-      signature: event.name,
+      signature: this.getEventSignature(event),
       tx_hash: transactionHash,
       topic: event.name,
       args: removeNumericKeys(event.result),
     }));
-    return {
-      ...tx,
-      smartContractCall: {
+
+    let smartContractCall: ITransactionWithLogs["smartContractCall"];
+
+    if (isTxCallingSmartContract(_tx)) {
+      const initializedAbis = Object.values(this.contracts).map((contract) =>
+        this.getContractInterface(contract.address)
+      );
+
+      const { args, method, signature } = decodeTx(_tx, [
+        ...initializedAbis,
+        ...abis,
+      ]);
+      smartContractCall = {
         method,
         signature,
         args,
-      },
+      };
+    }
+    const status =
+      _tx?.ret && _tx?.ret[0]?.contractRet === "SUCCESS"
+        ? TransactionStatus.Success
+        : TransactionStatus.Failed;
+
+    return {
+      ...tx,
+      status,
+      smartContractCall,
       logs,
     };
+  }
+  private getEventSignature(event: any) {
+    const abi = this.contracts[event.contract]?.abi;
+    if (!abi) {
+      return event.name;
+    }
+    const eventAbi = (abi as any[]).find(
+      (def) => def.type === "event" && def.name === event.name
+    );
+    if (!eventAbi) {
+      return event.name;
+    }
+    const inputTypes = eventAbi.inputs.map((input: any) => input.type);
+
+    return `${event.name}(${inputTypes.join(",")})`;
   }
   async getTransactionsFromEvents(
     contractAddress: string,
@@ -300,4 +332,8 @@ export class TronAdapter extends BaseAdapter<
       .map((event) => event.transaction)
       .filter(onlyUnique);
   }
+}
+
+function isTxCallingSmartContract(_tx: any) {
+  return ["TriggerSmartContract"].includes(_tx?.raw_data?.contract[0]?.type);
 }

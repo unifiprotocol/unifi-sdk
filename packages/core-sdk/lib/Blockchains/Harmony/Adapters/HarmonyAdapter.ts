@@ -11,7 +11,7 @@ import {
   ExecutionResponse,
   EthChainIds,
   ITransactionReceipt,
-  GetTransactionsFromEventsOptions,
+  TransactionStatus,
 } from "../../../Types";
 import { ContractInterface } from "ethers";
 import { BaseAdapter } from "../../../Adapters/BaseAdapter";
@@ -159,8 +159,8 @@ export class HarmonyAdapter extends BaseAdapter<
     }
   }
 
-  async waitForTransaction(txnHash: string): Promise<"SUCCESS" | "FAILED"> {
-    return new Promise<"FAILED" | "SUCCESS">((resolve) => {
+  async waitForTransaction(txnHash: string): Promise<TransactionStatus> {
+    return new Promise<TransactionStatus>((resolve) => {
       const checkTx = () => {
         return this.harmonyClient.blockchain
           .getTransactionReceipt({
@@ -169,8 +169,8 @@ export class HarmonyAdapter extends BaseAdapter<
           .then((res) => {
             const status =
               {
-                "0x0": "FAILED",
-                "0x1": "SUCCESS",
+                "0x0": TransactionStatus.Failed,
+                "0x1": TransactionStatus.Success,
               }[res?.result?.status as string] || undefined;
             if (status) {
               resolve(status as any);

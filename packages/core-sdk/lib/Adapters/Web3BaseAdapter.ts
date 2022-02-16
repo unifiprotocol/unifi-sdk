@@ -13,6 +13,7 @@ import {
   TransactionResult,
   GetDecodedTransactionWithLogsOptions,
   GetTransactionsFromEventsOptions,
+  TransactionStatus,
 } from "../Types";
 
 import { nonSuccessResponse, successResponse } from "./Helpers";
@@ -189,7 +190,9 @@ export class Web3BaseAdapter extends BaseAdapter<
     transactionHash: string
   ): Promise<TransactionResult> {
     return this.etherClient.waitForTransaction(transactionHash).then((res) => {
-      return res.status && res.status === 1 ? "SUCCESS" : "FAILED";
+      return res.status && res.status === 1
+        ? TransactionStatus.Success
+        : TransactionStatus.Failed;
     });
   }
 
@@ -202,28 +205,40 @@ export class Web3BaseAdapter extends BaseAdapter<
       this.web3Provider.getTransactionReceipt(transactionHash),
     ]);
 
+    const block = await this.web3Provider.getBlock(res.blockNumber);
+
     const initializedAbis = Object.values(this.contracts).map((contract) =>
       this.getContractInterface(contract.address)
     );
     const ABIs = [...initializedAbis, ...abis] as any;
     const logsDecoder = new LogDecoder(ABIs);
-    const txDecoder = new TxDecoder(ABIs);
-    const { args, method, signature } = this.decodeTxDetails(res, txDecoder);
-
     const logs: ITransactionLog[] = this.decodeTxLogs(receipt, logsDecoder);
+
+    let smartContractCall;
+    if (isSmartContractCall(res)) {
+      const txDecoder = new TxDecoder(ABIs);
+      const { args, method, signature } = this.decodeTxDetails(res, txDecoder);
+
+      smartContractCall = {
+        signature,
+        method,
+        args,
+      };
+    }
+
     return {
+      status:
+        receipt.status === 1
+          ? TransactionStatus.Success
+          : TransactionStatus.Failed,
       from: res.from,
       hash: transactionHash,
       blockHash: res.blockHash,
       blockNumber: res.blockNumber,
-      raw: res.raw,
-      timestamp: res.timestamp,
+      raw: res.data,
+      timestamp: block.timestamp,
       to: receipt.to,
-      smartContractCall: {
-        signature,
-        method,
-        args,
-      }, // todo: create nested object called: contractCall?
+      smartContractCall,
       logs,
     };
   }
@@ -367,4 +382,8 @@ function computeInvocationParams(
     { value: callValue ?? 0, ...gasOptions },
   ];
   return reducedContractParameters;
+}
+
+function isSmartContractCall(res: ethers.Transaction) {
+  return res.data !== "0x";
 }

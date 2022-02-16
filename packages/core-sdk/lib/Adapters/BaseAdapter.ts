@@ -8,13 +8,11 @@ import {
   BlockTag,
   GetDecodedTransactionWithLogsOptions,
   GetTransactionsFromEventsOptions,
-} from "../Types";
-import {
+  TransactionStatus,
   IBlock,
   IBlockWithTransactions,
   ITransactionWithLogs,
-} from "../Types/BlockAndTxs";
-
+} from "../Types";
 export abstract class BaseAdapter<ContractInterface, ProviderType>
   implements IAdapter<ContractInterface>
 {
@@ -45,7 +43,7 @@ export abstract class BaseAdapter<ContractInterface, ProviderType>
 
   abstract waitForTransaction(
     transactionHash: string
-  ): Promise<"SUCCESS" | "FAILED">;
+  ): Promise<TransactionStatus>;
   abstract getContractInterface(contractAddress: string): ContractInterface;
   abstract getBalance(): Promise<AdapterBalance>;
   abstract isValidNetwork(network: string): Promise<boolean>;

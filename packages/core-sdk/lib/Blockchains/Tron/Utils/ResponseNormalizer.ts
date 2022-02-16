@@ -1,4 +1,4 @@
-import { IBlock, ITransactionReceipt } from "../../../Types";
+import { IBlock, ITransactionReceipt, TransactionStatus } from "../../../Types";
 // TODO REMOVE AND USE tronweb.address.toHex/fromHex
 import * as TronAddressFormat from "tron-format-address";
 
@@ -44,7 +44,10 @@ export function mapTronTxToGlobal(
 
     return {
       hash: tronTx.txID, // string
-      // status: tx[0].ret[0].contractRet === "SUCCESS" ? TransactionStatus.Success : TransactionStatus.Failed,
+      status:
+        tronTx.ret[0].contractRet === "SUCCESS"
+          ? TransactionStatus.Success
+          : TransactionStatus.Failed,
       // Only if a transaction has been mined
       blockNumber: block.number, // ?:number
       timestamp: block.timestamp, // ?:number

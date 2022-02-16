@@ -15,11 +15,16 @@ export interface IBlockWithTransactions extends IBlockBase {
   transactions: ITransactionReceipt[];
 }
 
+export enum TransactionStatus {
+  Failed = "FAILED",
+  Success = "SUCCESS",
+}
+
 type ScArgs = Record<string, any>;
 export interface ITransactionReceipt {
   hash: string;
   blockNumber?: number;
-  //status: TransactionStatus;
+  status?: TransactionStatus;
   blockHash?: string;
   timestamp?: number;
   from: string;
@@ -43,9 +48,4 @@ export interface ITransactionLog {
 
 export interface ITransactionWithLogs extends ITransactionReceipt {
   logs: ITransactionLog[];
-}
-
-export enum TransactionStatus {
-  Failed = 0,
-  Success = 1,
 }
