@@ -1,4 +1,9 @@
-import { BNBNativeToken } from "./NativeToken";
+import {
+  BNBNativeToken,
+  BNBUpToken,
+  BNBWrappedToken,
+  BNBUnfiToken,
+} from "./Tokens";
 import { Blockchains, EthChainIds, OfflineConnectors } from "../../Types";
 import { MetamaskConnector } from "../../Connectors/Wallets/MetamaskConnector";
 import { MathWalletConnector } from "../../Connectors/Wallets/MathWalletConnector";
@@ -13,6 +18,9 @@ export const BinanceConfig = blockchainConfigFactory(
     chainId: EthChainIds.Bsc,
     publicRpc: "https://bsc-dataseed.binance.org/",
     nativeToken: BNBNativeToken,
+    wrappedToken: BNBWrappedToken,
+    upToken: BNBUpToken,
+    unfiToken: BNBUnfiToken,
     multicall: {
       supported: true,
     },

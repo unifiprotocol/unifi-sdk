@@ -5,7 +5,8 @@ import { blockchainConfigFactory, web3ConnectorFactory } from "../Utils";
 import { BinanceChainWalletConnector } from "../Binance/Wallets/BinanceChainWalletConnector";
 import { TrustWalletConnector } from "../../Connectors/Wallets/TrustWalletConnector";
 import { MetamaskCompatibleConnector } from "../../Connectors/Wallets/MetamaskCompatibleConnector";
-import { BNBNativeToken } from "../Binance/NativeToken";
+import { BNBNativeToken } from "../Binance/Tokens";
+import { BNBUpToken, BNBWrappedToken } from "./Tokens";
 
 export const BinanceTesnetConfig = blockchainConfigFactory(
   {
@@ -13,6 +14,8 @@ export const BinanceTesnetConfig = blockchainConfigFactory(
     chainId: EthChainIds.BscTestnet,
     publicRpc: "https://data-seed-prebsc-1-s1.binance.org:8545/",
     nativeToken: BNBNativeToken,
+    wrappedToken: BNBWrappedToken,
+    upToken: BNBUpToken,
     multicall: {
       supported: true,
       address: "0xae11c5b5f29a6a25e955f0cb8ddcc416f522af5c",

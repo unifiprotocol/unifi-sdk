@@ -11,6 +11,9 @@ export interface IBlockchainConfig {
   blockchain: Blockchains;
   publicRpc: string;
   nativeToken: Currency;
+  wrappedToken: Currency;
+  upToken?: Currency;
+  unfiToken?: Currency;
   chainId: EthChainIds;
   wallets: IConnector[];
   offlineConnectors: IConnector[];

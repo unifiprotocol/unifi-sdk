@@ -1,4 +1,4 @@
-import { MATICNativeToken } from "./NativeToken";
+import { MATICNativeToken, MATICUpToken, MATICWrappedToken } from "./Tokens";
 import { Blockchains, EthChainIds, OfflineConnectors } from "../../Types";
 import { MetamaskConnector } from "../../Connectors/Wallets/MetamaskConnector";
 import { blockchainConfigFactory, web3ConnectorFactory } from "../Utils";
@@ -10,6 +10,8 @@ export const PolygonConfig = blockchainConfigFactory(
     chainId: EthChainIds.Polygon,
     publicRpc: "https://polygon-rpc.com",
     nativeToken: MATICNativeToken,
+    wrappedToken: MATICWrappedToken,
+    upToken: MATICUpToken,
     multicall: {
       supported: true,
       address: "0x11ce4B23bD875D7F5C6a31084f55fDe1e9A87507",

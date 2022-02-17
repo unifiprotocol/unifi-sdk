@@ -1,4 +1,4 @@
-import { ETHNativeToken } from "./NativeToken";
+import { ETHNativeToken, ETHUpToken, ETHWrappedToken } from "./Tokens";
 import { Blockchains, EthChainIds, OfflineConnectors } from "../../Types";
 import { MetamaskConnector } from "../../Connectors/Wallets/MetamaskConnector";
 import { MathWalletConnector } from "../../Connectors/Wallets/MathWalletConnector";
@@ -13,6 +13,8 @@ export const EthereumConfig = blockchainConfigFactory(
     chainId: EthChainIds.Eth,
     publicRpc: "https://cloudflare-eth.com/",
     nativeToken: ETHNativeToken,
+    wrappedToken: ETHWrappedToken,
+    upToken: ETHUpToken,
     multicall: {
       supported: true,
     },

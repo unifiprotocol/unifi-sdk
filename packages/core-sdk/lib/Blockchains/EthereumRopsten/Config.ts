@@ -1,17 +1,20 @@
-import { ETHNativeToken } from "./NativeToken";
+import { RopstenNativeToken } from "./Tokens";
 import { Blockchains, EthChainIds, OfflineConnectors } from "../../Types";
 import { MetamaskConnector } from "../../Connectors/Wallets/MetamaskConnector";
 import { MathWalletConnector } from "../../Connectors/Wallets/MathWalletConnector";
 import { blockchainConfigFactory, web3ConnectorFactory } from "../Utils";
 import { TrustWalletConnector } from "../../Connectors/Wallets/TrustWalletConnector";
 import { MetamaskCompatibleConnector } from "../../Connectors/Wallets/MetamaskCompatibleConnector";
+import { ETHUpToken, ETHWrappedToken } from "../Ethereum";
 
 export const EthereumRopstenConfig = blockchainConfigFactory(
   {
     blockchain: Blockchains.EthereumRopsten,
     chainId: EthChainIds.EthRopsten,
     publicRpc: "https://api-ropsten.etherscan.io",
-    nativeToken: ETHNativeToken,
+    nativeToken: RopstenNativeToken,
+    wrappedToken: ETHWrappedToken,
+    upToken: ETHUpToken,
     multicall: {
       supported: true,
     },

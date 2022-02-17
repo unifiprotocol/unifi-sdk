@@ -1,9 +1,10 @@
-import { ONENativeToken } from "./NativeToken";
+import { ONENativeToken } from "./Tokens";
 import { Blockchains, EthChainIds, OfflineConnectors } from "../../Types";
 import { MetamaskConnector } from "../../Connectors/Wallets/MetamaskConnector";
 import { MathWalletConnector } from "../../Connectors/Wallets/MathWalletConnector";
 import { blockchainConfigFactory, web3ConnectorFactory } from "../Utils";
 import { OneWalletConnector } from "./Wallets/OneWalletConnector";
+import { ONEUpToken, ONEWrappedToken } from ".";
 
 export const HarmonyConfig = blockchainConfigFactory(
   {
@@ -11,6 +12,8 @@ export const HarmonyConfig = blockchainConfigFactory(
     chainId: EthChainIds.Harmony,
     publicRpc: "https://api.harmony.one",
     nativeToken: ONENativeToken,
+    wrappedToken: ONEWrappedToken,
+    upToken: ONEUpToken,
     multicall: {
       supported: true,
       address: "0xFE4980f62D708c2A84D3929859Ea226340759320",
