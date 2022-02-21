@@ -1,8 +1,14 @@
 import React from "react";
 import styled from "styled-components";
-import { BrandedHeader } from "@unifiprotocol/uikit";
+import {
+  BrandedHeader,
+  AiOutlineMenu as OpenSidebarIcon,
+  AiOutlineMenuFold as CloseSidebarIcon,
+} from "@unifiprotocol/uikit";
 import { BlockchainAction } from "../BlockchainAction";
 import { ConnectionAction } from "../ConnectionAction";
+import { useNavigation } from "../../Navigation";
+import { LeftMenuWrapper } from "./Styles";
 
 const TopHeaderWrapper = styled.div`
   display: flex;
@@ -15,8 +21,20 @@ const TopHeaderWrapper = styled.div`
 `;
 
 export const TopHeader = () => {
+  const { sidebarOpen, changeSidebarState } = useNavigation();
+
+  const LeftMenu = () => (
+    <LeftMenuWrapper
+      onClick={() => changeSidebarState(!sidebarOpen)}
+      // sidebarOpened={sidebarOpen}
+    >
+      {sidebarOpen && <CloseSidebarIcon size={25} />}
+      {!sidebarOpen && <OpenSidebarIcon size={25} />}
+    </LeftMenuWrapper>
+  );
+
   return (
-    <BrandedHeader>
+    <BrandedHeader leftControls={LeftMenu}>
       <TopHeaderWrapper>
         <BlockchainAction />
         <ConnectionAction />

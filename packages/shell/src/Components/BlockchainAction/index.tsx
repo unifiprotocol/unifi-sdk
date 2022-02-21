@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { SecondaryButton } from "@unifiprotocol/uikit";
+import { mediaQueries, SecondaryButton } from "@unifiprotocol/uikit";
 import { useAdapter } from "../../Adapter";
 import { BlockchainModal } from "../BlockchainModal";
 import { IConfig } from "../../Config";
@@ -18,6 +18,16 @@ const ChainLogo = styled.img`
   margin-right: 0.5rem;
   width: 20px;
   height: auto;
+
+  ${mediaQueries.xs} {
+    margin-right: 0;
+  }
+`;
+
+const ChainName = styled.span`
+  ${mediaQueries.xs} {
+    display: none;
+  }
 `;
 
 export const BlockchainAction = () => {
@@ -39,7 +49,7 @@ export const BlockchainAction = () => {
       <SecondaryButton onClick={() => setIsModalOpen(true)}>
         <ActionButtonWrapped>
           <ChainLogo src={activeChain.logoURI} alt={activeChain.blockchain} />
-          <span>{activeChain.blockchain}</span>
+          <ChainName>{activeChain.blockchain}</ChainName>
         </ActionButtonWrapped>
       </SecondaryButton>
       <BlockchainModal
