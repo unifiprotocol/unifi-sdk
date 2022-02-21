@@ -1,3 +1,5 @@
+import "reflect-metadata";
+
 export * from "./Blockchains";
 export * from "./Entities";
 export * from "./Abis";

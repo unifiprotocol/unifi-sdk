@@ -2,9 +2,13 @@ import { ETHNativeToken } from "./NativeToken";
 import { Blockchains, EthChainIds, OfflineConnectors } from "../../Types";
 import { MetamaskConnector } from "../../Connectors/Wallets/MetamaskConnector";
 import { MathWalletConnector } from "../../Connectors/Wallets/MathWalletConnector";
-import { blockchainConfigFactory, web3ConnectorFactory } from "../Utils";
+import { blockchainConfigFactory } from "../Utils";
 import { TrustWalletConnector } from "../../Connectors/Wallets/TrustWalletConnector";
 import { MetamaskCompatibleConnector } from "../../Connectors/Wallets/MetamaskCompatibleConnector";
+import {
+  createWeb3OfflineConnectorHelper,
+  web3ConnectorFactory,
+} from "../../Connectors/Factory";
 
 export const EthereumRopstenConfig = blockchainConfigFactory(
   {
@@ -15,6 +19,7 @@ export const EthereumRopstenConfig = blockchainConfigFactory(
     multicall: {
       supported: true,
     },
+    connectorFactory: web3ConnectorFactory,
     explorer: {
       baseUrl: "https://ropsten.etherscan.io",
       address: function (address: string) {
@@ -35,7 +40,7 @@ export const EthereumRopstenConfig = blockchainConfigFactory(
     MetamaskCompatibleConnector,
   ],
   [
-    web3ConnectorFactory(
+    createWeb3OfflineConnectorHelper(
       OfflineConnectors.EtherScan,
       "https://api-ropsten.etherscan.io"
     ),

@@ -1,3 +1,4 @@
+import { Blockchains } from "@unifiprotocol/utils";
 import {
   InvalidNetworkError,
   WalletNotDetectedError,
@@ -7,7 +8,6 @@ import {
   IConnectorAdapters,
   IBlockchainConfig,
   IAdapter,
-  IConnectorMetadata,
   WalletConnectors,
 } from "../../../../Types";
 import { BaseConnector } from "../../../../Connectors/BaseConnector";
@@ -27,16 +27,17 @@ enum TronLinkCodes {
   RejectedByUser = 4001,
   Success = 200,
 }
+
 export class TronLinkConnector extends BaseConnector {
-  constructor(
-    config: IBlockchainConfig,
-    metadata: IConnectorMetadata = {
-      name: WalletConnectors.TronLink,
-      displayName: "TronLink",
-      isWallet: true,
-    }
-  ) {
-    super(metadata, config);
+  constructor(config: IBlockchainConfig) {
+    super(
+      {
+        name: WalletConnectors.TronLink,
+        displayName: "TronLink",
+        isWallet: true,
+      },
+      config
+    );
   }
 
   async _connect(): Promise<IConnectorAdapters> {

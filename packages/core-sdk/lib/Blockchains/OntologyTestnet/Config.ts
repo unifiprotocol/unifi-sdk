@@ -1,8 +1,12 @@
 import { ONGNativeToken } from "./NativeToken";
 import { Blockchains, EthChainIds, OfflineConnectors } from "../../Types";
 import { MetamaskConnector } from "../../Connectors/Wallets/MetamaskConnector";
-import { blockchainConfigFactory, web3ConnectorFactory } from "../Utils";
+import { blockchainConfigFactory } from "../Utils";
 import { MetamaskCompatibleConnector } from "../../Connectors/Wallets/MetamaskCompatibleConnector";
+import {
+  createWeb3OfflineConnectorHelper,
+  web3ConnectorFactory,
+} from "../../Connectors/Factory";
 
 export const OntologyTestnetConfig = blockchainConfigFactory(
   {
@@ -15,6 +19,7 @@ export const OntologyTestnetConfig = blockchainConfigFactory(
       address: "0x814D299c9081085C6b99208f1387738EeD3D638F",
       tryAggregate: false,
     },
+    connectorFactory: web3ConnectorFactory,
     explorer: {
       baseUrl: `https://explorer.ont.io/testnet`,
       address: function (address: string) {
@@ -30,7 +35,7 @@ export const OntologyTestnetConfig = blockchainConfigFactory(
   },
   [MetamaskConnector, MetamaskCompatibleConnector],
   [
-    web3ConnectorFactory(
+    createWeb3OfflineConnectorHelper(
       OfflineConnectors.OntologyTestnet,
       "https://cached-proxy-lvlxd.ondigitalocean.app/ont-testnet"
     ),

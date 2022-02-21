@@ -5,22 +5,15 @@ import {
 } from "../../../../Types";
 import { BaseConnector } from "../../../../Connectors/BaseConnector";
 import { TronAdapter } from "../../Adapters/TronAdapter";
-
 import { MulticallBaseAdapter } from "../../../../Adapters/Multicall/MulticallBaseAdapter";
 import TronWeb from "tronweb";
-import { AxiosConcurrencyHandler } from "../../../../Utils/AxiosRateLimiter";
+import { ITronWebConnectorParams } from "../../Types";
 
-export interface TronOfflineConnectorParams {
-  fullHost: string;
-  privateKey?: string;
-  headers?: Record<string, string>;
-  rateLimiter?: AxiosConcurrencyHandler;
-}
 export class TronOfflineConnector extends BaseConnector {
   constructor(
-    private params: TronOfflineConnectorParams,
+    config: IBlockchainConfig,
     metadata: IConnectorMetadata,
-    config: IBlockchainConfig
+    private params: ITronWebConnectorParams
   ) {
     super(metadata, config);
   }

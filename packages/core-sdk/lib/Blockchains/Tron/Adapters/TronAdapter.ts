@@ -83,9 +83,6 @@ export class TronAdapter extends BaseAdapter<
     values: Partial<ExecutionParams>,
     isWrite?: boolean
   ): Promise<ExecutionResponse<T>> {
-    console.error(
-      "DO NOT USE PRIVATE TRON NODE ON PKG, REMOVE BEFORE PUBLISHING"
-    );
     const { args, callValue } = values;
     try {
       const contract = this.contracts[contractAddress];

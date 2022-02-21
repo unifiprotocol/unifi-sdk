@@ -2,10 +2,14 @@ import { BNBNativeToken } from "./NativeToken";
 import { Blockchains, EthChainIds, OfflineConnectors } from "../../Types";
 import { MetamaskConnector } from "../../Connectors/Wallets/MetamaskConnector";
 import { MathWalletConnector } from "../../Connectors/Wallets/MathWalletConnector";
-import { blockchainConfigFactory, web3ConnectorFactory } from "../Utils";
+import { blockchainConfigFactory } from "../Utils";
 import { BinanceChainWalletConnector } from "./Wallets/BinanceChainWalletConnector";
 import { TrustWalletConnector } from "../../Connectors/Wallets/TrustWalletConnector";
 import { MetamaskCompatibleConnector } from "../../Connectors/Wallets/MetamaskCompatibleConnector";
+import {
+  createWeb3OfflineConnectorHelper,
+  web3ConnectorFactory,
+} from "../../Connectors/Factory";
 
 export const BinanceConfig = blockchainConfigFactory(
   {
@@ -16,6 +20,7 @@ export const BinanceConfig = blockchainConfigFactory(
     multicall: {
       supported: true,
     },
+    connectorFactory: web3ConnectorFactory,
     explorer: {
       baseUrl: "https://bscscan.com",
       address: function (address: string) {
@@ -37,7 +42,7 @@ export const BinanceConfig = blockchainConfigFactory(
     MetamaskCompatibleConnector,
   ],
   [
-    web3ConnectorFactory(
+    createWeb3OfflineConnectorHelper(
       OfflineConnectors.BscDataseed,
       "https://bsc-dataseed.binance.org/"
     ),
