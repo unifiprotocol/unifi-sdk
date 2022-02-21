@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import { useNotifications } from "@unifiprotocol/uikit";
-import { ShellEventBus } from "../..";
 import {
   ShowNotification,
   ShowNotificationEvent,
 } from "../../EventBus/Events/NotificationEvents";
+import { ShellEventBus } from "../../EventBus";
 
 export const Notifications = () => {
   const { notify } = useNotifications();

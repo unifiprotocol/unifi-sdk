@@ -5,8 +5,8 @@ import {
   NavigationHeader,
 } from "@unifiprotocol/uikit";
 import { IConnector } from "@unifiprotocol/core-sdk";
-import { ShellEventBus } from "./EventBus";
 import { AdapterProvider, useAdapter } from "./Adapter";
+import { ShellEventBus } from "./EventBus";
 import { Updater } from "./Components/Updater";
 import { BalancesProvider, BalancesState, useBalances } from "./Balances";
 import { TopHeader } from "./Components/TopHeader";
@@ -29,25 +29,25 @@ export const Shell: React.FC<{
           <Updater />
           <NavigationHeader />
           <TopHeader />
-          {Wrapped && <ConnectedComp Wrapped={Wrapped} />}
+          <ConnectedComp Wrapped={Wrapped} />
         </AdapterProvider>
       </BalancesProvider>
     </UnifiThemeProvider>
   );
 };
 
-const ConnectedComp: React.FC<{ Wrapped: ShellWrappedComp }> = ({
+const ConnectedComp: React.FC<{ Wrapped?: ShellWrappedComp }> = ({
   Wrapped,
 }) => {
   const { connector } = useAdapter();
   const { balances } = useBalances();
-  return (
+  return Wrapped ? (
     <Wrapped
       eventBus={ShellEventBus}
       connection={connector}
       balances={balances}
     />
-  );
+  ) : null;
 };
 
 export default Shell;
