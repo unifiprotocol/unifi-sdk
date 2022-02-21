@@ -95,6 +95,6 @@ function methodOutputNormalizer(methodDef: any) {
     if (type === "address") {
       return TronAddressFormat.fromHex(value);
     }
-    value.toString();
+    return value.toString();
   };
 }

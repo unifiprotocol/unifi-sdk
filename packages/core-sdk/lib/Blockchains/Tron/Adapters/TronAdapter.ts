@@ -109,7 +109,6 @@ export class TronAdapter extends BaseAdapter<
           return successResponse({
             method,
             hash: response,
-            value: "",
           });
         }
       } else {
@@ -121,7 +120,7 @@ export class TronAdapter extends BaseAdapter<
           const abi = this.getContractInterface(contractAddress);
           return successResponse({
             method,
-            hash: contractResponse,
+            hash: "",
             value: normalizeResponse(method, abi, args, contractResponse),
           });
         }
