@@ -1,13 +1,13 @@
-export { AvalancheConfig } from "./Avalanche";
-export { BinanceConfig } from "./Binance";
-export { BinanceTesnetConfig } from "./BinanceTestnet";
-export { BttcConfig } from "./BTTC";
-export { EthereumConfig } from "./Ethereum";
+export * from "./Avalanche";
+export * from "./Binance";
+export * from "./BinanceTestnet";
+export * from "./BTTC";
+export * from "./Ethereum";
 export { EthereumRinkebyConfig } from "./EthereumRinkeby";
 export { EthereumRopstenConfig } from "./EthereumRopsten";
-export { HarmonyConfig } from "./Harmony";
-export { IotexConfig } from "./Iotex";
-export { OntologyTestnetConfig } from "./OntologyTestnet";
-export { PolygonConfig } from "./Polygon";
-export { FTMConfig } from './FTM'
-export { TronConfig } from "./Tron";
+export * from "./Harmony";
+export * from "./Iotex";
+export * from "./OntologyTestnet";
+export * from "./Polygon";
+export * from "./Tron";
+export * from "./FTM";

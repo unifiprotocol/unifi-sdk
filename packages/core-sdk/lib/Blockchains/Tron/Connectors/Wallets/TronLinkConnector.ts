@@ -47,6 +47,10 @@ export class TronLinkConnector extends BaseConnector {
     }
     const { code } = await agent.request({ method: "tron_requestAccounts" });
 
+    if (!code) {
+      throw new WalletNotDetectedError(this.metadata.name);
+    }
+
     if (code === TronLinkCodes.RejectedByUser) {
       throw new RejectedByUser();
     }
@@ -95,6 +99,9 @@ export class TronLinkConnector extends BaseConnector {
   }
 
   async initEventController(adapter: IAdapter): Promise<void> {
+    const agent = this.getAgent();
+    const emitter = this.emitter;
+
     window.addEventListener("message", (event) => {
       if (!event.data?.isTronLink) {
         return;
@@ -103,17 +110,17 @@ export class TronLinkConnector extends BaseConnector {
 
       switch (message.action) {
         case "accountsChanged":
-          return this.emitter.emit("AddressChanged", message.data.address);
+          return emitter.emit("AddressChanged", message.data.address);
       }
     });
-    this.getAgent().on("accountsChanged", ([address]: string[]) => {
+    agent.on("accountsChanged", ([address]: string[]) => {
       adapter.setAddress(address);
-      this.emitter.emit("AddressChanged", address);
+      emitter.emit("AddressChanged", address);
     });
 
-    this.getAgent().on("chainChanged", (chainId: string) => {
+    agent.on("chainChanged", (chainId: string) => {
       // currently we cannot detect network changes as the tron link events does not give chain id information
-      this.emitter.emit("NetworkChanged", chainId);
+      emitter.emit("NetworkChanged", chainId);
     });
   }
 }
