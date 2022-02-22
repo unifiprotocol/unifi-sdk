@@ -29,7 +29,6 @@ export interface IBlockchainConfig {
 }
 
 export interface IConnectorFactoryParams<T = any> {
-  blockchain?: Blockchains;
   metadata: IConnectorMetadata;
   params: T;
 }
