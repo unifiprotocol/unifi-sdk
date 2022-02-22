@@ -34,7 +34,7 @@ const reducer = (state: NavigationState, action: NavigationAction) => {
 };
 
 const initialState: NavigationState = {
-  sidebarOpen: true,
+  sidebarOpen: false,
 };
 
 const NavigationContext = createContext<{

@@ -2,13 +2,13 @@ import React from "react";
 import ReactDOM from "react-dom";
 import reportWebVitals from "./reportWebVitals";
 import Shell from "./Shell";
-import { Sample } from "./Sample";
+import { Sample, SampleSidebar } from "./Sample";
 
 import "./index.css";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Shell Wrapped={Sample} />
+    <Shell Wrapped={Sample} Sidebar={[SampleSidebar]} />
   </React.StrictMode>,
   document.getElementById("root")
 );

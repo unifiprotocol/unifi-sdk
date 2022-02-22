@@ -35,8 +35,8 @@ const ContentWrapper = styled.div`
 
 export const Shell: React.FC<{
   Wrapped?: ShellWrappedComp;
-  sidebar?: React.FC<any>[];
-}> = ({ Wrapped, sidebar = [] }) => {
+  Sidebar?: ShellWrappedComp[];
+}> = ({ Wrapped, Sidebar: SidebarComps = [] }) => {
   return (
     <AdapterProvider>
       <BalancesProvider>
@@ -47,7 +47,11 @@ export const Shell: React.FC<{
               <NavigationHeader />
               <TopHeader />
               <ContentWrapper>
-                <Sidebar />
+                <Sidebar>
+                  {SidebarComps.map((Comp, idx) => (
+                    <ConnectedComp Wrapped={Comp} key={idx} />
+                  ))}
+                </Sidebar>
                 <ConnectedComp Wrapped={Wrapped} />
               </ContentWrapper>
             </NavigationProvider>
