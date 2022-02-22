@@ -47,7 +47,7 @@ const ConnectionModalComponent: React.FC<ConnectionModalProps> = ({
   });
 
   const onWalletSelected = useCallback(
-    (connectorName: Connectors) => {
+    (connectorName: Connectors) =>
       connect(connectorName)
         .then(() => {
           setStorageKey(activeChain.blockchain, "CONNECTOR", connectorName);
@@ -55,8 +55,7 @@ const ConnectionModalComponent: React.FC<ConnectionModalProps> = ({
         })
         .catch((error) => {
           onConnectionError(error);
-        });
-    },
+        }),
     [activeChain.blockchain, connect, onConnect, onConnectionError]
   );
 

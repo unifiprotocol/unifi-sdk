@@ -38,10 +38,10 @@ export const Shell: React.FC<{
   sidebar?: React.FC<any>[];
 }> = ({ Wrapped, sidebar = [] }) => {
   return (
-    <UnifiThemeProvider theme={Themes.Dark}>
-      <ShellWrapper>
-        <BalancesProvider>
-          <AdapterProvider>
+    <AdapterProvider>
+      <BalancesProvider>
+        <UnifiThemeProvider theme={Themes.Dark}>
+          <ShellWrapper>
             <NavigationProvider>
               <Updater />
               <NavigationHeader />
@@ -51,10 +51,10 @@ export const Shell: React.FC<{
                 <ConnectedComp Wrapped={Wrapped} />
               </ContentWrapper>
             </NavigationProvider>
-          </AdapterProvider>
-        </BalancesProvider>
-      </ShellWrapper>
-    </UnifiThemeProvider>
+          </ShellWrapper>
+        </UnifiThemeProvider>
+      </BalancesProvider>
+    </AdapterProvider>
   );
 };
 

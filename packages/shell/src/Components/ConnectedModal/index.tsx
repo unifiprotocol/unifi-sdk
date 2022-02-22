@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import {
   Modal,
@@ -19,8 +19,13 @@ type ConnectedModalProps = {
 const ConnectedModalComponent: React.FC<ConnectedModalProps> = ({
   onClose,
 }) => {
-  const { adapter, activeChain, disconnect } = useAdapter();
+  const { adapter, disconnect } = useAdapter();
   const { t } = useTranslation();
+
+  const onDisconnect = useCallback(() => {
+    disconnect();
+    onClose();
+  }, [disconnect, onClose]);
 
   return (
     <Modal>
@@ -38,7 +43,7 @@ const ConnectedModalComponent: React.FC<ConnectedModalProps> = ({
           </div>
         </WalletInfo>
         <WalletAction>
-          <DangerButton onClick={() => disconnect()}>
+          <DangerButton onClick={onDisconnect}>
             <DisconnectIcon />
             Disconnect
           </DangerButton>

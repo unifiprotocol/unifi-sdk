@@ -24,7 +24,7 @@ export enum AdapterActionKind {
 
 export interface AdapterAction {
   type: AdapterActionKind;
-  payload: IConnector | IConfig;
+  payload: IConnector | IConfig | undefined;
 }
 
 export interface AdapterState {
@@ -49,10 +49,14 @@ const reducer = (state: AdapterState, action: AdapterAction) => {
     case AdapterActionKind.SWITCH_CHAIN:
       state.connector.disconnect();
       const cfg = payload as IConfig;
+      const offlineConnector = getBlockchainOfflineConnectors(
+        cfg.blockchain
+      )[0];
+      offlineConnector.connect();
       return {
         ...state,
-        connector: getBlockchainOfflineConnectors(cfg.blockchain)[0],
         activeChain: cfg,
+        connector: offlineConnector,
       };
     default:
       return state;
@@ -83,34 +87,37 @@ export const useAdapter = () => {
 
   const { connector, activeChain } = state;
 
-  const connect = async (connectorName: Connectors) => {
-    const walletConnector = getBlockchainConnectorByName(
-      activeChain.blockchain,
-      connectorName
-    );
-    const offlineConnector = getBlockchainOfflineConnectors(
-      activeChain.blockchain
-    )[0];
-    const successConnection = (payload: IConnector) => {
-      dispatch({ type: AdapterActionKind.CONNECT, payload });
-    };
-    try {
-      await Promise.race([
-        timedReject(10_000),
-        walletConnector
-          .connect()
-          .then(() => successConnection(walletConnector)),
-      ]).catch(() =>
+  const connect = useCallback(
+    async (connectorName: Connectors) => {
+      const walletConnector = getBlockchainConnectorByName(
+        activeChain.blockchain,
+        connectorName
+      );
+      const offlineConnector = getBlockchainOfflineConnectors(
+        activeChain.blockchain
+      )[0];
+      const successConnection = (payload: IConnector) => {
+        dispatch({ type: AdapterActionKind.CONNECT, payload });
+      };
+      try {
+        await Promise.race([
+          timedReject(10_000),
+          walletConnector
+            .connect()
+            .then(() => successConnection(walletConnector)),
+        ]).catch(() =>
+          offlineConnector
+            .connect()
+            .then(() => successConnection(offlineConnector))
+        );
+      } catch (err) {
         offlineConnector
           .connect()
-          .then(() => successConnection(offlineConnector))
-      );
-    } catch (err) {
-      offlineConnector
-        .connect()
-        .then(() => successConnection(offlineConnector));
-    }
-  };
+          .then(() => successConnection(offlineConnector));
+      }
+    },
+    [activeChain.blockchain, dispatch]
+  );
 
   const connectOffline = useCallback(() => {
     const offlineConnector = getBlockchainOfflineConnectors(
@@ -123,21 +130,24 @@ export const useAdapter = () => {
       );
   }, [activeChain.blockchain, dispatch]);
 
-  const updateChain = (cfg: IConfig) => {
-    dispatch({
-      type: AdapterActionKind.SWITCH_CHAIN,
-      payload: cfg,
-    });
-  };
+  const updateChain = useCallback(
+    (cfg: IConfig) => {
+      dispatch({
+        type: AdapterActionKind.SWITCH_CHAIN,
+        payload: cfg,
+      });
+    },
+    [dispatch]
+  );
 
   const disconnect = useCallback(async () => {
     if (!connector) {
       return;
     }
-    await connector.disconnect();
+    dispatch({ type: AdapterActionKind.DISCONNECT, payload: undefined });
     ShellEventBus.emit(new Wipe());
     connectOffline();
-  }, [connectOffline, connector]);
+  }, [connectOffline, connector, dispatch]);
 
   return {
     adapter: connector.adapter,

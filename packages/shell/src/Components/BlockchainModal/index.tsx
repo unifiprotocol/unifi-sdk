@@ -13,7 +13,6 @@ import {
   SelectionList,
   SelectionListItem,
 } from "../ConnectionModal/Styles";
-import { useAdapter } from "../../Adapter";
 
 type ChooseBlockchainModalProps = {
   onNetworkChange: (network: IConfig) => void;
@@ -24,8 +23,6 @@ const BlockchainModalComponent: React.FC<ChooseBlockchainModalProps> = ({
   onClose,
   onNetworkChange,
 }) => {
-  const { activeChain } = useAdapter();
-
   const options = useMemo(
     () =>
       config.map((network) => ({
@@ -54,11 +51,10 @@ const BlockchainModalComponent: React.FC<ChooseBlockchainModalProps> = ({
         /> */}
         <SelectionList>
           {options.map(({ value, display }, idx) => {
-            const selected = activeChain.blockchain === value.blockchain;
             return (
               <SelectionListItem
                 key={idx}
-                onClick={() => (selected ? onClose() : onNetworkChange(value))}
+                onClick={() => onNetworkChange(value)}
               >
                 {display}
               </SelectionListItem>
