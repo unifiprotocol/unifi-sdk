@@ -12,11 +12,13 @@ import {
   RefreshBalancesEvent,
   WipeEvent,
 } from "../EventBus/Events/BalancesEvents";
+import { coinGeckoService } from "../Services/Coingecko";
 
 export const BalancesUpdater = () => {
   const [initialTrigger, setInitialTrigger] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
-  const { balances, updateBalances, addToken, wipe } = useBalances();
+  const { balances, updateBalances, addToken, wipe, updateUnfiPrice } =
+    useBalances();
   const { adapter, activeChain } = useAdapter();
 
   const update = useCallback(async () => {
@@ -77,6 +79,18 @@ export const BalancesUpdater = () => {
       Clocks.off("SIXTY_SECONDS", fn);
     };
   }, [update, refreshing]);
+
+  useEffect(() => {
+    const fn = () =>
+      coinGeckoService.getUnfiPrice().then((price) => {
+        localStorage.setItem("UNFI_PRICE", price);
+        updateUnfiPrice(price);
+      });
+    Clocks.on("SIXTY_SECONDS", fn);
+    return () => {
+      Clocks.off("SIXTY_SECONDS", fn);
+    };
+  }, [updateUnfiPrice]);
 
   useEffect(() => {
     const fn = (event: AddCurrency) => addToken(event.payload);

@@ -1,11 +1,17 @@
 import React from "react";
 import { useNavigation } from "../../Navigation";
 import { SidebarItemIcon, SidebarItemWrapper, SidebarWrapper } from "./Styles";
+import { UnfiPrice } from "./UnfiPrice";
 
 export const Sidebar: React.FC = ({ children }) => {
   const { sidebarOpen } = useNavigation();
 
-  return <SidebarWrapper isOpen={sidebarOpen}>{children}</SidebarWrapper>;
+  return (
+    <SidebarWrapper isOpen={sidebarOpen}>
+      {children}
+      <UnfiPrice />
+    </SidebarWrapper>
+  );
 };
 
 export const SidebarItem: React.FC<{

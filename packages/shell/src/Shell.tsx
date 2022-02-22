@@ -15,12 +15,11 @@ import { TopHeader } from "./Components/TopHeader";
 import { Sidebar } from "./Components/Sidebar";
 import { NavigationProvider } from "./Navigation";
 
-export type ShellWrappedComp = React.FC<
-  {
-    connection: IConnector;
-    eventBus: typeof ShellEventBus;
-  } & BalancesState
->;
+export type ShellWrappedComp = React.FC<{
+  connection: IConnector;
+  eventBus: typeof ShellEventBus;
+  balances: BalancesState["balances"];
+}>;
 
 const ShellWrapper = styled.div`
   ${mediaQueries.xs} {

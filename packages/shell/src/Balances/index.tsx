@@ -10,21 +10,30 @@ import { Currency } from "@unifiprotocol/utils";
 export enum BalancesActionKind {
   ADD_TOKEN,
   UPDATE_BALANCES,
+  UPDATE_UNFI,
   WIPE,
 }
 
 export interface BalancesState {
   balances: { currency: Currency; balance: string }[];
+  unfiPrice: string;
 }
 
 export interface BalancesAction {
   type: BalancesActionKind;
-  payload: Currency | BalancesState["balances"] | undefined;
+  payload: string | Currency | BalancesState["balances"] | undefined;
 }
 
 const reducer = (state: BalancesState, action: BalancesAction) => {
   const { type, payload } = action;
   switch (type) {
+    case BalancesActionKind.UPDATE_UNFI:
+      if (typeof payload !== "string") return state;
+      return {
+        ...state,
+        unfiPrice: payload,
+      };
+
     case BalancesActionKind.ADD_TOKEN:
       if (!(payload instanceof Currency)) return state;
       if (state.balances.some((c) => c.currency.equals(payload))) return state;
@@ -64,24 +73,25 @@ const reducer = (state: BalancesState, action: BalancesAction) => {
       };
 
     case BalancesActionKind.WIPE:
-      return initialState;
+      return initialState();
 
     default:
       return state;
   }
 };
 
-const initialState: BalancesState = {
+const initialState: () => BalancesState = () => ({
   balances: [],
-};
+  unfiPrice: localStorage.getItem("UNFI_PRICE") ?? "0.0",
+});
 
 const BalancesContext = createContext<{
   state: BalancesState;
   dispatch: Dispatch<BalancesAction>;
-}>({ state: initialState, dispatch: () => null });
+}>({ state: initialState(), dispatch: () => null });
 
 export const BalancesProvider: React.FC = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(reducer, initialState());
   return (
     <BalancesContext.Provider value={{ state, dispatch }}>
       {children}
@@ -92,7 +102,7 @@ export const BalancesProvider: React.FC = ({ children }) => {
 export const useBalances = () => {
   const { state, dispatch } = useContext(BalancesContext);
 
-  const { balances } = state;
+  const { balances, unfiPrice } = state;
 
   const updateBalances = useCallback(
     (balances: BalancesState["balances"]) =>
@@ -111,5 +121,19 @@ export const useBalances = () => {
     dispatch({ type: BalancesActionKind.WIPE, payload: undefined });
   }, [dispatch]);
 
-  return { balances, updateBalances, addToken, wipe };
+  const updateUnfiPrice = useCallback(
+    (unfiPrice: string) => {
+      dispatch({ type: BalancesActionKind.UPDATE_UNFI, payload: unfiPrice });
+    },
+    [dispatch]
+  );
+
+  return {
+    balances,
+    unfiPrice,
+    updateBalances,
+    addToken,
+    wipe,
+    updateUnfiPrice,
+  };
 };

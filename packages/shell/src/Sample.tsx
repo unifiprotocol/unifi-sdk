@@ -57,6 +57,7 @@ export const SampleSidebar = () => {
       <SidebarItem icon={BiHome}>Liquidity</SidebarItem>
       <SidebarItem icon={BiHome}>UP</SidebarItem>
       <SidebarItem>Test</SidebarItem>
+      <div>Test #2</div>
     </>
   );
 };
