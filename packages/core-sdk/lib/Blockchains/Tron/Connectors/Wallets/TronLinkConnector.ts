@@ -1,7 +1,7 @@
-import { Blockchains } from "@unifiprotocol/utils";
 import {
   InvalidNetworkError,
   WalletNotDetectedError,
+  WalletIsLockedError,
 } from "../../../../Errors";
 import { MulticallBaseAdapter } from "../../../../Adapters";
 import {
@@ -48,7 +48,7 @@ export class TronLinkConnector extends BaseConnector {
     const { code } = await agent.request({ method: "tron_requestAccounts" });
 
     if (!code) {
-      throw new WalletNotDetectedError(this.metadata.name);
+      throw new WalletIsLockedError(this.metadata.name);
     }
 
     if (code === TronLinkCodes.RejectedByUser) {
