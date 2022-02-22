@@ -1,4 +1,4 @@
-import { getFactory } from "./container";
+import { getFactory } from "./Container";
 import { Blockchains, IBlockchainConfig } from "./Types";
 
 export const factory = getFactory();

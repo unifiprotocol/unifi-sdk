@@ -8,7 +8,7 @@ import {
   IConnectorFactoryParams,
 } from "./Types";
 import { randomItem } from "./Utils/Array";
-import { getBlockchainConfig } from "./container";
+import { getBlockchainConfig } from "./Container";
 import { IFactory } from "./Types/IFactory";
 
 @injectable()
