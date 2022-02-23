@@ -128,6 +128,24 @@ export const useBalances = () => {
     [dispatch]
   );
 
+  const getBalanceByCurrency = useCallback(
+    (currency: Currency) => {
+      const currentBalances = balances.find((b) => b.currency.equals(currency));
+      return currentBalances?.balance ?? "0";
+    },
+    [balances]
+  );
+
+  const getBalanceByAddress = useCallback(
+    (address: string) => {
+      const currentBalances = balances.find(
+        (b) => b.currency.address.toLowerCase() === address.toLowerCase()
+      );
+      return currentBalances?.balance ?? "0";
+    },
+    [balances]
+  );
+
   return {
     balances,
     unfiPrice,
@@ -135,5 +153,7 @@ export const useBalances = () => {
     addToken,
     wipe,
     updateUnfiPrice,
+    getBalanceByCurrency,
+    getBalanceByAddress,
   };
 };
