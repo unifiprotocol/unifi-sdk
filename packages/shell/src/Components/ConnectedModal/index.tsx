@@ -9,7 +9,9 @@ import {
   DangerButton,
   CgCopy,
   CgLink,
+  VscDebugDisconnect as DisconnectIcon,
 } from "@unifiprotocol/uikit";
+import { BlockchainScanExplorers } from "@unifiprotocol/utils";
 import { useAdapter } from "../../Adapter";
 import {
   ConnectedWalletAction,
@@ -18,7 +20,6 @@ import {
   WalletAddress,
   WalletInfo,
 } from "./Styles";
-import { VscDebugDisconnect as DisconnectIcon } from "@unifiprotocol/uikit";
 import useCopy from "@react-hook/copy";
 
 type ConnectedModalProps = {
@@ -28,7 +29,8 @@ type ConnectedModalProps = {
 const ConnectedModalComponent: React.FC<ConnectedModalProps> = ({
   onClose,
 }) => {
-  const { adapter, connector, disconnect } = useAdapter();
+  const { adapter, connector, activeChain, disconnect } = useAdapter();
+  console.log("🚀 ~ file: index.tsx ~ line 33 ~ activeChain", activeChain);
   const { t } = useTranslation();
   const { copy } = useCopy(adapter?.adapter.getAddress() ?? "");
 
@@ -53,7 +55,15 @@ const ConnectedModalComponent: React.FC<ConnectedModalProps> = ({
             <ConnectedWalletAction onClick={copy}>
               <CgCopy /> {t("connected_modal.copy_address")}
             </ConnectedWalletAction>
-            <ConnectedWalletAction>
+            <ConnectedWalletAction
+              onClick={() =>
+                window.open(
+                  BlockchainScanExplorers[activeChain.blockchain].address(
+                    adapter?.adapter.getAddress() ?? ""
+                  )
+                )
+              }
+            >
               <CgLink /> {t("connected_modal.view_on_explorer")}
             </ConnectedWalletAction>
           </ConnectedWalletActions>

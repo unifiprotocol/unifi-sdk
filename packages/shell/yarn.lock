@@ -2744,19 +2744,19 @@
     keccak "^3.0.2"
     tslib "^2.1.0"
 
-"@unifiprotocol/utils@^2.2.3":
-  version "2.2.3"
-  resolved "https://registry.yarnpkg.com/@unifiprotocol/utils/-/utils-2.2.3.tgz#0ac46cf66681a4a91f206dc06b7f338525f45022"
-  integrity sha512-9kkhVt+SBtpDhuQDkR9X5Qj7ZiLoYma1IBxocV+l3SzwL5LgLqU/aOjIhWCBllioOe5RH/0BC6a8MDLLUZSo8Q==
+"@unifiprotocol/utils@^2.2.4":
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/@unifiprotocol/utils/-/utils-2.2.4.tgz#00ab9306f8d257ba1fd9504af137464d683adab4"
+  integrity sha512-HKYRP++OE2dLhEC/6AgLei8LD0g9opWexFxX4f5A7+d3xOabOpP6DT3Zngx8SezJ8hO0EbB8X26o6qg+KE8Cig==
   dependencies:
     bignumber.js "^9.0.1"
     keccak "^3.0.2"
     tslib "^2.1.0"
 
-"@unifiprotocol/utils@^2.2.4":
-  version "2.2.4"
-  resolved "https://registry.yarnpkg.com/@unifiprotocol/utils/-/utils-2.2.4.tgz#00ab9306f8d257ba1fd9504af137464d683adab4"
-  integrity sha512-HKYRP++OE2dLhEC/6AgLei8LD0g9opWexFxX4f5A7+d3xOabOpP6DT3Zngx8SezJ8hO0EbB8X26o6qg+KE8Cig==
+"@unifiprotocol/utils@^2.2.8":
+  version "2.2.8"
+  resolved "https://registry.yarnpkg.com/@unifiprotocol/utils/-/utils-2.2.8.tgz#7c5f706e5690441d9457eceab7e48db94e5a1ade"
+  integrity sha512-kluYK37iNXbQwzcPQppTMOd4x6s6d2B0enaf2IbFoatg7qpi8k5T1sbX1AO2N3FWHV1+NCbHgQ+009+0YW9gUg==
   dependencies:
     bignumber.js "^9.0.1"
     keccak "^3.0.2"
