@@ -1,0 +1,18 @@
+import { WalletConnectors } from "@unifiprotocol/core-sdk";
+import metamask from "../Assets/Wallets/Metamask.png";
+import binancesmartchain from "../Assets/Wallets/BinanceSmartChain.png";
+import mathwallet from "../Assets/Wallets/Mathwallet.png";
+import trustwallet from "../Assets/Wallets/TrustWallet.svg";
+import harmonyOneWallet from "../Assets/Wallets/HarmonyOneWallet.png";
+import web3 from "../Assets/Wallets/Web3.png";
+
+export const getWalletIcon = (wallet: string) => {
+  return {
+    [WalletConnectors.Metamask]: metamask,
+    [WalletConnectors.Binance]: binancesmartchain,
+    [WalletConnectors.MathWallet]: mathwallet,
+    [WalletConnectors.TrustWallet]: trustwallet,
+    [WalletConnectors.MetamaskCompatible]: web3,
+    [WalletConnectors.HarmonyOneWallet]: harmonyOneWallet,
+  }[wallet];
+};
