@@ -1,3 +1,5 @@
+import { Blockchains } from ".";
+
 class ScanExplorer {
   constructor(
     public readonly baseUrl: string,
@@ -27,12 +29,37 @@ class ScanExplorer {
 export const ScanExplorers: Record<string, ScanExplorer> = {
   BscScan: new ScanExplorer("https://bscscan.com"),
   BscScanTestnet: new ScanExplorer("https://testnet.bscscan.com"),
-  EtherScan: new ScanExplorer("http://etherscan.io"),
+  EtherScan: new ScanExplorer("https://etherscan.io"),
   HarmonyExplorer: new ScanExplorer("https://explorer.harmony.one", {
     tokenPath: "address",
   }),
   IotexScan: new ScanExplorer("https://iotexscan.io", { txPath: "action" }),
   PolygonScan: new ScanExplorer("https://polygonscan.com"),
-  RopstenScan: new ScanExplorer("http://ropsten.etherscan.io"),
+  RopstenScan: new ScanExplorer("https://ropsten.etherscan.io"),
+  RinkebyScan: new ScanExplorer("https://rinkeby.etherscan.io/"),
   FtmScan: new ScanExplorer("https://ftmscan.com"),
+  BttcScan: new ScanExplorer("https://bttcscan.com/"),
+  AvalancheST: new ScanExplorer("https://snowtrace.io/"),
+  TronScan: new ScanExplorer("https://tronscan.org/#/", {
+    txPath: "transaction",
+    tokenPath: "token20",
+  }),
+};
+
+export const BlockchainScanExplorers: {
+  [B in Blockchains]: ScanExplorer;
+} = {
+  [Blockchains.Binance]: ScanExplorers["BscScan"],
+  [Blockchains.BinanceTestnet]: ScanExplorers["BscScanTestnet"],
+  [Blockchains.Ethereum]: ScanExplorers["EtherScan"],
+  [Blockchains.Harmony]: ScanExplorers["HarmonyExplorer"],
+  [Blockchains.Iotex]: ScanExplorers["IotexScab"],
+  [Blockchains.Polygon]: ScanExplorers["PolygonScan"],
+  [Blockchains.EthereumRopsten]: ScanExplorers["RopstenScan"],
+  [Blockchains.FTM]: ScanExplorers["FtmScan"],
+  [Blockchains.EthereumRinkeby]: ScanExplorers["RinkebyScan"],
+  [Blockchains.BTTC]: ScanExplorers["BttcScan"],
+  [Blockchains.OntologyTestnet]: ScanExplorers["OntologyTestnet"],
+  [Blockchains.Avalanche]: ScanExplorers["AvalancheST"],
+  [Blockchains.Tron]: ScanExplorers["TronScan"],
 };
