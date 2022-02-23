@@ -1,6 +1,6 @@
 {
   "name": "@unifiprotocol/shell",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "dependencies": {
     "@craco/craco": "^6.4.3",
     "@react-hook/copy": "^2.0.1",
