@@ -2,8 +2,12 @@ import { FTMToken } from "./NativeToken";
 import { Blockchains, EthChainIds, OfflineConnectors } from "../../Types";
 import { MetamaskConnector } from "../../Connectors/Wallets/MetamaskConnector";
 import { MathWalletConnector } from "../../Connectors/Wallets/MathWalletConnector";
-import { blockchainConfigFactory, web3ConnectorFactory } from "../Utils";
+import { blockchainConfigFactory } from "../Utils";
 import { MetamaskCompatibleConnector } from "../../Connectors/Wallets/MetamaskCompatibleConnector";
+import {
+  createWeb3OfflineConnectorHelper,
+  web3ConnectorFactory,
+} from "../../Connectors/Factory";
 
 export const FTMConfig = blockchainConfigFactory(
   {
@@ -16,6 +20,7 @@ export const FTMConfig = blockchainConfigFactory(
       address: "0x3BF91Ba76B8B60fD92F588068fAd1e6f50B9d420",
       tryAggregate: false,
     },
+    connectorFactory: web3ConnectorFactory,
     explorer: {
       baseUrl: "https://ftmscan.com",
       address: function (address: string) {
@@ -30,5 +35,10 @@ export const FTMConfig = blockchainConfigFactory(
     },
   },
   [MetamaskConnector, MathWalletConnector, MetamaskCompatibleConnector],
-  [web3ConnectorFactory(OfflineConnectors.FTM, "https://rpc.FTM.tools")]
+  [
+    createWeb3OfflineConnectorHelper(
+      OfflineConnectors.FTM,
+      "https://rpc.FTM.tools"
+    ),
+  ]
 );
