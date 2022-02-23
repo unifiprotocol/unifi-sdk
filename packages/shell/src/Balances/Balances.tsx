@@ -86,9 +86,9 @@ export const BalancesUpdater = () => {
         localStorage.setItem("UNFI_PRICE", price);
         updateUnfiPrice(price);
       });
-    Clocks.on("SIXTY_SECONDS", fn);
+    Clocks.on("TWO_MINUTES", fn);
     return () => {
-      Clocks.off("SIXTY_SECONDS", fn);
+      Clocks.off("TWO_MINUTES", fn);
     };
   }, [updateUnfiPrice]);
 

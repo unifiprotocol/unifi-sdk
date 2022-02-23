@@ -20,7 +20,7 @@ export const SidebarWrapper = styled.div<{ isOpen: boolean }>`
   }
 `;
 
-export const SidebarItemWrapper = styled.div<{ active: boolean }>`
+export const SidebarItemWrapper = styled.div<{ active: boolean; icon: any }>`
   padding: 1rem;
   margin-bottom: 0.2rem;
   font-weight: 600;
@@ -29,22 +29,26 @@ export const SidebarItemWrapper = styled.div<{ active: boolean }>`
 
   :hover {
     border-radius: ${(props) => props.theme.borderRadius};
-    cursor: pointer;
     background: ${(props) => props.theme.bgAlt};
+    cursor: pointer;
   }
 
   ${mediaQueries.sm} {
     justify-content: center;
+    display: ${(props) => (props.icon ? "flex" : "none")};
+
     span:last-of-type {
       display: none;
     }
   }
 
   ${mediaQueries.lg} {
+    justify-content: flex-start;
+    display: flex;
+
     span:last-of-type {
       display: inline;
     }
-    justify-content: flex-start;
   }
 `;
 
