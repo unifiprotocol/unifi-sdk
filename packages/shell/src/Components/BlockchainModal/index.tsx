@@ -13,6 +13,8 @@ import {
   SelectionList,
   SelectionListItem,
 } from "../ConnectionModal/Styles";
+import { Trans, useTranslation } from "react-i18next";
+import { useAdapter } from "../../Adapter";
 
 type ChooseBlockchainModalProps = {
   onNetworkChange: (network: IConfig) => void;
@@ -23,6 +25,9 @@ const BlockchainModalComponent: React.FC<ChooseBlockchainModalProps> = ({
   onClose,
   onNetworkChange,
 }) => {
+  const { activeChain } = useAdapter();
+  const { t } = useTranslation();
+
   const options = useMemo(
     () =>
       config.map((network) => ({
@@ -40,15 +45,15 @@ const BlockchainModalComponent: React.FC<ChooseBlockchainModalProps> = ({
   return (
     <Modal>
       <ModalHeader>
-        Choose the fukin netwrok stupid muggle
+        {t("choose_network_modal.select_network")}
         <ModalClose onClick={() => onClose()} />
       </ModalHeader>
       <ModalBody>
-        {/* <Trans
+        <Trans
           i18nKey="choose_network_modal.currently_browsing" // optional -> fallbacks to defaults if not provided
           values={{ networkName: activeChain.blockchain }}
           components={{ b: <b /> }}
-        /> */}
+        />
         <SelectionList>
           {options.map(({ value, display }, idx) => {
             return (
