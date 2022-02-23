@@ -7,10 +7,19 @@ import {
   ModalClose,
   useModal,
   DangerButton,
+  CgCopy,
+  CgLink,
 } from "@unifiprotocol/uikit";
 import { useAdapter } from "../../Adapter";
-import { WalletAction, WalletInfo } from "./Styles";
+import {
+  ConnectedWalletAction,
+  ConnectedWalletActions,
+  WalletAction,
+  WalletAddress,
+  WalletInfo,
+} from "./Styles";
 import { VscDebugDisconnect as DisconnectIcon } from "@unifiprotocol/uikit";
+import useCopy from "@react-hook/copy";
 
 type ConnectedModalProps = {
   onClose: () => void;
@@ -19,8 +28,9 @@ type ConnectedModalProps = {
 const ConnectedModalComponent: React.FC<ConnectedModalProps> = ({
   onClose,
 }) => {
-  const { adapter, disconnect } = useAdapter();
+  const { adapter, connector, disconnect } = useAdapter();
   const { t } = useTranslation();
+  const { copy } = useCopy(adapter?.adapter.getAddress() ?? "");
 
   const onDisconnect = useCallback(() => {
     disconnect();
@@ -30,17 +40,23 @@ const ConnectedModalComponent: React.FC<ConnectedModalProps> = ({
   return (
     <Modal>
       <ModalHeader>
-        Account
+        {t("connected_modal.account")}
         <ModalClose onClick={() => onClose()} />
       </ModalHeader>
       <ModalBody>
-        <div>You are connected using Metamask</div>
+        <div>
+          {t("connected_modal.using_wallet", { wallet: connector.displayName })}
+        </div>
         <WalletInfo>
-          <div>{adapter?.adapter.getAddress()}</div>
-          <div>
-            <span>Copy addreesss</span>
-            <span>Explore addreesss</span>
-          </div>
+          <WalletAddress>{adapter?.adapter.getAddress()}</WalletAddress>
+          <ConnectedWalletActions>
+            <ConnectedWalletAction onClick={copy}>
+              <CgCopy /> {t("connected_modal.copy_address")}
+            </ConnectedWalletAction>
+            <ConnectedWalletAction>
+              <CgLink /> {t("connected_modal.view_on_explorer")}
+            </ConnectedWalletAction>
+          </ConnectedWalletActions>
         </WalletInfo>
         <WalletAction>
           <DangerButton onClick={onDisconnect}>
