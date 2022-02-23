@@ -21,6 +21,7 @@ export type ShellWrappedComp = React.FC<{
   connection: IConnector;
   eventBus: typeof ShellEventBus;
   balances: BalancesState["balances"];
+  i18n: typeof i18n;
 }>;
 
 const ShellWrapper = styled.div`
@@ -77,6 +78,7 @@ const ConnectedComp: React.FC<{ Wrapped?: ShellWrappedComp }> = ({
       eventBus={ShellEventBus}
       connection={connector}
       balances={balances}
+      i18n={i18n}
     />
   ) : null;
 };
