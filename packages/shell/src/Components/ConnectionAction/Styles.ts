@@ -5,6 +5,10 @@ export const NativeBalance = styled(SecondaryButton)`
   ${mediaQueries.xs} {
     display: none;
   }
+
+  + button {
+    margin-left: -0.3rem !important;
+  }
 `;
 
 export const NativeBalanceSymbol = styled.span`
