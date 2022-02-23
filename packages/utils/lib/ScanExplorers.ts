@@ -1,4 +1,4 @@
-import { Blockchains } from "./Enums/Blockchains";
+import { Blockchains } from "./Enums/";
 
 class ScanExplorer {
   constructor(
