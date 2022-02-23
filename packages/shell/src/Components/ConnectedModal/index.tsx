@@ -30,7 +30,6 @@ const ConnectedModalComponent: React.FC<ConnectedModalProps> = ({
   onClose,
 }) => {
   const { adapter, connector, activeChain, disconnect } = useAdapter();
-  console.log("🚀 ~ file: index.tsx ~ line 33 ~ activeChain", activeChain);
   const { t } = useTranslation();
   const { copy } = useCopy(adapter?.adapter.getAddress() ?? "");
 
