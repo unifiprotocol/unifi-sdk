@@ -17,6 +17,7 @@ export enum EthChainIds {
 }
 
 export enum OfflineConnectors {
+  UnifiProxy = "unifiproxy",
   Cloudflare = "cloudflare",
   EtherScan = "etherscan",
   BscDataseed = "bscdataseed",

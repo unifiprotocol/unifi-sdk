@@ -39,5 +39,8 @@ export const TronConfig = blockchainConfigFactory(
       fullHost: "https://api.trongrid.io",
       headers: { "TRON-PRO-API-KEY": tronGridApiKey },
     }),
+    createTronOfflineConnectorHelper(OfflineConnectors.UnifiProxy, {
+      fullHost: `https://proxy.unifiprotocol.com/${Blockchains.Tron}`,
+    }),
   ]
 );
