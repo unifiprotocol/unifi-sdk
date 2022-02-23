@@ -49,11 +49,13 @@ export const Shell: React.FC<{
                 <NavigationHeader />
                 <TopHeader />
                 <ContentWrapper>
-                  <Sidebar>
-                    {SidebarComps.map((Comp, idx) => (
-                      <ConnectedComp Wrapped={Comp} key={idx} />
-                    ))}
-                  </Sidebar>
+                  {SidebarComps.length > 0 && (
+                    <Sidebar>
+                      {SidebarComps.map((Comp, idx) => (
+                        <ConnectedComp Wrapped={Comp} key={idx} />
+                      ))}
+                    </Sidebar>
+                  )}
                   <ConnectedComp Wrapped={Wrapped} />
                 </ContentWrapper>
               </NavigationProvider>
