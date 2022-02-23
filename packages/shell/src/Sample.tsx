@@ -6,10 +6,12 @@ import { AddCurrency, RefreshBalances } from "./EventBus/Events/BalancesEvents";
 import { ShowNotification } from "./EventBus/Events/NotificationEvents";
 import { ShellWrappedComp } from "./Shell";
 import { SidebarItem } from "./Components/Sidebar";
+import { useTranslation } from "react-i18next";
 
 export const Sample: ShellWrappedComp = ({ connection, eventBus }) => {
   const { balances } = useBalances();
   const { activeChain } = useAdapter();
+  const { i18n } = useTranslation();
 
   const onAddWrappedToken = useCallback(() => {
     eventBus.emit(new AddCurrency(activeChain.wrappedToken));
@@ -26,14 +28,15 @@ export const Sample: ShellWrappedComp = ({ connection, eventBus }) => {
   }, [eventBus]);
 
   const address = connection?.adapter?.adapter.isConnected() ? (
-    <h1>{connection?.adapter?.adapter.getAddress()}</h1>
+    <p>{connection?.adapter?.adapter.getAddress()}</p>
   ) : (
-    <h1>Not Connected</h1>
+    <p>Not Connected</p>
   );
 
   return (
     <div>
       {address}
+      <p>Language: {i18n.language}</p>
       <div>
         <PrimaryButton onClick={onAddWrappedToken}>
           Add Wrapped Token

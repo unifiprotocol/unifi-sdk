@@ -14,6 +14,8 @@ import { BalancesProvider, BalancesState, useBalances } from "./Balances";
 import { TopHeader } from "./Components/TopHeader";
 import { Sidebar } from "./Components/Sidebar";
 import { NavigationProvider } from "./Navigation";
+import { I18nextProvider } from "react-i18next";
+import i18n from "./i18n";
 
 export type ShellWrappedComp = React.FC<{
   connection: IConnector;
@@ -39,23 +41,25 @@ export const Shell: React.FC<{
   return (
     <AdapterProvider>
       <BalancesProvider>
-        <UnifiThemeProvider theme={Themes.Dark}>
-          <ShellWrapper>
-            <NavigationProvider>
-              <Updater />
-              <NavigationHeader />
-              <TopHeader />
-              <ContentWrapper>
-                <Sidebar>
-                  {SidebarComps.map((Comp, idx) => (
-                    <ConnectedComp Wrapped={Comp} key={idx} />
-                  ))}
-                </Sidebar>
-                <ConnectedComp Wrapped={Wrapped} />
-              </ContentWrapper>
-            </NavigationProvider>
-          </ShellWrapper>
-        </UnifiThemeProvider>
+        <I18nextProvider i18n={i18n}>
+          <UnifiThemeProvider theme={Themes.Dark}>
+            <ShellWrapper>
+              <NavigationProvider>
+                <Updater />
+                <NavigationHeader />
+                <TopHeader />
+                <ContentWrapper>
+                  <Sidebar>
+                    {SidebarComps.map((Comp, idx) => (
+                      <ConnectedComp Wrapped={Comp} key={idx} />
+                    ))}
+                  </Sidebar>
+                  <ConnectedComp Wrapped={Wrapped} />
+                </ContentWrapper>
+              </NavigationProvider>
+            </ShellWrapper>
+          </UnifiThemeProvider>
+        </I18nextProvider>
       </BalancesProvider>
     </AdapterProvider>
   );
