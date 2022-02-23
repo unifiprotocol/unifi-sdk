@@ -6,8 +6,10 @@ export const NativeBalance = styled(SecondaryButton)`
     display: none;
   }
 
-  + button {
-    margin-left: -0.3rem !important;
+  ${mediaQueries.sm} {
+    + button {
+      margin-left: -0.3rem !important;
+    }
   }
 `;
 
