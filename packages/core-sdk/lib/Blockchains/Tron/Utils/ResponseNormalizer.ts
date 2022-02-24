@@ -26,7 +26,9 @@ export function mapTrxBlockToGlobalInterface(block: any): IBlock {
     parentHash,
     number,
     timestamp,
-    transactions: block.transactions.map((tx: any) => tx.txID),
+    transactions: block.transactions
+      ? block.transactions.map((tx: any) => tx.txID)
+      : [],
   };
 }
 
