@@ -1,7 +1,7 @@
 import { Harmony, ExtensionInterface } from "@harmony-js/core";
 import { HarmonyAddress } from "@harmony-js/crypto";
 import { Contract } from "@harmony-js/contract";
-import { ChainType, hexToNumber } from "@harmony-js/utils";
+import { ChainType, hexToNumber, numberToHex } from "@harmony-js/utils";
 
 import { ERC20ABI } from "../../../Abis/ERC20";
 import {
@@ -233,16 +233,31 @@ export class HarmonyAdapter extends BaseAdapter<
     return new HarmonyAddress(address).basicHex;
   }
 
-  getBlock(height: BlockTag): Promise<IBlock> {
-    return this.harmonyClient.blockchain
-      .getBlockByHash({ blockHash: height })
-      .then(mapHmyBlockToGlobal);
+  async getBlock(height: BlockTag): Promise<IBlock> {
+    return this.getHarmonyBlock(height).then(mapHmyBlockToGlobal);
   }
 
+  protected async getHarmonyBlock(height: BlockTag): Promise<any> {
+    height = this.sanitizeBlock(height);
+
+    if (height === "latest") {
+      height = await this.harmonyClient.blockchain
+        .getBlockNumber()
+        .then((response) => hexToNumber(response.result));
+    }
+
+    if (BN(height).isNaN()) {
+      return this.harmonyClient.blockchain.getBlockByHash({
+        blockHash: `${height}`,
+      });
+    } else {
+      return this.harmonyClient.blockchain.getBlockByNumber({
+        blockNumber: numberToHex(height),
+      });
+    }
+  }
   async getBlockWithTxs(height: BlockTag): Promise<IBlockWithTransactions> {
-    const hmyBlockResult = await this.harmonyClient.blockchain.getBlockByHash({
-      blockHash: height,
-    });
+    const hmyBlockResult = await this.getHarmonyBlock(height);
     const block = mapHmyBlockToGlobal(hmyBlockResult);
     block.transactions = hmyBlockResult.result.transactions.map((tx: any) =>
       mapHmyTxToGlobal(block, tx)

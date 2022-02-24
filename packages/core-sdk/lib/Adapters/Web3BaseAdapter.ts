@@ -27,10 +27,12 @@ export class Web3BaseAdapter extends BaseAdapter<
   ethers.providers.BaseProvider
 > {
   getBlockWithTxs(height: BlockTag): Promise<IBlockWithTransactions> {
-    return this.getProvider().getBlockWithTransactions(height);
+    return this.getProvider().getBlockWithTransactions(
+      this.sanitizeBlock(height)
+    );
   }
   getBlock(height: BlockTag): Promise<IBlock> {
-    return this.getProvider().getBlock(height);
+    return this.getProvider().getBlock(this.sanitizeBlock(height));
   }
   protected etherClient: ethers.providers.BaseProvider;
   protected contracts: { [nameContract: string]: ethers.Contract } = {};

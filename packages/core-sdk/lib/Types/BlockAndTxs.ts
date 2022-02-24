@@ -1,4 +1,4 @@
-export type BlockTag = "latest" | string;
+export type BlockTag = string | number;
 
 export interface IBlockBase {
   hash: string;

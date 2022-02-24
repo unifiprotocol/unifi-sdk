@@ -25,8 +25,8 @@ export interface GetDecodedTransactionWithLogsOptions<ContractInterface> {
 }
 export type GetTransactionsFromEventsOptions = {
   abi?: any[];
-  fromBlock?: number;
-  toBlock?: number;
+  fromBlock?: BlockTag;
+  toBlock?: BlockTag;
 };
 export interface ExecutionParams {
   args: Array<string | number | undefined | string[] | BigNumberish>;

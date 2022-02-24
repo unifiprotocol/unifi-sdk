@@ -1,3 +1,4 @@
+import { BN } from "@unifiprotocol/utils";
 import { IBlockchainConfig } from "../Types/IBlockchainConfig";
 import { IAdapter } from "../Types/IAdapter";
 import {
@@ -13,6 +14,7 @@ import {
   IBlockWithTransactions,
   ITransactionWithLogs,
 } from "../Types";
+
 export abstract class BaseAdapter<ContractInterface, ProviderType>
   implements IAdapter<ContractInterface>
 {
@@ -78,5 +80,12 @@ export abstract class BaseAdapter<ContractInterface, ProviderType>
 
   getAddress(): string {
     return this.address;
+  }
+
+  protected sanitizeBlock(block: BlockTag): BlockTag {
+    if (BN(block).isNaN()) {
+      return block;
+    }
+    return Number(block);
   }
 }

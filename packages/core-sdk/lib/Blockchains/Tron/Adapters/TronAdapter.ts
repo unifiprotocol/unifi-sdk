@@ -203,6 +203,7 @@ export class TronAdapter extends BaseAdapter<
   }
 
   getBlock(height: BlockTag = "latest"): Promise<IBlock> {
+    height = this.sanitizeBlock(height);
     if (height === "latest") {
       return this._provider.trx
         .getCurrentBlock()
@@ -216,7 +217,10 @@ export class TronAdapter extends BaseAdapter<
   async getBlockWithTxs(height: BlockTag): Promise<IBlockWithTransactions> {
     const [_block, txs] = await Promise.all([
       this.getBlock(height),
-      this._provider.trx.getTransactionFromBlock(height, undefined),
+      this._provider.trx.getTransactionFromBlock(
+        this.sanitizeBlock(height),
+        undefined
+      ),
     ]);
 
     const block: IBlockWithTransactions = {
