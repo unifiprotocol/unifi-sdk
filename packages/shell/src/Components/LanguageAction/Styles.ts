@@ -1,3 +1,4 @@
+import { mediaQueries } from "@unifiprotocol/uikit";
 import styled from "styled-components";
 
 export const LanguageActionWrapper = styled.span`
@@ -8,7 +9,7 @@ export const LanguageActionWrapper = styled.span`
     display: none;
     margin-right: 0.3rem;
 
-    ${(p) => p.theme.mediaQueries.sm} {
+    ${mediaQueries.sm} {
       display: inline;
     }
   }
