@@ -1,6 +1,7 @@
 export { Blockchains } from "@unifiprotocol/utils";
 
 export enum EthChainIds {
+  Na = undefined,
   Eth = 1,
   EthRopsten = 3,
   EthRinkeby = 4,
@@ -16,6 +17,7 @@ export enum EthChainIds {
 }
 
 export enum OfflineConnectors {
+  UnifiProxy = "unifiproxy",
   Cloudflare = "cloudflare",
   EtherScan = "etherscan",
   BscDataseed = "bscdataseed",

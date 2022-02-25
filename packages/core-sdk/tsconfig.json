@@ -1,6 +1,12 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "types": [
+      "node",
+      "reflect-metadata"
+    ],
     "outDir": "./dist",
     "rootDir": "./lib",
   },

@@ -1,8 +1,12 @@
 import { AVAXNativeToken } from "./NativeToken";
 import { Blockchains, EthChainIds, OfflineConnectors } from "../../Types";
 import { MetamaskConnector } from "../../Connectors/Wallets/MetamaskConnector";
-import { blockchainConfigFactory, web3ConnectorFactory } from "../Utils";
+import { blockchainConfigFactory } from "../Utils";
 import { MetamaskCompatibleConnector } from "../../Connectors/Wallets/MetamaskCompatibleConnector";
+import {
+  createWeb3OfflineConnectorHelper,
+  web3ConnectorFactory,
+} from "../../Connectors/Factory";
 
 export const AvalancheConfig = blockchainConfigFactory(
   {
@@ -15,6 +19,7 @@ export const AvalancheConfig = blockchainConfigFactory(
       address: "0xa00FB557AA68d2e98A830642DBbFA534E8512E5f",
       tryAggregate: false,
     },
+    connectorFactory: web3ConnectorFactory,
     explorer: {
       baseUrl: "https://snowtrace.io",
       address: function (address: string) {
@@ -30,7 +35,7 @@ export const AvalancheConfig = blockchainConfigFactory(
   },
   [MetamaskConnector, MetamaskCompatibleConnector],
   [
-    web3ConnectorFactory(
+    createWeb3OfflineConnectorHelper(
       OfflineConnectors.Avalanche,
       "https://api.avax.network/ext/bc/C/rpc"
     ),

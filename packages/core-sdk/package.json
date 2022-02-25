@@ -1,6 +1,6 @@
 {
   "name": "@unifiprotocol/core-sdk",
-  "version": "5.4.1",
+  "version": "6.0.1",
   "description": "Unifi Protocol JS Core SDK",
   "author": "Unifi Protocol",
   "repository": "git@github.com:unifiprotocol/unifi-sdk.git",
@@ -32,13 +32,17 @@
     "@harmony-js/account": "^0.1.57",
     "@harmony-js/core": "^0.1.57",
     "@harmony-js/utils": "^0.1.56",
+    "@maticnetwork/eth-decoder": "git+https://github.com/deblanco/eth-decoder.git",
     "@unifiprotocol/utils": "^2.2.5",
     "bignumber.js": "^9.0.1",
     "ethereum-multicall": "^2.4.0",
     "ethers": "^5.2.0",
     "eventemitter3": "^4.0.7",
+    "inversify": "^5.1.1",
     "promise-parallel-throttle": "^3.3.0",
-    "tronweb": "^3.2.7",
+    "reflect-metadata": "^0.1.13",
+    "tron-format-address": "^0.1.8",
+    "tronweb": "^4.1.0",
     "tslib": "^2.1.0"
   },
   "devDependencies": {

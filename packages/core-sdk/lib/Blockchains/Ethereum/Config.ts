@@ -3,9 +3,13 @@ import { Blockchains, EthChainIds, OfflineConnectors } from "../../Types";
 import { MetamaskConnector } from "../../Connectors/Wallets/MetamaskConnector";
 import { MathWalletConnector } from "../../Connectors/Wallets/MathWalletConnector";
 import { AlchemyConnector } from "../../Connectors/Offline/AlchemyConnector";
-import { blockchainConfigFactory, web3ConnectorFactory } from "../Utils";
+import { blockchainConfigFactory } from "../Utils";
 import { TrustWalletConnector } from "../../Connectors/Wallets/TrustWalletConnector";
 import { MetamaskCompatibleConnector } from "../../Connectors/Wallets/MetamaskCompatibleConnector";
+import {
+  createWeb3OfflineConnectorHelper,
+  web3ConnectorFactory,
+} from "../../Connectors/Factory";
 
 export const EthereumConfig = blockchainConfigFactory(
   {
@@ -16,6 +20,7 @@ export const EthereumConfig = blockchainConfigFactory(
     multicall: {
       supported: true,
     },
+    connectorFactory: web3ConnectorFactory,
     explorer: {
       baseUrl: "https://etherscan.io",
       address: function (address: string) {
@@ -37,11 +42,11 @@ export const EthereumConfig = blockchainConfigFactory(
     AlchemyConnector,
   ],
   [
-    web3ConnectorFactory(
+    createWeb3OfflineConnectorHelper(
       OfflineConnectors.EtherScan,
       "https://api.etherscan.io"
     ),
-    web3ConnectorFactory(
+    createWeb3OfflineConnectorHelper(
       OfflineConnectors.Cloudflare,
       "https://cloudflare-eth.com/"
     ),

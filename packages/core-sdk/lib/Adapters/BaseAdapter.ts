@@ -1,3 +1,4 @@
+import { BN } from "@unifiprotocol/utils";
 import { IBlockchainConfig } from "../Types/IBlockchainConfig";
 import { IAdapter } from "../Types/IAdapter";
 import {
@@ -5,6 +6,13 @@ import {
   ExecutionResponse,
   AdapterBalance,
   Address,
+  BlockTag,
+  GetDecodedTransactionWithLogsOptions,
+  GetTransactionsFromEventsOptions,
+  TransactionStatus,
+  IBlock,
+  IBlockWithTransactions,
+  ITransactionWithLogs,
 } from "../Types";
 
 export abstract class BaseAdapter<ContractInterface, ProviderType>
@@ -37,12 +45,22 @@ export abstract class BaseAdapter<ContractInterface, ProviderType>
 
   abstract waitForTransaction(
     transactionHash: string
-  ): Promise<"SUCCESS" | "FAILED">;
-
+  ): Promise<TransactionStatus>;
   abstract getContractInterface(contractAddress: string): ContractInterface;
   abstract getBalance(): Promise<AdapterBalance>;
-
   abstract isValidNetwork(network: string): Promise<boolean>;
+  abstract getBlock(height: BlockTag): Promise<IBlock>;
+  abstract getBlockWithTxs(height: string): Promise<IBlockWithTransactions>;
+  abstract getDecodedTransactionWithLogs(
+    transactionHash: string,
+    options: GetDecodedTransactionWithLogsOptions<ContractInterface>
+  ): Promise<ITransactionWithLogs>;
+  abstract getTransactionsFromEvents(
+    contractAddress: string,
+    options?: GetTransactionsFromEventsOptions
+  ): Promise<string[]>;
+
+  abstract isValidAddress(address: Address): boolean;
 
   getTxLink(hash: string): string {
     return this.blockchainConfig.explorer.tx(hash);
@@ -64,5 +82,10 @@ export abstract class BaseAdapter<ContractInterface, ProviderType>
     return this.address;
   }
 
-  abstract isValidAddress(address: Address): boolean;
+  protected sanitizeBlock(block: BlockTag): BlockTag {
+    if (BN(block).isNaN()) {
+      return block;
+    }
+    return Number(block);
+  }
 }
