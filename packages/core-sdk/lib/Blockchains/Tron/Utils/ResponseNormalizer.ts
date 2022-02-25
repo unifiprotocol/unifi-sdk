@@ -37,32 +37,28 @@ export function mapTronTxToGlobal(
   tronTx: any
 ): ITransactionReceipt {
   const scData = tronTx.raw_data.contract[0].parameter.value;
-  try {
-    const receiver =
-      scData.contract_address ||
-      scData.to_address ||
-      scData.account_address ||
-      scData.receiver_address;
 
-    return {
-      hash: tronTx.txID, // string
-      status:
-        tronTx.ret[0].contractRet === "SUCCESS"
-          ? TransactionStatus.Success
-          : TransactionStatus.Failed,
-      // Only if a transaction has been mined
-      blockNumber: block.number, // ?:number
-      timestamp: block.timestamp, // ?:number
+  const receiver =
+    scData.contract_address ||
+    scData.to_address ||
+    scData.account_address ||
+    scData.receiver_address;
 
-      from: TronAddressFormat.fromHex(scData.owner_address), // string
-      to: receiver ? TronAddressFormat.fromHex(receiver) : undefined,
-      raw: tronTx.raw_data_hex, // ?:string
-    };
-  } catch (error) {
-    // TODO REMOVE
-    debugger;
-    throw error;
-  }
+  return {
+    hash: tronTx.txID, // string
+    value: scData?.call_value || "0",
+    status:
+      tronTx.ret[0].contractRet === "SUCCESS"
+        ? TransactionStatus.Success
+        : TransactionStatus.Failed,
+    // Only if a transaction has been mined
+    blockNumber: block.number, // ?:number
+    timestamp: block.timestamp, // ?:number
+
+    from: TronAddressFormat.fromHex(scData.owner_address), // string
+    to: receiver ? TronAddressFormat.fromHex(receiver) : undefined,
+    raw: tronTx.raw_data_hex, // ?:string
+  };
 }
 
 export function normalizeResponse(

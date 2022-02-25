@@ -26,10 +26,18 @@ export class Web3BaseAdapter extends BaseAdapter<
   ContractInterface,
   ethers.providers.BaseProvider
 > {
-  getBlockWithTxs(height: BlockTag): Promise<IBlockWithTransactions> {
-    return this.getProvider().getBlockWithTransactions(
+  async getBlockWithTxs(height: BlockTag): Promise<IBlockWithTransactions> {
+    const blockWithTxs = await this.getProvider().getBlockWithTransactions(
       this.sanitizeBlock(height)
     );
+
+    return {
+      ...blockWithTxs,
+      transactions: blockWithTxs.transactions.map((tx) => ({
+        ...tx,
+        value: tx.value.toString(),
+      })),
+    };
   }
   getBlock(height: BlockTag): Promise<IBlock> {
     return this.getProvider().getBlock(this.sanitizeBlock(height));
@@ -236,6 +244,7 @@ export class Web3BaseAdapter extends BaseAdapter<
       from: res.from,
       hash: transactionHash,
       blockHash: res.blockHash,
+      value: res.value.toString(),
       blockNumber: res.blockNumber,
       raw: res.data,
       timestamp: block.timestamp,
@@ -249,7 +258,6 @@ export class Web3BaseAdapter extends BaseAdapter<
     txReceipt: ethers.providers.TransactionReceipt,
     decoder: LogDecoder
   ): ITransactionLog[] {
-    // TODO tx with data = 0x seems to be a native tx
     const decodedLogs = decoder.decodeLogs(txReceipt.logs);
     return decodedLogs.map((rawLog: any) => {
       const log = rawLog;

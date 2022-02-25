@@ -28,6 +28,7 @@ export interface ITransactionReceipt {
   blockHash?: string;
   timestamp?: number;
   from: string;
+  value: string;
   smartContractCall?: {
     method: string;
     signature: string;

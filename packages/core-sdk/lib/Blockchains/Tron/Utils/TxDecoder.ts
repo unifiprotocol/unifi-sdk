@@ -36,6 +36,9 @@ const _decodeTx = (
     throw "No Contract found for this transaction hash.";
 
   const resultInput = _extractInfoFromABI(data, abi);
+  if (!resultInput.method) {
+    throw new Error("ABI does not match");
+  }
   const names = resultInput.namesInput;
 
   const types = resultInput.typesInput;

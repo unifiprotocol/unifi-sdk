@@ -279,6 +279,7 @@ function decodeValue(value: any): any {
 function mapHmyTxToGlobal(block: IBlock, hmyTx: any): ITransactionReceipt {
   return {
     hash: hmyTx.hash,
+    value: hexToNumber(hmyTx.value),
     blockNumber: block.number,
     blockHash: block.hash,
     timestamp: block.timestamp,
