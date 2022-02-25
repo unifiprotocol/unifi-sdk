@@ -6,6 +6,7 @@ import {
   tronConnectorFactory,
   createTronOfflineConnectorHelper,
 } from "./Connectors/Factory";
+import { unifiBlockchainProxyUrl } from "../../Connectors/Utils";
 
 const tronGridApiKey = "a2a267ee-3e71-430c-b51a-342aabd68deb";
 
@@ -40,7 +41,7 @@ export const TronConfig = blockchainConfigFactory(
       headers: { "TRON-PRO-API-KEY": tronGridApiKey },
     }),
     createTronOfflineConnectorHelper(OfflineConnectors.UnifiProxy, {
-      fullHost: `https://proxy.unifiprotocol.com/${Blockchains.Tron}`,
+      fullHost: unifiBlockchainProxyUrl(Blockchains.Tron),
     }),
   ]
 );

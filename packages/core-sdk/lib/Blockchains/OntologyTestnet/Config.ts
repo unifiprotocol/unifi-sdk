@@ -7,12 +7,13 @@ import {
   createWeb3OfflineConnectorHelper,
   web3ConnectorFactory,
 } from "../../Connectors/Factory";
+import { unifiBlockchainProxyUrl } from "../../Connectors/Utils";
 
 export const OntologyTestnetConfig = blockchainConfigFactory(
   {
     blockchain: Blockchains.OntologyTestnet,
     chainId: EthChainIds.OntologyTestnet,
-    publicRpc: "https://cached-proxy-lvlxd.ondigitalocean.app/ont-testnet",
+    publicRpc: unifiBlockchainProxyUrl(Blockchains.OntologyTestnet),
     nativeToken: ONGNativeToken,
     multicall: {
       supported: true,
@@ -37,7 +38,7 @@ export const OntologyTestnetConfig = blockchainConfigFactory(
   [
     createWeb3OfflineConnectorHelper(
       OfflineConnectors.OntologyTestnet,
-      "https://cached-proxy-lvlxd.ondigitalocean.app/ont-testnet"
+      unifiBlockchainProxyUrl(Blockchains.OntologyTestnet)
     ),
   ]
 );
