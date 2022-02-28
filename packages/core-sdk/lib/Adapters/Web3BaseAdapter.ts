@@ -21,6 +21,7 @@ import { ERC20ABI } from "../Abis/ERC20";
 import { BaseAdapter } from "./BaseAdapter";
 import { LogDecoder, TxDecoder } from "@maticnetwork/eth-decoder";
 import { onlyUnique } from "../Utils/Array";
+import { BlockNotFoundError } from "../Errors";
 
 export class Web3BaseAdapter extends BaseAdapter<
   ContractInterface,
@@ -30,17 +31,25 @@ export class Web3BaseAdapter extends BaseAdapter<
     const blockWithTxs = await this.getProvider().getBlockWithTransactions(
       this.sanitizeBlock(height)
     );
+    if (!blockWithTxs) {
+      throw new BlockNotFoundError(height, this.blockchainConfig.blockchain);
+    }
 
+    const transactions = (blockWithTxs.transactions || []).map((tx) => ({
+      ...tx,
+      value: tx.value.toString(),
+    }));
     return {
       ...blockWithTxs,
-      transactions: blockWithTxs.transactions.map((tx) => ({
-        ...tx,
-        value: tx.value.toString(),
-      })),
+      transactions,
     };
   }
-  getBlock(height: BlockTag): Promise<IBlock> {
-    return this.getProvider().getBlock(this.sanitizeBlock(height));
+  async getBlock(height: BlockTag): Promise<IBlock> {
+    const block = await this.getProvider().getBlock(this.sanitizeBlock(height));
+    if (!block) {
+      throw new BlockNotFoundError(height, this.blockchainConfig.blockchain);
+    }
+    return block;
   }
   protected etherClient: ethers.providers.BaseProvider;
   protected contracts: { [nameContract: string]: ethers.Contract } = {};

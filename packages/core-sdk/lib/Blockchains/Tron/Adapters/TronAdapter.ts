@@ -16,10 +16,11 @@ import {
   GetTransactionsFromEventsOptions,
   TransactionStatus,
 } from "../../../Types";
+import { BlockNotFoundError } from "../../../Errors";
 import { BaseAdapter } from "../../../Adapters/BaseAdapter";
 import { Opt } from "../../../Utils/Typings";
 import { nonSuccessResponse, successResponse } from "../../../Adapters/Helpers";
-import { BN } from "@unifiprotocol/utils";
+import { Blockchains, BN } from "@unifiprotocol/utils";
 import { TronChainId } from "../TronChainIds";
 import { ContractInterface, ethers } from "ethers";
 import { decodeTx } from "../Utils/TxDecoder";
@@ -207,10 +208,12 @@ export class TronAdapter extends BaseAdapter<
     if (height === "latest") {
       return this._provider.trx
         .getCurrentBlock()
+        .then(throwErrorIfNoBlock(height))
         .then(mapTrxBlockToGlobalInterface);
     }
     return this._provider.trx
       .getBlockByNumber(height)
+      .then(throwErrorIfNoBlock(height))
       .then(mapTrxBlockToGlobalInterface);
   }
 
@@ -336,4 +339,13 @@ export class TronAdapter extends BaseAdapter<
 
 function isTxCallingSmartContract(_tx: any) {
   return ["TriggerSmartContract"].includes(_tx?.raw_data?.contract[0]?.type);
+}
+
+function throwErrorIfNoBlock(height: any) {
+  return (block: any) => {
+    if (!block) {
+      throw new BlockNotFoundError(height, Blockchains.Tron);
+    }
+    return block;
+  };
 }
