@@ -108,7 +108,11 @@ export const TokenInput: React.FC<TokenInputProps> = ({
 }) => {
   const tokenChangeEnabled = !disableTokenChange;
   const max = useCallback(() => {
-    onAmountChange(BN(balance).multipliedBy(maxPercentage).toFixed());
+    onAmountChange(
+      BN(balance ?? "0")
+        .multipliedBy(maxPercentage)
+        .toFixed()
+    );
   }, [onAmountChange, balance]);
 
   const combinedActions = useMemo(() => {
