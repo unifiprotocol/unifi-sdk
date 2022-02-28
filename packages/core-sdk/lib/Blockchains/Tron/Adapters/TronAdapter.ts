@@ -327,11 +327,7 @@ export class TronAdapter extends BaseAdapter<
     });
 
     return events
-      .filter((event) => {
-        const min = !fromBlock || fromBlock >= event.block;
-        const max = !toBlock || toBlock <= event.block;
-        return min && max;
-      })
+      .filter(eventBlockRangeFilter(fromBlock, toBlock))
       .map((event) => event.transaction)
       .filter(onlyUnique);
   }
@@ -347,5 +343,13 @@ function throwErrorIfNoBlock(height: any) {
       throw new BlockNotFoundError(height, Blockchains.Tron);
     }
     return block;
+  };
+}
+
+function eventBlockRangeFilter(fromBlock: number, toBlock: number) {
+  return (event: { block: number }) => {
+    const min = !fromBlock || event.block >= fromBlock;
+    const max = !toBlock || event.block <= toBlock;
+    return min && max;
   };
 }
