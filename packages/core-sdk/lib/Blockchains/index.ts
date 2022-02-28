@@ -8,6 +8,7 @@ export { EthereumRopstenConfig } from "./EthereumRopsten";
 export * from "./Harmony";
 export * from "./Iotex";
 export * from "./OntologyTestnet";
+export * from "./Ontology";
 export * from "./Polygon";
 export * from "./Tron";
 export * from "./FTM";

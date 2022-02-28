@@ -33,7 +33,7 @@
     "@harmony-js/core": "^0.1.57",
     "@harmony-js/utils": "^0.1.56",
     "@maticnetwork/eth-decoder": "git+https://github.com/deblanco/eth-decoder.git",
-    "@unifiprotocol/utils": "^2.2.5",
+    "@unifiprotocol/utils": "^2.2.10",
     "bignumber.js": "^9.0.1",
     "ethereum-multicall": "^2.4.0",
     "ethers": "^5.2.0",
