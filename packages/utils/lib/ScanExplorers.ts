@@ -39,6 +39,8 @@ export const ScanExplorers: Record<string, ScanExplorer> = {
   RinkebyScan: new ScanExplorer("https://rinkeby.etherscan.io/"),
   FtmScan: new ScanExplorer("https://ftmscan.com"),
   BttcScan: new ScanExplorer("https://bttcscan.com/"),
+  OntologyTestnetExplorer: new ScanExplorer("https://explorer.ont.io/testnet/"),
+  OntologyExplorer: new ScanExplorer("https://explorer.ont.io/"),
   AvalancheST: new ScanExplorer("https://snowtrace.io/"),
   TronScan: new ScanExplorer("https://tronscan.org/#/", {
     txPath: "transaction",
@@ -59,7 +61,8 @@ export const BlockchainScanExplorers: {
   [Blockchains.FTM]: ScanExplorers["FtmScan"],
   [Blockchains.EthereumRinkeby]: ScanExplorers["RinkebyScan"],
   [Blockchains.BTTC]: ScanExplorers["BttcScan"],
-  [Blockchains.OntologyTestnet]: ScanExplorers["OntologyTestnet"],
+  [Blockchains.OntologyTestnet]: ScanExplorers["OntologyTestnetExplorer"],
+  [Blockchains.Ontology]: ScanExplorers["OntologyExplorer"],
   [Blockchains.Avalanche]: ScanExplorers["AvalancheST"],
   [Blockchains.Tron]: ScanExplorers["TronScan"],
 };
