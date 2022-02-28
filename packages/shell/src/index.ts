@@ -6,7 +6,7 @@ export * from "./EventBus/index";
 
 // APP
 export { Shell } from "./Shell";
-export type { ShellWrappedComp } from "./Shell";
+export type { ShellWrappedComp, ShellWrappedProps } from "./Shell";
 
 // COMPONENTS
 export { SidebarItem } from "./Components/Sidebar";

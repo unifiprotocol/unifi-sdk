@@ -17,12 +17,14 @@ import { NavigationProvider } from "./Navigation";
 import { I18nextProvider } from "react-i18next";
 import i18n from "./i18n";
 
-export type ShellWrappedComp = React.FC<{
+export type ShellWrappedProps = {
   connection: IConnector;
   eventBus: typeof ShellEventBus;
   balances: BalancesState["balances"];
   i18n: typeof i18n;
-}>;
+};
+
+export type ShellWrappedComp = React.FC<ShellWrappedProps>;
 
 const ShellWrapper = styled.div`
   ${mediaQueries.xs} {
