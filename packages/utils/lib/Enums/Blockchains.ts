@@ -12,4 +12,5 @@ export enum Blockchains {
   BTTC = "BTTC",
   FTM = "FTM",
   OntologyTestnet = "OntologyTestnet",
+  Ontology = "Ontology",
 }
