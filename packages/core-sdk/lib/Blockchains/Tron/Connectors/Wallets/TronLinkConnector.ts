@@ -99,7 +99,6 @@ export class TronLinkConnector extends BaseConnector {
   }
 
   async initEventController(adapter: IAdapter): Promise<void> {
-    const agent = this.getAgent();
     const emitter = this.emitter;
 
     window.addEventListener("message", (event) => {
@@ -112,15 +111,6 @@ export class TronLinkConnector extends BaseConnector {
         case "accountsChanged":
           return emitter.emit("AddressChanged", message.data.address);
       }
-    });
-    agent.on("accountsChanged", ([address]: string[]) => {
-      adapter.setAddress(address);
-      emitter.emit("AddressChanged", address);
-    });
-
-    agent.on("chainChanged", (chainId: string) => {
-      // currently we cannot detect network changes as the tron link events does not give chain id information
-      emitter.emit("NetworkChanged", chainId);
     });
   }
 }
