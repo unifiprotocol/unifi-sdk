@@ -96,7 +96,7 @@ export const TokenInput: React.FC<TokenInputProps> = ({
   amount = "0",
   label,
   maxPercentage = "0.99",
-  balance = "0",
+  balance,
   balanceLoading = false,
   balanceLabel,
   disableTokenChange = false,
