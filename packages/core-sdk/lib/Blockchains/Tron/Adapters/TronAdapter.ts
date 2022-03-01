@@ -100,7 +100,6 @@ export class TronAdapter extends BaseAdapter<
 
       if (isWrite) {
         const response = await contract[method].apply(null, args).send({
-          feeLimit: 100_000_000,
           callValue: callValue || 0,
           shouldPollResponse: false,
           keepTxID: true,
