@@ -1,6 +1,6 @@
 {
   "name": "@unifiprotocol/utils",
-  "version": "2.2.11",
+  "version": "2.2.12",
   "description": "Unifi Protocol JS Utils",
   "author": "Unifi Protocol",
   "repository": "git@github.com:unifiprotocol/unifi-sdk.git",
