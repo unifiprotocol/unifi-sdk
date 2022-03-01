@@ -1,3 +1,5 @@
+import { Blockchains } from "@unifiprotocol/utils";
+
 import {
   InvalidNetworkError,
   WalletNotDetectedError,
@@ -15,6 +17,8 @@ import { RejectedByUser } from "../../../../Errors/RejectedByUser";
 
 import { TronAdapter } from "../../Adapters/TronAdapter";
 import { TronChainId } from "../../TronChainIds";
+import TronWeb from "tronweb";
+import { unifiBlockchainProxyUrl } from "../../../../Connectors/Utils";
 
 declare global {
   interface Window {
@@ -67,6 +71,8 @@ export class TronLinkConnector extends BaseConnector {
     adapter.setAddress(address);
     adapter.setProvider(window.tronWeb);
 
+    this.overrideTronLinkJsonNode(adapter.getProvider());
+
     const multicall = new MulticallBaseAdapter(adapter);
     this.initEventController(adapter);
 
@@ -99,7 +105,6 @@ export class TronLinkConnector extends BaseConnector {
   }
 
   async initEventController(adapter: IAdapter): Promise<void> {
-    const agent = this.getAgent();
     const emitter = this.emitter;
 
     window.addEventListener("message", (event) => {
@@ -113,14 +118,18 @@ export class TronLinkConnector extends BaseConnector {
           return emitter.emit("AddressChanged", message.data.address);
       }
     });
-    agent.on("accountsChanged", ([address]: string[]) => {
-      adapter.setAddress(address);
-      emitter.emit("AddressChanged", address);
-    });
+  }
 
-    agent.on("chainChanged", (chainId: string) => {
-      // currently we cannot detect network changes as the tron link events does not give chain id information
-      emitter.emit("NetworkChanged", chainId);
+  private overrideTronLinkJsonNode(tronweb: TronWeb): void {
+    [
+      tronweb.fullNode.instance,
+      tronweb.eventServer.instance,
+      tronweb.solidityNode.instance,
+    ].forEach((axiosInstance) => {
+      axiosInstance.interceptors.request.use((config: any) => {
+        config.baseURL = unifiBlockchainProxyUrl(Blockchains.Tron);
+        return Promise.resolve(config);
+      });
     });
   }
 }

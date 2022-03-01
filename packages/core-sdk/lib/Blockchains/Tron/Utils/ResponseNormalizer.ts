@@ -66,7 +66,6 @@ export function normalizeResponse(
   res: any
 ) {
   const methodDef = findMethodDefinitionOnAbi(abi, method, args);
-  const isArrayResponse = methodDef.outputs.length > 1;
 
   if (!methodDef) {
     return res;
@@ -74,11 +73,13 @@ export function normalizeResponse(
 
   const responseNormalizer = methodOutputNormalizer(methodDef);
 
-  return isArrayResponse
+  return isArrayResponse(methodDef)
     ? res.map(responseNormalizer)
     : responseNormalizer(res, 0);
 }
-
+function isArrayResponse(methodDef: any) {
+  return methodDef.outputs.length > 1;
+}
 function findMethodDefinitionOnAbi(abi: any, method: string, args: any[]) {
   return abi.find(
     (m: any) => m.name === method && m.inputs.length === args.length
@@ -87,10 +88,20 @@ function findMethodDefinitionOnAbi(abi: any, method: string, args: any[]) {
 
 function methodOutputNormalizer(methodDef: any) {
   return (value: any, index: number) => {
-    const type = methodDef.outputs[index].type;
+    const output = methodDef.outputs[index];
+    const _type = output.type;
+
+    const type = _type.replace(/\[\]/g, "");
+
+    let normalizer = (_value: any) => _value.toString();
+
     if (type === "address") {
-      return TronAddressFormat.fromHex(value);
+      normalizer = (_value: any) => TronAddressFormat.fromHex(_value);
     }
-    return value.toString();
+
+    if (Array.isArray(value)) {
+      return value.map(normalizer);
+    }
+    return normalizer(value);
   };
 }
