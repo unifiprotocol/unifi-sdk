@@ -32,6 +32,7 @@ import {
   removeNumericKeys,
   denormalizeExecutionArgs,
   ensureHexPrefix,
+  removeHexPrefix,
 } from "../Utils/Normalizers";
 import { onlyUnique } from "../../../Utils/Array";
 
@@ -272,9 +273,10 @@ export class TronAdapter extends BaseAdapter<
   }
 
   async getDecodedTransactionWithLogs(
-    transactionHash: string,
+    _transactionHash: string,
     { abis = [] }: GetDecodedTransactionWithLogsOptions<ContractInterface> = {}
   ): Promise<ITransactionWithLogs> {
+    const transactionHash = removeHexPrefix(_transactionHash);
     const [_tx, _txInfo, _txEvents] = await Promise.all([
       this.getProvider().trx.getTransaction(transactionHash),
       this.getProvider().trx.getTransactionInfo(transactionHash),
@@ -290,7 +292,7 @@ export class TronAdapter extends BaseAdapter<
     );
 
     const logs: ITransactionLog[] = _txEvents.map((event: any) => ({
-      address: event.contract,
+      address: ensureHexAddress(event.contract),
       name: event.name,
       signature: this.getEventSignature(event),
       tx_hash: ensureHexPrefix(transactionHash),
@@ -343,9 +345,10 @@ export class TronAdapter extends BaseAdapter<
     return `${event.name}(${inputTypes.join(",")})`;
   }
   async getTransactionsFromEvents(
-    contractAddress: string,
-    { fromBlock, toBlock }: GetTransactionsFromEventsOptions
+    contractHexAddress: string,
+    { fromBlock, toBlock }: GetTransactionsFromEventsOptions = {}
   ): Promise<string[]> {
+    const contractAddress = ensureTronAddress(contractHexAddress);
     const events = await this.getProvider().getEventResult(contractAddress, {
       size: MAX_EVENT_PAGE_SIZE,
     });

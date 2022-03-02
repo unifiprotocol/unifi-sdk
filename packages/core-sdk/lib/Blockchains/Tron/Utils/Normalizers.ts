@@ -159,3 +159,6 @@ const parseTronHexAddress = (address: string) => `0x${address.substring(2)}`;
 
 export const ensureHexPrefix = (address: string): string =>
   address.startsWith("0x") ? address : `0x${address}`;
+
+export const removeHexPrefix = (str: string): string =>
+  str.startsWith("0x") ? str.substring(2) : str;
