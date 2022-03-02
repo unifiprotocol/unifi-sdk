@@ -9,12 +9,13 @@ import {
   createWeb3OfflineConnectorHelper,
   web3ConnectorFactory,
 } from "../../Connectors/Factory";
+import { unifiBlockchainProxyUrl } from "../../Connectors/Utils";
 
 export const EthereumRopstenConfig = blockchainConfigFactory(
   {
     blockchain: Blockchains.EthereumRopsten,
     chainId: EthChainIds.EthRopsten,
-    publicRpc: "https://api-ropsten.etherscan.io",
+    publicRpc: unifiBlockchainProxyUrl(Blockchains.EthereumRopsten),
     nativeToken: ETHNativeToken,
     multicall: {
       supported: true,
@@ -41,8 +42,8 @@ export const EthereumRopstenConfig = blockchainConfigFactory(
   ],
   [
     createWeb3OfflineConnectorHelper(
-      OfflineConnectors.EtherScan,
-      "https://api-ropsten.etherscan.io"
+      OfflineConnectors.UnifiProxy,
+      unifiBlockchainProxyUrl(Blockchains.EthereumRopsten)
     ),
   ]
 );
