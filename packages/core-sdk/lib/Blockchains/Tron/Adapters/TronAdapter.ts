@@ -28,9 +28,11 @@ import {
   ensureTronAddress,
   mapTronTxToGlobal,
   mapTrxBlockToGlobalInterface,
-  normalizeResponse,
+  normalizeExecutionResponse,
   removeNumericKeys,
-} from "../Utils/ResponseNormalizer";
+  denormalizeExecutionArgs,
+  ensureHexPrefix,
+} from "../Utils/Normalizers";
 import { onlyUnique } from "../../../Utils/Array";
 
 const MAX_EVENT_PAGE_SIZE = 200;
@@ -96,9 +98,14 @@ export class TronAdapter extends BaseAdapter<
     values: Partial<ExecutionParams>,
     isWrite?: boolean
   ): Promise<ExecutionResponse<T>> {
-    const { args, callValue } = values;
+    const { args: unPreparedArgs, callValue } = values;
     try {
       const contract = this.getContract(contractAddress);
+      const args = denormalizeExecutionArgs(
+        unPreparedArgs,
+        method,
+        contract.abi
+      );
 
       if (
         ensureHexAddress(contractAddress) ===
@@ -134,7 +141,12 @@ export class TronAdapter extends BaseAdapter<
           return successResponse({
             method,
             hash: "",
-            value: normalizeResponse(method, abi, args, contractResponse),
+            value: normalizeExecutionResponse(
+              method,
+              abi,
+              args,
+              contractResponse
+            ),
           });
         }
       }
@@ -281,7 +293,7 @@ export class TronAdapter extends BaseAdapter<
       address: event.contract,
       name: event.name,
       signature: this.getEventSignature(event),
-      tx_hash: transactionHash,
+      tx_hash: ensureHexPrefix(transactionHash),
       topic: event.name,
       args: removeNumericKeys(event.result),
     }));
@@ -316,7 +328,7 @@ export class TronAdapter extends BaseAdapter<
     };
   }
   private getEventSignature(event: any) {
-    const abi = this.getContract(event)?.abi;
+    const abi = this.getContract(event.contract)?.abi;
     if (!abi) {
       return event.name;
     }
