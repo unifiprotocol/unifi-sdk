@@ -35,11 +35,21 @@ const reducer = (state: BalancesState, action: BalancesAction) => {
       };
 
     case BalancesActionKind.ADD_TOKEN:
-      if (!(payload instanceof Currency)) return state;
-      if (state.balances.some((c) => c.currency.equals(payload))) return state;
+      if (
+        !(
+          payload &&
+          payload.hasOwnProperty("address") &&
+          payload.hasOwnProperty("name") &&
+          payload.hasOwnProperty("decimals")
+        )
+      ) {
+        return state;
+      }
+      const currency = payload as Currency;
+      if (state.balances.some((c) => c.currency.equals(currency))) return state;
       return {
         ...state,
-        balances: [...state.balances, { currency: payload, balance: "0" }],
+        balances: [...state.balances, { currency, balance: "0" }],
       };
 
     case BalancesActionKind.UPDATE_BALANCES:

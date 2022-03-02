@@ -101,7 +101,7 @@ export const BalancesUpdater = () => {
   }, [addToken]);
 
   useEffect(() => {
-    const fn = () => !refreshing && update();
+    const fn = () => update();
     ShellEventBus.on(RefreshBalancesEvent, fn);
     return () => {
       ShellEventBus.off(RefreshBalancesEvent, fn);
