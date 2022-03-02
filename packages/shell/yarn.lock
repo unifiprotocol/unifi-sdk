@@ -2762,7 +2762,16 @@
     keccak "^3.0.2"
     tslib "^2.1.0"
 
-"@unifiprotocol/utils@^2.2.5", "@unifiprotocol/utils@^2.2.8":
+"@unifiprotocol/utils@^2.2.13":
+  version "2.2.13"
+  resolved "https://registry.yarnpkg.com/@unifiprotocol/utils/-/utils-2.2.13.tgz#6e25fbeb3413e65b87e18d98e34ac45d8423a91a"
+  integrity sha512-MHvH+zcyMgcNdcpi0IhIbHcIGPeZwYpFuxHt1Wur/Q6Kx7g7ktIFJajfCQAqhUXH9BNxvIglD9XHo393Fu4Ycw==
+  dependencies:
+    bignumber.js "^9.0.1"
+    keccak "^3.0.2"
+    tslib "^2.1.0"
+
+"@unifiprotocol/utils@^2.2.5":
   version "2.2.8"
   resolved "https://registry.yarnpkg.com/@unifiprotocol/utils/-/utils-2.2.8.tgz#7c5f706e5690441d9457eceab7e48db94e5a1ade"
   integrity sha512-kluYK37iNXbQwzcPQppTMOd4x6s6d2B0enaf2IbFoatg7qpi8k5T1sbX1AO2N3FWHV1+NCbHgQ+009+0YW9gUg==
