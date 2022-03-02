@@ -15,7 +15,7 @@ export enum Blockchains {
   Ontology = "Ontology",
 }
 
-export const VernacularBlockchains: { [B in Blockchains]: string } = {
+export const VernacularBlockchains: { [B in Blockchains]?: string } = {
   [Blockchains.Binance]: "BNB Chain",
   [Blockchains.BinanceTestnet]: "BNB Chain Testnet",
   [Blockchains.Ethereum]: "Ethereum",
@@ -30,4 +30,8 @@ export const VernacularBlockchains: { [B in Blockchains]: string } = {
   [Blockchains.FTM]: "Fantom",
   [Blockchains.Ontology]: "Ontology",
   [Blockchains.OntologyTestnet]: "Ontology Testnet",
+};
+
+export const getVernacularBlockchain = (blockchain: Blockchains): string => {
+  return VernacularBlockchains[blockchain] ?? blockchain;
 };
