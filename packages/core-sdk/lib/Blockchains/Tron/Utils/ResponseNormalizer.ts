@@ -1,6 +1,6 @@
 import { IBlock, ITransactionReceipt, TransactionStatus } from "../../../Types";
-// TODO REMOVE AND USE tronweb.address.toHex/fromHex
 import * as TronAddressFormat from "tron-format-address";
+import { TronNativeToken } from "../NativeToken";
 
 export function removeNumericKeys(
   obj: Record<string, any>
@@ -53,8 +53,8 @@ export function mapTronTxToGlobal(
     blockNumber: block.number, // ?:number
     timestamp: block.timestamp, // ?:number
 
-    from: TronAddressFormat.fromHex(scData.owner_address), // string
-    to: receiver ? TronAddressFormat.fromHex(receiver) : undefined,
+    from: TronAddressFormat.toHex(scData.owner_address), // string
+    to: receiver ? TronAddressFormat.toHex(receiver) : undefined,
     raw: tronTx.raw_data_hex, // ?:string
   };
 }
@@ -105,3 +105,20 @@ function methodOutputNormalizer(methodDef: any) {
     return normalizer(value);
   };
 }
+export const isTronNativeToken = (address: string): boolean =>
+  address.toLowerCase() === TronNativeToken.address.toLowerCase();
+
+export const ensureHexAddress = (address: string): string => {
+  if (address.startsWith("0x") || isTronNativeToken(address)) {
+    return address;
+  }
+  return TronAddressFormat.toHex(address);
+};
+
+export const ensureTronAddress = (address: string): string => {
+  if (!address.startsWith("0x") || isTronNativeToken(address)) {
+    return address;
+  }
+
+  return TronAddressFormat.fromHex(address);
+};

@@ -14,6 +14,7 @@ import {
   GetDecodedTransactionWithLogsOptions,
   GetTransactionsFromEventsOptions,
   TransactionStatus,
+  AddressFormat,
 } from "../Types";
 
 import { nonSuccessResponse, successResponse } from "./Helpers";
@@ -217,7 +218,7 @@ export class Web3BaseAdapter extends BaseAdapter<
 
   async getDecodedTransactionWithLogs(
     transactionHash: string,
-    { abis = [] }: GetDecodedTransactionWithLogsOptions<ContractInterface>
+    { abis = [] }: GetDecodedTransactionWithLogsOptions<ContractInterface> = {}
   ): Promise<ITransactionWithLogs> {
     const [res, receipt] = await Promise.all([
       this.web3Provider.getTransaction(transactionHash),
@@ -388,6 +389,10 @@ export class Web3BaseAdapter extends BaseAdapter<
       toBlock
     );
     return events.map((event) => event.transactionHash).filter(onlyUnique);
+  }
+
+  convertAddressTo(address: string, format: AddressFormat): string {
+    throw new Error("Method not implemented.");
   }
 }
 

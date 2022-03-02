@@ -1,7 +1,5 @@
 import TronWeb from "tronweb";
 import { ERC20ABI } from "../../../Abis/ERC20";
-// TODO REMOVE AND USE tronweb.address.toHex/fromHex
-import * as TronAddressFormat from "tron-format-address";
 import {
   AdapterBalance,
   Address,
@@ -15,6 +13,7 @@ import {
   ITransactionLog,
   GetTransactionsFromEventsOptions,
   TransactionStatus,
+  AddressFormat,
 } from "../../../Types";
 import { BlockNotFoundError } from "../../../Errors";
 import { BaseAdapter } from "../../../Adapters/BaseAdapter";
@@ -25,6 +24,8 @@ import { TronChainId } from "../TronChainIds";
 import { ContractInterface, ethers } from "ethers";
 import { decodeTx } from "../Utils/TxDecoder";
 import {
+  ensureHexAddress,
+  ensureTronAddress,
   mapTronTxToGlobal,
   mapTrxBlockToGlobalInterface,
   normalizeResponse,
@@ -59,23 +60,34 @@ export class TronAdapter extends BaseAdapter<
   }
 
   setAddress(address: string): void {
-    this.address = address;
+    this.address = ensureHexAddress(address);
+  }
+
+  getAddress(format: AddressFormat = AddressFormat.Native): string {
+    return format === AddressFormat.Hex
+      ? ensureHexAddress(this.address)
+      : ensureTronAddress(this.address);
   }
 
   async initializeContract(
-    contractAddress: string,
+    _contractAddress: string,
     abi: TronContractInterface
   ): Promise<void> {
+    const hexAddress = ensureHexAddress(_contractAddress);
     if (
-      this.contracts[contractAddress] ||
-      contractAddress === this.blockchainConfig.nativeToken.address
+      this.getContract(hexAddress) ||
+      hexAddress === this.blockchainConfig.nativeToken.address
     ) {
       return;
     }
 
-    const contract = await this._provider.contract(abi as any, contractAddress);
-
-    this.contracts[contractAddress] = contract;
+    this.contracts[hexAddress] = await this._provider.contract(
+      abi as any,
+      ensureTronAddress(hexAddress)
+    );
+  }
+  protected getContract(contractAddress: string) {
+    return this.contracts[ensureHexAddress(contractAddress)];
   }
 
   async execute<T = any>(
@@ -86,10 +98,11 @@ export class TronAdapter extends BaseAdapter<
   ): Promise<ExecutionResponse<T>> {
     const { args, callValue } = values;
     try {
-      const contract = this.contracts[contractAddress];
+      const contract = this.getContract(contractAddress);
 
       if (
-        contractAddress === this.blockchainConfig.nativeToken.address &&
+        ensureHexAddress(contractAddress) ===
+          ensureHexAddress(this.blockchainConfig.nativeToken.address) &&
         ["allowance", "approve"].includes(method)
       ) {
         return successResponse({
@@ -162,18 +175,17 @@ export class TronAdapter extends BaseAdapter<
       checkTx();
     });
   }
-  getContractInterface(_contractAddress: string): TronContractInterface {
-    const contractAddress = _contractAddress.startsWith("0x")
-      ? TronAddressFormat.fromHex(_contractAddress)
-      : _contractAddress;
-    const contract = this.contracts[contractAddress];
+  getContractInterface(contractAddress: string): TronContractInterface {
+    const contract = this.getContract(contractAddress);
     if (!contract) {
       throw new Error(`Contract ${contractAddress} not initialized`);
     }
     return contract.abi;
   }
   async getBalance(address: Address = this.address): Promise<AdapterBalance> {
-    const balance = await this._provider.trx.getBalance(address);
+    const balance = await this._provider.trx.getBalance(
+      ensureTronAddress(address)
+    );
     return {
       name: this.blockchainConfig.nativeToken.symbol,
       balance,
@@ -183,9 +195,10 @@ export class TronAdapter extends BaseAdapter<
   async isValidNetwork(network: string): Promise<boolean> {
     return network === TronChainId.Mainnet;
   }
+
   isValidAddress(address: string): boolean {
     try {
-      this._provider.address.toHex(address);
+      this._provider.address.fromHex(ensureHexAddress(address));
     } catch (_) {
       return false;
     }
@@ -193,10 +206,10 @@ export class TronAdapter extends BaseAdapter<
   }
 
   getAddressLink(address: string): string {
-    return this.blockchainConfig.explorer.address(address);
+    return this.blockchainConfig.explorer.address(ensureTronAddress(address));
   }
   getTokenLink(address: string): string {
-    return this.blockchainConfig.explorer.token(address);
+    return this.blockchainConfig.explorer.token(ensureTronAddress(address));
   }
   getTxLink(hash: string | number): string {
     return this.blockchainConfig.explorer.tx(`${hash}`);
@@ -239,7 +252,7 @@ export class TronAdapter extends BaseAdapter<
     tokenAddress: Address,
     abi: TronContractInterface = ERC20ABI
   ): Promise<void> {
-    this.initializeContract(tokenAddress, abi);
+    await this.initializeContract(tokenAddress, abi);
   }
 
   toHexAddress(address: string): string {
@@ -303,7 +316,7 @@ export class TronAdapter extends BaseAdapter<
     };
   }
   private getEventSignature(event: any) {
-    const abi = this.contracts[event.contract]?.abi;
+    const abi = this.getContract(event)?.abi;
     if (!abi) {
       return event.name;
     }
@@ -329,6 +342,13 @@ export class TronAdapter extends BaseAdapter<
       .filter(eventBlockRangeFilter(fromBlock, toBlock))
       .map((event) => event.transaction)
       .filter(onlyUnique);
+  }
+
+  convertAddressTo(address: string, format: AddressFormat): string {
+    if (format === AddressFormat.Hex) {
+      return ensureHexAddress(address);
+    }
+    return ensureTronAddress(address);
   }
 }
 
