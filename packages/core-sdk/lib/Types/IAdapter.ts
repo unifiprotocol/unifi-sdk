@@ -12,6 +12,11 @@ export type AdapterBalance = { name: string; balance: string };
 
 export type Address = string;
 
+export enum AddressFormat {
+  Native = "Native",
+  Hex = "Hex",
+}
+
 export interface ExecutionResponse<T = any> {
   success: boolean;
   method?: string;
@@ -85,10 +90,11 @@ export interface IAdapter<ContractInterface = any> {
   // Event methods
   getTransactionsFromEvents(
     contractAddress: string,
-    options: GetTransactionsFromEventsOptions
+    options?: GetTransactionsFromEventsOptions
   ): Promise<string[]>;
   // Address methods
   setAddress(address: Address): void;
-  getAddress(): Address;
+  getAddress(format?: AddressFormat): Address;
+  convertAddressTo(address: string, format: AddressFormat): Address;
   isValidAddress(address: Address): boolean;
 }

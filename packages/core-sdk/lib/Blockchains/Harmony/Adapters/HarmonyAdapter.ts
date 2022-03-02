@@ -1,5 +1,5 @@
 import { Harmony, ExtensionInterface } from "@harmony-js/core";
-import { HarmonyAddress } from "@harmony-js/crypto";
+import { HarmonyAddress, toBech32, fromBech32 } from "@harmony-js/crypto";
 import { Contract } from "@harmony-js/contract";
 import { ChainType, hexToNumber, numberToHex } from "@harmony-js/utils";
 
@@ -12,6 +12,7 @@ import {
   EthChainIds,
   ITransactionReceipt,
   TransactionStatus,
+  AddressFormat,
 } from "../../../Types";
 import { ContractInterface } from "ethers";
 import { BaseAdapter } from "../../../Adapters/BaseAdapter";
@@ -34,6 +35,13 @@ export class HarmonyAdapter extends BaseAdapter<
   HarmonyContractInterface,
   HarmonyProvider
 > {
+  convertAddressTo(address: string, format: AddressFormat): string {
+    if (format === AddressFormat.Native) {
+      return address.startsWith("one") ? address : toBech32(address);
+    }
+
+    return address.startsWith("0x") ? address : fromBech32(address);
+  }
   private _provider: Opt<HarmonyProvider>;
 
   protected contracts: { [nameContract: string]: Contract } = {};

@@ -1,6 +1,6 @@
 import { BN } from "@unifiprotocol/utils";
 import { IBlockchainConfig } from "../Types/IBlockchainConfig";
-import { IAdapter } from "../Types/IAdapter";
+import { AddressFormat, IAdapter } from "../Types/IAdapter";
 import {
   ExecutionParams,
   ExecutionResponse,
@@ -88,4 +88,6 @@ export abstract class BaseAdapter<ContractInterface, ProviderType>
     }
     return Number(block);
   }
+
+  abstract convertAddressTo(address: string, format: AddressFormat): string;
 }
