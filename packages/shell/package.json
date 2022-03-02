@@ -1,6 +1,6 @@
 {
   "name": "@unifiprotocol/shell",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "dependencies": {
     "@craco/craco": "^6.4.3",
     "@react-hook/copy": "^2.0.1",
@@ -12,7 +12,7 @@
     "@types/node": "^16.7.13",
     "@types/react": "^17.0.20",
     "@types/react-dom": "^17.0.9",
-    "@unifiprotocol/core-sdk": "^6.0.2",
+    "@unifiprotocol/core-sdk": "^6.0.14",
     "@unifiprotocol/uikit": "^1.13.0",
     "@unifiprotocol/utils": "^2.2.13",
     "@unifiprotocol/utrade-v2-localization": "git+https://github.com/unifiprotocol/utrade-v2-localization.git",
