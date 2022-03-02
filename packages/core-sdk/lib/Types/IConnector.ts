@@ -2,7 +2,7 @@ import { ConnectorEvent } from "../Types";
 import { IAdapter } from "./IAdapter";
 import { Callback } from "../Utils/Typings";
 import { IMulticallAdapter } from "./IMulticallAdapter";
-import { IConnectorFactoryParams } from "..";
+import { IBlockchainConfig, IConnectorFactoryParams } from "..";
 
 export interface IConnectorAdapters {
   adapter: IAdapter;
@@ -14,6 +14,7 @@ export interface IConnector {
   name: string;
   displayName: string;
   adapter: IConnectorAdapters | undefined;
+  readonly config: IBlockchainConfig;
 
   connect(): Promise<IConnectorAdapters>;
   disconnect(): Promise<void>;
