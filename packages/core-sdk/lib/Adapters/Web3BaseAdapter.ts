@@ -92,7 +92,6 @@ export class Web3BaseAdapter extends BaseAdapter<
           method,
           params
         );
-        console.log(`Estimated gas limit is ${gasLimit}`);
 
         const computedParams = computeInvocationParams(params, { gasLimit });
 
@@ -100,7 +99,6 @@ export class Web3BaseAdapter extends BaseAdapter<
         await contract.callStatic[method]
           .apply(null, computedParams)
           .catch((err: any) => {
-            console.log(`Error in callStatic: ${err}`);
             if (err.code && /UNPREDICTABLE_GAS_LIMIT/i.test(err.code)) {
               // ignore this error
               return;
@@ -108,10 +106,7 @@ export class Web3BaseAdapter extends BaseAdapter<
             throw err;
           });
 
-        console.log(`Contract static call has been checked`);
         const contractCall = await contract[method].apply(null, computedParams);
-        console.log("Call result:");
-        console.log(contractCall);
 
         if (contractCall && contractCall.hash) {
           return successResponse({
