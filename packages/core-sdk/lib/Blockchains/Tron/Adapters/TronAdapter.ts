@@ -245,10 +245,14 @@ export class TronAdapter extends BaseAdapter<
   async getBlockWithTxs(height: BlockTag): Promise<IBlockWithTransactions> {
     const [_block, txs] = await Promise.all([
       this.getBlock(height),
-      this._provider.trx.getTransactionFromBlock(
-        this.sanitizeBlock(height),
-        undefined
-      ),
+      this._provider.trx
+        .getTransactionFromBlock(this.sanitizeBlock(height), undefined)
+        .catch((error) => {
+          if (error && error === "Transaction not found in block") {
+            return [];
+          }
+          throw error;
+        }),
     ]);
 
     const block: IBlockWithTransactions = {
