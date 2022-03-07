@@ -1,4 +1,4 @@
-import { TronNativeToken } from "./NativeToken";
+import { TronNativeToken } from "./Tokens";
 import { Blockchains, OfflineConnectors } from "../../Types";
 import { blockchainConfigFactory } from "../Utils";
 import { TronLinkConnector } from "./Connectors/Wallets/TronLinkConnector";
@@ -7,6 +7,7 @@ import {
   createTronOfflineConnectorHelper,
 } from "./Connectors/Factory";
 import { unifiBlockchainProxyUrl } from "../../Connectors/Utils";
+import { TronUpToken, TronWrappedToken } from ".";
 
 const tronGridApiKey = "a2a267ee-3e71-430c-b51a-342aabd68deb";
 
@@ -16,6 +17,8 @@ export const TronConfig = blockchainConfigFactory(
     chainId: undefined,
     publicRpc: "https://api.trongrid.io",
     nativeToken: TronNativeToken,
+    wrappedToken: TronWrappedToken,
+    upToken: TronUpToken,
     connectorFactory: tronConnectorFactory,
     multicall: {
       supported: true,

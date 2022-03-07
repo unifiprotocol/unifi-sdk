@@ -1,4 +1,4 @@
-import { FTMToken } from "./NativeToken";
+import { FTMToken, FTMUpToken, FTMWrappedToken } from "./Tokens";
 import { Blockchains, EthChainIds, OfflineConnectors } from "../../Types";
 import { MetamaskConnector } from "../../Connectors/Wallets/MetamaskConnector";
 import { MathWalletConnector } from "../../Connectors/Wallets/MathWalletConnector";
@@ -15,6 +15,8 @@ export const FTMConfig = blockchainConfigFactory(
     chainId: EthChainIds.FTM,
     publicRpc: "https://rpc.fantom.network",
     nativeToken: FTMToken,
+    wrappedToken: FTMWrappedToken,
+    upToken: FTMUpToken,
     multicall: {
       supported: true,
       address: "0x3BF91Ba76B8B60fD92F588068fAd1e6f50B9d420",

@@ -1,4 +1,4 @@
-import { IOTXNativeToken } from "./NativeToken";
+import { IOTXNativeToken, IOTXUpToken, IOTXWrappedToken } from "./Tokens";
 import { Blockchains, EthChainIds, OfflineConnectors } from "../../Types";
 import { MetamaskConnector } from "../../Connectors/Wallets/MetamaskConnector";
 import { blockchainConfigFactory } from "../Utils";
@@ -14,6 +14,8 @@ export const IotexConfig = blockchainConfigFactory(
     chainId: EthChainIds.Iotex,
     publicRpc: "https://babel-api.mainnet.iotex.io",
     nativeToken: IOTXNativeToken,
+    wrappedToken: IOTXWrappedToken,
+    upToken: IOTXUpToken,
     multicall: {
       supported: true,
       address: "0xacce294bf7d25fe8c5c64ae45197d3878f68403b",

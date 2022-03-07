@@ -1,4 +1,4 @@
-import { AVAXNativeToken } from "./NativeToken";
+import { AVAXNativeToken, AVAXUpToken, AVAXWrappedToken } from "./Tokens";
 import { Blockchains, EthChainIds, OfflineConnectors } from "../../Types";
 import { MetamaskConnector } from "../../Connectors/Wallets/MetamaskConnector";
 import { blockchainConfigFactory } from "../Utils";
@@ -14,6 +14,8 @@ export const AvalancheConfig = blockchainConfigFactory(
     chainId: EthChainIds.Avalanche,
     publicRpc: "https://api.avax.network/ext/bc/C/rpc",
     nativeToken: AVAXNativeToken,
+    wrappedToken: AVAXWrappedToken,
+    upToken: AVAXUpToken,
     multicall: {
       supported: true,
       address: "0xa00FB557AA68d2e98A830642DBbFA534E8512E5f",

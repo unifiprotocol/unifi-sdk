@@ -1,4 +1,4 @@
-import { ONGNativeToken } from "./NativeToken";
+import { ONGNativeToken, ONGUpToken, ONGWrappedToken } from "./Tokens";
 import { Blockchains, EthChainIds, OfflineConnectors } from "../../Types";
 import { MetamaskConnector } from "../../Connectors/Wallets/MetamaskConnector";
 import { blockchainConfigFactory } from "../Utils";
@@ -15,6 +15,8 @@ export const OntologyTestnetConfig = blockchainConfigFactory(
     chainId: EthChainIds.OntologyTestnet,
     publicRpc: unifiBlockchainProxyUrl(Blockchains.OntologyTestnet),
     nativeToken: ONGNativeToken,
+    wrappedToken: ONGWrappedToken,
+    upToken: ONGUpToken,
     multicall: {
       supported: true,
       address: "0x814D299c9081085C6b99208f1387738EeD3D638F",

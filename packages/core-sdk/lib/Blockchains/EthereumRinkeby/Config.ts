@@ -1,4 +1,4 @@
-import { ETHNativeToken } from "./NativeToken";
+import { RinkebyNativeToken, RinkebyWrappedToken } from "./Tokens";
 import { Blockchains, EthChainIds, OfflineConnectors } from "../../Types";
 import { MetamaskConnector } from "../../Connectors/Wallets/MetamaskConnector";
 import { MathWalletConnector } from "../../Connectors/Wallets/MathWalletConnector";
@@ -15,7 +15,8 @@ export const EthereumRinkebyConfig = blockchainConfigFactory(
     blockchain: Blockchains.EthereumRinkeby,
     chainId: EthChainIds.EthRinkeby,
     publicRpc: "https://api-rinkeby.etherscan.io",
-    nativeToken: ETHNativeToken,
+    nativeToken: RinkebyNativeToken,
+    wrappedToken: RinkebyWrappedToken,
     multicall: {
       supported: true,
     },

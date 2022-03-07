@@ -1,4 +1,4 @@
-import { BTTCNativeToken } from "./NativeToken";
+import { BTTCNativeToken, BTTCUpToken, BTTCWrappedToken } from "./Tokens";
 import { Blockchains, EthChainIds, OfflineConnectors } from "../../Types";
 import { MetamaskConnector } from "../../Connectors/Wallets/MetamaskConnector";
 import { blockchainConfigFactory } from "../Utils";
@@ -14,6 +14,8 @@ export const BttcConfig = blockchainConfigFactory(
     chainId: EthChainIds.BTTC,
     publicRpc: "https://rpc.bt.io",
     nativeToken: BTTCNativeToken,
+    wrappedToken: BTTCWrappedToken,
+    upToken: BTTCUpToken,
     multicall: {
       supported: true,
       address: "0x9F80bb4f2eEEdf82d6Cc39c84184E34FC7F198eE",
