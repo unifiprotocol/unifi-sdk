@@ -16,7 +16,7 @@ export interface IBlockchainConfig {
   blockchain: Blockchains;
   publicRpc: string;
   nativeToken: Currency;
-  chainId: EthChainIds;
+  chainId: EthChainIds | undefined;
   wallets: IConnector[];
   offlineConnectors: IConnector[];
   multicall: {

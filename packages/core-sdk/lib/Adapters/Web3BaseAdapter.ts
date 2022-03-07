@@ -14,11 +14,10 @@ import {
   GetDecodedTransactionWithLogsOptions,
   GetTransactionsFromEventsOptions,
   TransactionStatus,
-  AddressFormat,
 } from "../Types";
 
 import { nonSuccessResponse, successResponse } from "./Helpers";
-import { ERC20ABI } from "../Abis/ERC20";
+import { ERC20ABI } from "../Abis";
 import { BaseAdapter } from "./BaseAdapter";
 import { LogDecoder, TxDecoder } from "@maticnetwork/eth-decoder";
 import { onlyUnique } from "../Utils/Array";
@@ -391,8 +390,8 @@ export class Web3BaseAdapter extends BaseAdapter<
     return events.map((event) => event.transactionHash).filter(onlyUnique);
   }
 
-  convertAddressTo(address: string, format: AddressFormat): string {
-    throw new Error("Method not implemented.");
+  convertAddressTo(address: string): string {
+    return address;
   }
 }
 

@@ -38,7 +38,6 @@
     "ethereum-multicall": "^2.4.0",
     "ethers": "^5.2.0",
     "eventemitter3": "^4.0.7",
-    "inversify": "^5.1.1",
     "promise-parallel-throttle": "^3.3.0",
     "reflect-metadata": "^0.1.13",
     "tron-format-address": "^0.1.8",

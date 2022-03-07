@@ -6,4 +6,3 @@ export * from "./IConnectorMetadata";
 export * from "./IMulticallAdapter";
 export * from "./IBlockchainExplorer";
 export * from "./BlockAndTxs";
-export * from "./IFactory";
