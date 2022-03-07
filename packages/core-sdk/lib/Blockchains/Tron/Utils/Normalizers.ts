@@ -1,6 +1,6 @@
 import { IBlock, ITransactionReceipt, TransactionStatus } from "../../../Types";
 import * as TronAddressFormat from "tron-format-address";
-import { TronNativeToken } from "../NativeToken";
+import { TronNativeToken } from "../Tokens";
 import { ERC20ABI } from "../../..";
 
 export function removeNumericKeys(
