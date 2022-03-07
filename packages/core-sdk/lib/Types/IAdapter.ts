@@ -1,9 +1,21 @@
 import { BigNumberish } from "@ethersproject/bignumber";
+import {
+  IBlock,
+  IBlockWithTransactions,
+  BlockTag,
+  ITransactionWithLogs,
+  TransactionStatus,
+} from "./BlockAndTxs";
 import { IBlockchainConfig } from "./IBlockchainConfig";
 
 export type AdapterBalance = { name: string; balance: string };
 
 export type Address = string;
+
+export enum AddressFormat {
+  Native = "Native",
+  Hex = "Hex",
+}
 
 export interface ExecutionResponse<T = any> {
   success: boolean;
@@ -13,7 +25,14 @@ export interface ExecutionResponse<T = any> {
   params?: any;
   err?: any;
 }
-
+export interface GetDecodedTransactionWithLogsOptions<ContractInterface> {
+  abis?: ContractInterface[];
+}
+export type GetTransactionsFromEventsOptions = {
+  abi?: any[];
+  fromBlock?: number;
+  toBlock?: number;
+};
 export interface ExecutionParams {
   args: Array<string | number | undefined | string[] | BigNumberish>;
   callValue: string | number | undefined;
@@ -21,7 +40,9 @@ export interface ExecutionParams {
 
 export type ExecutionValueProps = Partial<ExecutionParams>;
 
-export type TransactionResult = "SUCCESS" | "FAILED";
+export type TransactionResult =
+  | TransactionStatus.Success
+  | TransactionStatus.Failed;
 
 export interface IAdapter<ContractInterface = any> {
   readonly blockchainConfig: IBlockchainConfig;
@@ -40,9 +61,7 @@ export interface IAdapter<ContractInterface = any> {
   ): Promise<void>;
 
   getContractInterface(contractAddress: string): ContractInterface;
-
   resetContracts(): void;
-
   execute<T = string>(
     contractAddress: string,
     method: string,
@@ -50,18 +69,32 @@ export interface IAdapter<ContractInterface = any> {
     isWrite?: boolean
   ): Promise<ExecutionResponse<T>>;
 
-  waitForTransaction(transactionHash: string): Promise<"SUCCESS" | "FAILED">;
-
   getBalance(): Promise<AdapterBalance>;
-
   isValidNetwork(network: string): Promise<boolean>;
 
+  // Transaction methods
+  waitForTransaction(transactionHash: string): Promise<TransactionStatus>;
+  getDecodedTransactionWithLogs(
+    transactionHash: string,
+    options?: GetDecodedTransactionWithLogsOptions<ContractInterface>
+  ): Promise<ITransactionWithLogs>;
+
+  // Explorer methods
   getTxLink(hash: string): string;
   getAddressLink(hash: string): string;
   getTokenLink(hash: string): string;
 
+  // Block methods
+  getBlock(height?: BlockTag): Promise<IBlock>;
+  getBlockWithTxs(height?: BlockTag): Promise<IBlockWithTransactions>;
+  // Event methods
+  getTransactionsFromEvents(
+    contractAddress: string,
+    options?: GetTransactionsFromEventsOptions
+  ): Promise<string[]>;
+  // Address methods
   setAddress(address: Address): void;
-  getAddress(): Address;
-
+  getAddress(format?: AddressFormat): Address;
+  convertAddressTo(address: string, format: AddressFormat): Address;
   isValidAddress(address: Address): boolean;
 }

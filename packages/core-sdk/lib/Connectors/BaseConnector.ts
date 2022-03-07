@@ -4,7 +4,6 @@ import { IConnector } from "../Types/IConnector";
 import { Callback } from "../Utils/Typings";
 import { IBlockchainConfig } from "../Types/IBlockchainConfig";
 import { IConnectorMetadata } from "../Types";
-import { AdapterNotConnectedError } from "../Errors/AdapterNotConnectedError";
 
 export abstract class BaseConnector implements IConnector {
   protected emitter = new EventEmitter<ConnectorEvent>();

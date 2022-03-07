@@ -3,19 +3,54 @@ import { ContractInterface, ethers, utils } from "ethers";
 import {
   AdapterBalance,
   Address,
+  BlockTag,
   ExecutionParams,
   ExecutionResponse,
+  IBlock,
+  IBlockWithTransactions,
+  ITransactionWithLogs,
+  ITransactionLog,
   TransactionResult,
+  GetDecodedTransactionWithLogsOptions,
+  GetTransactionsFromEventsOptions,
+  TransactionStatus,
 } from "../Types";
 
 import { nonSuccessResponse, successResponse } from "./Helpers";
-import { ERC20ABI } from "../Abis/ERC20";
+import { ERC20ABI } from "../Abis";
 import { BaseAdapter } from "./BaseAdapter";
+import { LogDecoder, TxDecoder } from "@maticnetwork/eth-decoder";
+import { onlyUnique } from "../Utils/Array";
+import { BlockNotFoundError } from "../Errors";
 
 export class Web3BaseAdapter extends BaseAdapter<
   ContractInterface,
   ethers.providers.BaseProvider
 > {
+  async getBlockWithTxs(height: BlockTag): Promise<IBlockWithTransactions> {
+    const blockWithTxs = await this.getProvider().getBlockWithTransactions(
+      this.sanitizeBlock(height)
+    );
+    if (!blockWithTxs) {
+      throw new BlockNotFoundError(height, this.blockchainConfig.blockchain);
+    }
+
+    const transactions = (blockWithTxs.transactions || []).map((tx) => ({
+      ...tx,
+      value: tx.value.toString(),
+    }));
+    return {
+      ...blockWithTxs,
+      transactions,
+    };
+  }
+  async getBlock(height: BlockTag): Promise<IBlock> {
+    const block = await this.getProvider().getBlock(this.sanitizeBlock(height));
+    if (!block) {
+      throw new BlockNotFoundError(height, this.blockchainConfig.blockchain);
+    }
+    return block;
+  }
   protected etherClient: ethers.providers.BaseProvider;
   protected contracts: { [nameContract: string]: ethers.Contract } = {};
   protected stablePairs: string[] = [];
@@ -174,8 +209,113 @@ export class Web3BaseAdapter extends BaseAdapter<
     transactionHash: string
   ): Promise<TransactionResult> {
     return this.etherClient.waitForTransaction(transactionHash).then((res) => {
-      return res.status && res.status === 1 ? "SUCCESS" : "FAILED";
+      return res.status && res.status === 1
+        ? TransactionStatus.Success
+        : TransactionStatus.Failed;
     });
+  }
+
+  async getDecodedTransactionWithLogs(
+    transactionHash: string,
+    { abis = [] }: GetDecodedTransactionWithLogsOptions<ContractInterface> = {}
+  ): Promise<ITransactionWithLogs> {
+    const [res, receipt] = await Promise.all([
+      this.web3Provider.getTransaction(transactionHash),
+      this.web3Provider.getTransactionReceipt(transactionHash),
+    ]);
+
+    const block = await this.web3Provider.getBlock(res.blockNumber);
+
+    const initializedAbis = Object.values(this.contracts).map((contract) =>
+      this.getContractInterface(contract.address)
+    );
+    const ABIs = [...initializedAbis, ...abis] as any;
+    const logsDecoder = new LogDecoder(ABIs);
+    const logs: ITransactionLog[] = this.decodeTxLogs(receipt, logsDecoder);
+
+    let smartContractCall;
+    if (isSmartContractCall(res)) {
+      const txDecoder = new TxDecoder(ABIs);
+      const { args, method, signature } = this.decodeTxDetails(res, txDecoder);
+
+      smartContractCall = {
+        signature,
+        method,
+        args,
+      };
+    }
+
+    return {
+      status:
+        receipt.status === 1
+          ? TransactionStatus.Success
+          : TransactionStatus.Failed,
+      from: res.from,
+      hash: transactionHash,
+      blockHash: res.blockHash,
+      value: res.value.toString(),
+      blockNumber: res.blockNumber,
+      raw: res.data,
+      timestamp: block.timestamp,
+      to: receipt.to,
+      smartContractCall,
+      logs,
+    };
+  }
+
+  private decodeTxLogs(
+    txReceipt: ethers.providers.TransactionReceipt,
+    decoder: LogDecoder
+  ): ITransactionLog[] {
+    const decodedLogs = decoder.decodeLogs(txReceipt.logs);
+    return decodedLogs.map((rawLog: any) => {
+      const log = rawLog;
+      const args = log.eventFragment.inputs.reduce(
+        (t: any, curr: any, i: number) => {
+          const argName: string = curr.name;
+          t[argName] = log.args[i].toString();
+          return t;
+        },
+        {} as Record<string, any>
+      );
+
+      return {
+        tx_hash: txReceipt.transactionHash,
+        name: log.name,
+        signature: log.signature,
+        topic: log.topic,
+        address: log.address,
+        args,
+      };
+    });
+  }
+
+  private decodeTxDetails(
+    txRes: ethers.providers.TransactionResponse,
+    decoder: TxDecoder
+  ) {
+    try {
+      const decodedTx = decoder.decodeTx(txRes);
+
+      const args = decodedTx.functionFragment.inputs.reduce((t, curr, i) => {
+        const argName: string = curr.name;
+        t[argName] = decodedTx.args[i].toString();
+        return t;
+      }, {} as Record<string, any>);
+
+      return {
+        method: decodedTx.name,
+        signature: decodedTx.signature,
+
+        args,
+      };
+    } catch (error) {
+      return {
+        method: "unknown",
+        signature: "external",
+        args: {},
+      };
+    }
   }
 
   protected reduceParams(
@@ -225,6 +365,34 @@ export class Web3BaseAdapter extends BaseAdapter<
       return false;
     }
   }
+  async getTransactionsFromEvents(
+    contractAddress: string,
+    { abi: givenAbi, fromBlock, toBlock }: GetTransactionsFromEventsOptions
+  ): Promise<string[]> {
+    const abi = givenAbi || this.getContractInterface(contractAddress);
+    if (!abi) {
+      throw new Error("You need to pass the contract ABI or initialize it");
+    }
+
+    const contract = new ethers.Contract(
+      contractAddress,
+      abi,
+      this.getProvider()
+    );
+
+    const events = await contract.queryFilter(
+      {
+        address: contract.address,
+      },
+      fromBlock,
+      toBlock
+    );
+    return events.map((event) => event.transactionHash).filter(onlyUnique);
+  }
+
+  convertAddressTo(address: string): string {
+    return address;
+  }
 }
 
 function computeInvocationParams(
@@ -237,4 +405,8 @@ function computeInvocationParams(
     { value: callValue ?? 0, ...gasOptions },
   ];
   return reducedContractParameters;
+}
+
+function isSmartContractCall(res: ethers.Transaction) {
+  return res.data !== "0x";
 }

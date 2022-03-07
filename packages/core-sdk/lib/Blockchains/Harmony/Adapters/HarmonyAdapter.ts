@@ -1,7 +1,7 @@
 import { Harmony, ExtensionInterface } from "@harmony-js/core";
-import { HarmonyAddress } from "@harmony-js/crypto";
+import { HarmonyAddress, toBech32, fromBech32 } from "@harmony-js/crypto";
 import { Contract } from "@harmony-js/contract";
-import { ChainType, hexToNumber } from "@harmony-js/utils";
+import { ChainType, hexToNumber, numberToHex } from "@harmony-js/utils";
 
 import { ERC20ABI } from "../../../Abis/ERC20";
 import {
@@ -10,6 +10,9 @@ import {
   ExecutionParams,
   ExecutionResponse,
   EthChainIds,
+  ITransactionReceipt,
+  TransactionStatus,
+  AddressFormat,
 } from "../../../Types";
 import { ContractInterface } from "ethers";
 import { BaseAdapter } from "../../../Adapters/BaseAdapter";
@@ -17,6 +20,12 @@ import { Opt } from "../../../Utils/Typings";
 import { nonSuccessResponse, successResponse } from "../../../Adapters/Helpers";
 import { hexlify } from "ethers/lib/utils";
 import { BN } from "@unifiprotocol/utils";
+import {
+  IBlock,
+  IBlockWithTransactions,
+  BlockTag,
+  ITransactionWithLogs,
+} from "../../../Types/BlockAndTxs";
 
 export type HarmonyProvider = ExtensionInterface & {
   network: { chain_id: number };
@@ -26,6 +35,13 @@ export class HarmonyAdapter extends BaseAdapter<
   HarmonyContractInterface,
   HarmonyProvider
 > {
+  convertAddressTo(address: string, format: AddressFormat): string {
+    if (format === AddressFormat.Native) {
+      return address.startsWith("one") ? address : toBech32(address);
+    }
+
+    return address.startsWith("0x") ? address : fromBech32(address);
+  }
   private _provider: Opt<HarmonyProvider>;
 
   protected contracts: { [nameContract: string]: Contract } = {};
@@ -150,14 +166,9 @@ export class HarmonyAdapter extends BaseAdapter<
       });
     }
   }
-  signTransaction(tx: any): Promise<any> {
-    throw new Error("Method not implemented.");
-  }
-  sendTransaction<T = any>(tx: any): Promise<ExecutionResponse<T>> {
-    throw new Error("Method not implemented.");
-  }
-  async waitForTransaction(txnHash: string): Promise<"SUCCESS" | "FAILED"> {
-    return new Promise<"FAILED" | "SUCCESS">((resolve) => {
+
+  async waitForTransaction(txnHash: string): Promise<TransactionStatus> {
+    return new Promise<TransactionStatus>((resolve) => {
       const checkTx = () => {
         return this.harmonyClient.blockchain
           .getTransactionReceipt({
@@ -166,8 +177,8 @@ export class HarmonyAdapter extends BaseAdapter<
           .then((res) => {
             const status =
               {
-                "0x0": "FAILED",
-                "0x1": "SUCCESS",
+                "0x0": TransactionStatus.Failed,
+                "0x1": TransactionStatus.Success,
               }[res?.result?.status as string] || undefined;
             if (status) {
               resolve(status as any);
@@ -209,6 +220,13 @@ export class HarmonyAdapter extends BaseAdapter<
     return this.blockchainConfig.explorer.tx(`${hash}`);
   }
 
+  getDecodedTransactionWithLogs(): Promise<ITransactionWithLogs> {
+    throw new Error("Method not implemented. Use Harmony Web3 Adapter ");
+  }
+  getTransactionsFromEvents(): Promise<string[]> {
+    throw new Error("Method not implemented. Use Harmony Web3 Adapter ");
+  }
+
   async initializeToken(
     tokenAddress: Address,
     abi: ContractInterface = ERC20ABI
@@ -222,6 +240,38 @@ export class HarmonyAdapter extends BaseAdapter<
     }
     return new HarmonyAddress(address).basicHex;
   }
+
+  async getBlock(height: BlockTag): Promise<IBlock> {
+    return this.getHarmonyBlock(height).then(mapHmyBlockToGlobal);
+  }
+
+  protected async getHarmonyBlock(height: BlockTag): Promise<any> {
+    height = this.sanitizeBlock(height);
+
+    if (height === "latest") {
+      height = await this.harmonyClient.blockchain
+        .getBlockNumber()
+        .then((response) => hexToNumber(response.result));
+    }
+
+    if (BN(height).isNaN()) {
+      return this.harmonyClient.blockchain.getBlockByHash({
+        blockHash: `${height}`,
+      });
+    } else {
+      return this.harmonyClient.blockchain.getBlockByNumber({
+        blockNumber: numberToHex(height),
+      });
+    }
+  }
+  async getBlockWithTxs(height: BlockTag): Promise<IBlockWithTransactions> {
+    const hmyBlockResult = await this.getHarmonyBlock(height);
+    const block = mapHmyBlockToGlobal(hmyBlockResult);
+    block.transactions = hmyBlockResult.result.transactions.map((tx: any) =>
+      mapHmyTxToGlobal(block, tx)
+    );
+    return block;
+  }
 }
 
 function decodeValue(value: any): any {
@@ -232,4 +282,27 @@ function decodeValue(value: any): any {
     return value.toString();
   }
   return value;
+}
+
+function mapHmyTxToGlobal(block: IBlock, hmyTx: any): ITransactionReceipt {
+  return {
+    hash: hmyTx.hash,
+    value: hexToNumber(hmyTx.value),
+    blockNumber: block.number,
+    blockHash: block.hash,
+    timestamp: block.timestamp,
+    from: hmyTx.from,
+    to: hmyTx.to,
+    raw: hmyTx.input,
+  };
+}
+
+function mapHmyBlockToGlobal({ result }: { result: any }) {
+  return {
+    hash: result.hash,
+    parentHash: result.parentHash,
+    number: Number(hexToNumber(result.number)),
+    timestamp: Number(hexToNumber(result.timestamp)),
+    transactions: result.transactions.map((tx: any) => tx.hash),
+  };
 }

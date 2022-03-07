@@ -1,4 +1,5 @@
-import { Blockchains, IBlockchainConfig } from "../Types";
+import { IBlockchainConfig } from "../Types/IBlockchainConfig";
+import { Blockchains } from "../Types/Enums";
 import { AvalancheConfig } from "./Avalanche";
 import { BinanceConfig } from "./Binance";
 import { BinanceTesnetConfig } from "./BinanceTestnet";
@@ -11,6 +12,7 @@ import { IotexConfig } from "./Iotex";
 import { OntologyTestnetConfig } from "./OntologyTestnet";
 import { PolygonConfig } from "./Polygon";
 import { FTMConfig } from "./FTM";
+import { TronConfig } from "./Tron";
 
 export const blockchainConfigMap: Partial<
   Record<Blockchains, IBlockchainConfig>
@@ -27,4 +29,5 @@ export const blockchainConfigMap: Partial<
   [Blockchains.BTTC]: BttcConfig,
   [Blockchains.OntologyTestnet]: OntologyTestnetConfig,
   [Blockchains.FTM]: FTMConfig,
+  [Blockchains.Tron]: TronConfig,
 };

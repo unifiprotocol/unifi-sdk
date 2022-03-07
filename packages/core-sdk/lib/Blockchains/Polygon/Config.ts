@@ -1,8 +1,12 @@
 import { MATICNativeToken, MATICUpToken, MATICWrappedToken } from "./Tokens";
 import { Blockchains, EthChainIds, OfflineConnectors } from "../../Types";
 import { MetamaskConnector } from "../../Connectors/Wallets/MetamaskConnector";
-import { blockchainConfigFactory, web3ConnectorFactory } from "../Utils";
+import { blockchainConfigFactory } from "../Utils";
 import { MetamaskCompatibleConnector } from "../../Connectors/Wallets/MetamaskCompatibleConnector";
+import {
+  createWeb3OfflineConnectorHelper,
+  web3ConnectorFactory,
+} from "../../Connectors/Factory";
 
 export const PolygonConfig = blockchainConfigFactory(
   {
@@ -17,6 +21,7 @@ export const PolygonConfig = blockchainConfigFactory(
       address: "0x11ce4B23bD875D7F5C6a31084f55fDe1e9A87507",
       tryAggregate: false,
     },
+    connectorFactory: web3ConnectorFactory,
     explorer: {
       baseUrl: "https://polygonscan.com",
       address: function (address: string) {
@@ -31,5 +36,10 @@ export const PolygonConfig = blockchainConfigFactory(
     },
   },
   [MetamaskConnector, MetamaskCompatibleConnector],
-  [web3ConnectorFactory(OfflineConnectors.Polygon, "https://polygon-rpc.com")]
+  [
+    createWeb3OfflineConnectorHelper(
+      OfflineConnectors.Polygon,
+      "https://polygon-rpc.com"
+    ),
+  ]
 );

@@ -1,10 +1,13 @@
-import { ONENativeToken } from "./Tokens";
+import { ONENativeToken, ONEUpToken, ONEWrappedToken } from "./Tokens";
 import { Blockchains, EthChainIds, OfflineConnectors } from "../../Types";
 import { MetamaskConnector } from "../../Connectors/Wallets/MetamaskConnector";
 import { MathWalletConnector } from "../../Connectors/Wallets/MathWalletConnector";
-import { blockchainConfigFactory, web3ConnectorFactory } from "../Utils";
+import { blockchainConfigFactory } from "../Utils";
 import { OneWalletConnector } from "./Wallets/OneWalletConnector";
-import { ONEUpToken, ONEWrappedToken } from ".";
+import {
+  createWeb3OfflineConnectorHelper,
+  web3ConnectorFactory,
+} from "../../Connectors/Factory";
 
 export const HarmonyConfig = blockchainConfigFactory(
   {
@@ -19,6 +22,7 @@ export const HarmonyConfig = blockchainConfigFactory(
       address: "0xFE4980f62D708c2A84D3929859Ea226340759320",
       tryAggregate: false,
     },
+    connectorFactory: web3ConnectorFactory,
     explorer: {
       baseUrl: "https://explorer.harmony.one/#",
       address: function (address: string) {
@@ -33,5 +37,10 @@ export const HarmonyConfig = blockchainConfigFactory(
     },
   },
   [MetamaskConnector, OneWalletConnector, MathWalletConnector],
-  [web3ConnectorFactory(OfflineConnectors.Harmony, "https://api.harmony.one")]
+  [
+    createWeb3OfflineConnectorHelper(
+      OfflineConnectors.Harmony,
+      "https://api.harmony.one"
+    ),
+  ]
 );

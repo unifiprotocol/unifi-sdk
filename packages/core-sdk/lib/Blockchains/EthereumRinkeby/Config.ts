@@ -2,9 +2,13 @@ import { RinkebyNativeToken, RinkebyWrappedToken } from "./Tokens";
 import { Blockchains, EthChainIds, OfflineConnectors } from "../../Types";
 import { MetamaskConnector } from "../../Connectors/Wallets/MetamaskConnector";
 import { MathWalletConnector } from "../../Connectors/Wallets/MathWalletConnector";
-import { blockchainConfigFactory, web3ConnectorFactory } from "../Utils";
+import { blockchainConfigFactory } from "../Utils";
 import { TrustWalletConnector } from "../../Connectors/Wallets/TrustWalletConnector";
 import { MetamaskCompatibleConnector } from "../../Connectors/Wallets/MetamaskCompatibleConnector";
+import {
+  createWeb3OfflineConnectorHelper,
+  web3ConnectorFactory,
+} from "../../Connectors/Factory";
 
 export const EthereumRinkebyConfig = blockchainConfigFactory(
   {
@@ -16,6 +20,7 @@ export const EthereumRinkebyConfig = blockchainConfigFactory(
     multicall: {
       supported: true,
     },
+    connectorFactory: web3ConnectorFactory,
     explorer: {
       baseUrl: "https://rinkeby.etherscan.io",
       address: function (address: string) {
@@ -36,7 +41,7 @@ export const EthereumRinkebyConfig = blockchainConfigFactory(
     MetamaskCompatibleConnector,
   ],
   [
-    web3ConnectorFactory(
+    createWeb3OfflineConnectorHelper(
       OfflineConnectors.EtherScan,
       "https://api-rinkeby.etherscan.io"
     ),
