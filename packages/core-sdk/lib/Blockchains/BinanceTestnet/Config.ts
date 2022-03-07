@@ -5,8 +5,7 @@ import { blockchainConfigFactory, web3ConnectorFactory } from "../Utils";
 import { BinanceChainWalletConnector } from "../Binance/Wallets/BinanceChainWalletConnector";
 import { TrustWalletConnector } from "../../Connectors/Wallets/TrustWalletConnector";
 import { MetamaskCompatibleConnector } from "../../Connectors/Wallets/MetamaskCompatibleConnector";
-import { BNBNativeToken } from "../Binance/Tokens";
-import { BNBUpToken, BNBWrappedToken } from "./Tokens";
+import { BNBUpToken, BNBWrappedToken, BNBNativeToken } from "./Tokens";
 
 export const BinanceTesnetConfig = blockchainConfigFactory(
   {
