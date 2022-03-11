@@ -10,6 +10,7 @@ import { EthereumRopstenConfig } from "./EthereumRopsten";
 import { HarmonyConfig } from "./Harmony";
 import { IotexConfig } from "./Iotex";
 import { OntologyTestnetConfig } from "./OntologyTestnet";
+import { OntologyConfig } from "./Ontology";
 import { PolygonConfig } from "./Polygon";
 import { FTMConfig } from "./FTM";
 import { TronConfig } from "./Tron";
@@ -30,4 +31,5 @@ export const blockchainConfigMap: Partial<
   [Blockchains.OntologyTestnet]: OntologyTestnetConfig,
   [Blockchains.FTM]: FTMConfig,
   [Blockchains.Tron]: TronConfig,
+  [Blockchains.Ontology]: OntologyConfig,
 };
