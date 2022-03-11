@@ -13,6 +13,7 @@ export enum EthChainIds {
   BTTC = 199,
   FTM = 250,
   OntologyTestnet = 5851,
+  Ontology = 58,
 }
 
 export enum OfflineConnectors {
