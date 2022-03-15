@@ -93,12 +93,29 @@ export class TronAdapter extends BaseAdapter<
     return this.contracts[ensureHexAddress(contractAddress)];
   }
 
+  protected isNativeTokenAddress(contractAddress: string): boolean {
+    return (
+      contractAddress.toLowerCase() ===
+      this.blockchainConfig.nativeToken.address.toLowerCase()
+    );
+  }
+
   async execute<T = any>(
     contractAddress: string,
     method: string,
     values: Partial<ExecutionParams>,
     isWrite?: boolean
   ): Promise<ExecutionResponse<T>> {
+    if (
+      this.isNativeTokenAddress(contractAddress) &&
+      ["allowance", "approve"].includes(method)
+    ) {
+      return successResponse({
+        method,
+        value: BN(2 ** 256).toFixed(),
+      });
+    }
+
     const { args: unPreparedArgs, callValue } = values;
     try {
       const contract = this.getContract(contractAddress);
@@ -107,17 +124,6 @@ export class TronAdapter extends BaseAdapter<
         method,
         contract.abi
       );
-
-      if (
-        ensureHexAddress(contractAddress) ===
-          ensureHexAddress(this.blockchainConfig.nativeToken.address) &&
-        ["allowance", "approve"].includes(method)
-      ) {
-        return successResponse({
-          method,
-          value: BN(2 ** 256).toFixed(),
-        });
-      }
 
       if (isWrite) {
         const response = await contract[method].apply(null, args).send({
