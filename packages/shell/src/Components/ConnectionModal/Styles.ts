@@ -19,6 +19,7 @@ export const ItemTags = styled.div`
 export const ItemLogo = styled.img`
   width: 1.8rem;
   margin-right: 0.5rem;
+  border-radius: 50%;
 `;
 
 export const SelectionListItem = styled.div`

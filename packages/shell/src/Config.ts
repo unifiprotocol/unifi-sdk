@@ -102,6 +102,19 @@ const config: IConfig[] = [
     ),
   },
   {
+    blockchain: Blockchains.FTM,
+    chainId: 250,
+    logoURI:
+      "https://proxy.unifiprotocol.com/ipfs/QmPN8aMAnY2PxQeebTtyg1qxz7hqwHdojRp33dm3E8K5UA",
+    nativeToken: new Currency("FTM", 18, "FTM", "Fantom"),
+    wrappedToken: new Currency(
+      "0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
+      18,
+      "WFTM",
+      "Wrapped Fantom"
+    ),
+  },
+  {
     blockchain: Blockchains.EthereumRopsten,
     chainId: 3,
     logoURI:
