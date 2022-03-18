@@ -2782,7 +2782,7 @@
 
 "@unifiprotocol/utrade-v2-localization@git+https://github.com/unifiprotocol/utrade-v2-localization.git":
   version "1.0.0"
-  resolved "git+https://github.com/unifiprotocol/utrade-v2-localization.git#271273fbe04c0e3cd4f36e400853117bc84a1c7b"
+  resolved "git+https://github.com/unifiprotocol/utrade-v2-localization.git#52aef570ad0cf7cee267c2c0762257c6c5702b83"
 
 "@webassemblyjs/ast@1.11.1":
   version "1.11.1"
