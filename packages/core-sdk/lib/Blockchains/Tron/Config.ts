@@ -19,6 +19,8 @@ export const TronConfig = blockchainConfigFactory(
     nativeToken: TronNativeToken,
     wrappedToken: TronWrappedToken,
     upToken: TronUpToken,
+    logoURI:
+      "https://proxy.unifiprotocol.com/ipfs/QmNfhQcEHNL7tJJHCitHEwKFEr37dLJPVWaWZ13yXbYUZ8",
     connectorFactory: tronConnectorFactory,
     multicall: {
       supported: true,
