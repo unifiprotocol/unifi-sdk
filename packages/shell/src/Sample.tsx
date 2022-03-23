@@ -7,6 +7,7 @@ import { ShowNotification } from "./EventBus/Events/NotificationEvents";
 import { ShellWrappedComp } from "./Shell";
 import { SidebarItem } from "./Components/Sidebar";
 import { useTranslation } from "react-i18next";
+import { OpenNetworkModal } from "./EventBus/Events/UIEvents";
 
 export const Sample: ShellWrappedComp = ({ connection, eventBus }) => {
   const { balances } = useBalances();
@@ -27,6 +28,10 @@ export const Sample: ShellWrappedComp = ({ connection, eventBus }) => {
     );
   }, [eventBus]);
 
+  const onOpenModal = useCallback(() => {
+    eventBus.emit(new OpenNetworkModal());
+  }, [eventBus]);
+
   const address = connection?.adapter?.adapter.isConnected() ? (
     <p>{connection?.adapter?.adapter.getAddress()}</p>
   ) : (
@@ -45,6 +50,11 @@ export const Sample: ShellWrappedComp = ({ connection, eventBus }) => {
       <div>
         <PrimaryButton onClick={onShowNotification}>
           Show Notification
+        </PrimaryButton>
+      </div>
+      <div>
+        <PrimaryButton onClick={onOpenModal}>
+          Open Network Modal By Event
         </PrimaryButton>
       </div>
       <div>Balances</div>

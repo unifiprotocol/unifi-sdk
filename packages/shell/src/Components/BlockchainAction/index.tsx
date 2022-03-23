@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { mediaQueries, SecondaryButton } from "@unifiprotocol/uikit";
 import { useAdapter } from "../../Adapter";
 import { BlockchainModal } from "../BlockchainModal";
@@ -7,6 +7,7 @@ import styled from "styled-components";
 import { NetworkChanged } from "../../EventBus/Events/AdapterEvents";
 import { ShellEventBus } from "../../EventBus";
 import { Wipe } from "../../EventBus/Events/BalancesEvents";
+import { OpenNetworkModalEvent } from "../../EventBus/Events/UIEvents";
 
 const ActionButtonWrapped = styled.div`
   display: flex;
@@ -44,6 +45,14 @@ export const BlockchainAction = () => {
     },
     [updateChain]
   );
+
+  useEffect(() => {
+    const fn = () => !isModalOpen && setIsModalOpen(true);
+    ShellEventBus.on(OpenNetworkModalEvent, fn);
+    return () => {
+      ShellEventBus.off(OpenNetworkModalEvent, fn);
+    };
+  }, [isModalOpen]);
 
   return (
     <>
