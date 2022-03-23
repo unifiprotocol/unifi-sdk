@@ -17,6 +17,8 @@ export const EthereumRinkebyConfig = blockchainConfigFactory(
     publicRpc: "https://api-rinkeby.etherscan.io",
     nativeToken: RinkebyNativeToken,
     wrappedToken: RinkebyWrappedToken,
+    logoURI:
+      "https://proxy.unifiprotocol.com/ipfs/QmXaeURdHVszjDuGCwM7DauTjaASfm8qBZYzETM5ehq7MD",
     multicall: {
       supported: true,
     },

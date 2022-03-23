@@ -16,6 +16,8 @@ export const PolygonConfig = blockchainConfigFactory(
     nativeToken: MATICNativeToken,
     wrappedToken: MATICWrappedToken,
     upToken: MATICUpToken,
+    logoURI:
+      "https://proxy.unifiprotocol.com/ipfs/QmSwnuGtuLGyP7kGuW8oQhn8oHEFKuaAcYA7HBRNQtWvtm",
     multicall: {
       supported: true,
       address: "0x11ce4B23bD875D7F5C6a31084f55fDe1e9A87507",

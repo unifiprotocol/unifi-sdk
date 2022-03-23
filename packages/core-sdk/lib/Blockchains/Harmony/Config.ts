@@ -17,6 +17,8 @@ export const HarmonyConfig = blockchainConfigFactory(
     nativeToken: ONENativeToken,
     wrappedToken: ONEWrappedToken,
     upToken: ONEUpToken,
+    logoURI:
+      "https://proxy.unifiprotocol.com/ipfs/QmYm9c8Lx6mSWDvK3qhgnwJmbFEy1on4NXCVbEXHYNMSdt",
     multicall: {
       supported: true,
       address: "0xFE4980f62D708c2A84D3929859Ea226340759320",

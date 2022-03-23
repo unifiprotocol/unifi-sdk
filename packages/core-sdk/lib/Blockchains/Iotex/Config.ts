@@ -16,6 +16,8 @@ export const IotexConfig = blockchainConfigFactory(
     nativeToken: IOTXNativeToken,
     wrappedToken: IOTXWrappedToken,
     upToken: IOTXUpToken,
+    logoURI:
+      "https://proxy.unifiprotocol.com/ipfs/QmX4WzftcjqPpw1GUgVGDDLTk1aUwtFZtSzBtv6Zt1RTBZ",
     multicall: {
       supported: true,
       address: "0xacce294bf7d25fe8c5c64ae45197d3878f68403b",

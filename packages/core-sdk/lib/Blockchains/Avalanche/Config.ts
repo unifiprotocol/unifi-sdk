@@ -16,6 +16,8 @@ export const AvalancheConfig = blockchainConfigFactory(
     nativeToken: AVAXNativeToken,
     wrappedToken: AVAXWrappedToken,
     upToken: AVAXUpToken,
+    logoURI:
+      "https://proxy.unifiprotocol.com/ipfs/QmX4WzftcjqPpw1GUgVGDDLTk1aUwtFZtSzBtv6Zt1RTBZ",
     multicall: {
       supported: true,
       address: "0xa00FB557AA68d2e98A830642DBbFA534E8512E5f",

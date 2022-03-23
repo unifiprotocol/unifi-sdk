@@ -17,6 +17,8 @@ export const OntologyConfig = blockchainConfigFactory(
     nativeToken: ONGNativeToken,
     wrappedToken: ONGWrappedToken,
     upToken: ONGUpToken,
+    logoURI:
+      "https://proxy.unifiprotocol.com/ipfs/QmXRH7VxcrLM9mP3si1f4A82UPcgyqEiSWJtNzHKkVeUW2",
     multicall: {
       supported: true,
       address: "0xF0FccF333d45B383A9086739Ab8176BeDDd5a519",

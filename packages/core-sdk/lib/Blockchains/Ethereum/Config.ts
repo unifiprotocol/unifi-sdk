@@ -19,6 +19,8 @@ export const EthereumConfig = blockchainConfigFactory(
     nativeToken: ETHNativeToken,
     wrappedToken: ETHWrappedToken,
     upToken: ETHUpToken,
+    logoURI:
+      "https://proxy.unifiprotocol.com/ipfs/QmXaeURdHVszjDuGCwM7DauTjaASfm8qBZYzETM5ehq7MD",
     multicall: {
       supported: true,
     },

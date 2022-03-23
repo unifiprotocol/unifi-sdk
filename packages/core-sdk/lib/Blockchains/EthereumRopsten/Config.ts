@@ -4,12 +4,12 @@ import { MathWalletConnector } from "../../Connectors/Wallets/MathWalletConnecto
 import { blockchainConfigFactory } from "../Utils";
 import { TrustWalletConnector } from "../../Connectors/Wallets/TrustWalletConnector";
 import { MetamaskCompatibleConnector } from "../../Connectors/Wallets/MetamaskCompatibleConnector";
-import {  
+import {
   RopstenUpToken,
   RopstenWrappedToken,
   RopstenNativeToken,
 } from "./Tokens";
-import {  
+import {
   createWeb3OfflineConnectorHelper,
   web3ConnectorFactory,
 } from "../../Connectors/Factory";
@@ -23,6 +23,8 @@ export const EthereumRopstenConfig = blockchainConfigFactory(
     nativeToken: RopstenNativeToken,
     wrappedToken: RopstenWrappedToken,
     upToken: RopstenUpToken,
+    logoURI:
+      "https://proxy.unifiprotocol.com/ipfs/QmXaeURdHVszjDuGCwM7DauTjaASfm8qBZYzETM5ehq7MD",
     multicall: {
       supported: true,
     },

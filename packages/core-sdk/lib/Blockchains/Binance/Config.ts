@@ -25,6 +25,8 @@ export const BinanceConfig = blockchainConfigFactory(
     wrappedToken: BNBWrappedToken,
     upToken: BNBUpToken,
     unfiToken: BNBUnfiToken,
+    logoURI:
+      "https://proxy.unifiprotocol.com/ipfs/QmU2EACvQ1YT7LTzHQdQEVMwDYVeeX3AHBHT9q5HQ4e5oK",
     multicall: {
       supported: true,
     },

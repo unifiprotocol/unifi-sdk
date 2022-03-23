@@ -19,6 +19,7 @@ export interface IBlockchainConfig {
   wrappedToken: Currency;
   upToken?: Currency;
   unfiToken?: Currency;
+  logoURI: string;
   chainId: EthChainIds | undefined;
   wallets: IConnector[];
   offlineConnectors: IConnector[];

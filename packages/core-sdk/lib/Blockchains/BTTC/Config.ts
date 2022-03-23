@@ -16,6 +16,8 @@ export const BttcConfig = blockchainConfigFactory(
     nativeToken: BTTCNativeToken,
     wrappedToken: BTTCWrappedToken,
     upToken: BTTCUpToken,
+    logoURI:
+      "https://proxy.unifiprotocol.com/ipfs/QmTrdCwZBPhGSjjFHrZwVBGcSKM2tgdQMiAWuePwhMMR9q",
     multicall: {
       supported: true,
       address: "0x9F80bb4f2eEEdf82d6Cc39c84184E34FC7F198eE",

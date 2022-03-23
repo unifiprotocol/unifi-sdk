@@ -17,6 +17,8 @@ export const FTMConfig = blockchainConfigFactory(
     nativeToken: FTMToken,
     wrappedToken: FTMWrappedToken,
     upToken: FTMUpToken,
+    logoURI:
+      "https://proxy.unifiprotocol.com/ipfs/QmPN8aMAnY2PxQeebTtyg1qxz7hqwHdojRp33dm3E8K5UA",
     multicall: {
       supported: true,
       address: "0x3BF91Ba76B8B60fD92F588068fAd1e6f50B9d420",
