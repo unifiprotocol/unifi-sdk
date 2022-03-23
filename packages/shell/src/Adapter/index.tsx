@@ -1,6 +1,7 @@
 import {
   Connectors,
   getBlockchainConnectorByName,
+  getBlockchainOfflineConnector,
   getBlockchainOfflineConnectors,
   IConnector,
 } from "@unifiprotocol/core-sdk";
@@ -15,6 +16,7 @@ import Config, { IConfig } from "../Config";
 import { ShellEventBus } from "../EventBus";
 import { Wipe } from "../EventBus/Events/BalancesEvents";
 import { timedReject } from "../Utils";
+import { getChainOnStorage, setChainOnStorage } from "../Utils/ChainStorage";
 
 export enum AdapterActionKind {
   CONNECT,
@@ -63,10 +65,22 @@ const reducer = (state: AdapterState, action: AdapterAction) => {
   }
 };
 
-const initialState: AdapterState = {
-  connector: getBlockchainOfflineConnectors(Config[0].blockchain)[0],
-  activeChain: Config[0],
-};
+const initialState: AdapterState = (function () {
+  const chain = getChainOnStorage();
+  if (chain) {
+    const cfg = Config.find((cfg) => cfg.blockchain === chain);
+    if (cfg) {
+      return {
+        connector: getBlockchainOfflineConnector(cfg.blockchain),
+        activeChain: cfg,
+      };
+    }
+  }
+  return {
+    connector: getBlockchainOfflineConnector(Config[0].blockchain),
+    activeChain: Config[0],
+  };
+})();
 
 const AdapterContext = createContext<{
   state: AdapterState;
@@ -93,9 +107,9 @@ export const useAdapter = () => {
         activeChain.blockchain,
         connectorName
       );
-      const offlineConnector = getBlockchainOfflineConnectors(
+      const offlineConnector = getBlockchainOfflineConnector(
         activeChain.blockchain
-      )[0];
+      );
       const successConnection = (payload: IConnector) => {
         dispatch({ type: AdapterActionKind.CONNECT, payload });
       };
@@ -132,6 +146,7 @@ export const useAdapter = () => {
 
   const updateChain = useCallback(
     (cfg: IConfig) => {
+      setChainOnStorage(cfg.blockchain);
       dispatch({
         type: AdapterActionKind.SWITCH_CHAIN,
         payload: cfg,
