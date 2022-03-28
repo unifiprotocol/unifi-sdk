@@ -43,12 +43,11 @@ export const EthereumConfig = blockchainConfigFactory(
     TrustWalletConnector,
     MathWalletConnector,
     MetamaskCompatibleConnector,
-    AlchemyConnector,
   ],
   [
     createWeb3OfflineConnectorHelper(
       OfflineConnectors.EtherScan,
-      "https://api.etherscan.io"
+      "https://nodes.mewapi.io/rpc/eth"
     ),
     createWeb3OfflineConnectorHelper(
       OfflineConnectors.Cloudflare,
