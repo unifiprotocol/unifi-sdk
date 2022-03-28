@@ -24,8 +24,8 @@ export const TokenLogo: React.FC<TokenLogoProps> = ({
   const sources = useMemo(
     () =>
       [
-        tokenLogoResolver && tokenLogoResolver(token.address),
         blockchain && TokenLogoResolvers[blockchain](token.address),
+        tokenLogoResolver && tokenLogoResolver(token.address),
         UNKNOWN_TOKEN_LOGO,
       ].filter((v) => !!v),
     [token]
