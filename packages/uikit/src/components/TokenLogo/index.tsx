@@ -25,7 +25,7 @@ export const TokenLogo: React.FC<TokenLogoProps> = ({
     () =>
       [
         tokenLogoResolver && tokenLogoResolver(token.address),
-        blockchain && TokenLogoResolvers[blockchain],
+        blockchain && TokenLogoResolvers[blockchain](token.address),
         UNKNOWN_TOKEN_LOGO,
       ].filter((v) => !!v),
     [token]
