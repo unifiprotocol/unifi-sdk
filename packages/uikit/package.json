@@ -1,6 +1,6 @@
 {
   "name": "@unifiprotocol/uikit",
-  "version": "1.13.2",
+  "version": "1.13.3",
   "description": "Set of UI components for Unifi Protocol projects",
   "author": "Unifi Protocol",
   "repository": "git@github.com:unifiprotocol/unifi-sdk.git",
