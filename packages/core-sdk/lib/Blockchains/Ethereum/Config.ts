@@ -49,9 +49,5 @@ export const EthereumConfig = blockchainConfigFactory(
       OfflineConnectors.Cloudflare,
       "https://cloudflare-eth.com/"
     ),
-    createWeb3OfflineConnectorHelper(
-      OfflineConnectors.EtherScan,
-      "https://nodes.mewapi.io/rpc/eth"
-    ),
   ]
 );
