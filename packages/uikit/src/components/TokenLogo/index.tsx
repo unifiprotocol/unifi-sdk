@@ -1,3 +1,4 @@
+import { Blockchains, TokenLogoResolvers } from "@unifiprotocol/utils";
 import React, { useCallback, useContext, useMemo, useState } from "react";
 import styled from "styled-components";
 import { UiContext } from "../../context/UiContext";
@@ -10,14 +11,21 @@ type TokenData = { address: string; symbol: string };
 
 type TokenLogoProps = {
   token: TokenData;
+  blockchain?: Blockchains;
 } & React.ImgHTMLAttributes<HTMLImageElement>;
 
-export const TokenLogo: React.FC<TokenLogoProps> = ({ token, ...imgProps }) => {
+export const TokenLogo: React.FC<TokenLogoProps> = ({
+  token,
+  blockchain,
+  ...imgProps
+}) => {
   const { tokenLogoResolver } = useContext(UiContext);
+
   const sources = useMemo(
     () =>
       [
         tokenLogoResolver && tokenLogoResolver(token.address),
+        blockchain && TokenLogoResolvers[blockchain],
         UNKNOWN_TOKEN_LOGO,
       ].filter((v) => !!v),
     [token]
