@@ -25,7 +25,7 @@ export const IotexConfig = blockchainConfigFactory(
     },
     connectorFactory: web3ConnectorFactory,
     explorer: {
-      baseUrl: "https://iotexscan.io",
+      baseUrl: "https://iotexscout.io",
       address: function (address: string) {
         return `${this.baseUrl}/address/${address}`;
       },
