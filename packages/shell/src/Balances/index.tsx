@@ -8,10 +8,10 @@ import {
 import { Currency } from "@unifiprotocol/utils";
 
 export enum BalancesActionKind {
-  ADD_TOKEN,
-  UPDATE_BALANCES,
-  UPDATE_UNFI,
-  WIPE,
+  ADD_TOKEN = "ADD_TOKEN",
+  UPDATE_BALANCES = "UPDATE_BALANCES",
+  UPDATE_UNFI = "UPDATE_UNFI",
+  WIPE = "WIPE",
 }
 
 export interface BalancesState {

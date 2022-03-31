@@ -7,7 +7,7 @@ import {
 } from "react";
 
 export enum NavigationActionKind {
-  UPDATE_SIDEBAR,
+  UPDATE_SIDEBAR = "UPDATE_SIDEBAR",
 }
 
 export interface NavigationState {

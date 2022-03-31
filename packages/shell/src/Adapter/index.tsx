@@ -19,9 +19,9 @@ import { timedReject } from "../Utils";
 import { getChainOnStorage, setChainOnStorage } from "../Utils/ChainStorage";
 
 export enum AdapterActionKind {
-  CONNECT,
-  DISCONNECT,
-  SWITCH_CHAIN,
+  CONNECT = "CONNECT",
+  DISCONNECT = "DISCONNECT",
+  SWITCH_CHAIN = "SWITCH_CHAIN",
 }
 
 export interface AdapterAction {
@@ -119,11 +119,7 @@ export const useAdapter = () => {
           walletConnector
             .connect()
             .then(() => successConnection(walletConnector)),
-        ]).catch(() =>
-          offlineConnector
-            .connect()
-            .then(() => successConnection(offlineConnector))
-        );
+        ]);
       } catch (err) {
         offlineConnector
           .connect()
