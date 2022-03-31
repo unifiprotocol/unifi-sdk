@@ -1,0 +1,10 @@
+version: '3'
+services:
+  shell:
+    build: .
+    container_name: shell
+    ports:
+      - 3000:3010
+    command: yarn start
+    volumes:
+      - ./:/app
