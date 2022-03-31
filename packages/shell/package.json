@@ -57,6 +57,7 @@
     "prepublishOnly": "yarn clean && yarn compile",
     "start": "craco start",
     "build": "craco build",
+    "build:watch": "nodemon --watch \"src/**\" --ext \"ts,json\" --exec yarn build",
     "compile": "rollup -c",
     "test": "craco test",
     "clean": "rm -rf ./build"
@@ -88,6 +89,7 @@
     "@rollup/plugin-url": "^6.1.0",
     "@types/crypto-js": "^4.1.0",
     "@types/styled-components": "^5.1.21",
+    "nodemon": "^2.0.15",
     "rollup": "^2.67.2",
     "rollup-plugin-peer-deps-external": "^2.2.4"
   }
