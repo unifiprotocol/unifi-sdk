@@ -11,6 +11,9 @@ export const Updater = () => {
 
   useEffect(() => {
     Clocks.start();
+    return () => {
+      Clocks.clear();
+    };
   }, []);
 
   useEffect(() => {
