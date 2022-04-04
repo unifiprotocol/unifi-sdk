@@ -14,6 +14,7 @@ import {
 } from "react";
 import Config, { IConfig } from "../Config";
 import { ShellEventBus } from "../EventBus";
+import { AddressChanged } from "../EventBus/Events/AdapterEvents";
 import { Wipe } from "../EventBus/Events/BalancesEvents";
 import { timedReject } from "../Utils";
 import { getChainOnStorage, setChainOnStorage } from "../Utils/ChainStorage";
@@ -120,6 +121,9 @@ export const useAdapter = () => {
             .connect()
             .then(() => successConnection(walletConnector)),
         ]);
+        walletConnector.on("AddressChanged", (address) => {
+          ShellEventBus.emit(new AddressChanged(address));
+        });
       } catch (err) {
         offlineConnector
           .connect()

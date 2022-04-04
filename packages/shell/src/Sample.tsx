@@ -8,7 +8,13 @@ import { ShellWrappedComp } from "./Shell";
 import { SidebarItem } from "./Components/Sidebar";
 import { useTranslation } from "react-i18next";
 import { OpenNetworkModal } from "./EventBus/Events/UIEvents";
-import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import {
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 
 export const Sample: ShellWrappedComp = ({ connection, eventBus }) => {
   const { balances } = useBalances();
@@ -66,6 +72,7 @@ export const Sample: ShellWrappedComp = ({ connection, eventBus }) => {
         <Route path="/exchange" element={<>AAA</>}></Route>
         <Route path="/liquidity" element={<>BBB</>}></Route>
         <Route path="/up" element={<>CCC</>}></Route>
+        <Route path="/" element={<Navigate to="/exchange" />}></Route>
       </Routes>
     </div>
   );

@@ -13,6 +13,7 @@ import {
   WipeEvent,
 } from "../EventBus/Events/BalancesEvents";
 import { coinGeckoService } from "../Services/Coingecko";
+import { AddressChangedEvent } from "../EventBus/Events/AdapterEvents";
 
 export const BalancesUpdater = () => {
   const [initialTrigger, setInitialTrigger] = useState(false);
@@ -73,7 +74,9 @@ export const BalancesUpdater = () => {
   ]);
 
   useEffect(() => {
-    const fn = () => !refreshing && update();
+    const fn = () => {
+      !refreshing && update();
+    };
     Clocks.on("SIXTY_SECONDS", fn);
     return () => {
       Clocks.off("SIXTY_SECONDS", fn);
@@ -101,12 +104,14 @@ export const BalancesUpdater = () => {
   }, [addToken]);
 
   useEffect(() => {
-    const fn = () => update();
+    const fn = () => {
+      update();
+    };
     ShellEventBus.on(RefreshBalancesEvent, fn);
     return () => {
       ShellEventBus.off(RefreshBalancesEvent, fn);
     };
-  }, [refreshing, update]);
+  }, [update]);
 
   useEffect(() => {
     const fn = () => {
@@ -116,6 +121,17 @@ export const BalancesUpdater = () => {
     ShellEventBus.on(WipeEvent, fn);
     return () => {
       ShellEventBus.off(WipeEvent, fn);
+    };
+  }, [refreshing, update, wipe]);
+
+  useEffect(() => {
+    const fn = () => {
+      wipe();
+      update();
+    };
+    ShellEventBus.on(AddressChangedEvent, fn);
+    return () => {
+      ShellEventBus.off(AddressChangedEvent, fn);
     };
   }, [refreshing, update, wipe]);
 
