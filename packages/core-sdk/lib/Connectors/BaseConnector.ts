@@ -17,7 +17,7 @@ export abstract class BaseConnector implements IConnector {
   protected abstract _connect(): Promise<IConnectorAdapters>;
 
   async connect(): Promise<IConnectorAdapters> {
-    if (!this.adapter) {
+    if (this.adapter) {
       return this.adapter;
     }
     const adapters = await this._connect();
