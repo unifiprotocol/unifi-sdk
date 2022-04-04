@@ -17,15 +17,21 @@ export abstract class BaseConnector implements IConnector {
   protected abstract _connect(): Promise<IConnectorAdapters>;
 
   async connect(): Promise<IConnectorAdapters> {
-    const connector = await this._connect();
-    this.adapter = connector;
-    return connector;
+    if (!this.adapter) {
+      return this.adapter;
+    }
+    const adapters = await this._connect();
+    this.adapter = adapters;
+
+    return adapters;
   }
 
   async disconnect(): Promise<void> {
-    this.emitter.emit("Disconnect", {});
-    this.emitter.removeAllListeners();
-    this.adapter = undefined;
+    if (this.adapter) {
+      this.emitter.emit("Disconnect", {});
+      this.emitter.removeAllListeners();
+      this.adapter = undefined;
+    }
   }
 
   get isWallet(): boolean {
