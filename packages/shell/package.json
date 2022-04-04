@@ -40,8 +40,6 @@
     "stream-browserify": "^3.0.0",
     "stream-http": "^3.2.0",
     "styled-components": "^5.3.3",
-    "tslib": "^2.3.1",
-    "typescript": "^4.4.2",
     "web-vitals": "^2.1.0"
   },
   "main": "build/index.js",
@@ -57,10 +55,12 @@
     "prepublishOnly": "yarn clean && yarn compile",
     "start": "craco start",
     "build": "craco build",
-    "build:watch": "nodemon --watch \"src/**\" --ext \"ts,json\" --exec yarn build",
+    "build:watch": "yarn watch yarn build",
     "compile": "rollup -c",
+    "compile:watch": "yarn watch yarn compile",
     "test": "craco test",
-    "clean": "rm -rf ./build"
+    "clean": "rm -rf ./build",
+    "watch": "nodemon --watch \"src/**\" --ext \"ts,json\" --exec"
   },
   "eslintConfig": {
     "extends": [
@@ -91,6 +91,8 @@
     "@types/styled-components": "^5.1.21",
     "nodemon": "^2.0.15",
     "rollup": "^2.67.2",
-    "rollup-plugin-peer-deps-external": "^2.2.4"
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "tslib": "^2.3.1",
+    "typescript": "^4.4.2"
   }
 }

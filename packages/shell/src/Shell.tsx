@@ -16,6 +16,7 @@ import { Sidebar } from "./Components/Sidebar";
 import { NavigationProvider } from "./Navigation";
 import { I18nextProvider } from "react-i18next";
 import i18n from "./i18n";
+import { BrowserRouter } from "react-router-dom";
 
 export type ShellWrappedProps = {
   connection: IConnector;
@@ -36,37 +37,43 @@ const ShellWrapper = styled.div`
 const ContentWrapper = styled.div`
   display: flex;
 `;
-
-export const Shell: React.FC<{
+export interface ShellProps {
   Wrapped?: ShellWrappedComp;
   Sidebar?: ShellWrappedComp[];
-}> = ({ Wrapped, Sidebar: SidebarComps = [] }) => {
+}
+
+export const Shell: React.FC<ShellProps> = ({
+  Wrapped,
+  Sidebar: SidebarComps = [],
+}) => {
   return (
-    <AdapterProvider>
-      <BalancesProvider>
-        <I18nextProvider i18n={i18n}>
-          <UnifiThemeProvider theme={Themes.Dark}>
-            <ShellWrapper>
-              <NavigationProvider>
-                <Updater />
-                <NavigationHeader />
-                <TopHeader />
-                <ContentWrapper>
-                  {SidebarComps.length > 0 && (
-                    <Sidebar>
-                      {SidebarComps.map((Comp, idx) => (
-                        <ConnectedComp Wrapped={Comp} key={idx} />
-                      ))}
-                    </Sidebar>
-                  )}
-                  <ConnectedComp Wrapped={Wrapped} />
-                </ContentWrapper>
-              </NavigationProvider>
-            </ShellWrapper>
-          </UnifiThemeProvider>
-        </I18nextProvider>
-      </BalancesProvider>
-    </AdapterProvider>
+    <BrowserRouter>
+      <AdapterProvider>
+        <BalancesProvider>
+          <I18nextProvider i18n={i18n}>
+            <UnifiThemeProvider theme={Themes.Dark}>
+              <ShellWrapper>
+                <NavigationProvider>
+                  <Updater />
+                  <NavigationHeader />
+                  <TopHeader />
+                  <ContentWrapper>
+                    {SidebarComps.length > 0 && (
+                      <Sidebar>
+                        {SidebarComps.map((Comp, idx) => (
+                          <ConnectedComp Wrapped={Comp} key={idx} />
+                        ))}
+                      </Sidebar>
+                    )}
+                    <ConnectedComp Wrapped={Wrapped} />
+                  </ContentWrapper>
+                </NavigationProvider>
+              </ShellWrapper>
+            </UnifiThemeProvider>
+          </I18nextProvider>
+        </BalancesProvider>
+      </AdapterProvider>
+    </BrowserRouter>
   );
 };
 

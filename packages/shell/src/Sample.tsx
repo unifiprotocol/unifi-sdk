@@ -8,6 +8,7 @@ import { ShellWrappedComp } from "./Shell";
 import { SidebarItem } from "./Components/Sidebar";
 import { useTranslation } from "react-i18next";
 import { OpenNetworkModal } from "./EventBus/Events/UIEvents";
+import { Route, Routes, useNavigate } from "react-router-dom";
 
 export const Sample: ShellWrappedComp = ({ connection, eventBus }) => {
   const { balances } = useBalances();
@@ -58,17 +59,31 @@ export const Sample: ShellWrappedComp = ({ connection, eventBus }) => {
         </PrimaryButton>
       </div>
       <div>Balances</div>
+
       <pre>{JSON.stringify(balances, null, 4)}</pre>
+
+      <Routes>
+        <Route path="/exchange" element={<>AAA</>}></Route>
+        <Route path="/liquidity" element={<>BBB</>}></Route>
+        <Route path="/up" element={<>CCC</>}></Route>
+      </Routes>
     </div>
   );
 };
 
 export const SampleSidebar = () => {
+  const navigate = useNavigate();
   return (
     <>
-      <SidebarItem icon={BiHome}>Exchange</SidebarItem>
-      <SidebarItem icon={BiHome}>Liquidity</SidebarItem>
-      <SidebarItem icon={BiHome}>UP</SidebarItem>
+      <SidebarItem icon={BiHome} onClick={() => navigate("exchange")}>
+        Exchange
+      </SidebarItem>
+      <SidebarItem icon={BiHome} onClick={() => navigate("liquidity")}>
+        Liquidity
+      </SidebarItem>
+      <SidebarItem icon={BiHome} onClick={() => navigate("up")}>
+        UP
+      </SidebarItem>
       <SidebarItem>Test</SidebarItem>
       <div>Test #2</div>
     </>

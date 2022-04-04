@@ -5,13 +5,13 @@ import {
   NetworkChanged,
 } from "./AdapterEvents";
 import { ShowNotification } from "./NotificationEvents";
-import { OpenNetworkModal } from "./UIEvents";
+import { OpenNetworkModal, ChangeSidebarState } from "./UIEvents";
 import { ChangeNetwork } from "./BlockchainEvents";
 
 export const ShellEvents = {
   Balances: { AddCurrency, RefreshBalances, Wipe },
   Adapter: { AdapterConnected, AddressChanged, NetworkChanged },
   Notifications: { ShowNotification },
-  UI: { OpenNetworkModal },
+  UI: { OpenNetworkModal, ChangeSidebarState },
   Blockchain: { OpenNetworkModal, ChangeNetwork },
 };
