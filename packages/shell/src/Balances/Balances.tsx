@@ -1,10 +1,8 @@
-import { useCallback, useEffect, useState } from "react";
-import { BN } from "@unifiprotocol/utils";
+import { useEffect, useState } from "react";
 import { useBalances } from ".";
 import { useAdapter } from "../Adapter";
-import { BalanceOf } from "../Contracts/ERC20/balanceOf";
+
 import Clocks from "../Services/Clocks";
-import { GenericUseCase } from "@unifiprotocol/core-sdk";
 import { ShellEventBus } from "../EventBus";
 import {
   AddCurrency,
@@ -17,71 +15,17 @@ import { AddressChangedEvent } from "../EventBus/Events/AdapterEvents";
 
 export const BalancesUpdater = () => {
   const [initialTrigger, setInitialTrigger] = useState(false);
-  const [refreshing, setRefreshing] = useState(false);
-  const { balances, updateBalances, addToken, wipe, updateUnfiPrice } =
+
+  const { refreshing, addToken, refresh, wipe, updateUnfiPrice } =
     useBalances();
-  const { adapter, activeChain } = useAdapter();
-
-  const update = useCallback(async () => {
-    try {
-      if (!adapter?.adapter.isConnected()) return;
-      setRefreshing(true);
-
-      const result: typeof balances = [];
-      const filteredBalances = balances.filter(
-        (b) => !b.currency.equals(activeChain.nativeToken)
-      );
-      const multicallRequests = filteredBalances.reduce(
-        (calls: GenericUseCase[], b) => {
-          adapter.adapter.initializeToken(b.currency.address);
-          calls.push(
-            new BalanceOf({
-              tokenAddress: b.currency.address,
-              owner: adapter.adapter.getAddress(),
-            })
-          );
-          return calls;
-        },
-        []
-      );
-
-      const nativeBalance = await adapter.adapter.getBalance();
-      const responses = await adapter.multicall.execute(multicallRequests);
-      responses.forEach((res, idx) => {
-        result.push({
-          currency: filteredBalances[idx].currency,
-          balance: BN(res.value ?? "0").toFixed(),
-        });
-      });
-
-      result.push({
-        currency: activeChain.nativeToken,
-        balance: nativeBalance.balance,
-      });
-
-      updateBalances(result);
-    } catch (err) {
-      console.error("🚀 ~ file: Balances.tsx ~ line 41 ~ update ~ err", err);
-    } finally {
-      setRefreshing(false);
-    }
-  }, [
-    activeChain.nativeToken,
-    adapter?.adapter,
-    adapter?.multicall,
-    balances,
-    updateBalances,
-  ]);
+  const { adapter } = useAdapter();
 
   useEffect(() => {
-    const fn = () => {
-      !refreshing && update();
-    };
-    Clocks.on("SIXTY_SECONDS", fn);
+    Clocks.on("SIXTY_SECONDS", refresh);
     return () => {
-      Clocks.off("SIXTY_SECONDS", fn);
+      Clocks.off("SIXTY_SECONDS", refresh);
     };
-  }, [update, refreshing]);
+  }, [refresh]);
 
   useEffect(() => {
     const fn = () =>
@@ -105,13 +49,13 @@ export const BalancesUpdater = () => {
 
   useEffect(() => {
     const fn = () => {
-      update();
+      refresh();
     };
     ShellEventBus.on(RefreshBalancesEvent, fn);
     return () => {
       ShellEventBus.off(RefreshBalancesEvent, fn);
     };
-  }, [update]);
+  }, [refresh]);
 
   useEffect(() => {
     const fn = () => {
@@ -122,25 +66,25 @@ export const BalancesUpdater = () => {
     return () => {
       ShellEventBus.off(WipeEvent, fn);
     };
-  }, [refreshing, update, wipe]);
+  }, [refreshing, refresh, wipe]);
 
   useEffect(() => {
     const fn = () => {
       wipe();
-      update();
+      refresh();
     };
     ShellEventBus.on(AddressChangedEvent, fn);
     return () => {
       ShellEventBus.off(AddressChangedEvent, fn);
     };
-  }, [refreshing, update, wipe]);
+  }, [refreshing, refresh, wipe]);
 
   useEffect(() => {
     if (!initialTrigger && adapter?.adapter.isConnected() && !refreshing) {
-      update();
+      refresh();
       setInitialTrigger(true);
     }
-  }, [adapter, initialTrigger, refreshing, update]);
+  }, [adapter, initialTrigger, refreshing, refresh]);
 
   return <></>;
 };

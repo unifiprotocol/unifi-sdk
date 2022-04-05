@@ -18,7 +18,7 @@ import { ShellEventBus } from "../EventBus";
 import { AddressChanged } from "../EventBus/Events/AdapterEvents";
 import { Wipe } from "../EventBus/Events/BalancesEvents";
 import { ShowNotification } from "../EventBus/Events/NotificationEvents";
-import { WrongNetworkNotification } from "../Notifications";
+import { ShellNotifications } from "../Notifications";
 import { timedReject } from "../Utils";
 import { getChainOnStorage, setChainOnStorage } from "../Utils/ChainStorage";
 
@@ -118,7 +118,9 @@ export const useAdapter = () => {
       if (error instanceof InvalidNetworkError) {
         ShellEventBus.emit(
           new ShowNotification(
-            new WrongNetworkNotification(state.activeChain.blockchain)
+            new ShellNotifications.Blockchain.WrongNetworkNotification(
+              state.activeChain.blockchain
+            )
           )
         );
       }

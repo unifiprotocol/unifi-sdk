@@ -17,7 +17,7 @@ import {
 } from "react-router-dom";
 
 export const Sample: ShellWrappedComp = ({ connection, eventBus }) => {
-  const { balances } = useBalances();
+  const { balances, refreshing } = useBalances();
   const { activeChain } = useAdapter();
   const { i18n } = useTranslation();
 
@@ -64,7 +64,7 @@ export const Sample: ShellWrappedComp = ({ connection, eventBus }) => {
           Open Network Modal By Event
         </PrimaryButton>
       </div>
-      <div>Balances</div>
+      <div>Balances: {refreshing ? "Refreshing" : "Loaded"}</div>
 
       <pre>{JSON.stringify(balances, null, 4)}</pre>
 
