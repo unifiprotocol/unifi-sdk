@@ -8,6 +8,7 @@ import { NetworkChanged } from "../../EventBus/Events/AdapterEvents";
 import { ShellEventBus } from "../../EventBus";
 import { Wipe } from "../../EventBus/Events/BalancesEvents";
 import { OpenNetworkModalEvent } from "../../EventBus/Events/UIEvents";
+import { getVernacularBlockchain } from "@unifiprotocol/utils";
 
 const ActionButtonWrapped = styled.div`
   display: flex;
@@ -59,7 +60,9 @@ export const BlockchainAction = () => {
       <SecondaryButton onClick={() => setIsModalOpen(true)}>
         <ActionButtonWrapped>
           <ChainLogo src={activeChain.logoURI} alt={activeChain.blockchain} />
-          <ChainName>{activeChain.blockchain}</ChainName>
+          <ChainName>
+            {getVernacularBlockchain(activeChain.blockchain)}
+          </ChainName>
         </ActionButtonWrapped>
       </SecondaryButton>
       <BlockchainModal

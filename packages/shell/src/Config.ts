@@ -50,6 +50,19 @@ const config: IConfig[] = [
     ),
   },
   {
+    blockchain: Blockchains.Ontology,
+    chainId: 58,
+    logoURI:
+      "https://proxy.unifiprotocol.com/ipfs/QmXRH7VxcrLM9mP3si1f4A82UPcgyqEiSWJtNzHKkVeUW2",
+    nativeToken: new Currency("ONG", 18, "ONG", "ONG"),
+    wrappedToken: new Currency(
+      "0xd8bc24cfd45452ef2c8bc7618e32330b61f2691b",
+      18,
+      "WONG",
+      "Wrapped ONG"
+    ),
+  },
+  {
     blockchain: Blockchains.Polygon,
     chainId: 137,
     logoURI:
