@@ -81,6 +81,10 @@ const LISTED_ITEMS: Array<{ name: string; href: string }> = [
     name: "NFT",
     href: "https://nft.unifiprotocol.com",
   },
+  {
+    name: "UBRIDGE",
+    href: "https://ubridge.unifiprotocol.com",
+  },
 ];
 
 export const NavigationHeader: React.FC = () => (
