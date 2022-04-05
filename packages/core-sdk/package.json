@@ -37,7 +37,7 @@
     "@unifiprotocol/utils": "^2.3.0",
     "bignumber.js": "^9.0.1",
     "ethereum-multicall": "^2.4.0",
-    "ethers": "^5.2.0",
+    "ethers": "^5.6.2",
     "eventemitter3": "^4.0.7",
     "promise-parallel-throttle": "^3.3.0",
     "reflect-metadata": "^0.1.13",

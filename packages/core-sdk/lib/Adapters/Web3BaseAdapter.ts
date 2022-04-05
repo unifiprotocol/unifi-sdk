@@ -1,4 +1,4 @@
-import { BN } from "@unifiprotocol/utils";
+import { Blockchains, BN } from "@unifiprotocol/utils";
 import { ContractInterface, ethers, utils } from "ethers";
 import {
   AdapterBalance,
@@ -128,7 +128,19 @@ export class Web3BaseAdapter extends BaseAdapter<
           params
         );
 
-        const computedParams = computeInvocationParams(params, { gasLimit });
+        let gasPrice;
+        try {
+          gasPrice = await this.etherClient
+            .getFeeData()
+            .then((data) => data.gasPrice.toHexString());
+        } catch (err) {
+          console.error("Error fetching Web3BaseAdapter.getFeeData");
+        }
+
+        const computedParams = computeInvocationParams(params, {
+          gasLimit,
+          ...(gasPrice ? { gasPrice } : {}),
+        });
 
         // use callStatic to check if tx might fail before calling spending gas
         await contract.callStatic[method]
