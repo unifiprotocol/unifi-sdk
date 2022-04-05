@@ -4,6 +4,7 @@ import {
   getBlockchainOfflineConnector,
   getBlockchainOfflineConnectors,
   IConnector,
+  InvalidNetworkError,
 } from "@unifiprotocol/core-sdk";
 import {
   createContext,
@@ -16,26 +17,30 @@ import Config, { IConfig } from "../Config";
 import { ShellEventBus } from "../EventBus";
 import { AddressChanged } from "../EventBus/Events/AdapterEvents";
 import { Wipe } from "../EventBus/Events/BalancesEvents";
+import { ShowNotification } from "../EventBus/Events/NotificationEvents";
+import { WrongNetworkNotification } from "../Notifications";
 import { timedReject } from "../Utils";
 import { getChainOnStorage, setChainOnStorage } from "../Utils/ChainStorage";
 
 export enum AdapterActionKind {
   CONNECT = "CONNECT",
+  CONNECTION_ERROR = "CONNECTION_ERROR",
   DISCONNECT = "DISCONNECT",
   SWITCH_CHAIN = "SWITCH_CHAIN",
 }
 
 export interface AdapterAction {
   type: AdapterActionKind;
-  payload: IConnector | IConfig | undefined;
+  payload: IConnector | IConfig | undefined | Error;
 }
 
 export interface AdapterState {
   connector: IConnector;
   activeChain: IConfig;
+  walletError?: Error;
 }
 
-const reducer = (state: AdapterState, action: AdapterAction) => {
+const reducer = (state: AdapterState, action: AdapterAction): AdapterState => {
   const { type, payload } = action;
   switch (type) {
     case AdapterActionKind.CONNECT:
@@ -43,11 +48,17 @@ const reducer = (state: AdapterState, action: AdapterAction) => {
       return {
         ...state,
         connector,
+        walletError: connector.isWallet ? undefined : state.walletError,
       };
     case AdapterActionKind.DISCONNECT:
       state.connector.disconnect();
       return {
         ...state,
+      };
+    case AdapterActionKind.CONNECTION_ERROR:
+      return {
+        ...state,
+        walletError: action.payload as Error,
       };
     case AdapterActionKind.SWITCH_CHAIN:
       state.connector.disconnect();
@@ -102,6 +113,20 @@ export const useAdapter = () => {
 
   const { connector, activeChain } = state;
 
+  const handleWalletConnectionError = useCallback(
+    async (error: any) => {
+      if (error instanceof InvalidNetworkError) {
+        ShellEventBus.emit(
+          new ShowNotification(
+            new WrongNetworkNotification(state.activeChain.blockchain)
+          )
+        );
+      }
+      throw error;
+    },
+    [state.activeChain.blockchain]
+  );
+
   const connect = useCallback(
     async (connectorName: Connectors) => {
       const walletConnector = getBlockchainConnectorByName(
@@ -119,18 +144,23 @@ export const useAdapter = () => {
           timedReject(10_000),
           walletConnector
             .connect()
-            .then(() => successConnection(walletConnector)),
+            .then(() => successConnection(walletConnector))
+            .catch(handleWalletConnectionError),
         ]);
-        walletConnector.on("AddressChanged", (address) => {
+        walletConnector.on("AddressChanged", (address: string) => {
           ShellEventBus.emit(new AddressChanged(address));
         });
       } catch (err) {
+        dispatch({
+          type: AdapterActionKind.CONNECTION_ERROR,
+          payload: err as Error,
+        });
         offlineConnector
           .connect()
           .then(() => successConnection(offlineConnector));
       }
     },
-    [activeChain.blockchain, dispatch]
+    [activeChain.blockchain, dispatch, handleWalletConnectionError]
   );
 
   const connectOffline = useCallback(() => {
@@ -168,6 +198,7 @@ export const useAdapter = () => {
     adapter: connector.adapter,
     connector,
     activeChain,
+    walletError: state.walletError,
     connect,
     connectOffline,
     disconnect,

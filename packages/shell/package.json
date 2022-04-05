@@ -8,10 +8,6 @@
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.0.0",
     "@testing-library/user-event": "^13.2.1",
-    "@types/jest": "^27.0.1",
-    "@types/node": "^16.7.13",
-    "@types/react": "^17.0.20",
-    "@types/react-dom": "^17.0.9",
     "@unifiprotocol/uikit": "^1.13.5",
     "@unifiprotocol/core-sdk": "^6.0.32",
     "@unifiprotocol/utils": "^2.3.0",
@@ -24,23 +20,23 @@
     "emitter": "^0.0.5",
     "eventemitter3": "^4.0.7",
     "https-browserify": "^1.0.0",
-    "i18next": "^21.6.11",
-    "i18next-browser-languagedetector": "^6.1.3",
     "os-browserify": "^0.3.0",
     "path-browserify": "^1.0.1",
     "querystring-es3": "^0.2.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-i18next": "^11.15.3",
-    "react-router-dom": "^6.2.1",
-    "react-scripts": "5.0.0",
-    "react-toast-notifications": "^2.5.1",
     "recoil": "^0.5.2",
     "stream": "^0.0.2",
     "stream-browserify": "^3.0.0",
     "stream-http": "^3.2.0",
     "styled-components": "^5.3.3",
-    "web-vitals": "^2.1.0"
+    "web-vitals": "^2.1.0",
+    "i18next": "^21.6.11",
+    "i18next-browser-languagedetector": "^6.1.3",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-i18next": "^11.15.3",
+    "react-router-dom": "^6.2.1",
+    "react-scripts": "5.0.0",
+    "react-toast-notifications": "^2.5.1"
   },
   "main": "build/index.js",
   "module": "build/index.esm.js",
@@ -55,12 +51,10 @@
     "prepublishOnly": "yarn clean && yarn compile",
     "start": "craco start",
     "build": "craco build",
-    "build:watch": "yarn watch yarn build",
     "compile": "rollup -c",
-    "compile:watch": "yarn watch yarn compile",
+    "compile:watch": "yarn compile -- watch",
     "test": "craco test",
-    "clean": "rm -rf ./build",
-    "watch": "nodemon --watch \"src/**\" --ext \"ts,json\" --exec"
+    "clean": "rm -rf ./build"
   },
   "eslintConfig": {
     "extends": [
@@ -80,6 +74,15 @@
       "last 1 safari version"
     ]
   },
+  "peerDependencies": {
+    "i18next": "^21.6.11",
+    "i18next-browser-languagedetector": "^6.1.3",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-i18next": "^11.15.3",
+    "react-router-dom": "^6.2.1",
+    "react-scripts": "5.0.0"
+  },
   "devDependencies": {
     "@rollup/plugin-alias": "^3.1.9",
     "@rollup/plugin-commonjs": "^21.0.1",
@@ -89,10 +92,14 @@
     "@rollup/plugin-url": "^6.1.0",
     "@types/crypto-js": "^4.1.0",
     "@types/styled-components": "^5.1.21",
-    "nodemon": "^2.0.15",
     "rollup": "^2.67.2",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "tslib": "^2.3.1",
-    "typescript": "^4.4.2"
+    "typescript": "^4.4.2",
+    "@types/jest": "^27.0.1",
+    "@types/node": "^16.7.13",
+    "@types/react": "^17.0.20",
+    "@types/react-dom": "^17.0.9",
+    
   }
 }
