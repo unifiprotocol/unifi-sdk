@@ -42,16 +42,16 @@ export const ConnectionAction = () => {
   return (
     <>
       <ConnectionModal
-        isOpen={!adapter?.adapter.isConnected() && isModalOpen}
+        isOpen={!adapter?.isConnected() && isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onConnect={() => setIsModalOpen(false)}
         onConnectionError={() => setIsModalOpen(false)}
       />
       <ConnectedModal
-        isOpen={!!adapter?.adapter.isConnected() && isModalOpen}
+        isOpen={!!adapter?.isConnected() && isModalOpen}
         onClose={() => setIsModalOpen(false)}
       />
-      {connector.isWallet && (
+      {connector?.isWallet && (
         <NativeBalance>
           {nativeBalances}{" "}
           <NativeBalanceSymbol>
@@ -59,13 +59,13 @@ export const ConnectionAction = () => {
           </NativeBalanceSymbol>
         </NativeBalance>
       )}
-      {adapter && adapter.adapter.isConnected() && (
+      {adapter && adapter.isConnected() && (
         <PrimaryButton onClick={() => setIsModalOpen(true)}>
-          {shortAddress(adapter.adapter.getAddress(), 6)}
+          {shortAddress(adapter.getAddress(), 6)}
         </PrimaryButton>
       )}
 
-      {(!adapter || !adapter.adapter.isConnected()) && ConnectButton}
+      {(!adapter || !adapter.isConnected()) && ConnectButton}
     </>
   );
 };

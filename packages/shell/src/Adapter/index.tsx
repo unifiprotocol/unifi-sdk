@@ -3,7 +3,9 @@ import {
   getBlockchainConnectorByName,
   getBlockchainOfflineConnector,
   getBlockchainOfflineConnectors,
+  IAdapter,
   IConnector,
+  IMulticallAdapter,
   InvalidNetworkError,
 } from "@unifiprotocol/core-sdk";
 import {
@@ -22,36 +24,42 @@ import { ShellNotifications } from "../Notifications";
 import { timedReject } from "../Utils";
 import { getChainOnStorage, setChainOnStorage } from "../Utils/ChainStorage";
 
-export enum AdapterActionKind {
+enum AdapterActionKind {
   CONNECT = "CONNECT",
   CONNECTION_ERROR = "CONNECTION_ERROR",
   DISCONNECT = "DISCONNECT",
   SWITCH_CHAIN = "SWITCH_CHAIN",
 }
 
-export interface AdapterAction {
+interface AdapterAction {
   type: AdapterActionKind;
   payload: IConnector | IConfig | undefined | Error;
 }
 
 export interface AdapterState {
-  connector: IConnector;
+  connector?: IConnector;
+  adapter?: IAdapter;
+  multicallAdapter?: IMulticallAdapter;
   activeChain: IConfig;
   walletError?: Error;
 }
 
 const reducer = (state: AdapterState, action: AdapterAction): AdapterState => {
   const { type, payload } = action;
+  console.debug(type, payload);
   switch (type) {
     case AdapterActionKind.CONNECT:
       const connector = payload as IConnector;
+      // keep error if connecting to offline wallet after error
+      const walletError = connector.isWallet ? undefined : state.walletError;
       return {
         ...state,
         connector,
-        walletError: connector.isWallet ? undefined : state.walletError,
+        adapter: connector.adapter?.adapter,
+        multicallAdapter: connector.adapter?.multicall,
+        walletError,
       };
     case AdapterActionKind.DISCONNECT:
-      state.connector.disconnect();
       return {
         ...state,
       };
@@ -61,7 +69,6 @@ const reducer = (state: AdapterState, action: AdapterAction): AdapterState => {
         walletError: action.payload as Error,
       };
     case AdapterActionKind.SWITCH_CHAIN:
-      state.connector.disconnect();
       const cfg = payload as IConfig;
       const offlineConnector = getBlockchainOfflineConnectors(
         cfg.blockchain
@@ -111,7 +118,8 @@ export const AdapterProvider: React.FC = ({ children }) => {
 export const useAdapter = () => {
   const { state, dispatch } = useContext(AdapterContext);
 
-  const { connector, activeChain } = state;
+  const { connector, activeChain, adapter, multicallAdapter, walletError } =
+    state;
 
   const handleWalletConnectionError = useCallback(
     async (error: any) => {
@@ -119,14 +127,14 @@ export const useAdapter = () => {
         ShellEventBus.emit(
           new ShowNotification(
             new ShellNotifications.Blockchain.WrongNetworkNotification(
-              state.activeChain.blockchain
+              activeChain.blockchain
             )
           )
         );
       }
       throw error;
     },
-    [state.activeChain.blockchain]
+    [activeChain.blockchain]
   );
 
   const connect = useCallback(
@@ -166,9 +174,9 @@ export const useAdapter = () => {
   );
 
   const connectOffline = useCallback(() => {
-    const offlineConnector = getBlockchainOfflineConnectors(
+    const offlineConnector = getBlockchainOfflineConnector(
       activeChain.blockchain
-    )[0];
+    );
     offlineConnector
       .connect()
       .then(() =>
@@ -179,28 +187,34 @@ export const useAdapter = () => {
   const updateChain = useCallback(
     (cfg: IConfig) => {
       setChainOnStorage(cfg.blockchain);
+      connector?.disconnect();
       dispatch({
         type: AdapterActionKind.SWITCH_CHAIN,
         payload: cfg,
       });
     },
-    [dispatch]
+    [dispatch, connector]
   );
 
   const disconnect = useCallback(async () => {
     if (!connector) {
       return;
     }
+    connector.disconnect();
     dispatch({ type: AdapterActionKind.DISCONNECT, payload: undefined });
     ShellEventBus.emit(new Wipe());
     connectOffline();
   }, [connectOffline, connector, dispatch]);
 
+  const isAdapterReady = !!(adapter && multicallAdapter);
+
   return {
-    adapter: connector.adapter,
+    isAdapterReady,
+    adapter,
+    multicallAdapter,
     connector,
     activeChain,
-    walletError: state.walletError,
+    walletError,
     connect,
     connectOffline,
     disconnect,

@@ -80,7 +80,7 @@ export const BalancesUpdater = () => {
   }, [refreshing, refresh, wipe]);
 
   useEffect(() => {
-    if (!initialTrigger && adapter?.adapter.isConnected() && !refreshing) {
+    if (!initialTrigger && adapter?.isConnected() && !refreshing) {
       refresh();
       setInitialTrigger(true);
     }

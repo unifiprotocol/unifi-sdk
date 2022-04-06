@@ -6,7 +6,11 @@ import {
   NavigationHeader,
   mediaQueries,
 } from "@unifiprotocol/uikit";
-import { IConnector } from "@unifiprotocol/core-sdk";
+import {
+  IAdapter,
+  IConnector,
+  IMulticallAdapter,
+} from "@unifiprotocol/core-sdk";
 import { AdapterProvider, useAdapter } from "./Adapter";
 import { ShellEventBus } from "./EventBus";
 import { Updater } from "./Components/Updater";
@@ -17,9 +21,12 @@ import { NavigationProvider } from "./Navigation";
 import { I18nextProvider } from "react-i18next";
 import i18n from "./i18n";
 import { BrowserRouter } from "react-router-dom";
+import { EnsureAdapter } from "./Adapter/EnsureAdapter";
 
 export type ShellWrappedProps = {
   connection: IConnector;
+  adapter: IAdapter;
+  multicallAdapter: IMulticallAdapter;
   eventBus: typeof ShellEventBus;
   // TODO breaking change: pass whole state in balances prop
   balances: BalancesState["balances"];
@@ -60,14 +67,16 @@ export const Shell: React.FC<ShellProps> = ({
                   <NavigationHeader />
                   <TopHeader />
                   <ContentWrapper>
-                    {SidebarComps.length > 0 && (
-                      <Sidebar>
-                        {SidebarComps.map((Comp, idx) => (
-                          <ConnectedComp Wrapped={Comp} key={idx} />
-                        ))}
-                      </Sidebar>
-                    )}
-                    <ConnectedComp Wrapped={Wrapped} />
+                    <EnsureAdapter>
+                      {SidebarComps.length > 0 && (
+                        <Sidebar>
+                          {SidebarComps.map((Comp, idx) => (
+                            <ConnectedComp Wrapped={Comp} key={idx} />
+                          ))}
+                        </Sidebar>
+                      )}
+                      <ConnectedComp Wrapped={Wrapped} />
+                    </EnsureAdapter>
                   </ContentWrapper>
                 </NavigationProvider>
               </ShellWrapper>
@@ -82,12 +91,18 @@ export const Shell: React.FC<ShellProps> = ({
 const ConnectedComp: React.FC<{ Wrapped?: ShellWrappedComp }> = ({
   Wrapped,
 }) => {
-  const { connector } = useAdapter();
+  const { isAdapterReady, connector, adapter, multicallAdapter } = useAdapter();
   const { balances, refreshing } = useBalances();
+  if (!isAdapterReady) {
+    return <>"Loading"</>;
+  }
+
   return Wrapped ? (
     <Wrapped
       eventBus={ShellEventBus}
-      connection={connector}
+      adapter={adapter!}
+      multicallAdapter={multicallAdapter!}
+      connection={connector!}
       balances={balances}
       refreshingBalances={refreshing}
       i18n={i18n}

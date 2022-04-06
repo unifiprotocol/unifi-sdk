@@ -128,7 +128,7 @@ export const BalancesProvider: React.FC = ({ children }) => {
 
 export const useBalances = () => {
   const { state, dispatch } = useContext(BalancesContext);
-  const { adapter, activeChain } = useAdapter();
+  const { adapter, multicallAdapter, activeChain } = useAdapter();
   const { balances, unfiPrice, refreshing } = state;
 
   const updateBalances = useCallback(
@@ -185,7 +185,8 @@ export const useBalances = () => {
   const refresh = useCallback(async () => {
     try {
       if (refreshing) return;
-      if (!adapter?.adapter.isConnected()) return;
+      if (!multicallAdapter || !adapter || !adapter.isConnected()) return;
+
       setRefreshing(true);
 
       const result: typeof balances = [];
@@ -194,11 +195,11 @@ export const useBalances = () => {
       );
       const multicallRequests = filteredBalances.reduce(
         (calls: GenericUseCase[], b) => {
-          adapter.adapter.initializeToken(b.currency.address);
+          adapter.initializeToken(b.currency.address);
           calls.push(
             new BalanceOf({
               tokenAddress: b.currency.address,
-              owner: adapter.adapter.getAddress(),
+              owner: adapter.getAddress(),
             })
           );
           return calls;
@@ -206,8 +207,8 @@ export const useBalances = () => {
         []
       );
 
-      const nativeBalance = await adapter.adapter.getBalance();
-      const responses = await adapter.multicall.execute(multicallRequests);
+      const nativeBalance = await adapter.getBalance();
+      const responses = await multicallAdapter.execute(multicallRequests);
       responses.forEach((res, idx) => {
         result.push({
           currency: filteredBalances[idx].currency,
@@ -228,11 +229,11 @@ export const useBalances = () => {
     }
   }, [
     refreshing,
-    activeChain.nativeToken,
-    adapter?.adapter,
-    adapter?.multicall,
-    balances,
+    adapter,
     setRefreshing,
+    balances,
+    multicallAdapter,
+    activeChain.nativeToken,
     updateBalances,
   ]);
 
