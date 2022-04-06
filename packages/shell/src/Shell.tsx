@@ -10,6 +10,7 @@ import {
   IAdapter,
   IConnector,
   IMulticallAdapter,
+  Blockchains,
 } from "@unifiprotocol/core-sdk";
 import { AdapterProvider, useAdapter } from "./Adapter";
 import { ShellEventBus } from "./EventBus";
@@ -24,6 +25,7 @@ import { BrowserRouter } from "react-router-dom";
 import { EnsureAdapter } from "./Adapter/EnsureAdapter";
 
 export type ShellWrappedProps = {
+  blockchain: Blockchains;
   connection: IConnector;
   adapter: IAdapter;
   multicallAdapter: IMulticallAdapter;
@@ -91,7 +93,8 @@ export const Shell: React.FC<ShellProps> = ({
 const ConnectedComp: React.FC<{ Wrapped?: ShellWrappedComp }> = ({
   Wrapped,
 }) => {
-  const { isAdapterReady, connector, adapter, multicallAdapter } = useAdapter();
+  const { isAdapterReady, connector, adapter, multicallAdapter, activeChain } =
+    useAdapter();
   const { balances, refreshing } = useBalances();
   if (!isAdapterReady) {
     return <>"Loading"</>;
@@ -99,6 +102,7 @@ const ConnectedComp: React.FC<{ Wrapped?: ShellWrappedComp }> = ({
 
   return Wrapped ? (
     <Wrapped
+      blockchain={activeChain.blockchain}
       eventBus={ShellEventBus}
       adapter={adapter!}
       multicallAdapter={multicallAdapter!}
