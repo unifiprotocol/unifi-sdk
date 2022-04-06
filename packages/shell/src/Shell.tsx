@@ -21,7 +21,9 @@ import { BrowserRouter } from "react-router-dom";
 export type ShellWrappedProps = {
   connection: IConnector;
   eventBus: typeof ShellEventBus;
+  // TODO breaking change: pass whole state in balances prop
   balances: BalancesState["balances"];
+  refreshingBalances: BalancesState["refreshing"];
   i18n: typeof i18n;
 };
 
@@ -81,12 +83,13 @@ const ConnectedComp: React.FC<{ Wrapped?: ShellWrappedComp }> = ({
   Wrapped,
 }) => {
   const { connector } = useAdapter();
-  const { balances } = useBalances();
+  const { balances, refreshing } = useBalances();
   return Wrapped ? (
     <Wrapped
       eventBus={ShellEventBus}
       connection={connector}
       balances={balances}
+      refreshingBalances={refreshing}
       i18n={i18n}
     />
   ) : null;
