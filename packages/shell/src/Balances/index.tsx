@@ -10,7 +10,7 @@ import { GenericUseCase } from "@unifiprotocol/core-sdk";
 import { useAdapter } from "../Adapter";
 import { BalanceOf } from "../Contracts/ERC20/balanceOf";
 
-export enum BalancesActionKind {
+enum BalancesActionKind {
   ADD_TOKEN = "ADD_TOKEN",
   UPDATE_BALANCES = "UPDATE_BALANCES",
   SET_UPDATING_BALANCES = "SET_UPDATING_BALANCES",
@@ -24,7 +24,7 @@ export interface BalancesState {
   refreshing: boolean;
 }
 
-export interface BalancesAction {
+interface BalancesAction {
   type: BalancesActionKind;
   payload: string | Currency | BalancesState["balances"] | undefined | boolean;
 }

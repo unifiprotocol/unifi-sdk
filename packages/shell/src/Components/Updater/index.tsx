@@ -3,7 +3,7 @@ import { Connectors } from "@unifiprotocol/core-sdk";
 import { useAdapter } from "../../Adapter";
 import Clocks from "../../Services/Clocks";
 import { getStorageKey } from "../../Utils/ChainStorage";
-import { BalancesUpdater } from "../../Balances/Balances";
+import { BalancesUpdater } from "../../Balances/BalancesUpdater";
 import { Notifications } from "../Notifications";
 
 export const Updater = () => {
