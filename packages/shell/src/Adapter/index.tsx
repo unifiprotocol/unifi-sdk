@@ -15,7 +15,8 @@ import {
   useContext,
   useReducer,
 } from "react";
-import Config, { IConfig } from "../Config";
+
+import Configs, { IConfig } from "../Config";
 import { ShellEventBus } from "../EventBus";
 import { AddressChanged } from "../EventBus/Events/AdapterEvents";
 import { Wipe } from "../EventBus/Events/BalancesEvents";
@@ -46,7 +47,6 @@ export interface AdapterState {
 
 const reducer = (state: AdapterState, action: AdapterAction): AdapterState => {
   const { type, payload } = action;
-  console.debug(type, payload);
   switch (type) {
     case AdapterActionKind.CONNECT:
       const connector = payload as IConnector;
@@ -84,10 +84,27 @@ const reducer = (state: AdapterState, action: AdapterAction): AdapterState => {
   }
 };
 
+const getInitialChain = () => {
+  let chain = getChainOnStorage();
+  const chainOverrideSetter = new URL(window.location.href).searchParams
+    .get("blockchain")
+    ?.toLowerCase();
+  if (chainOverrideSetter) {
+    const chainMatched = Configs.find(
+      (config) => config.blockchain.toLowerCase() === chainOverrideSetter
+    );
+    if (chainMatched) {
+      setChainOnStorage(chainMatched.blockchain);
+      chain = chainMatched.blockchain;
+    }
+  }
+  return chain;
+};
+
 const initialState: AdapterState = (function () {
-  const chain = getChainOnStorage();
+  const chain = getInitialChain();
   if (chain) {
-    const cfg = Config.find((cfg) => cfg.blockchain === chain);
+    const cfg = Configs.find((cfg) => cfg.blockchain === chain);
     if (cfg) {
       return {
         connector: getBlockchainOfflineConnector(cfg.blockchain),
@@ -96,8 +113,8 @@ const initialState: AdapterState = (function () {
     }
   }
   return {
-    connector: getBlockchainOfflineConnector(Config[0].blockchain),
-    activeChain: Config[0],
+    connector: getBlockchainOfflineConnector(Configs[0].blockchain),
+    activeChain: Configs[0],
   };
 })();
 
