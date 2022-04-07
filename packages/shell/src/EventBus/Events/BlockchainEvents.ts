@@ -8,3 +8,11 @@ export class ChangeNetwork extends BaseEvent<IConfig> {
     super(ChangeNetworkEvent, blockchainConfig);
   }
 }
+
+export const OpenConnectionModalEvent = Symbol("OpenConnectionModalEvent");
+
+export class OpenConnectionModal extends BaseEvent<void> {
+  constructor() {
+    super(OpenConnectionModalEvent);
+  }
+}
