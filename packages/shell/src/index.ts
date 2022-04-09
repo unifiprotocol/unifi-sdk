@@ -3,7 +3,7 @@ export * from "./EventBus/Events/AdapterEvents";
 export * from "./EventBus/Events/BalancesEvents";
 export * from "./EventBus/Events/NotificationEvents";
 export * from "./EventBus/Events/UIEvents";
-export * from "./EventBus/index";
+export * from "./EventBus";
 
 // APP
 export { Shell } from "./Shell";

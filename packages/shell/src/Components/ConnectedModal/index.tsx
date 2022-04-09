@@ -31,7 +31,7 @@ const ConnectedModalComponent: React.FC<ConnectedModalProps> = ({
 }) => {
   const { adapter, connector, activeChain, disconnect } = useAdapter();
   const { t } = useTranslation();
-  const { copy } = useCopy(adapter?.adapter.getAddress() ?? "");
+  const { copy } = useCopy(adapter?.getAddress() ?? "");
 
   const onDisconnect = useCallback(() => {
     disconnect();
@@ -46,10 +46,12 @@ const ConnectedModalComponent: React.FC<ConnectedModalProps> = ({
       </ModalHeader>
       <ModalBody>
         <div>
-          {t("connected_modal.using_wallet", { wallet: connector.displayName })}
+          {t("connected_modal.using_wallet", {
+            wallet: connector?.displayName,
+          })}
         </div>
         <WalletInfo>
-          <WalletAddress>{adapter?.adapter.getAddress()}</WalletAddress>
+          <WalletAddress>{adapter?.getAddress()}</WalletAddress>
           <ConnectedWalletActions>
             <ConnectedWalletAction onClick={copy}>
               <CgCopy /> {t("connected_modal.copy_address")}
@@ -58,7 +60,7 @@ const ConnectedModalComponent: React.FC<ConnectedModalProps> = ({
               onClick={() =>
                 window.open(
                   BlockchainScanExplorers[activeChain.blockchain].address(
-                    adapter?.adapter.getAddress() ?? ""
+                    adapter?.getAddress() ?? ""
                   )
                 )
               }

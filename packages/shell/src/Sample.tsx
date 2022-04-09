@@ -8,9 +8,16 @@ import { ShellWrappedComp } from "./Shell";
 import { SidebarItem } from "./Components/Sidebar";
 import { useTranslation } from "react-i18next";
 import { OpenNetworkModal } from "./EventBus/Events/UIEvents";
+import {
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 
 export const Sample: ShellWrappedComp = ({ connection, eventBus }) => {
-  const { balances } = useBalances();
+  const { balances, refreshing } = useBalances();
   const { activeChain } = useAdapter();
   const { i18n } = useTranslation();
 
@@ -57,18 +64,46 @@ export const Sample: ShellWrappedComp = ({ connection, eventBus }) => {
           Open Network Modal By Event
         </PrimaryButton>
       </div>
-      <div>Balances</div>
+      <div>Balances: {refreshing ? "Refreshing" : "Loaded"}</div>
+
       <pre>{JSON.stringify(balances, null, 4)}</pre>
+
+      <Routes>
+        <Route path="/exchange" element={<>AAA</>}></Route>
+        <Route path="/liquidity" element={<>BBB</>}></Route>
+        <Route path="/up" element={<>CCC</>}></Route>
+        <Route path="/" element={<Navigate to="/exchange" />}></Route>
+      </Routes>
     </div>
   );
 };
 
 export const SampleSidebar = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
   return (
     <>
-      <SidebarItem icon={BiHome}>Exchange</SidebarItem>
-      <SidebarItem icon={BiHome}>Liquidity</SidebarItem>
-      <SidebarItem icon={BiHome}>UP</SidebarItem>
+      <SidebarItem
+        active={/^(\/exchange)/.test(location.pathname)}
+        icon={BiHome}
+        onClick={() => navigate("exchange")}
+      >
+        Exchange
+      </SidebarItem>
+      <SidebarItem
+        active={/^(\/liquidity)/.test(location.pathname)}
+        icon={BiHome}
+        onClick={() => navigate("liquidity")}
+      >
+        Liquidity
+      </SidebarItem>
+      <SidebarItem
+        active={/^(\/up)/.test(location.pathname)}
+        icon={BiHome}
+        onClick={() => navigate("up")}
+      >
+        UP
+      </SidebarItem>
       <SidebarItem>Test</SidebarItem>
       <div>Test #2</div>
     </>

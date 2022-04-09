@@ -27,12 +27,22 @@ export const SidebarItemWrapper = styled.div<{ active: boolean; icon: any }>`
   font-weight: 600;
   display: flex;
   align-items: center;
+  transition: 0.15s all;
 
   :hover {
     border-radius: ${(props) => props.theme.borderRadius};
     background: ${(props) => props.theme.bgAlt};
     cursor: pointer;
   }
+
+  ${(props) =>
+    props.active &&
+    `
+  border-radius: ${props.theme.borderRadius};
+  background: ${props.theme.bgAlt};
+  color: ${props.theme.primary};
+  cursor: pointer;
+  `}
 
   ${mediaQueries.sm} {
     justify-content: center;

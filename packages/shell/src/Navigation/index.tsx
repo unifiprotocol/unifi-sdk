@@ -3,11 +3,17 @@ import {
   Dispatch,
   useCallback,
   useContext,
+  useEffect,
   useReducer,
 } from "react";
+import { ShellEventBus } from "../EventBus";
+import {
+  ChangeSidebarState,
+  ChangeSidebarStateEvent,
+} from "../EventBus/Events/UIEvents";
 
 export enum NavigationActionKind {
-  UPDATE_SIDEBAR,
+  UPDATE_SIDEBAR = "UPDATE_SIDEBAR",
 }
 
 export interface NavigationState {
@@ -44,6 +50,19 @@ const NavigationContext = createContext<{
 
 export const NavigationProvider: React.FC = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const { changeSidebarState } = useNavigation();
+
+  useEffect(() => {
+    const onChangeSidebarStateEvent = (event: ChangeSidebarState) => {
+      changeSidebarState(event.payload.isOpen);
+    };
+
+    ShellEventBus.on(ChangeSidebarStateEvent, onChangeSidebarStateEvent);
+    return () => {
+      ShellEventBus.off(ChangeSidebarStateEvent, onChangeSidebarStateEvent);
+    };
+  }, [changeSidebarState]);
+
   return (
     <NavigationContext.Provider value={{ state, dispatch }}>
       {children}

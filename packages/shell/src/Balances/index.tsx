@@ -5,26 +5,34 @@ import {
   useContext,
   useReducer,
 } from "react";
-import { Currency } from "@unifiprotocol/utils";
+import { BN, Currency } from "@unifiprotocol/utils";
+import { GenericUseCase } from "@unifiprotocol/core-sdk";
+import { useAdapter } from "../Adapter";
+import { BalanceOf } from "../Contracts/ERC20/balanceOf";
 
-export enum BalancesActionKind {
-  ADD_TOKEN,
-  UPDATE_BALANCES,
-  UPDATE_UNFI,
-  WIPE,
+enum BalancesActionKind {
+  ADD_TOKEN = "ADD_TOKEN",
+  UPDATE_BALANCES = "UPDATE_BALANCES",
+  SET_UPDATING_BALANCES = "SET_UPDATING_BALANCES",
+  UPDATE_UNFI = "UPDATE_UNFI",
+  WIPE = "WIPE",
 }
 
 export interface BalancesState {
   balances: { currency: Currency; balance: string }[];
   unfiPrice: string;
+  refreshing: boolean;
 }
 
-export interface BalancesAction {
+interface BalancesAction {
   type: BalancesActionKind;
-  payload: string | Currency | BalancesState["balances"] | undefined;
+  payload: string | Currency | BalancesState["balances"] | undefined | boolean;
 }
 
-const reducer = (state: BalancesState, action: BalancesAction) => {
+const reducer = (
+  state: BalancesState,
+  action: BalancesAction
+): BalancesState => {
   const { type, payload } = action;
   switch (type) {
     case BalancesActionKind.UPDATE_UNFI:
@@ -32,6 +40,13 @@ const reducer = (state: BalancesState, action: BalancesAction) => {
       return {
         ...state,
         unfiPrice: payload,
+      };
+
+    case BalancesActionKind.SET_UPDATING_BALANCES:
+      if (typeof payload !== "boolean") return state;
+      return {
+        ...state,
+        refreshing: payload,
       };
 
     case BalancesActionKind.ADD_TOKEN:
@@ -79,6 +94,7 @@ const reducer = (state: BalancesState, action: BalancesAction) => {
       );
       return {
         ...state,
+        refreshing: false,
         balances: [...balances, ...unmatchedBalances],
       };
 
@@ -92,6 +108,7 @@ const reducer = (state: BalancesState, action: BalancesAction) => {
 
 const initialState: () => BalancesState = () => ({
   balances: [],
+  refreshing: false,
   unfiPrice: localStorage.getItem("UNFI_PRICE") ?? "0.0",
 });
 
@@ -111,12 +128,21 @@ export const BalancesProvider: React.FC = ({ children }) => {
 
 export const useBalances = () => {
   const { state, dispatch } = useContext(BalancesContext);
-
-  const { balances, unfiPrice } = state;
+  const { adapter, multicallAdapter, activeChain } = useAdapter();
+  const { balances, unfiPrice, refreshing } = state;
 
   const updateBalances = useCallback(
     (balances: BalancesState["balances"]) =>
       dispatch({ type: BalancesActionKind.UPDATE_BALANCES, payload: balances }),
+    [dispatch]
+  );
+
+  const setRefreshing = useCallback(
+    (refreshing: boolean) =>
+      dispatch({
+        type: BalancesActionKind.SET_UPDATING_BALANCES,
+        payload: refreshing,
+      }),
     [dispatch]
   );
 
@@ -156,7 +182,64 @@ export const useBalances = () => {
     [balances]
   );
 
+  const refresh = useCallback(async () => {
+    try {
+      if (refreshing) return;
+      if (!multicallAdapter || !adapter || !adapter.isConnected()) return;
+
+      setRefreshing(true);
+
+      const result: typeof balances = [];
+      const filteredBalances = balances.filter(
+        (b) => !b.currency.equals(activeChain.nativeToken)
+      );
+      const multicallRequests = filteredBalances.reduce(
+        (calls: GenericUseCase[], b) => {
+          adapter.initializeToken(b.currency.address);
+          calls.push(
+            new BalanceOf({
+              tokenAddress: b.currency.address,
+              owner: adapter.getAddress(),
+            })
+          );
+          return calls;
+        },
+        []
+      );
+
+      const nativeBalance = await adapter.getBalance();
+      const responses = await multicallAdapter.execute(multicallRequests);
+      responses.forEach((res, idx) => {
+        result.push({
+          currency: filteredBalances[idx].currency,
+          balance: BN(res.value ?? "0").toFixed(),
+        });
+      });
+
+      result.push({
+        currency: activeChain.nativeToken,
+        balance: nativeBalance.balance,
+      });
+
+      updateBalances(result);
+    } catch (err) {
+      console.error("🚀 ~ file: Balances.tsx ~ line 41 ~ update ~ err", err);
+    } finally {
+      setRefreshing(false);
+    }
+  }, [
+    refreshing,
+    adapter,
+    setRefreshing,
+    balances,
+    multicallAdapter,
+    activeChain.nativeToken,
+    updateBalances,
+  ]);
+
   return {
+    refreshing,
+    refresh,
     balances,
     unfiPrice,
     updateBalances,

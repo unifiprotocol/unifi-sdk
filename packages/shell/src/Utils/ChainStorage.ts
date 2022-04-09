@@ -16,5 +16,7 @@ export const setStorageKey = (
   keyValue: string
 ) => localStorage.setItem(`${KEY_PREFIX}.${blockchain}.${keyName}`, keyValue);
 
-export const getStorageKey = (blockchain: Blockchains, keyName: StorageKey) =>
-  localStorage.getItem(`${KEY_PREFIX}.${blockchain}.${keyName}`);
+export const getStorageKey = <T extends string = string>(
+  blockchain: Blockchains,
+  keyName: StorageKey
+) => localStorage.getItem(`${KEY_PREFIX}.${blockchain}.${keyName}`) as T | null;

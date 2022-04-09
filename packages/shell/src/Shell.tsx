@@ -6,7 +6,12 @@ import {
   NavigationHeader,
   mediaQueries,
 } from "@unifiprotocol/uikit";
-import { IConnector } from "@unifiprotocol/core-sdk";
+import {
+  IAdapter,
+  IConnector,
+  IMulticallAdapter,
+  Blockchains,
+} from "@unifiprotocol/core-sdk";
 import { AdapterProvider, useAdapter } from "./Adapter";
 import { ShellEventBus } from "./EventBus";
 import { Updater } from "./Components/Updater";
@@ -16,11 +21,18 @@ import { Sidebar } from "./Components/Sidebar";
 import { NavigationProvider } from "./Navigation";
 import { I18nextProvider } from "react-i18next";
 import i18n from "./i18n";
+import { BrowserRouter } from "react-router-dom";
+import { EnsureAdapter } from "./Adapter/EnsureAdapter";
 
 export type ShellWrappedProps = {
+  blockchain: Blockchains;
   connection: IConnector;
+  adapter: IAdapter;
+  multicallAdapter: IMulticallAdapter;
   eventBus: typeof ShellEventBus;
+  // TODO breaking change: pass whole state in balances prop
   balances: BalancesState["balances"];
+  refreshingBalances: BalancesState["refreshing"];
   i18n: typeof i18n;
 };
 
@@ -36,50 +48,67 @@ const ShellWrapper = styled.div`
 const ContentWrapper = styled.div`
   display: flex;
 `;
-
-export const Shell: React.FC<{
+export interface ShellProps {
   Wrapped?: ShellWrappedComp;
   Sidebar?: ShellWrappedComp[];
-}> = ({ Wrapped, Sidebar: SidebarComps = [] }) => {
+}
+
+export const Shell: React.FC<ShellProps> = ({
+  Wrapped,
+  Sidebar: SidebarComps = [],
+}) => {
   return (
-    <AdapterProvider>
-      <BalancesProvider>
-        <I18nextProvider i18n={i18n}>
-          <UnifiThemeProvider theme={Themes.Dark}>
-            <ShellWrapper>
-              <NavigationProvider>
-                <Updater />
-                <NavigationHeader />
-                <TopHeader />
-                <ContentWrapper>
-                  {SidebarComps.length > 0 && (
-                    <Sidebar>
-                      {SidebarComps.map((Comp, idx) => (
-                        <ConnectedComp Wrapped={Comp} key={idx} />
-                      ))}
-                    </Sidebar>
-                  )}
-                  <ConnectedComp Wrapped={Wrapped} />
-                </ContentWrapper>
-              </NavigationProvider>
-            </ShellWrapper>
-          </UnifiThemeProvider>
-        </I18nextProvider>
-      </BalancesProvider>
-    </AdapterProvider>
+    <BrowserRouter>
+      <AdapterProvider>
+        <BalancesProvider>
+          <I18nextProvider i18n={i18n}>
+            <UnifiThemeProvider theme={Themes.Dark}>
+              <ShellWrapper>
+                <NavigationProvider>
+                  <Updater />
+                  <NavigationHeader />
+                  <TopHeader />
+                  <ContentWrapper>
+                    <EnsureAdapter>
+                      {SidebarComps.length > 0 && (
+                        <Sidebar>
+                          {SidebarComps.map((Comp, idx) => (
+                            <ConnectedComp Wrapped={Comp} key={idx} />
+                          ))}
+                        </Sidebar>
+                      )}
+                      <ConnectedComp Wrapped={Wrapped} />
+                    </EnsureAdapter>
+                  </ContentWrapper>
+                </NavigationProvider>
+              </ShellWrapper>
+            </UnifiThemeProvider>
+          </I18nextProvider>
+        </BalancesProvider>
+      </AdapterProvider>
+    </BrowserRouter>
   );
 };
 
 const ConnectedComp: React.FC<{ Wrapped?: ShellWrappedComp }> = ({
   Wrapped,
 }) => {
-  const { connector } = useAdapter();
-  const { balances } = useBalances();
+  const { isAdapterReady, connector, adapter, multicallAdapter, activeChain } =
+    useAdapter();
+  const { balances, refreshing } = useBalances();
+  if (!isAdapterReady) {
+    return <>"Loading"</>;
+  }
+
   return Wrapped ? (
     <Wrapped
+      blockchain={activeChain.blockchain}
       eventBus={ShellEventBus}
-      connection={connector}
+      adapter={adapter!}
+      multicallAdapter={multicallAdapter!}
+      connection={connector!}
       balances={balances}
+      refreshingBalances={refreshing}
       i18n={i18n}
     />
   ) : null;
