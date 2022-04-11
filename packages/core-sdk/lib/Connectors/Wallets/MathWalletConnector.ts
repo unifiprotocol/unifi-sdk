@@ -23,7 +23,7 @@ export class MathWalletConnector extends MetamaskConnector {
 
   async _connect(): Promise<IConnectorAdapters> {
     if (this.config.blockchain !== Blockchains.Harmony) {
-      return super.connect();
+      return super._connect();
     }
     return this.connectToHarmony();
   }
