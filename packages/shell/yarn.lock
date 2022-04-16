@@ -2898,6 +2898,15 @@
     keccak "^3.0.2"
     tslib "^2.1.0"
 
+"@unifiprotocol/utils@^2.3.2":
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/@unifiprotocol/utils/-/utils-2.3.2.tgz#b671982567d6486f3c7d4066d9417038528906bc"
+  integrity sha512-wrakRqpLIH+V3A7V1lRlLe4Ijq+LQNfN95DHyfZ1OogAzZoHlpjWJv5FGSWT3SHcyr6wut5KvGqYsYFGKUw9aw==
+  dependencies:
+    bignumber.js "^9.0.1"
+    keccak "^3.0.2"
+    tslib "^2.1.0"
+
 "@unifiprotocol/utrade-v2-localization@git+https://github.com/unifiprotocol/utrade-v2-localization.git":
   version "1.0.0"
   resolved "git+https://github.com/unifiprotocol/utrade-v2-localization.git#db9ef98b0b54f88bae16b245b4c63a62b753f83d"
