@@ -28,8 +28,8 @@ export const VernacularBlockchains: { [B in Blockchains]?: string } = {
   [Blockchains.BTTC]: "BitTorrent",
   [Blockchains.Avalanche]: "Avalanche",
   [Blockchains.FTM]: "Fantom",
-  [Blockchains.Ontology]: "Ontology",
-  [Blockchains.OntologyTestnet]: "Ontology Testnet",
+  [Blockchains.Ontology]: "Ontology EVM",
+  [Blockchains.OntologyTestnet]: "Ontology EVM Testnet",
 };
 
 export const getVernacularBlockchain = (blockchain: Blockchains): string => {
