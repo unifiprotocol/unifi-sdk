@@ -82,6 +82,8 @@ export abstract class BaseAdapter<ContractInterface, ProviderType>
     return this.address;
   }
 
+  abstract signMessage(message: string): Promise<string>;
+
   protected sanitizeBlock(block: BlockTag): BlockTag {
     if (BN(block).isNaN()) {
       return block;

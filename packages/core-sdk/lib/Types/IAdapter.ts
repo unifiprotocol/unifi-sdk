@@ -36,6 +36,7 @@ export type GetTransactionsFromEventsOptions = {
 export interface ExecutionParams {
   args: Array<string | number | undefined | string[] | BigNumberish>;
   callValue: string | number | undefined;
+  block?: string | number;
 }
 
 export type ExecutionValueProps = Partial<ExecutionParams>;
@@ -78,6 +79,9 @@ export interface IAdapter<ContractInterface = any> {
     transactionHash: string,
     options?: GetDecodedTransactionWithLogsOptions<ContractInterface>
   ): Promise<ITransactionWithLogs>;
+
+  // Signing methods
+  signMessage(message: string): Promise<string>;
 
   // Explorer methods
   getTxLink(hash: string): string;

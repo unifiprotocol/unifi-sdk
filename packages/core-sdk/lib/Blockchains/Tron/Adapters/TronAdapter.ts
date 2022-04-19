@@ -15,7 +15,11 @@ import {
   TransactionStatus,
   AddressFormat,
 } from "../../../Types";
-import { BlockNotFoundError } from "../../../Errors";
+import {
+  AdapterNotConnectedError,
+  BlockNotFoundError,
+  NotImplementedError,
+} from "../../../Errors";
 import { BaseAdapter } from "../../../Adapters/BaseAdapter";
 import { Opt } from "../../../Utils/Typings";
 import { nonSuccessResponse, successResponse } from "../../../Adapters/Helpers";
@@ -42,6 +46,13 @@ type TronContractInterface = ethers.ContractInterface;
 type TronProvider = TronWeb;
 type Contract = any;
 
+function textToHex(str: string): string {
+  let result = "";
+  for (let i = 0; i < str.length; i++) {
+    result += str.charCodeAt(i).toString(16);
+  }
+  return result;
+}
 export class TronAdapter extends BaseAdapter<
   TronContractInterface,
   TronProvider
@@ -70,6 +81,13 @@ export class TronAdapter extends BaseAdapter<
     return format === AddressFormat.Hex
       ? ensureHexAddress(this.address)
       : ensureTronAddress(this.address);
+  }
+
+  signMessage(message: string): Promise<string> {
+    if (!this.isConnected()) {
+      throw new AdapterNotConnectedError();
+    }
+    return this.getProvider().trx.signMessage(textToHex(message));
   }
 
   async initializeContract(
@@ -116,7 +134,12 @@ export class TronAdapter extends BaseAdapter<
       });
     }
 
-    const { args: unPreparedArgs, callValue } = values;
+    const { args: unPreparedArgs, callValue, block } = values;
+    if (block) {
+      throw new NotImplementedError(
+        "TronAdapter.execute on specific blocktag not supported"
+      );
+    }
     try {
       const contract = this.getContract(contractAddress);
       const args = denormalizeExecutionArgs(

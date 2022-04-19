@@ -1,4 +1,4 @@
-import { Blockchains, BN } from "@unifiprotocol/utils";
+import { BN } from "@unifiprotocol/utils";
 import { ContractInterface, ethers, utils } from "ethers";
 import {
   AdapterBalance,
@@ -21,12 +21,19 @@ import { ERC20ABI } from "../Abis";
 import { BaseAdapter } from "./BaseAdapter";
 import { LogDecoder, TxDecoder } from "@maticnetwork/eth-decoder";
 import { onlyUnique } from "../Utils/Array";
-import { BlockNotFoundError } from "../Errors";
+import { AdapterNotConnectedError, BlockNotFoundError } from "../Errors";
 
 export class Web3BaseAdapter extends BaseAdapter<
   ContractInterface,
   ethers.providers.BaseProvider
 > {
+  signMessage(message: string): Promise<string> {
+    if (this.isConnected()) {
+      return this.web3Provider.getSigner().signMessage(message);
+    }
+    throw new AdapterNotConnectedError();
+  }
+
   async getBlockWithTxs(height: BlockTag): Promise<IBlockWithTransactions> {
     const blockWithTxs = await this.getProvider().getBlockWithTransactions(
       this.sanitizeBlock(height)
@@ -101,10 +108,12 @@ export class Web3BaseAdapter extends BaseAdapter<
   async execute<T = string>(
     contractAddress: string,
     method: string,
-    paramsRaw: ExecutionParams,
+    params: ExecutionParams,
     isWrite = false
   ): Promise<ExecutionResponse<T>> {
-    const params = this.reduceParams(contractAddress, method, paramsRaw);
+    if (params.block) {
+      params.block = this.sanitizeBlock(params.block);
+    }
 
     // Allowance on native are always MAX
     if (
@@ -329,34 +338,6 @@ export class Web3BaseAdapter extends BaseAdapter<
     }
   }
 
-  protected reduceParams(
-    contractAddress: string,
-    method: string,
-    params: ExecutionParams
-  ): ExecutionParams {
-    let reducedParams: ExecutionParams = params;
-
-    // STABLE PAIRS RULES
-    if (this.stablePairs.includes(contractAddress)) {
-      switch (method) {
-        case "buy":
-          reducedParams = {
-            callValue: 0,
-            args: [...reducedParams.args, reducedParams.callValue],
-          };
-          break;
-        case "depositSupply":
-          reducedParams = {
-            callValue: 0,
-            args: [reducedParams.callValue],
-          };
-          break;
-      }
-    }
-
-    return reducedParams;
-  }
-
   async isValidNetwork(network: string): Promise<boolean> {
     return `${this.blockchainConfig.chainId}` === network;
   }
@@ -411,9 +392,11 @@ function computeInvocationParams(
   gasOptions: { gasPrice?: string; gasLimit?: string } = {}
 ) {
   const { args, callValue } = params;
+
+  const blockTag = params.block ? { blockTag: params.block } : {};
   const reducedContractParameters = [
     ...(args || []),
-    { value: callValue ?? 0, ...gasOptions },
+    { value: callValue ?? 0, ...gasOptions, ...blockTag },
   ];
   return reducedContractParameters;
 }

@@ -26,6 +26,7 @@ import {
   BlockTag,
   ITransactionWithLogs,
 } from "../../../Types/BlockAndTxs";
+import { NotImplementedError } from "../../../Errors";
 
 export type HarmonyProvider = ExtensionInterface & {
   network: { chain_id: number };
@@ -35,6 +36,9 @@ export class HarmonyAdapter extends BaseAdapter<
   HarmonyContractInterface,
   HarmonyProvider
 > {
+  signMessage(): Promise<string> {
+    throw new NotImplementedError();
+  }
   convertAddressTo(address: string, format: AddressFormat): string {
     if (format === AddressFormat.Native) {
       return address.startsWith("one") ? address : toBech32(address);
