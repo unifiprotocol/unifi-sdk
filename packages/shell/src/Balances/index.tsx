@@ -193,9 +193,11 @@ export const useBalances = () => {
       const filteredBalances = balances.filter(
         (b) => !b.currency.equals(activeChain.nativeToken)
       );
+      await Promise.all(
+        filteredBalances.map((b) => adapter.initializeToken(b.currency.address))
+      );
       const multicallRequests = filteredBalances.reduce(
         (calls: GenericUseCase[], b) => {
-          adapter.initializeToken(b.currency.address);
           calls.push(
             new BalanceOf({
               tokenAddress: b.currency.address,
