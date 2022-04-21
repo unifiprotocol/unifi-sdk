@@ -2,7 +2,6 @@ import { ETHNativeToken, ETHUpToken, ETHWrappedToken } from "./Tokens";
 import { Blockchains, EthChainIds, OfflineConnectors } from "../../Types";
 import { MetamaskConnector } from "../../Connectors/Wallets/MetamaskConnector";
 import { MathWalletConnector } from "../../Connectors/Wallets/MathWalletConnector";
-import { AlchemyConnector } from "../../Connectors/Offline/AlchemyConnector";
 import { blockchainConfigFactory } from "../Utils";
 import { TrustWalletConnector } from "../../Connectors/Wallets/TrustWalletConnector";
 import { MetamaskCompatibleConnector } from "../../Connectors/Wallets/MetamaskCompatibleConnector";
@@ -10,6 +9,7 @@ import {
   createWeb3OfflineConnectorHelper,
   web3ConnectorFactory,
 } from "../../Connectors/Factory";
+import { ETHUnfiToken } from ".";
 
 export const EthereumConfig = blockchainConfigFactory(
   {
@@ -19,6 +19,7 @@ export const EthereumConfig = blockchainConfigFactory(
     nativeToken: ETHNativeToken,
     wrappedToken: ETHWrappedToken,
     upToken: ETHUpToken,
+    unfiToken: ETHUnfiToken,
     logoURI:
       "https://proxy.unifiprotocol.com/ipfs/QmXaeURdHVszjDuGCwM7DauTjaASfm8qBZYzETM5ehq7MD",
     multicall: {
