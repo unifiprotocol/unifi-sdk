@@ -4,18 +4,15 @@ import { useAdapter } from "../../Adapter";
 import { BlockchainModal } from "../BlockchainModal";
 import { IConfig } from "../../Config";
 import styled from "styled-components";
-import {
-  NetworkChanged,
-  NetworkChangedEvent,
-} from "../../EventBus/Events/AdapterEvents";
+import { NetworkChanged } from "../../EventBus/Events/AdapterEvents";
 import { ShellEventBus } from "../../EventBus";
-import { Wipe } from "../../EventBus/Events/BalancesEvents";
 import { OpenNetworkModalEvent } from "../../EventBus/Events/UIEvents";
 import { getVernacularBlockchain } from "@unifiprotocol/utils";
 import {
   ChangeNetwork,
   ChangeNetworkEvent,
 } from "../../EventBus/Events/BlockchainEvents";
+import { useBalances } from "../../Balances";
 
 const ActionButtonWrapped = styled.div`
   display: flex;
@@ -43,14 +40,16 @@ const ChainName = styled.span`
 export const BlockchainAction = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { activeChain, updateChain } = useAdapter();
+  const { wipe } = useBalances();
 
   const onNetworkChange = useCallback(
     (cfg: IConfig) => {
+      wipe(); // wipe here to be sync
       updateChain(cfg);
       ShellEventBus.emit(new NetworkChanged(cfg.chainId));
       setIsModalOpen(false);
     },
-    [updateChain]
+    [updateChain, wipe]
   );
 
   useEffect(() => {
@@ -58,16 +57,6 @@ export const BlockchainAction = () => {
     ShellEventBus.on(OpenNetworkModalEvent, fn);
     return () => {
       ShellEventBus.off(OpenNetworkModalEvent, fn);
-    };
-  }, [isModalOpen]);
-
-  useEffect(() => {
-    const onNetworkChanged = () => {
-      ShellEventBus.emit(new Wipe());
-    };
-    ShellEventBus.on(NetworkChangedEvent, onNetworkChanged);
-    return () => {
-      ShellEventBus.off(NetworkChangedEvent, onNetworkChanged);
     };
   }, [isModalOpen]);
 
