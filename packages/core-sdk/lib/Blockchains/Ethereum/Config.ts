@@ -9,7 +9,7 @@ import {
   createWeb3OfflineConnectorHelper,
   web3ConnectorFactory,
 } from "../../Connectors/Factory";
-import { ETHUnfiToken } from ".";
+import { ETHUnfiToken } from "./Tokens";
 
 export const EthereumConfig = blockchainConfigFactory(
   {
