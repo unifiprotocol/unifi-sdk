@@ -1,4 +1,9 @@
-import { AVAXNativeToken, AVAXUpToken, AVAXWrappedToken } from "./Tokens";
+import {
+  AVAXNativeToken,
+  AVAXUpToken,
+  AVAXWrappedToken,
+  AVAXUnfiToken,
+} from "./Tokens";
 import { Blockchains, EthChainIds, OfflineConnectors } from "../../Types";
 import { MetamaskConnector } from "../../Connectors/Wallets/MetamaskConnector";
 import { blockchainConfigFactory } from "../Utils";
@@ -7,7 +12,6 @@ import {
   createWeb3OfflineConnectorHelper,
   web3ConnectorFactory,
 } from "../../Connectors/Factory";
-import { AVAXUnfiToken } from ".";
 
 export const AvalancheConfig = blockchainConfigFactory(
   {
