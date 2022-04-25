@@ -1,4 +1,4 @@
-import { FTMToken, FTMUpToken, FTMWrappedToken } from "./Tokens";
+import { FTMToken, FTMUnfiToken, FTMUpToken, FTMWrappedToken } from "./Tokens";
 import { Blockchains, EthChainIds, OfflineConnectors } from "../../Types";
 import { MetamaskConnector } from "../../Connectors/Wallets/MetamaskConnector";
 import { MathWalletConnector } from "../../Connectors/Wallets/MathWalletConnector";
@@ -17,6 +17,7 @@ export const FTMConfig = blockchainConfigFactory(
     nativeToken: FTMToken,
     wrappedToken: FTMWrappedToken,
     upToken: FTMUpToken,
+    unfiToken: FTMUnfiToken,
     logoURI:
       "https://proxy.unifiprotocol.com/ipfs/QmPN8aMAnY2PxQeebTtyg1qxz7hqwHdojRp33dm3E8K5UA",
     multicall: {

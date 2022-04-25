@@ -7,6 +7,7 @@ import {
   createWeb3OfflineConnectorHelper,
   web3ConnectorFactory,
 } from "../../Connectors/Factory";
+import { AVAXUnfiToken } from ".";
 
 export const AvalancheConfig = blockchainConfigFactory(
   {
@@ -16,6 +17,7 @@ export const AvalancheConfig = blockchainConfigFactory(
     nativeToken: AVAXNativeToken,
     wrappedToken: AVAXWrappedToken,
     upToken: AVAXUpToken,
+    unfiToken: AVAXUnfiToken,
     logoURI:
       "https://proxy.unifiprotocol.com/ipfs/QmWPVF97Jrf4QZZwsfgbViZRYFCqg8jyU3gH72QwLPTF64",
     multicall: {

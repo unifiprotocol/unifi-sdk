@@ -1,4 +1,9 @@
-import { IOTXNativeToken, IOTXUpToken, IOTXWrappedToken } from "./Tokens";
+import {
+  IOTXNativeToken,
+  IOTXUnfiToken,
+  IOTXUpToken,
+  IOTXWrappedToken,
+} from "./Tokens";
 import { Blockchains, EthChainIds, OfflineConnectors } from "../../Types";
 import { MetamaskConnector } from "../../Connectors/Wallets/MetamaskConnector";
 import { blockchainConfigFactory } from "../Utils";
@@ -16,6 +21,7 @@ export const IotexConfig = blockchainConfigFactory(
     nativeToken: IOTXNativeToken,
     wrappedToken: IOTXWrappedToken,
     upToken: IOTXUpToken,
+    unfiToken: IOTXUnfiToken,
     logoURI:
       "https://proxy.unifiprotocol.com/ipfs/QmX4WzftcjqPpw1GUgVGDDLTk1aUwtFZtSzBtv6Zt1RTBZ",
     multicall: {

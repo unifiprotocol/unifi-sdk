@@ -1,4 +1,9 @@
-import { ONENativeToken, ONEUpToken, ONEWrappedToken } from "./Tokens";
+import {
+  ONENativeToken,
+  ONEUnfiToken,
+  ONEUpToken,
+  ONEWrappedToken,
+} from "./Tokens";
 import { Blockchains, EthChainIds, OfflineConnectors } from "../../Types";
 import { MetamaskConnector } from "../../Connectors/Wallets/MetamaskConnector";
 import { MathWalletConnector } from "../../Connectors/Wallets/MathWalletConnector";
@@ -17,6 +22,7 @@ export const HarmonyConfig = blockchainConfigFactory(
     nativeToken: ONENativeToken,
     wrappedToken: ONEWrappedToken,
     upToken: ONEUpToken,
+    unfiToken: ONEUnfiToken,
     logoURI:
       "https://proxy.unifiprotocol.com/ipfs/QmYm9c8Lx6mSWDvK3qhgnwJmbFEy1on4NXCVbEXHYNMSdt",
     multicall: {

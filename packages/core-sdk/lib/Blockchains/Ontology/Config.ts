@@ -1,4 +1,9 @@
-import { ONGNativeToken, ONGUpToken, ONGWrappedToken } from "./Tokens";
+import {
+  ONGNativeToken,
+  ONGUnfiToken,
+  ONGUpToken,
+  ONGWrappedToken,
+} from "./Tokens";
 import { Blockchains, EthChainIds, OfflineConnectors } from "../../Types";
 import { MetamaskConnector } from "../../Connectors/Wallets/MetamaskConnector";
 import { blockchainConfigFactory } from "../Utils";
@@ -17,6 +22,7 @@ export const OntologyConfig = blockchainConfigFactory(
     nativeToken: ONGNativeToken,
     wrappedToken: ONGWrappedToken,
     upToken: ONGUpToken,
+    unfiToken: ONGUnfiToken,
     logoURI:
       "https://proxy.unifiprotocol.com/ipfs/QmXRH7VxcrLM9mP3si1f4A82UPcgyqEiSWJtNzHKkVeUW2",
     multicall: {

@@ -1,4 +1,9 @@
-import { MATICNativeToken, MATICUpToken, MATICWrappedToken } from "./Tokens";
+import {
+  MATICNativeToken,
+  MATICUnfiToken,
+  MATICUpToken,
+  MATICWrappedToken,
+} from "./Tokens";
 import { Blockchains, EthChainIds, OfflineConnectors } from "../../Types";
 import { MetamaskConnector } from "../../Connectors/Wallets/MetamaskConnector";
 import { blockchainConfigFactory } from "../Utils";
@@ -16,6 +21,7 @@ export const PolygonConfig = blockchainConfigFactory(
     nativeToken: MATICNativeToken,
     wrappedToken: MATICWrappedToken,
     upToken: MATICUpToken,
+    unfiToken: MATICUnfiToken,
     logoURI:
       "https://proxy.unifiprotocol.com/ipfs/QmSwnuGtuLGyP7kGuW8oQhn8oHEFKuaAcYA7HBRNQtWvtm",
     multicall: {
