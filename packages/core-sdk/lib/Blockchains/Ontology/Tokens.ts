@@ -15,3 +15,10 @@ export const ONGUpToken = new Currency(
   "UP",
   "UP"
 );
+
+export const ONGUnfiToken = new Currency(
+  "0xb510ac30c04c86Fc2FcFCc2012A415d2cEd8e629",
+  18,
+  "UNFI",
+  "UNFI"
+);

@@ -15,3 +15,10 @@ export const IOTXUpToken = new Currency(
   "UP",
   "UP"
 );
+
+export const IOTXUnfiToken = new Currency(
+  "0xD2ECEDa377DAe9dAF952c18786be736bEC9312cC",
+  18,
+  "UNFI",
+  "UNFI"
+);

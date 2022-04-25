@@ -15,3 +15,10 @@ export const ONEUpToken = new Currency(
   "UP",
   "UP"
 );
+
+export const ONEUnfiToken = new Currency(
+  "0xEe7207c782d6937BE63E38FCF902fF59E5498386",
+  18,
+  "UNFI",
+  "UNFI"
+);

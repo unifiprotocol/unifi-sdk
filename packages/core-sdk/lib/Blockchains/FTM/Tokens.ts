@@ -15,3 +15,10 @@ export const FTMUpToken = new Currency(
   "UP",
   "UP"
 );
+
+export const FTMUnfiToken = new Currency(
+  "0x3824D0C574641CC8cb9253e6a84fE26E1E7a349F",
+  18,
+  "UNFI",
+  "UNFI"
+);

@@ -15,3 +15,10 @@ export const MATICUpToken = new Currency(
   "UP",
   "UP"
 );
+
+export const MATICUnfiToken = new Currency(
+  "0xed6072Ef5032484c2CC5f76630310e4BD36e62d2",
+  18,
+  "UNFI",
+  "UNFI"
+);

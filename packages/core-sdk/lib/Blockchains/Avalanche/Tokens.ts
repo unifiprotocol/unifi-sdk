@@ -14,3 +14,10 @@ export const AVAXUpToken = new Currency(
   "UP",
   "UP"
 );
+
+export const AVAXUnfiToken = new Currency(
+  "0x42A99bB49b54811A95A36981Cb03d230A0Aef67B",
+  18,
+  "UNFI",
+  "UNFI"
+);
