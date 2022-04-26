@@ -1,5 +1,6 @@
 export * from "./AdapterNotConnectedError";
 export * from "./BlockNotFoundError";
+export * from "./BlockNotRecoverableError";
 export * from "./InvalidBlockchainError";
 export * from "./InvalidNetworkError";
 export * from "./RejectedByUser";

@@ -18,6 +18,7 @@ import {
 import {
   AdapterNotConnectedError,
   BlockNotFoundError,
+  BlockNotRecoverableError,
   NotImplementedError,
 } from "../../../Errors";
 import { BaseAdapter } from "../../../Adapters/BaseAdapter";
@@ -263,11 +264,13 @@ export class TronAdapter extends BaseAdapter<
       return this._provider.trx
         .getCurrentBlock()
         .then(throwErrorIfNoBlock(height))
+        .then(throwUnrecoverableBlockError(height))
         .then(mapTrxBlockToGlobalInterface);
     }
     return this._provider.trx
       .getBlockByNumber(height)
       .then(throwErrorIfNoBlock(height))
+      .then(throwUnrecoverableBlockError(height))
       .then(mapTrxBlockToGlobalInterface);
   }
 
@@ -408,6 +411,20 @@ function throwErrorIfNoBlock(height: any) {
   return (block: any) => {
     if (!block) {
       throw new BlockNotFoundError(height, Blockchains.Tron);
+    }
+    return block;
+  };
+}
+
+const UNRECOVERABLE_ERRORS = [
+  "class com.alibaba.fastjson.JSONException : illegal state. 0",
+];
+function throwUnrecoverableBlockError(height: any) {
+  return (block: any) => {
+    if (block && block.Error) {
+      if (UNRECOVERABLE_ERRORS.includes(block.Error)) {
+        throw new BlockNotRecoverableError(height, Blockchains.Tron);
+      }
     }
     return block;
   };
