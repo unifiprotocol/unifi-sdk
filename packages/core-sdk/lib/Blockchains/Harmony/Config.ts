@@ -13,7 +13,6 @@ import {
   createWeb3OfflineConnectorHelper,
   web3ConnectorFactory,
 } from "../../Connectors/Factory";
-import { OntoWalletConnector } from "../../Connectors/Wallets/OntoWallet";
 
 export const HarmonyConfig = blockchainConfigFactory(
   {
@@ -45,12 +44,7 @@ export const HarmonyConfig = blockchainConfigFactory(
       },
     },
   },
-  [
-    MetamaskConnector,
-    OneWalletConnector,
-    MathWalletConnector,
-    OntoWalletConnector,
-  ],
+  [MetamaskConnector, OneWalletConnector, MathWalletConnector],
   [
     createWeb3OfflineConnectorHelper(
       OfflineConnectors.Harmony,

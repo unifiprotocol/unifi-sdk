@@ -10,7 +10,6 @@ import {
   web3ConnectorFactory,
 } from "../../Connectors/Factory";
 import { ETHUnfiToken } from "./Tokens";
-import { OntoWalletConnector } from "../../Connectors/Wallets/OntoWallet";
 
 export const EthereumConfig = blockchainConfigFactory(
   {
@@ -45,7 +44,6 @@ export const EthereumConfig = blockchainConfigFactory(
     TrustWalletConnector,
     MathWalletConnector,
     MetamaskCompatibleConnector,
-    OntoWalletConnector,
   ],
   [
     createWeb3OfflineConnectorHelper(
