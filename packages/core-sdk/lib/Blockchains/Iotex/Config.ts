@@ -12,6 +12,7 @@ import {
   createWeb3OfflineConnectorHelper,
   web3ConnectorFactory,
 } from "../../Connectors/Factory";
+import { OntoWalletConnector } from "../../Connectors/Wallets/OntoWallet";
 
 export const IotexConfig = blockchainConfigFactory(
   {
@@ -43,7 +44,7 @@ export const IotexConfig = blockchainConfigFactory(
       },
     },
   },
-  [MetamaskConnector, MetamaskCompatibleConnector],
+  [MetamaskConnector, MetamaskCompatibleConnector, OntoWalletConnector],
   [
     createWeb3OfflineConnectorHelper(
       OfflineConnectors.Iotex,
