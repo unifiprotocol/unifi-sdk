@@ -13,6 +13,7 @@ import {
   web3ConnectorFactory,
 } from "../../Connectors/Factory";
 import { unifiBlockchainProxyUrl } from "../../Connectors/Utils";
+import { OntoWalletConnector } from "../../Connectors/Wallets/OntoWallet";
 
 export const OntologyConfig = blockchainConfigFactory(
   {
@@ -44,7 +45,7 @@ export const OntologyConfig = blockchainConfigFactory(
       },
     },
   },
-  [MetamaskConnector, MetamaskCompatibleConnector],
+  [MetamaskConnector, MetamaskCompatibleConnector, OntoWalletConnector],
   [
     createWeb3OfflineConnectorHelper(
       OfflineConnectors.UnifiProxy,

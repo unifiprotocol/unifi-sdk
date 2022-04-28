@@ -36,6 +36,7 @@ export enum WalletConnectors {
   HarmonyOneWallet = "HarmonyOneWallet",
   Binance = "binance",
   Metamask = "metamask",
+  OntoWallet = "ontowallet",
   MathWallet = "mathwallet",
   TronLink = "tronlink",
   TrustWallet = "trustwallet",
