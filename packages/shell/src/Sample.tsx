@@ -97,9 +97,9 @@ export const Sample: ShellWrappedComp = ({ connection, eventBus }) => {
       <pre>{JSON.stringify(balances, null, 4)}</pre>
 
       <Routes>
-        <Route path="/exchange" element={<>AAA</>}></Route>
-        <Route path="/liquidity" element={<>BBB</>}></Route>
-        <Route path="/up" element={<>CCC</>}></Route>
+        <Route path="/exchange" element={<>Exchange page</>}></Route>
+        <Route path="/liquidity" element={<>Liquidity Page</>}></Route>
+        <Route path="/up" element={<>UP page</>}></Route>
         <Route path="/" element={<Navigate to="/exchange" />}></Route>
       </Routes>
     </div>

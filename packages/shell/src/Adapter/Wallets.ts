@@ -5,6 +5,7 @@ import mathwallet from "../Assets/Wallets/Mathwallet.png";
 import trustwallet from "../Assets/Wallets/TrustWallet.svg";
 import harmonyOneWallet from "../Assets/Wallets/HarmonyOneWallet.png";
 import web3 from "../Assets/Wallets/Web3.png";
+import OntoWallet from "../Assets/Wallets/OntoWallet.png";
 
 export const getWalletIcon = (wallet: string) => {
   return {
@@ -14,5 +15,6 @@ export const getWalletIcon = (wallet: string) => {
     [WalletConnectors.TrustWallet]: trustwallet,
     [WalletConnectors.MetamaskCompatible]: web3,
     [WalletConnectors.HarmonyOneWallet]: harmonyOneWallet,
+    [WalletConnectors.OntoWallet]: OntoWallet,
   }[wallet];
 };
