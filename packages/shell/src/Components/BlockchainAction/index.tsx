@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { mediaQueries, SecondaryButton } from "@unifiprotocol/uikit";
 import { useAdapter } from "../../Adapter";
 import { BlockchainModal } from "../BlockchainModal";
@@ -13,6 +13,7 @@ import {
   ChangeNetworkEvent,
 } from "../../EventBus/Events/BlockchainEvents";
 import { useBalances } from "../../Balances";
+import { getBlockchainConfig } from "@unifiprotocol/core-sdk";
 
 const ActionButtonWrapped = styled.div`
   display: flex;
@@ -41,6 +42,10 @@ export const BlockchainAction = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { activeChain, updateChain } = useAdapter();
   const { wipe } = useBalances();
+
+  const cfgActiveChain = useMemo(() => {
+    return getBlockchainConfig(activeChain.blockchain);
+  }, [activeChain]);
 
   const onNetworkChange = useCallback(
     (cfg: IConfig) => {
@@ -73,7 +78,10 @@ export const BlockchainAction = () => {
     <>
       <SecondaryButton onClick={() => setIsModalOpen(true)}>
         <ActionButtonWrapped>
-          <ChainLogo src={activeChain.logoURI} alt={activeChain.blockchain} />
+          <ChainLogo
+            src={cfgActiveChain.logoURI}
+            alt={activeChain.blockchain}
+          />
           <ChainName>
             {getVernacularBlockchain(activeChain.blockchain)}
           </ChainName>

@@ -16,6 +16,7 @@ import {
 import { Trans, useTranslation } from "react-i18next";
 import { useAdapter } from "../../Adapter";
 import { getVernacularBlockchain } from "@unifiprotocol/utils";
+import { getBlockchainConfig } from "@unifiprotocol/core-sdk";
 
 type ChooseBlockchainModalProps = {
   onNetworkChange: (network: IConfig) => void;
@@ -31,18 +32,21 @@ const BlockchainModalComponent: React.FC<ChooseBlockchainModalProps> = ({
 
   const options = useMemo(
     () =>
-      config.map((network) => ({
-        value: network,
-        display: (
-          <>
-            <ItemLogo
-              alt={getVernacularBlockchain(network.blockchain)}
-              src={network.logoURI}
-            />
-            <ItemName>{getVernacularBlockchain(network.blockchain)}</ItemName>
-          </>
-        ),
-      })),
+      config.map((network) => {
+        const cfg = getBlockchainConfig(network.blockchain);
+        return {
+          value: network,
+          display: (
+            <>
+              <ItemLogo
+                alt={getVernacularBlockchain(network.blockchain)}
+                src={cfg.logoURI}
+              />
+              <ItemName>{getVernacularBlockchain(network.blockchain)}</ItemName>
+            </>
+          ),
+        };
+      }),
     []
   );
 
