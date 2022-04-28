@@ -69,7 +69,10 @@ export class OntoWalletConnector extends BaseConnector {
   }
 
   protected getAgent(): any {
-    return (window as any).onto;
+    return (
+      (window as any).onto ??
+      ((window as any).ethereum?.isONTO && (window as any).ethereum)
+    );
   }
 
   async initEventController(adapter: IAdapter): Promise<void> {
