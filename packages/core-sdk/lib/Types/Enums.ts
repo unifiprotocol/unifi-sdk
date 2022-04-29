@@ -14,6 +14,13 @@ export enum EthChainIds {
   FTM = 250,
   OntologyTestnet = 5851,
   Ontology = 58,
+  /**
+   * Non real chain ids
+   * Format: 1337XXXX where XXXX is an autoincrement
+   * We need this for the nature of the bridge, using chainid as configuration
+   * Check existing ones here: https://chainlist.org/
+   */
+  Tron = 13370001,
 }
 
 export enum OfflineConnectors {

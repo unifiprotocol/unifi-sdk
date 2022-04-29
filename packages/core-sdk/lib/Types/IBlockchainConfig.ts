@@ -20,7 +20,7 @@ export interface IBlockchainConfig {
   upToken?: Currency;
   unfiToken?: Currency;
   logoURI: string;
-  chainId: EthChainIds | undefined;
+  chainId: EthChainIds;
   wallets: IConnector[];
   offlineConnectors: IConnector[];
   multicall: {
