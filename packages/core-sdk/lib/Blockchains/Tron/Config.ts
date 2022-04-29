@@ -1,5 +1,5 @@
 import { TronNativeToken } from "./Tokens";
-import { Blockchains, OfflineConnectors } from "../../Types";
+import { Blockchains, EthChainIds, OfflineConnectors } from "../../Types";
 import { blockchainConfigFactory } from "../Utils";
 import { TronLinkConnector } from "./Connectors/Wallets/TronLinkConnector";
 import {
@@ -14,7 +14,7 @@ const tronGridApiKey = "a2a267ee-3e71-430c-b51a-342aabd68deb";
 export const TronConfig = blockchainConfigFactory(
   {
     blockchain: Blockchains.Tron,
-    chainId: undefined,
+    chainId: EthChainIds.Tron,
     publicRpc: "https://api.trongrid.io",
     nativeToken: TronNativeToken,
     wrappedToken: TronWrappedToken,
