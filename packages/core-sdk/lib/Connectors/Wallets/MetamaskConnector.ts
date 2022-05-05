@@ -90,7 +90,7 @@ export class MetamaskConnector extends BaseConnector {
           method: "wallet_addEthereumChain",
           params: [
             {
-              chainId,
+              chainId: utils.hexValue(chainId),
               chainName: blockchain,
               nativeCurrency: {
                 name: nativeToken.name,
