@@ -1,9 +1,10 @@
 import { ConnectorEvent, IConnectorAdapters } from "../Types";
 import EventEmitter from "eventemitter3";
-import { IConnector } from "../Types/IConnector";
+import { IConnector, OnNetworkChangeOptions } from "../Types/IConnector";
 import { Callback } from "../Utils/Typings";
 import { IBlockchainConfig } from "../Types/IBlockchainConfig";
 import { IConnectorMetadata } from "../Types";
+import { blockchainConfigMap } from "../Blockchains";
 
 export abstract class BaseConnector implements IConnector {
   protected emitter = new EventEmitter<ConnectorEvent>();
@@ -14,14 +15,51 @@ export abstract class BaseConnector implements IConnector {
     public readonly config: IBlockchainConfig
   ) {}
 
-  protected abstract _connect(): Promise<IConnectorAdapters>;
+  protected abstract _connect(
+    config?: IBlockchainConfig
+  ): Promise<IConnectorAdapters>;
 
-  async connect(): Promise<IConnectorAdapters> {
+  async connect(
+    { tryReconnection, onConnect }: OnNetworkChangeOptions = {
+      tryReconnection: false,
+    }
+  ): Promise<IConnectorAdapters> {
     if (this.adapter) {
       return this.adapter;
     }
-    const adapters = await this._connect();
+
+    onConnect && this.on("Connected", onConnect);
+
+    const adapters = await this._connect(this.config);
     this.adapter = adapters;
+    this.emitter.emit("Connected", adapters);
+
+    if (tryReconnection) {
+      this.on("NetworkChanged", async (chainId) => {
+        const config = Object.values(blockchainConfigMap).find(
+          (cfg) => cfg.chainId === chainId
+        );
+        if (config === undefined) {
+          throw new Error("Target blockchain is not supported.");
+        }
+        const adapters = await this.changeNetwork(config);
+        this.adapter = adapters;
+        this.emitter.emit("Connected", adapters);
+      });
+    }
+
+    return adapters;
+  }
+
+  async changeNetwork(config: IBlockchainConfig): Promise<IConnectorAdapters> {
+    const walletSupportTargetBlockchain = config.wallets.some(
+      (connector) => connector.displayName === this.metadata.displayName
+    );
+    if (!walletSupportTargetBlockchain) {
+      throw new Error("Wallet doesn't support target blockchain.");
+    }
+
+    const adapters = await this._connect(config);
 
     return adapters;
   }

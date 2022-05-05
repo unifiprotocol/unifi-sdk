@@ -44,7 +44,9 @@ export class TronLinkConnector extends BaseConnector {
     );
   }
 
-  async _connect(): Promise<IConnectorAdapters> {
+  async _connect(
+    config: IBlockchainConfig = this.config
+  ): Promise<IConnectorAdapters> {
     const agent = this.getAgent();
     if (!(await this.isAvailable())) {
       throw new WalletNotDetectedError(this.metadata.name);
@@ -66,7 +68,7 @@ export class TronLinkConnector extends BaseConnector {
 
     const chainIdStr = TronChainId.Mainnet;
 
-    const adapter = new TronAdapter(this.config);
+    const adapter = new TronAdapter(config);
 
     adapter.setAddress(address);
     adapter.setProvider(window.tronWeb);

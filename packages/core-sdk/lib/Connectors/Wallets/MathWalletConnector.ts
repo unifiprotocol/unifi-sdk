@@ -21,14 +21,18 @@ export class MathWalletConnector extends MetamaskConnector {
     });
   }
 
-  async _connect(): Promise<IConnectorAdapters> {
-    if (this.config.blockchain !== Blockchains.Harmony) {
-      return super._connect();
+  async _connect(
+    config: IBlockchainConfig = this.config
+  ): Promise<IConnectorAdapters> {
+    if (config.blockchain !== Blockchains.Harmony) {
+      return super._connect(config);
     }
-    return this.connectToHarmony();
+    return this.connectToHarmony(config);
   }
 
-  async connectToHarmony(): Promise<IConnectorAdapters> {
+  async connectToHarmony(
+    config: IBlockchainConfig
+  ): Promise<IConnectorAdapters> {
     if (!(await this.isAvailable())) {
       throw new WalletNotDetectedError(this.metadata.displayName);
     }
@@ -41,7 +45,7 @@ export class MathWalletConnector extends MetamaskConnector {
 
     const account = await this.getAgent().getAccount();
     const address = account.address;
-    const adapter = new HarmonyAdapter(this.config);
+    const adapter = new HarmonyAdapter(config);
 
     adapter.setAddress(address);
     adapter.setProvider(this.getAgent());

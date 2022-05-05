@@ -3,6 +3,7 @@ import { ethers } from "ethers";
 import { BaseConnector } from "../BaseConnector";
 import { hexToDec } from "@unifiprotocol/utils";
 import { Web3BaseAdapter } from "../../Adapters/Web3BaseAdapter";
+import { utils } from "ethers";
 
 import { Web3MulticallAdapter } from "../../Adapters";
 import {
@@ -31,11 +32,14 @@ export class MetamaskConnector extends BaseConnector {
     super(metadata, config);
   }
 
-  async _connect(): Promise<IConnectorAdapters> {
+  async _connect(
+    config: IBlockchainConfig = this.config
+  ): Promise<IConnectorAdapters> {
     const ethAgent = this.getAgent();
     if (!(await this.isAvailable())) {
       throw new WalletNotDetectedError(this.metadata.name);
     }
+    await this._forceNetwork(config);
     const accounts: string[] = await ethAgent.request({
       method: "eth_requestAccounts",
     });
@@ -46,7 +50,7 @@ export class MetamaskConnector extends BaseConnector {
     const { chainId } = await provider.getNetwork();
     const chainIdStr = `${chainId}`;
 
-    const adapter = new Web3BaseAdapter(this.config);
+    const adapter = new Web3BaseAdapter(config);
 
     adapter.setAddress(address);
     adapter.setProvider(provider);
@@ -61,6 +65,50 @@ export class MetamaskConnector extends BaseConnector {
     }
 
     return { adapter, multicall };
+  }
+
+  protected async _forceNetwork({
+    chainId,
+    blockchain,
+    nativeToken,
+    publicRpc,
+  }: IBlockchainConfig) {
+    const agent = this.isAvailable() && this.getAgent();
+    if (!agent) {
+      throw new Error("Couldn't connect correctly");
+    }
+    try {
+      const success = await agent
+        .request({
+          method: "wallet_switchEthereumChain",
+          params: [{ chainId: utils.hexValue(chainId) }],
+        })
+        .then(() => true)
+        .catch(() => false);
+      if (!success) {
+        await window.ethereum.request({
+          method: "wallet_addEthereumChain",
+          params: [
+            {
+              chainId,
+              chainName: blockchain,
+              nativeCurrency: {
+                name: nativeToken.name,
+                symbol: nativeToken.symbol,
+                decimals: nativeToken.decimals,
+              },
+              rpcUrls: [publicRpc],
+            },
+          ],
+        });
+        await agent.request({
+          method: "wallet_switchEthereumChain",
+          params: [{ chainId: utils.hexValue(chainId) }],
+        });
+      }
+    } catch (e) {
+      throw new Error("Network couldn't be switch correctly.");
+    }
   }
 
   async isAvailable(): Promise<boolean> {
