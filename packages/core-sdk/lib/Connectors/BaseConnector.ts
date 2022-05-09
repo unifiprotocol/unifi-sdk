@@ -12,7 +12,7 @@ export abstract class BaseConnector implements IConnector {
 
   constructor(
     public readonly metadata: IConnectorMetadata,
-    public readonly config: IBlockchainConfig
+    public config: IBlockchainConfig
   ) {}
 
   protected abstract _connect(
@@ -60,6 +60,7 @@ export abstract class BaseConnector implements IConnector {
     }
 
     const adapters = await this._connect(config);
+    this.config = config;
 
     return adapters;
   }
