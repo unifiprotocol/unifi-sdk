@@ -20,15 +20,13 @@ export abstract class BaseConnector implements IConnector {
   ): Promise<IConnectorAdapters>;
 
   async connect(
-    { tryReconnection, onConnect }: OnNetworkChangeOptions = {
+    { tryReconnection }: OnNetworkChangeOptions = {
       tryReconnection: false,
     }
   ): Promise<IConnectorAdapters> {
     if (this.adapter) {
       return this.adapter;
     }
-
-    onConnect && this.on("Connected", onConnect);
 
     const adapters = await this._connect(this.config);
     this.adapter = adapters;

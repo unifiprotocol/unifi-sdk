@@ -11,7 +11,6 @@ export interface IConnectorAdapters {
 
 export interface OnNetworkChangeOptions {
   tryReconnection: boolean;
-  onConnect?: (adapters: IConnectorAdapters) => any;
 }
 
 export interface IConnector {
