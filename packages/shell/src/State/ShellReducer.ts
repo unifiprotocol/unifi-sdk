@@ -1,5 +1,5 @@
 import { AdapterReducer } from "../Adapter/State/AdapterReducer";
-import { BalanceReducer } from "../Balances/State/BalanceReducer";
+import { BalancesReducer } from "../Balances/State/BalancesReducer";
 import { ShellAction } from "./ShellContext";
 import { ShellState } from "./ShellState";
 
@@ -10,6 +10,6 @@ export const ShellReducer = (
   return {
     ...state,
     adapter: AdapterReducer(state.adapter, action, state),
-    balances: BalanceReducer(state.balances, action, state),
+    balances: BalancesReducer(state.balances, action, state),
   };
 };

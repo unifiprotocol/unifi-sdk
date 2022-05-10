@@ -6,7 +6,7 @@ import { BalanceOf } from "../Contracts/ERC20/balanceOf";
 
 import { ShellContext } from "../State/ShellContext";
 import { BalancesState } from "./State/BalanceState";
-import { BalancesActionKind } from "./State/BalanceActions";
+import { BalancesActionKind } from "./State/BalancesActions";
 
 export const useBalances = () => {
   const { state, dispatch } = useContext(ShellContext);

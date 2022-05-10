@@ -4,7 +4,7 @@ import {
 } from "../Adapter/State/AdapterState";
 import {
   BalancesState,
-  getBalanceInitialState,
+  getBalancesInitialState,
 } from "../Balances/State/BalanceState";
 
 export interface ShellState {
@@ -14,5 +14,5 @@ export interface ShellState {
 
 export const getShellInitialState = () => ({
   adapter: getAdapterInitialState(),
-  balances: getBalanceInitialState(),
+  balances: getBalancesInitialState(),
 });

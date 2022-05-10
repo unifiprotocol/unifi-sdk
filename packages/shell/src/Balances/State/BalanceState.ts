@@ -8,7 +8,7 @@ export interface BalancesState {
   unfiPrice: string;
 }
 
-export const getBalanceInitialState: () => BalancesState = () => ({
+export const getBalancesInitialState: () => BalancesState = () => ({
   balances: [],
   refreshingBalances: false,
   unfiPrice: localStorage.getItem("UNFI_PRICE") ?? "0.0",

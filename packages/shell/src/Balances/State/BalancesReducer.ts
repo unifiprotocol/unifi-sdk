@@ -1,8 +1,8 @@
-import { BalancesActionKind } from "./BalanceActions";
-import { BalancesState, getBalanceInitialState } from "./BalanceState";
+import { BalancesActionKind } from "./BalancesActions";
+import { BalancesState, getBalancesInitialState } from "./BalanceState";
 import { ShellPartialReducer } from "../../State/Types";
 
-export const BalanceReducer: ShellPartialReducer<BalancesState> = (
+export const BalancesReducer: ShellPartialReducer<BalancesState> = (
   state,
   action,
   rootState
@@ -66,7 +66,7 @@ export const BalanceReducer: ShellPartialReducer<BalancesState> = (
       };
 
     case BalancesActionKind.WIPE:
-      return { ...state, ...getBalanceInitialState() };
+      return { ...state, ...getBalancesInitialState() };
 
     default:
       return state;
