@@ -2,7 +2,7 @@ import { Connectors } from "@unifiprotocol/core-sdk";
 import { CgSpinner } from "@unifiprotocol/uikit";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useAdapter } from ".";
+import { useAdapter } from "./useAdapter";
 import { getStorageKey } from "../Utils/ChainStorage";
 
 const ConnectingAdapter = styled.div`

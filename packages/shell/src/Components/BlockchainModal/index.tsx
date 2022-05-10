@@ -14,7 +14,7 @@ import {
   SelectionListItem,
 } from "../ConnectionModal/Styles";
 import { Trans, useTranslation } from "react-i18next";
-import { useAdapter } from "../../Adapter";
+import { useAdapter } from "../../Adapter/useAdapter";
 import { getVernacularBlockchain } from "@unifiprotocol/utils";
 import { getBlockchainConfig } from "@unifiprotocol/core-sdk";
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { useBalances } from ".";
-import { useAdapter } from "../Adapter";
+import { useBalances } from "./useBalances";
+import { useAdapter } from "../Adapter/useAdapter";
 
 import Clocks from "../Services/Clocks";
 import { ShellEventBus } from "../EventBus";
@@ -16,7 +16,7 @@ import { AddressChangedEvent } from "../EventBus/Events/AdapterEvents";
 export const BalancesUpdater = () => {
   const [initialTrigger, setInitialTrigger] = useState(false);
 
-  const { refreshing, addToken, refresh, wipe, updateUnfiPrice } =
+  const { refreshingBalances, addToken, refresh, wipe, updateUnfiPrice } =
     useBalances();
   const { adapter } = useAdapter();
 
@@ -66,7 +66,7 @@ export const BalancesUpdater = () => {
     return () => {
       ShellEventBus.off(WipeEvent, fn);
     };
-  }, [refreshing, refresh, wipe]);
+  }, [refreshingBalances, refresh, wipe]);
 
   useEffect(() => {
     const fn = () => {
@@ -77,14 +77,14 @@ export const BalancesUpdater = () => {
     return () => {
       ShellEventBus.off(AddressChangedEvent, fn);
     };
-  }, [refreshing, refresh, wipe]);
+  }, [refreshingBalances, refresh, wipe]);
 
   useEffect(() => {
-    if (!initialTrigger && adapter?.isConnected() && !refreshing) {
+    if (!initialTrigger && adapter?.isConnected() && !refreshingBalances) {
       refresh();
       setInitialTrigger(true);
     }
-  }, [adapter, initialTrigger, refreshing, refresh]);
+  }, [adapter, initialTrigger, refreshingBalances, refresh]);
 
   return <></>;
 };

@@ -12,10 +12,10 @@ import {
   IMulticallAdapter,
   Blockchains,
 } from "@unifiprotocol/core-sdk";
-import { AdapterProvider, useAdapter } from "./Adapter";
+import { useAdapter } from "./Adapter/useAdapter";
 import { ShellEventBus } from "./EventBus";
 import { Updater } from "./Components/Updater";
-import { BalancesProvider, BalancesState, useBalances } from "./Balances";
+import { useBalances } from "./Balances/useBalances";
 import { TopHeader } from "./Components/TopHeader";
 import { Sidebar } from "./Components/Sidebar";
 import { NavigationProvider } from "./Navigation";
@@ -23,6 +23,8 @@ import { I18nextProvider } from "react-i18next";
 import i18n from "./i18n";
 import { BrowserRouter } from "react-router-dom";
 import { EnsureAdapter } from "./Adapter/EnsureAdapter";
+import { BalancesState } from "./Balances/State/BalanceState";
+import { ShellProvider } from "./State/ShellProvider";
 
 export type ShellWrappedProps = {
   blockchain: Blockchains;
@@ -32,7 +34,7 @@ export type ShellWrappedProps = {
   eventBus: typeof ShellEventBus;
   // TODO breaking change: pass whole state in balances prop
   balances: BalancesState["balances"];
-  refreshingBalances: BalancesState["refreshing"];
+  refreshingBalances: BalancesState["refreshingBalances"];
   i18n: typeof i18n;
 };
 
@@ -59,33 +61,31 @@ export const Shell: React.FC<ShellProps> = ({
 }) => {
   return (
     <BrowserRouter>
-      <AdapterProvider>
-        <BalancesProvider>
-          <I18nextProvider i18n={i18n}>
-            <UnifiThemeProvider theme={Themes.Dark}>
-              <ShellWrapper>
-                <NavigationProvider>
-                  <Updater />
-                  <NavigationHeader />
-                  <TopHeader />
-                  <ContentWrapper>
-                    <EnsureAdapter>
-                      {SidebarComps.length > 0 && (
-                        <Sidebar>
-                          {SidebarComps.map((Comp, idx) => (
-                            <ConnectedComp Wrapped={Comp} key={idx} />
-                          ))}
-                        </Sidebar>
-                      )}
-                      <ConnectedComp Wrapped={Wrapped} />
-                    </EnsureAdapter>
-                  </ContentWrapper>
-                </NavigationProvider>
-              </ShellWrapper>
-            </UnifiThemeProvider>
-          </I18nextProvider>
-        </BalancesProvider>
-      </AdapterProvider>
+      <ShellProvider>
+        <I18nextProvider i18n={i18n}>
+          <UnifiThemeProvider theme={Themes.Dark}>
+            <ShellWrapper>
+              <NavigationProvider>
+                <Updater />
+                <NavigationHeader />
+                <TopHeader />
+                <ContentWrapper>
+                  <EnsureAdapter>
+                    {SidebarComps.length > 0 && (
+                      <Sidebar>
+                        {SidebarComps.map((Comp, idx) => (
+                          <ConnectedComp Wrapped={Comp} key={idx} />
+                        ))}
+                      </Sidebar>
+                    )}
+                    <ConnectedComp Wrapped={Wrapped} />
+                  </EnsureAdapter>
+                </ContentWrapper>
+              </NavigationProvider>
+            </ShellWrapper>
+          </UnifiThemeProvider>
+        </I18nextProvider>
+      </ShellProvider>
     </BrowserRouter>
   );
 };
@@ -95,7 +95,8 @@ const ConnectedComp: React.FC<{ Wrapped?: ShellWrappedComp }> = ({
 }) => {
   const { isAdapterReady, connector, adapter, multicallAdapter, activeChain } =
     useAdapter();
-  const { balances, refreshing } = useBalances();
+  const { balances, refreshingBalances } = useBalances();
+
   if (!isAdapterReady) {
     return <>"Loading"</>;
   }
@@ -108,7 +109,7 @@ const ConnectedComp: React.FC<{ Wrapped?: ShellWrappedComp }> = ({
       multicallAdapter={multicallAdapter!}
       connection={connector!}
       balances={balances}
-      refreshingBalances={refreshing}
+      refreshingBalances={refreshingBalances}
       i18n={i18n}
     />
   ) : null;

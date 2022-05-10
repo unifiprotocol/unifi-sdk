@@ -62,5 +62,5 @@ function baseConfig(
     wrappedToken: sdkConfig.wrappedToken,
   };
 }
-
+export const defaultConfig = config[0];
 export default config;

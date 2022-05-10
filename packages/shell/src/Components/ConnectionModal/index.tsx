@@ -12,7 +12,7 @@ import {
   ModalClose,
   useModal,
 } from "@unifiprotocol/uikit";
-import { useAdapter } from "../../Adapter";
+import { useAdapter } from "../../Adapter/useAdapter";
 import { getWalletIcon } from "../../Adapter/Wallets";
 import { setStorageKey } from "../../Utils/ChainStorage";
 

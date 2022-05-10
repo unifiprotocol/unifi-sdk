@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { mediaQueries } from "@unifiprotocol/uikit";
-import { useBalances } from "../../Balances";
+import { useBalances } from "../../Balances/useBalances";
 
 const UnfiPriceWrapper = styled.div`
   display: flex;
