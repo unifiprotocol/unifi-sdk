@@ -15,36 +15,15 @@ export abstract class BaseConnector implements IConnector {
     public config: IBlockchainConfig
   ) {}
 
-  protected abstract _connect(
-    config?: IBlockchainConfig
-  ): Promise<IConnectorAdapters>;
+  protected abstract _connect(): Promise<IConnectorAdapters>;
 
-  async connect(
-    { tryReconnection }: OnNetworkChangeOptions = {
-      tryReconnection: false,
-    }
-  ): Promise<IConnectorAdapters> {
+  async connect(): Promise<IConnectorAdapters> {
     if (this.adapter) {
       return this.adapter;
     }
 
-    const adapters = await this._connect(this.config);
+    const adapters = await this._connect();
     this.adapter = adapters;
-    this.emitter.emit("Connected", adapters);
-
-    if (tryReconnection) {
-      this.on("NetworkChanged", async (chainId) => {
-        const config = Object.values(blockchainConfigMap).find(
-          (cfg) => cfg.chainId === chainId
-        );
-        if (config === undefined) {
-          throw new Error("Target blockchain is not supported.");
-        }
-        const adapters = await this.changeNetwork(config);
-        this.adapter = adapters;
-        this.emitter.emit("Connected", adapters);
-      });
-    }
 
     return adapters;
   }
@@ -57,7 +36,7 @@ export abstract class BaseConnector implements IConnector {
       throw new Error("Wallet doesn't support target blockchain.");
     }
 
-    const adapters = await this._connect(config);
+    const adapters = await this._connect();
     this.config = config;
 
     return adapters;

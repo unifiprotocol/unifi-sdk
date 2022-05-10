@@ -52,8 +52,4 @@ export enum WalletConnectors {
 
 export type Connectors = WalletConnectors | OfflineConnectors;
 
-export type ConnectorEvent =
-  | "AddressChanged"
-  | "NetworkChanged"
-  | "Disconnect"
-  | "Connected";
+export type ConnectorEvent = "AddressChanged" | "NetworkChanged" | "Disconnect";

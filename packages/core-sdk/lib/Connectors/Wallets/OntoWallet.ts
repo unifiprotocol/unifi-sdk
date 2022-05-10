@@ -31,9 +31,7 @@ export class OntoWalletConnector extends BaseConnector {
     super(metadata, config);
   }
 
-  async _connect(
-    config: IBlockchainConfig = this.config
-  ): Promise<IConnectorAdapters> {
+  async _connect(): Promise<IConnectorAdapters> {
     const ethAgent = this.getAgent();
     if (!(await this.isAvailable())) {
       throw new WalletNotDetectedError(this.metadata.name);
@@ -49,7 +47,7 @@ export class OntoWalletConnector extends BaseConnector {
 
     const chainIdStr = `${chainId}`;
 
-    const adapter = new Web3BaseAdapter(config);
+    const adapter = new Web3BaseAdapter(this.config);
 
     adapter.setAddress(address);
     adapter.setProvider(provider);

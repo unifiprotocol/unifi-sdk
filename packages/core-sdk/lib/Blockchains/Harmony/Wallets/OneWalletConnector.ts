@@ -28,9 +28,7 @@ export class OneWalletConnector extends BaseConnector {
 
   protected async _forceNetwork(config: IBlockchainConfig) {}
 
-  async _connect(
-    config: IBlockchainConfig = this.config
-  ): Promise<IConnectorAdapters> {
+  async _connect(): Promise<IConnectorAdapters> {
     if (!(await this.isAvailable())) {
       throw new WalletNotDetectedError(this.displayName);
     }
@@ -45,7 +43,7 @@ export class OneWalletConnector extends BaseConnector {
 
     const address = account.address;
 
-    const adapter = new HarmonyAdapter(config);
+    const adapter = new HarmonyAdapter(this.config);
     adapter.setAddress(address);
     adapter.setProvider(this.getAgent());
 

@@ -32,14 +32,12 @@ export class MetamaskConnector extends BaseConnector {
     super(metadata, config);
   }
 
-  async _connect(
-    config: IBlockchainConfig = this.config
-  ): Promise<IConnectorAdapters> {
+  async _connect(): Promise<IConnectorAdapters> {
     const ethAgent = this.getAgent();
     if (!(await this.isAvailable())) {
       throw new WalletNotDetectedError(this.metadata.name);
     }
-    await this._forceNetwork(config);
+    await this._forceNetwork(this.config);
     const accounts: string[] = await ethAgent.request({
       method: "eth_requestAccounts",
     });
@@ -50,7 +48,7 @@ export class MetamaskConnector extends BaseConnector {
     const { chainId } = await provider.getNetwork();
     const chainIdStr = `${chainId}`;
 
-    const adapter = new Web3BaseAdapter(config);
+    const adapter = new Web3BaseAdapter(this.config);
 
     adapter.setAddress(address);
     adapter.setProvider(provider);
