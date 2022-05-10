@@ -33,7 +33,6 @@ export const BalancesReducer: ShellPartialReducer<BalancesState> = (
       if (
         action.payload.blockchain !== rootState.adapter.activeChain.blockchain
       ) {
-        console.warn("Ignore this balances");
         return state;
       }
       const balances = state.balances.reduce(
