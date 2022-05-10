@@ -2,6 +2,7 @@ import {
   Connectors,
   getBlockchainConnectorByName,
   getBlockchainOfflineConnector,
+  getBlockchainOfflineConnectors,
   IAdapter,
   IConnector,
   IMulticallAdapter,
@@ -17,6 +18,7 @@ import {
 
 import Configs, { IConfig } from "../Config";
 import { ShellEventBus } from "../EventBus";
+import { AddressChanged } from "../EventBus/Events/AdapterEvents";
 import { Wipe } from "../EventBus/Events/BalancesEvents";
 import { ShowNotification } from "../EventBus/Events/NotificationEvents";
 import { ShellNotifications } from "../Notifications";
@@ -50,10 +52,8 @@ const reducer = (state: AdapterState, action: AdapterAction): AdapterState => {
       const connector = payload as IConnector;
       // keep error if connecting to offline wallet after error
       const walletError = connector.isWallet ? undefined : state.walletError;
-      const activeChain = connector.config;
-      setChainOnStorage(activeChain.blockchain);
       return {
-        activeChain,
+        ...state,
         connector,
         adapter: connector.adapter?.adapter,
         multicallAdapter: connector.adapter?.multicall,
@@ -70,7 +70,9 @@ const reducer = (state: AdapterState, action: AdapterAction): AdapterState => {
       };
     case AdapterActionKind.SWITCH_CHAIN:
       const cfg = payload as IConfig;
-      const offlineConnector = getBlockchainOfflineConnector(cfg.blockchain);
+      const offlineConnector = getBlockchainOfflineConnectors(
+        cfg.blockchain
+      )[0];
       offlineConnector.connect();
       return {
         ...state,
@@ -161,19 +163,20 @@ export const useAdapter = () => {
       const offlineConnector = getBlockchainOfflineConnector(
         activeChain.blockchain
       );
-      const successConnection = (payload: IConnector) =>
+      const successConnection = (payload: IConnector) => {
         dispatch({ type: AdapterActionKind.CONNECT, payload });
+      };
       try {
-        walletConnector.on("Connected", () => {
-          successConnection(walletConnector);
-        });
         await Promise.race([
           timedReject(10_000),
           walletConnector
-            .connect({ tryReconnection: true })
+            .connect()
             .then(() => successConnection(walletConnector))
             .catch(handleWalletConnectionError),
         ]);
+        walletConnector.on("AddressChanged", (address: string) => {
+          ShellEventBus.emit(new AddressChanged(address));
+        });
       } catch (err) {
         dispatch({
           type: AdapterActionKind.CONNECTION_ERROR,
