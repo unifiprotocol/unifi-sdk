@@ -23,7 +23,7 @@ const binanceTokens: Currency[] = JSON.parse(
 );
 
 export const Sample: ShellWrappedComp = ({ connection, eventBus }) => {
-  const { balances, refreshing } = useBalances();
+  const { balances, refreshingBalances } = useBalances();
   const { activeChain } = useAdapter();
   const { i18n } = useTranslation();
 
@@ -92,7 +92,7 @@ export const Sample: ShellWrappedComp = ({ connection, eventBus }) => {
           Open Network Modal By Event
         </PrimaryButton>
       </div>
-      <div>Balances: {refreshing ? "Refreshing" : "Loaded"}</div>
+      <div>Balances: {refreshingBalances ? "Refreshing" : "Loaded"}</div>
 
       <pre>{JSON.stringify(balances, null, 4)}</pre>
 
