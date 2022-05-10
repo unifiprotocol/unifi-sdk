@@ -12,10 +12,10 @@ import {
   IMulticallAdapter,
   Blockchains,
 } from "@unifiprotocol/core-sdk";
-import { useAdapter } from "./Adapter";
+import { useAdapter } from "./Adapter/useAdapter";
 import { ShellEventBus } from "./EventBus";
 import { Updater } from "./Components/Updater";
-import { useBalances } from "./Balances";
+import { useBalances } from "./Balances/useBalances";
 import { TopHeader } from "./Components/TopHeader";
 import { Sidebar } from "./Components/Sidebar";
 import { NavigationProvider } from "./Navigation";

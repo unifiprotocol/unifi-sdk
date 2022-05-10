@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { mediaQueries, SecondaryButton } from "@unifiprotocol/uikit";
-import { useAdapter } from "../../Adapter";
+import { useAdapter } from "../../Adapter/useAdapter";
 import { BlockchainModal } from "../BlockchainModal";
 import { IConfig } from "../../Config";
 import styled from "styled-components";
@@ -12,7 +12,7 @@ import {
   ChangeNetwork,
   ChangeNetworkEvent,
 } from "../../EventBus/Events/BlockchainEvents";
-import { useBalances } from "../../Balances";
+import { useBalances } from "../../Balances/useBalances";
 import { getBlockchainConfig } from "@unifiprotocol/core-sdk";
 
 const ActionButtonWrapped = styled.div`

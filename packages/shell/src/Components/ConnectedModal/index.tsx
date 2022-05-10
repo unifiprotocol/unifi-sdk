@@ -12,7 +12,7 @@ import {
   VscDebugDisconnect as DisconnectIcon,
 } from "@unifiprotocol/uikit";
 import { BlockchainScanExplorers } from "@unifiprotocol/utils";
-import { useAdapter } from "../../Adapter";
+import { useAdapter } from "../../Adapter/useAdapter";
 import {
   ConnectedWalletAction,
   ConnectedWalletActions,

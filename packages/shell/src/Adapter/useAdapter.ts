@@ -5,7 +5,7 @@ import {
   IConnector,
   InvalidNetworkError,
 } from "@unifiprotocol/core-sdk";
-import { useCallback, useContext, useReducer } from "react";
+import { useCallback, useContext } from "react";
 
 import { IConfig } from "../Config";
 import { ShellEventBus } from "../EventBus";

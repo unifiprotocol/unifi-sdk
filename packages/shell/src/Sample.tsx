@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { BiHome, PrimaryButton } from "@unifiprotocol/uikit";
-import { useAdapter } from "./Adapter";
-import { useBalances } from "./Balances";
+import { useAdapter } from "./Adapter/useAdapter";
+import { useBalances } from "./Balances/useBalances";
 import { AddCurrency, RefreshBalances } from "./EventBus/Events/BalancesEvents";
 import { ShowNotification } from "./EventBus/Events/NotificationEvents";
 import { ShellWrappedComp } from "./Shell";

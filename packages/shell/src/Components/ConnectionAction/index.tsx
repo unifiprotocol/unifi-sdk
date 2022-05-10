@@ -1,10 +1,10 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { DangerButton, PrimaryButton } from "@unifiprotocol/uikit";
 import { ConnectionModal } from "../ConnectionModal";
-import { useAdapter } from "../../Adapter";
+import { useAdapter } from "../../Adapter/useAdapter";
 import { shortAddress } from "@unifiprotocol/utils";
 import { ConnectedModal } from "../ConnectedModal";
-import { useBalances } from "../../Balances";
+import { useBalances } from "../../Balances/useBalances";
 import { NativeBalance, NativeBalanceSymbol } from "./Styles";
 import { InvalidNetworkError } from "@unifiprotocol/core-sdk";
 import { useTranslation } from "react-i18next";

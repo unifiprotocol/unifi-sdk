@@ -1,7 +1,7 @@
 import { useCallback, useContext } from "react";
 import { Blockchains, BN, Currency } from "@unifiprotocol/utils";
 import { GenericUseCase } from "@unifiprotocol/core-sdk";
-import { useAdapter } from "../Adapter";
+import { useAdapter } from "../Adapter/useAdapter";
 import { BalanceOf } from "../Contracts/ERC20/balanceOf";
 
 import { ShellContext } from "../State/ShellContext";

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { useBalances } from ".";
-import { useAdapter } from "../Adapter";
+import { useBalances } from "./useBalances";
+import { useAdapter } from "../Adapter/useAdapter";
 
 import Clocks from "../Services/Clocks";
 import { ShellEventBus } from "../EventBus";
