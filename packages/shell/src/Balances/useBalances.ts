@@ -98,17 +98,7 @@ export const useBalances = () => {
 
       const nativeBalance = await adapter.getBalance();
 
-      const responses = await multicallAdapter
-        .execute(multicallRequests)
-        .then((res) => {
-          if (activeChain.blockchain === Blockchains.Binance) {
-            return res;
-          }
-
-          return new Promise((resolve) =>
-            setTimeout(() => resolve(res), 10_000)
-          ) as Promise<typeof res>;
-        });
+      const responses = await multicallAdapter.execute(multicallRequests);
 
       responses.forEach((res, idx) => {
         result.push({
