@@ -84,7 +84,7 @@ export class MetamaskConnector extends BaseConnector {
         .then(() => true)
         .catch(() => false);
       if (!success) {
-        await window.ethereum.request({
+        await agent.request({
           method: "wallet_addEthereumChain",
           params: [
             {
