@@ -23,7 +23,6 @@ export interface IConnector {
   connect(
     onNetworkChangeOptions?: OnNetworkChangeOptions
   ): Promise<IConnectorAdapters>;
-  changeNetwork(config?: IBlockchainConfig): Promise<IConnectorAdapters>;
   disconnect(): Promise<void>;
 
   isAvailable(): Promise<boolean>;

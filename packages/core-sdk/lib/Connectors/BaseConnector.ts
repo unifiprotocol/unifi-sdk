@@ -28,20 +28,6 @@ export abstract class BaseConnector implements IConnector {
     return adapters;
   }
 
-  async changeNetwork(config: IBlockchainConfig): Promise<IConnectorAdapters> {
-    const walletSupportTargetBlockchain = config.wallets.some(
-      (connector) => connector.displayName === this.metadata.displayName
-    );
-    if (!walletSupportTargetBlockchain) {
-      throw new Error("Wallet doesn't support target blockchain.");
-    }
-
-    const adapters = await this._connect();
-    this.config = config;
-
-    return adapters;
-  }
-
   async disconnect(): Promise<void> {
     if (this.adapter) {
       this.emitter.emit("Disconnect", {});
