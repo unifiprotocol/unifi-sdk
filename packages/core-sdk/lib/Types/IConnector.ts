@@ -9,10 +9,6 @@ export interface IConnectorAdapters {
   multicall: IMulticallAdapter;
 }
 
-export interface OnNetworkChangeOptions {
-  tryReconnection: boolean;
-}
-
 export interface IConnector {
   isWallet: boolean;
   name: string;
@@ -20,9 +16,7 @@ export interface IConnector {
   adapter: IConnectorAdapters | undefined;
   readonly config: IBlockchainConfig;
 
-  connect(
-    onNetworkChangeOptions?: OnNetworkChangeOptions
-  ): Promise<IConnectorAdapters>;
+  connect(): Promise<IConnectorAdapters>;
   disconnect(): Promise<void>;
 
   isAvailable(): Promise<boolean>;

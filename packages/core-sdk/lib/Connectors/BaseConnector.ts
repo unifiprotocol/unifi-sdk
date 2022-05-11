@@ -1,10 +1,9 @@
 import { ConnectorEvent, IConnectorAdapters } from "../Types";
 import EventEmitter from "eventemitter3";
-import { IConnector, OnNetworkChangeOptions } from "../Types/IConnector";
+import { IConnector } from "../Types/IConnector";
 import { Callback } from "../Utils/Typings";
 import { IBlockchainConfig } from "../Types/IBlockchainConfig";
 import { IConnectorMetadata } from "../Types";
-import { blockchainConfigMap } from "../Blockchains";
 
 export abstract class BaseConnector implements IConnector {
   protected emitter = new EventEmitter<ConnectorEvent>();
@@ -12,7 +11,7 @@ export abstract class BaseConnector implements IConnector {
 
   constructor(
     public readonly metadata: IConnectorMetadata,
-    public config: IBlockchainConfig
+    public readonly config: IBlockchainConfig
   ) {}
 
   protected abstract _connect(): Promise<IConnectorAdapters>;
