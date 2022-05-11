@@ -13,6 +13,7 @@ import {
   IConnectorMetadata,
   WalletConnectors,
 } from "../../Types";
+import { ForceNetworkError } from "../../Errors/ForceNetworkError";
 
 declare global {
   interface Window {
@@ -73,7 +74,7 @@ export class MetamaskConnector extends BaseConnector {
   }: IBlockchainConfig) {
     const agent = this.isAvailable() && this.getAgent();
     if (!agent) {
-      throw new Error("Couldn't connect correctly");
+      throw new WalletNotDetectedError(this.metadata.name);
     }
     try {
       const success = await agent
@@ -105,7 +106,7 @@ export class MetamaskConnector extends BaseConnector {
         });
       }
     } catch (e) {
-      throw new Error("Network couldn't be switch correctly.");
+      throw new ForceNetworkError();
     }
   }
 
