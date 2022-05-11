@@ -105,9 +105,7 @@ export class MetamaskConnector extends BaseConnector {
           params: [{ chainId: utils.hexValue(chainId) }],
         });
       }
-    } catch (e) {
-      throw new ForceNetworkError();
-    }
+    } catch (e) {}
   }
 
   async isAvailable(): Promise<boolean> {
