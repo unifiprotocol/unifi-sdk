@@ -26,6 +26,8 @@ export class OneWalletConnector extends BaseConnector {
     );
   }
 
+  protected async _forceNetwork(config: IBlockchainConfig) {}
+
   async _connect(): Promise<IConnectorAdapters> {
     if (!(await this.isAvailable())) {
       throw new WalletNotDetectedError(this.displayName);

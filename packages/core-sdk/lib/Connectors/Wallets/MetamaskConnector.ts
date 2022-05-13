@@ -3,6 +3,7 @@ import { ethers } from "ethers";
 import { BaseConnector } from "../BaseConnector";
 import { hexToDec } from "@unifiprotocol/utils";
 import { Web3BaseAdapter } from "../../Adapters/Web3BaseAdapter";
+import { utils } from "ethers";
 
 import { Web3MulticallAdapter } from "../../Adapters";
 import {
@@ -12,6 +13,7 @@ import {
   IConnectorMetadata,
   WalletConnectors,
 } from "../../Types";
+import { ForceNetworkError } from "../../Errors/ForceNetworkError";
 
 declare global {
   interface Window {
@@ -36,6 +38,7 @@ export class MetamaskConnector extends BaseConnector {
     if (!(await this.isAvailable())) {
       throw new WalletNotDetectedError(this.metadata.name);
     }
+    await this._forceNetwork(this.config);
     const accounts: string[] = await ethAgent.request({
       method: "eth_requestAccounts",
     });
@@ -61,6 +64,50 @@ export class MetamaskConnector extends BaseConnector {
     }
 
     return { adapter, multicall };
+  }
+
+  protected async _forceNetwork({
+    chainId,
+    blockchain,
+    nativeToken,
+    publicRpc,
+  }: IBlockchainConfig) {
+    const agent = this.isAvailable() && this.getAgent();
+    if (!agent) {
+      throw new WalletNotDetectedError(this.metadata.name);
+    }
+    try {
+      const success = await agent
+        .request({
+          method: "wallet_switchEthereumChain",
+          params: [{ chainId: utils.hexValue(chainId) }],
+        })
+        .then(() => true)
+        .catch(() => false);
+      if (!success) {
+        await agent.request({
+          method: "wallet_addEthereumChain",
+          params: [
+            {
+              chainId: utils.hexValue(chainId),
+              chainName: blockchain,
+              nativeCurrency: {
+                name: nativeToken.name,
+                symbol: nativeToken.symbol,
+                decimals: nativeToken.decimals,
+              },
+              rpcUrls: [publicRpc],
+            },
+          ],
+        });
+        await agent.request({
+          method: "wallet_switchEthereumChain",
+          params: [{ chainId: utils.hexValue(chainId) }],
+        });
+      }
+    } catch (e) {
+      throw new ForceNetworkError();
+    }
   }
 
   async isAvailable(): Promise<boolean> {

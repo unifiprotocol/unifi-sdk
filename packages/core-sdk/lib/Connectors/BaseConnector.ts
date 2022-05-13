@@ -20,6 +20,7 @@ export abstract class BaseConnector implements IConnector {
     if (this.adapter) {
       return this.adapter;
     }
+
     const adapters = await this._connect();
     this.adapter = adapters;
 
