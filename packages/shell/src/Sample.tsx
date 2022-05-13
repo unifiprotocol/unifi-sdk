@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { BiHome, PrimaryButton } from "@unifiprotocol/uikit";
-import { useAdapter } from "./Adapter";
-import { useBalances } from "./Balances";
+import { useAdapter } from "./Adapter/useAdapter";
+import { useBalances } from "./Balances/useBalances";
 import { AddCurrency, RefreshBalances } from "./EventBus/Events/BalancesEvents";
 import { ShowNotification } from "./EventBus/Events/NotificationEvents";
 import { ShellWrappedComp } from "./Shell";
@@ -23,7 +23,7 @@ const binanceTokens: Currency[] = JSON.parse(
 );
 
 export const Sample: ShellWrappedComp = ({ connection, eventBus }) => {
-  const { balances, refreshing } = useBalances();
+  const { balances, refreshingBalances } = useBalances();
   const { activeChain } = useAdapter();
   const { i18n } = useTranslation();
 
@@ -92,7 +92,7 @@ export const Sample: ShellWrappedComp = ({ connection, eventBus }) => {
           Open Network Modal By Event
         </PrimaryButton>
       </div>
-      <div>Balances: {refreshing ? "Refreshing" : "Loaded"}</div>
+      <div>Balances: {refreshingBalances ? "Refreshing" : "Loaded"}</div>
 
       <pre>{JSON.stringify(balances, null, 4)}</pre>
 

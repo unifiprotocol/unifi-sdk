@@ -25,6 +25,10 @@ export interface ExecutionResponse<T = any> {
   params?: any;
   err?: any;
 }
+
+export interface SignMessageParams {
+  type?: "typed" | "basic";
+}
 export interface GetDecodedTransactionWithLogsOptions<ContractInterface> {
   abis?: ContractInterface[];
 }
@@ -81,7 +85,7 @@ export interface IAdapter<ContractInterface = any> {
   ): Promise<ITransactionWithLogs>;
 
   // Signing methods
-  signMessage(message: string): Promise<string>;
+  signMessage(message: string, params?: SignMessageParams): Promise<string>;
 
   // Explorer methods
   getTxLink(hash: string): string;

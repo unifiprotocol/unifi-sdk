@@ -14,6 +14,7 @@ import {
   GetDecodedTransactionWithLogsOptions,
   GetTransactionsFromEventsOptions,
   TransactionStatus,
+  SignMessageParams,
 } from "../Types";
 
 import { nonSuccessResponse, successResponse } from "./Helpers";
@@ -22,18 +23,37 @@ import { BaseAdapter } from "./BaseAdapter";
 import { LogDecoder, TxDecoder } from "@maticnetwork/eth-decoder";
 import { onlyUnique } from "../Utils/Array";
 import { AdapterNotConnectedError, BlockNotFoundError } from "../Errors";
-
 export class Web3BaseAdapter extends BaseAdapter<
   ContractInterface,
   ethers.providers.BaseProvider
 > {
-  signMessage(message: string): Promise<string> {
+  signMessage(
+    message: string,
+    { type = "basic" }: SignMessageParams = {}
+  ): Promise<string> {
     if (this.isConnected()) {
+      if (type === "typed") {
+        return this.signTypedMessage(message);
+      }
       return this.web3Provider.getSigner().signMessage(message);
     }
     throw new AdapterNotConnectedError();
   }
 
+  private async signTypedMessage(message: string) {
+    let domain, types, value;
+    try {
+      const params = JSON.parse(message);
+      domain = params.domain;
+      types = params.types;
+      value = params.value;
+    } catch (error) {
+      throw new Error(
+        "Invalid signTypedData request. It must be an object with the following schema: {domain, types, value}. Check ethers/provider _signTypedData method for detailed information about each prop type"
+      );
+    }
+    return this.web3Provider.getSigner()._signTypedData(domain, types, value);
+  }
   async getBlockWithTxs(height: BlockTag): Promise<IBlockWithTransactions> {
     const blockWithTxs = await this.getProvider().getBlockWithTransactions(
       this.sanitizeBlock(height)
