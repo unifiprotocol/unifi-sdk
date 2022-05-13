@@ -21,6 +21,8 @@ export class Web3BaseConnector extends BaseConnector {
     super(metadata, config);
   }
 
+  protected async _forceNetwork(): Promise<void> {}
+
   async _connect(): Promise<IConnectorAdapters> {
     const adapter = new Web3BaseAdapter(this.config);
     adapter.setProvider(

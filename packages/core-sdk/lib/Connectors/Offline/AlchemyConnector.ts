@@ -20,6 +20,8 @@ export class AlchemyConnector extends BaseConnector {
     // ...more
   ];
 
+  protected async _forceNetwork(): Promise<void> {}
+
   constructor(config: IBlockchainConfig) {
     super(
       {

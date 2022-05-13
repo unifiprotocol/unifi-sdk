@@ -26,7 +26,7 @@ export class OneWalletConnector extends BaseConnector {
     );
   }
 
-  protected async _forceNetwork(config: IBlockchainConfig) {}
+  protected async _forceNetwork() {}
 
   async _connect(): Promise<IConnectorAdapters> {
     if (!(await this.isAvailable())) {

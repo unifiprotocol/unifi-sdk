@@ -4,6 +4,7 @@ import { IConnector } from "../Types/IConnector";
 import { Callback } from "../Utils/Typings";
 import { IBlockchainConfig } from "../Types/IBlockchainConfig";
 import { IConnectorMetadata } from "../Types";
+import { MetamaskConnector } from ".";
 
 export abstract class BaseConnector implements IConnector {
   protected emitter = new EventEmitter<ConnectorEvent>();
@@ -15,8 +16,10 @@ export abstract class BaseConnector implements IConnector {
   ) {}
 
   protected abstract _connect(): Promise<IConnectorAdapters>;
+  protected abstract _forceNetwork(): Promise<void>;
 
   async connect(): Promise<IConnectorAdapters> {
+    await this._forceNetwork();
     if (this.adapter) {
       return this.adapter;
     }

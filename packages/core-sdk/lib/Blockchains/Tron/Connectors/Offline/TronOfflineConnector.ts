@@ -18,6 +18,8 @@ export class TronOfflineConnector extends BaseConnector {
     super(metadata, config);
   }
 
+  protected async _forceNetwork(): Promise<void> {}
+
   async _connect(): Promise<IConnectorAdapters> {
     const adapter = new TronAdapter(this.config);
     const { rateLimiter, ...params } = this.params;

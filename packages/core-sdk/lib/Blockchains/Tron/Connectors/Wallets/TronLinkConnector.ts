@@ -44,6 +44,8 @@ export class TronLinkConnector extends BaseConnector {
     );
   }
 
+  protected async _forceNetwork(): Promise<void> {}
+
   async _connect(): Promise<IConnectorAdapters> {
     const agent = this.getAgent();
     if (!(await this.isAvailable())) {

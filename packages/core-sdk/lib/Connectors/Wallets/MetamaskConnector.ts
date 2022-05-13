@@ -38,7 +38,6 @@ export class MetamaskConnector extends BaseConnector {
     if (!(await this.isAvailable())) {
       throw new WalletNotDetectedError(this.metadata.name);
     }
-    await this._forceNetwork(this.config);
     const accounts: string[] = await ethAgent.request({
       method: "eth_requestAccounts",
     });
@@ -66,12 +65,8 @@ export class MetamaskConnector extends BaseConnector {
     return { adapter, multicall };
   }
 
-  protected async _forceNetwork({
-    chainId,
-    blockchain,
-    nativeToken,
-    publicRpc,
-  }: IBlockchainConfig) {
+  protected async _forceNetwork() {
+    const { chainId, blockchain, nativeToken, publicRpc } = this.config;
     const agent = this.isAvailable() && this.getAgent();
     if (!agent) {
       throw new WalletNotDetectedError(this.metadata.name);
