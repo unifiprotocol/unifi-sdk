@@ -48,6 +48,7 @@ export enum WalletConnectors {
   TronLink = "tronlink",
   TrustWallet = "trustwallet",
   MetamaskCompatible = "metamaskCompatible",
+  WalletConnect = "walletConnect",
 }
 
 export type Connectors = WalletConnectors | OfflineConnectors;

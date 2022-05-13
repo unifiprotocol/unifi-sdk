@@ -16,6 +16,7 @@ import {
   web3ConnectorFactory,
 } from "../../Connectors/Factory";
 import { OntoWalletConnector } from "../../Connectors/Wallets/OntoWallet";
+import { WalletConnectConnector } from "../../Connectors/Wallets/WalletConnectConnector";
 
 export const BinanceConfig = blockchainConfigFactory(
   {
@@ -48,6 +49,7 @@ export const BinanceConfig = blockchainConfigFactory(
   [
     MetamaskConnector,
     BinanceChainWalletConnector,
+    WalletConnectConnector,
     TrustWalletConnector,
     MathWalletConnector,
     MetamaskCompatibleConnector,

@@ -35,6 +35,7 @@
     "@maticnetwork/eth-decoder": "git+https://github.com/deblanco/eth-decoder.git",
     "@types/reflect-metadata": "^0.1.0",
     "@unifiprotocol/utils": "^2.3.2",
+    "@walletconnect/ethereum-provider": "^1.7.8",
     "bignumber.js": "^9.0.1",
     "ethereum-multicall": "^2.4.0",
     "ethers": "^5.6.2",

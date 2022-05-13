@@ -10,6 +10,7 @@ import {
   createWeb3OfflineConnectorHelper,
   web3ConnectorFactory,
 } from "../../Connectors/Factory";
+import { WalletConnectConnector } from "../../Connectors/Wallets/WalletConnectConnector";
 
 export const BinanceTesnetConfig = blockchainConfigFactory(
   {
@@ -43,6 +44,7 @@ export const BinanceTesnetConfig = blockchainConfigFactory(
   [
     MetamaskConnector,
     BinanceChainWalletConnector,
+    WalletConnectConnector,
     TrustWalletConnector,
     MathWalletConnector,
     MetamaskCompatibleConnector,

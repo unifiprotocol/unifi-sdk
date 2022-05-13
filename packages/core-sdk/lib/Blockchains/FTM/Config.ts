@@ -8,6 +8,7 @@ import {
   createWeb3OfflineConnectorHelper,
   web3ConnectorFactory,
 } from "../../Connectors/Factory";
+import { WalletConnectConnector } from "../../Connectors/Wallets/WalletConnectConnector";
 
 export const FTMConfig = blockchainConfigFactory(
   {
@@ -39,7 +40,12 @@ export const FTMConfig = blockchainConfigFactory(
       },
     },
   },
-  [MetamaskConnector, MathWalletConnector, MetamaskCompatibleConnector],
+  [
+    MetamaskConnector,
+    WalletConnectConnector,
+    MathWalletConnector,
+    MetamaskCompatibleConnector,
+  ],
   [
     createWeb3OfflineConnectorHelper(
       OfflineConnectors.FTM,
