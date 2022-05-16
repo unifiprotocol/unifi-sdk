@@ -1,4 +1,5 @@
 import {
+  blockchainConfigMap,
   Connectors,
   getBlockchainConnectorByName,
   getBlockchainOfflineConnector,
@@ -9,7 +10,10 @@ import { useCallback, useContext } from "react";
 
 import { IConfig } from "../Config";
 import { ShellEventBus } from "../EventBus";
-import { AddressChanged } from "../EventBus/Events/AdapterEvents";
+import {
+  AddressChanged,
+  NetworkChanged,
+} from "../EventBus/Events/AdapterEvents";
 import { Wipe } from "../EventBus/Events/BalancesEvents";
 import { ShowNotification } from "../EventBus/Events/NotificationEvents";
 import { ShellNotifications } from "../Notifications";
@@ -17,6 +21,7 @@ import { AdapterActionKind } from "./State/AdapterActions";
 import { ShellContext } from "../State/ShellContext";
 import { timedReject } from "../Utils";
 import { setChainOnStorage } from "../Utils/ChainStorage";
+import { ChangeNetwork } from "../EventBus/Events/BlockchainEvents";
 
 export const useAdapter = () => {
   const { state, dispatch } = useContext(ShellContext);
@@ -63,6 +68,19 @@ export const useAdapter = () => {
         walletConnector.on("AddressChanged", (address: string) => {
           ShellEventBus.emit(new AddressChanged(address));
         });
+        walletConnector.on("NetworkChanged", (chainId: number) => {
+          const config = Object.values(blockchainConfigMap).find(
+            (cfg) => cfg.chainId === chainId
+          );
+          if (!config) {
+            dispatch({
+              type: AdapterActionKind.CONNECTION_ERROR,
+              payload: new Error("Adapter changed to a non-supported network"),
+            });
+          } else {
+            ShellEventBus.emit(new ChangeNetwork(config));
+          }
+        });
       } catch (err) {
         dispatch({
           type: AdapterActionKind.CONNECTION_ERROR,
@@ -90,20 +108,18 @@ export const useAdapter = () => {
   const updateChain = useCallback(
     (cfg: IConfig) => {
       setChainOnStorage(cfg.blockchain);
-      connector?.disconnect();
       dispatch({
         type: AdapterActionKind.SWITCH_CHAIN,
         payload: cfg,
       });
     },
-    [dispatch, connector]
+    [dispatch, connectOffline]
   );
 
   const disconnect = useCallback(async () => {
     if (!connector) {
       return;
     }
-    connector.disconnect();
     dispatch({ type: AdapterActionKind.DISCONNECT, payload: undefined });
     ShellEventBus.emit(new Wipe());
     connectOffline();

@@ -11,7 +11,10 @@ import {
   WipeEvent,
 } from "../EventBus/Events/BalancesEvents";
 import { coinGeckoService } from "../Services/Coingecko";
-import { AddressChangedEvent } from "../EventBus/Events/AdapterEvents";
+import {
+  AddressChangedEvent,
+  NetworkChangedEvent,
+} from "../EventBus/Events/AdapterEvents";
 
 export const BalancesUpdater = () => {
   const [initialTrigger, setInitialTrigger] = useState(false);
@@ -74,8 +77,10 @@ export const BalancesUpdater = () => {
       refresh();
     };
     ShellEventBus.on(AddressChangedEvent, fn);
+    ShellEventBus.on(NetworkChangedEvent, fn);
     return () => {
       ShellEventBus.off(AddressChangedEvent, fn);
+      ShellEventBus.off(NetworkChangedEvent, fn);
     };
   }, [refreshingBalances, refresh, wipe]);
 
