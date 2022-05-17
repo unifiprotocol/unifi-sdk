@@ -10,10 +10,7 @@ import { useCallback, useContext } from "react";
 
 import { IConfig } from "../Config";
 import { ShellEventBus } from "../EventBus";
-import {
-  AddressChanged,
-  NetworkChanged,
-} from "../EventBus/Events/AdapterEvents";
+import { AddressChanged } from "../EventBus/Events/AdapterEvents";
 import { Wipe } from "../EventBus/Events/BalancesEvents";
 import { ShowNotification } from "../EventBus/Events/NotificationEvents";
 import { ShellNotifications } from "../Notifications";
@@ -75,7 +72,7 @@ export const useAdapter = () => {
           if (!config) {
             dispatch({
               type: AdapterActionKind.CONNECTION_ERROR,
-              payload: new Error("Adapter changed to a non-supported network"),
+              payload: new InvalidNetworkError(activeChain.blockchain),
             });
           } else {
             ShellEventBus.emit(new ChangeNetwork(config));
