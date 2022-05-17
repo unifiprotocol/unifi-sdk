@@ -11,7 +11,7 @@ export const AdapterReducer: ShellPartialReducer<AdapterState> = (
       const connector = action.payload;
       // keep error if connecting to offline wallet after error
       const walletError = connector.isWallet ? undefined : state.walletError;
-      state.connector?.disconnect();
+      connector !== state.connector && state.connector?.disconnect();
       return {
         ...state,
         connector,
