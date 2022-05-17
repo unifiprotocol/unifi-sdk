@@ -1,4 +1,3 @@
-import { getBlockchainOfflineConnectors } from "@unifiprotocol/core-sdk";
 import { AdapterActionKind } from "./AdapterActions";
 import { AdapterState } from "./AdapterState";
 import { ShellPartialReducer } from "../../State/Types";
@@ -33,6 +32,8 @@ export const AdapterReducer: ShellPartialReducer<AdapterState> = (
       const cfg = action.payload;
       return {
         ...state,
+        adapter: undefined,
+        multicallAdapter: undefined,
         activeChain: cfg,
       };
     default:
