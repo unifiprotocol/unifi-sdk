@@ -44,10 +44,10 @@ export const BinanceTesnetConfig = blockchainConfigFactory(
   [
     MetamaskConnector,
     BinanceChainWalletConnector,
-    WalletConnectConnector,
     TrustWalletConnector,
     MathWalletConnector,
     MetamaskCompatibleConnector,
+    WalletConnectConnector,
   ],
   [
     createWeb3OfflineConnectorHelper(

@@ -42,9 +42,9 @@ export const FTMConfig = blockchainConfigFactory(
   },
   [
     MetamaskConnector,
-    WalletConnectConnector,
     MathWalletConnector,
     MetamaskCompatibleConnector,
+    WalletConnectConnector,
   ],
   [
     createWeb3OfflineConnectorHelper(

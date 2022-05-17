@@ -44,7 +44,7 @@ export const IotexConfig = blockchainConfigFactory(
       },
     },
   },
-  [MetamaskConnector, WalletConnectConnector, MetamaskCompatibleConnector],
+  [MetamaskConnector, MetamaskCompatibleConnector, WalletConnectConnector],
   [
     createWeb3OfflineConnectorHelper(
       OfflineConnectors.Iotex,

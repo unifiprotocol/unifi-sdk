@@ -47,9 +47,9 @@ export const HarmonyConfig = blockchainConfigFactory(
   },
   [
     MetamaskConnector,
-    WalletConnectConnector,
     OneWalletConnector,
     MathWalletConnector,
+    WalletConnectConnector,
   ],
   [
     createWeb3OfflineConnectorHelper(

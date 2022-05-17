@@ -49,11 +49,11 @@ export const BinanceConfig = blockchainConfigFactory(
   [
     MetamaskConnector,
     BinanceChainWalletConnector,
-    WalletConnectConnector,
     TrustWalletConnector,
     MathWalletConnector,
     MetamaskCompatibleConnector,
     OntoWalletConnector,
+    WalletConnectConnector,
   ],
   [
     createWeb3OfflineConnectorHelper(
