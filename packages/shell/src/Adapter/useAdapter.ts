@@ -1,5 +1,4 @@
 import {
-  BaseConnector,
   blockchainConfigMap,
   Connectors,
   getBlockchainConnectorByName,
