@@ -12,6 +12,7 @@ export const AdapterReducer: ShellPartialReducer<AdapterState> = (
       const connector = action.payload;
       // keep error if connecting to offline wallet after error
       const walletError = connector.isWallet ? undefined : state.walletError;
+      state.connector?.disconnect();
       return {
         ...state,
         connector,
@@ -30,14 +31,9 @@ export const AdapterReducer: ShellPartialReducer<AdapterState> = (
       };
     case AdapterActionKind.SWITCH_CHAIN:
       const cfg = action.payload;
-      const offlineConnector = getBlockchainOfflineConnectors(
-        cfg.blockchain
-      )[0];
-      offlineConnector.connect();
       return {
         ...state,
         activeChain: cfg,
-        connector: offlineConnector,
       };
     default:
       return state;

@@ -3192,10 +3192,10 @@
     "@typescript-eslint/types" "5.18.0"
     eslint-visitor-keys "^3.0.0"
 
-"@unifiprotocol/core-sdk@^6.3.3":
-  version "6.3.3"
-  resolved "https://registry.yarnpkg.com/@unifiprotocol/core-sdk/-/core-sdk-6.3.3.tgz#c580aa11f95bd88a64af56c85336ddd6fa2e8d83"
-  integrity sha512-IZ6q7/JfP07RHyhShyBAjHWpYIgpvX2N/PWZH/UyElS59DHvnjiXtKL6sL7UbWxkiamRJtWaNtarEb9j32wwOA==
+"@unifiprotocol/core-sdk@^6.4.0":
+  version "6.4.0"
+  resolved "https://registry.yarnpkg.com/@unifiprotocol/core-sdk/-/core-sdk-6.4.0.tgz#f21df27dc2b20c11216dd66fe09e66bd7e5cebcb"
+  integrity sha512-0iCIRAUA4xB1b1+RifbnK3oa6lxJMZ34E8lxJ1IohiHbPKq/SeHL3MqxZsTLoDaQFqWXlOtp/RTIhn+yLOKn2A==
   dependencies:
     "@harmony-js/account" "^0.1.57"
     "@harmony-js/core" "^0.1.57"
