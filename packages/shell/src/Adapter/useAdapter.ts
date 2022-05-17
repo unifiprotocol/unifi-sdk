@@ -57,7 +57,7 @@ export const useAdapter = () => {
         ShellEventBus.emit(new ChangeNetwork(config));
       }
     },
-    [activeChain.chainId]
+    [activeChain]
   );
 
   const connect = useCallback(
@@ -94,12 +94,7 @@ export const useAdapter = () => {
           .then(() => successConnection(offlineConnector));
       }
     },
-    [
-      activeChain.blockchain,
-      dispatch,
-      handleWalletConnectionError,
-      changeNetwork,
-    ]
+    [activeChain, dispatch, handleWalletConnectionError, changeNetwork]
   );
 
   const connectOffline = useCallback(() => {
