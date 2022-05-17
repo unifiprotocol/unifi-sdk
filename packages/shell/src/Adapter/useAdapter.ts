@@ -106,7 +106,7 @@ export const useAdapter = () => {
       .then(() =>
         dispatch({ type: AdapterActionKind.CONNECT, payload: offlineConnector })
       );
-  }, [activeChain.blockchain, dispatch]);
+  }, [activeChain, dispatch]);
 
   const updateChain = useCallback(
     (cfg: IConfig) => {
