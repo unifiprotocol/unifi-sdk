@@ -57,7 +57,7 @@ export const useAdapter = () => {
         ShellEventBus.emit(new ChangeNetwork(config));
       }
     },
-    [activeChain]
+    [activeChain, dispatch]
   );
 
   const connect = useCallback(
@@ -116,7 +116,7 @@ export const useAdapter = () => {
         payload: cfg,
       });
     },
-    [dispatch, connectOffline]
+    [dispatch]
   );
 
   const disconnect = useCallback(async () => {
