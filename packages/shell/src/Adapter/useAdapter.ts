@@ -42,6 +42,24 @@ export const useAdapter = () => {
     [activeChain.blockchain]
   );
 
+  const changeNetwork = useCallback(
+    (chainId: number) => {
+      if (chainId === activeChain.chainId) return;
+      const config = Object.values(blockchainConfigMap).find(
+        (cfg) => cfg.chainId === chainId
+      );
+      if (!config) {
+        dispatch({
+          type: AdapterActionKind.CONNECTION_ERROR,
+          payload: new InvalidNetworkError(activeChain.blockchain),
+        });
+      } else {
+        ShellEventBus.emit(new ChangeNetwork(config));
+      }
+    },
+    [activeChain, dispatch]
+  );
+
   const connect = useCallback(
     async (connectorName: Connectors) => {
       const walletConnector = getBlockchainConnectorByName(
@@ -65,19 +83,7 @@ export const useAdapter = () => {
         walletConnector.on("AddressChanged", (address: string) => {
           ShellEventBus.emit(new AddressChanged(address));
         });
-        walletConnector.on("NetworkChanged", (chainId: number) => {
-          const config = Object.values(blockchainConfigMap).find(
-            (cfg) => cfg.chainId === chainId
-          );
-          if (!config) {
-            dispatch({
-              type: AdapterActionKind.CONNECTION_ERROR,
-              payload: new InvalidNetworkError(activeChain.blockchain),
-            });
-          } else {
-            ShellEventBus.emit(new ChangeNetwork(config));
-          }
-        });
+        walletConnector.on("NetworkChanged", changeNetwork);
       } catch (err) {
         dispatch({
           type: AdapterActionKind.CONNECTION_ERROR,
@@ -88,7 +94,7 @@ export const useAdapter = () => {
           .then(() => successConnection(offlineConnector));
       }
     },
-    [activeChain.blockchain, dispatch, handleWalletConnectionError]
+    [activeChain, dispatch, handleWalletConnectionError, changeNetwork]
   );
 
   const connectOffline = useCallback(() => {
@@ -100,7 +106,7 @@ export const useAdapter = () => {
       .then(() =>
         dispatch({ type: AdapterActionKind.CONNECT, payload: offlineConnector })
       );
-  }, [activeChain.blockchain, dispatch]);
+  }, [activeChain, dispatch]);
 
   const updateChain = useCallback(
     (cfg: IConfig) => {
@@ -110,7 +116,7 @@ export const useAdapter = () => {
         payload: cfg,
       });
     },
-    [dispatch, connectOffline]
+    [dispatch]
   );
 
   const disconnect = useCallback(async () => {
