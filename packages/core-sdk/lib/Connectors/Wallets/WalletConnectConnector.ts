@@ -49,7 +49,6 @@ export class WalletConnectConnector extends BaseConnector {
       })
       .catch((err) => {
         this.agent = this._initAgent();
-        console.log("Error");
         throw err;
       });
 
@@ -96,42 +95,27 @@ export class WalletConnectConnector extends BaseConnector {
           params: [{ chainId: utils.hexValue(chainId) }],
         })
         .then(() => true)
-        .catch(() => {
-          console.log("BAD: switch 1");
-          return false;
-        });
+        .catch(() => false);
       if (!success) {
-        await agent
-          .request({
-            method: "wallet_addEthereumChain",
-            params: [
-              {
-                chainId: utils.hexValue(chainId),
-                chainName: blockchain,
-                nativeCurrency: {
-                  name: nativeToken.name,
-                  symbol: nativeToken.symbol,
-                  decimals: nativeToken.decimals,
-                },
-                rpcUrls: [publicRpc],
+        await agent.request({
+          method: "wallet_addEthereumChain",
+          params: [
+            {
+              chainId: utils.hexValue(chainId),
+              chainName: blockchain,
+              nativeCurrency: {
+                name: nativeToken.name,
+                symbol: nativeToken.symbol,
+                decimals: nativeToken.decimals,
               },
-            ],
-          })
-          .catch((err) => {
-            console.log("BAD: add");
-            console.log(err);
-            throw err;
-          });
-        await agent
-          .request({
-            method: "wallet_switchEthereumChain",
-            params: [{ chainId: utils.hexValue(chainId) }],
-          })
-          .catch((err) => {
-            console.log("BAD: switch 2");
-            console.log(err);
-            throw err;
-          });
+              rpcUrls: [publicRpc],
+            },
+          ],
+        });
+        await agent.request({
+          method: "wallet_switchEthereumChain",
+          params: [{ chainId: utils.hexValue(chainId) }],
+        });
       }
     } catch (e) {
       throw new ForceNetworkError();
