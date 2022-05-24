@@ -2,13 +2,16 @@ import React from "react";
 import ReactDOM from "react-dom";
 import reportWebVitals from "./reportWebVitals";
 import Shell from "./Shell";
-import { Sample, SampleSidebar } from "./Sample";
+import { BrowserRouter } from "react-router-dom";
+import { SampleSidebar, SampleWithRoutes } from "./Sample";
 
 import "./index.css";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Shell Wrapped={Sample} Sidebar={[SampleSidebar]} />
+    <BrowserRouter>
+      <Shell Wrapped={SampleWithRoutes} Sidebar={[SampleSidebar]} />
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")
 );

@@ -21,7 +21,7 @@ import { Sidebar } from "./Components/Sidebar";
 import { NavigationProvider } from "./Navigation";
 import { I18nextProvider } from "react-i18next";
 import i18n from "./i18n";
-import { BrowserRouter } from "react-router-dom";
+
 import { EnsureAdapter } from "./Adapter/EnsureAdapter";
 import { BalancesState } from "./Balances/State/BalanceState";
 import { ShellProvider } from "./State/ShellProvider";
@@ -38,7 +38,9 @@ export type ShellWrappedProps = {
   i18n: typeof i18n;
 };
 
-export type ShellWrappedComp = React.FC<ShellWrappedProps>;
+export type ShellWrappedComp<
+  T extends Record<string, any> = Record<string, any>
+> = React.FC<ShellWrappedProps & T>;
 
 const ShellWrapper = styled.div`
   ${mediaQueries.xs} {
@@ -60,33 +62,31 @@ export const Shell: React.FC<ShellProps> = ({
   Sidebar: SidebarComps = [],
 }) => {
   return (
-    <BrowserRouter>
-      <ShellProvider>
-        <I18nextProvider i18n={i18n}>
-          <UnifiThemeProvider theme={Themes.Dark}>
-            <ShellWrapper>
-              <NavigationProvider>
-                <Updater />
-                <NavigationHeader />
-                <TopHeader />
-                <ContentWrapper>
-                  <EnsureAdapter>
-                    {SidebarComps.length > 0 && (
-                      <Sidebar>
-                        {SidebarComps.map((Comp, idx) => (
-                          <ConnectedComp Wrapped={Comp} key={idx} />
-                        ))}
-                      </Sidebar>
-                    )}
-                    <ConnectedComp Wrapped={Wrapped} />
-                  </EnsureAdapter>
-                </ContentWrapper>
-              </NavigationProvider>
-            </ShellWrapper>
-          </UnifiThemeProvider>
-        </I18nextProvider>
-      </ShellProvider>
-    </BrowserRouter>
+    <ShellProvider>
+      <I18nextProvider i18n={i18n}>
+        <UnifiThemeProvider theme={Themes.Dark}>
+          <ShellWrapper>
+            <NavigationProvider>
+              <Updater />
+              <NavigationHeader />
+              <TopHeader />
+              <ContentWrapper>
+                <EnsureAdapter>
+                  {SidebarComps.length > 0 && (
+                    <Sidebar>
+                      {SidebarComps.map((Comp, idx) => (
+                        <ConnectedComp Wrapped={Comp} key={idx} />
+                      ))}
+                    </Sidebar>
+                  )}
+                  <ConnectedComp Wrapped={Wrapped} />
+                </EnsureAdapter>
+              </ContentWrapper>
+            </NavigationProvider>
+          </ShellWrapper>
+        </UnifiThemeProvider>
+      </I18nextProvider>
+    </ShellProvider>
   );
 };
 
