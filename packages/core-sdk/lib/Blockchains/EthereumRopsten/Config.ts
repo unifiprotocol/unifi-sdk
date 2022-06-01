@@ -14,6 +14,7 @@ import {
   web3ConnectorFactory,
 } from "../../Connectors/Factory";
 import { unifiBlockchainProxyUrl } from "../../Connectors/Utils";
+import { WalletConnectConnector } from "../../Connectors/Wallets/WalletConnectConnector";
 
 export const EthereumRopstenConfig = blockchainConfigFactory(
   {
@@ -47,6 +48,7 @@ export const EthereumRopstenConfig = blockchainConfigFactory(
     TrustWalletConnector,
     MathWalletConnector,
     MetamaskCompatibleConnector,
+    WalletConnectConnector,
   ],
   [
     createWeb3OfflineConnectorHelper(
