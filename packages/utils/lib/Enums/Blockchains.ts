@@ -3,7 +3,7 @@ export enum Blockchains {
   Ethereum = "Ethereum",
   EthereumRopsten = "Ropsten",
   EthereumRinkeby = "Rinkeby",
-  BinanceTestnet = "BinanceTesnet",
+  BinanceTestnet = "BinanceTestnet",
   Iotex = "Iotex",
   Tron = "Tron",
   Harmony = "Harmony",
