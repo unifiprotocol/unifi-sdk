@@ -12,7 +12,7 @@ import {
 } from "../../Connectors/Factory";
 import { WalletConnectConnector } from "../../Connectors/Wallets/WalletConnectConnector";
 
-export const BinanceTesnetConfig = blockchainConfigFactory(
+export const BinanceTestnetConfig = blockchainConfigFactory(
   {
     blockchain: Blockchains.BinanceTestnet,
     chainId: EthChainIds.BscTestnet,

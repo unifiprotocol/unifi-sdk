@@ -1295,17 +1295,15 @@
   dependencies:
     "@types/node" "*"
 
-"@unifiprotocol/utils@^2.3.2":
-  version "2.3.2"
-  resolved "https://registry.yarnpkg.com/@unifiprotocol/utils/-/utils-2.3.2.tgz#b671982567d6486f3c7d4066d9417038528906bc"
-  integrity sha512-wrakRqpLIH+V3A7V1lRlLe4Ijq+LQNfN95DHyfZ1OogAzZoHlpjWJv5FGSWT3SHcyr6wut5KvGqYsYFGKUw9aw==
+"@unifiprotocol/utils@^2.3.3":
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/@unifiprotocol/utils/-/utils-2.3.3.tgz#b1eb1ca17194893d99d653b3c9fbc48318d9ba7b"
+  integrity sha512-0DDPiSQkutxTEJt4Z2ffmgp2fH18dUQMOiwajtQYOPnM1osxW2LJcirQKnU0f1pDLUFK/HpxDKSCBlXuSXa2QQ==
   dependencies:
     bignumber.js "^9.0.1"
     keccak "^3.0.2"
     tslib "^2.1.0"
 
-<<<<<<< Updated upstream
-=======
 "@walletconnect/browser-utils@^1.7.8":
   version "1.7.8"
   resolved "https://registry.yarnpkg.com/@walletconnect/browser-utils/-/browser-utils-1.7.8.tgz#c9e27f69d838442d69ccf53cb38ffc3c554baee2"
@@ -1497,7 +1495,6 @@
   dependencies:
     "@walletconnect/window-getters" "^1.0.0"
 
->>>>>>> Stashed changes
 acorn-jsx@^5.3.1:
   version "5.3.1"
   resolved "https://registry.yarnpkg.com/acorn-jsx/-/acorn-jsx-5.3.1.tgz#fc8661e11b7ac1539c47dbfea2e72b3af34d267b"
@@ -2788,14 +2785,11 @@ keccak@^3.0.2:
     node-gyp-build "^4.2.0"
     readable-stream "^3.6.0"
 
-<<<<<<< Updated upstream
-=======
 keyvaluestorage-interface@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/keyvaluestorage-interface/-/keyvaluestorage-interface-1.0.0.tgz#13ebdf71f5284ad54be94bd1ad9ed79adad515ff"
   integrity sha512-8t6Q3TclQ4uZynJY9IGr2+SsIGwK9JHcO6ootkHCGA0CrQCRy+VkouYNO2xicET6b9al7QKzpebNow+gkpCL8g==
 
->>>>>>> Stashed changes
 levn@^0.4.1:
   version "0.4.1"
   resolved "https://registry.yarnpkg.com/levn/-/levn-0.4.1.tgz#ae4562c007473b932a6200d403268dd2fffc6ade"

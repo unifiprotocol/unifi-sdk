@@ -2,7 +2,7 @@ import { IBlockchainConfig } from "../Types/IBlockchainConfig";
 import { Blockchains } from "../Types/Enums";
 import { AvalancheConfig } from "./Avalanche";
 import { BinanceConfig } from "./Binance";
-import { BinanceTesnetConfig } from "./BinanceTestnet";
+import { BinanceTestnetConfig } from "./BinanceTestnet";
 import { BttcConfig } from "./BTTC";
 import { EthereumConfig } from "./Ethereum";
 import { EthereumRinkebyConfig } from "./EthereumRinkeby";
@@ -22,7 +22,7 @@ export const blockchainConfigMap: Partial<
   [Blockchains.EthereumRinkeby]: EthereumRinkebyConfig,
   [Blockchains.EthereumRopsten]: EthereumRopstenConfig,
   [Blockchains.Binance]: BinanceConfig,
-  [Blockchains.BinanceTestnet]: BinanceTesnetConfig,
+  [Blockchains.BinanceTestnet]: BinanceTestnetConfig,
   [Blockchains.Harmony]: HarmonyConfig,
   [Blockchains.Avalanche]: AvalancheConfig,
   [Blockchains.Polygon]: PolygonConfig,
