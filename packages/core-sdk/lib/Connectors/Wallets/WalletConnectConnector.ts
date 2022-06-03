@@ -29,7 +29,6 @@ export class WalletConnectConnector extends BaseConnector {
   }
 
   _initAgent() {
-    console.log(`${this.config.chainId} -> ${this.config.publicRpc}`);
     return new WalletConnectProvider({
       rpc: {
         [this.config.chainId]: this.config.publicRpc,
@@ -84,7 +83,6 @@ export class WalletConnectConnector extends BaseConnector {
     const agent = this.getAgent();
 
     this.on("Disconnect", () => {
-      console.log("Disconnecting...");
       agent.disconnect();
     });
   }
