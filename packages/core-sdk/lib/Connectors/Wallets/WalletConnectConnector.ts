@@ -1,5 +1,5 @@
-import { InvalidNetworkError, WalletNotDetectedError } from "../../Errors";
-import { ethers, utils } from "ethers";
+import { InvalidNetworkError } from "../../Errors";
+import { ethers } from "ethers";
 import { BaseConnector } from "../BaseConnector";
 import { Web3BaseAdapter } from "../../Adapters/Web3BaseAdapter";
 import WalletConnectProvider from "@walletconnect/ethereum-provider";
