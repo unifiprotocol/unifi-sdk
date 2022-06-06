@@ -24,6 +24,7 @@ type ScArgs = Record<string, any>;
 export interface ITransactionReceipt {
   hash: string;
   blockNumber?: number;
+  txFee: string;
   status?: TransactionStatus;
   blockHash?: string;
   timestamp?: number;
