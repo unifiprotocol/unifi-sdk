@@ -7,6 +7,7 @@ import harmonyOneWallet from "../Assets/Wallets/HarmonyOneWallet.png";
 import web3 from "../Assets/Wallets/Web3.png";
 import OntoWallet from "../Assets/Wallets/OntoWallet.png";
 import TronLink from "../Assets/Wallets/TronLink.jpeg";
+import WalletConnect from "../Assets/Wallets/WalletConnect.png";
 
 export const getWalletIcon = (wallet: string) => {
   return {
@@ -18,5 +19,6 @@ export const getWalletIcon = (wallet: string) => {
     [WalletConnectors.HarmonyOneWallet]: harmonyOneWallet,
     [WalletConnectors.OntoWallet]: OntoWallet,
     [WalletConnectors.TronLink]: TronLink,
+    [WalletConnectors.WalletConnect]: WalletConnect,
   }[wallet];
 };

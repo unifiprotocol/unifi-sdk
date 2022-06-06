@@ -74,7 +74,7 @@ export const useAdapter = () => {
       };
       try {
         await Promise.race([
-          timedReject(10_000),
+          timedReject(60_000),
           walletConnector
             .connect()
             .then(() => successConnection(walletConnector))
