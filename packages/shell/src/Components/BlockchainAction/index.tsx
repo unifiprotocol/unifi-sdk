@@ -1,10 +1,9 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { mediaQueries, SecondaryButton } from "@unifiprotocol/uikit";
 import { useAdapter } from "../../Adapter/useAdapter";
 import { BlockchainModal } from "../BlockchainModal";
 import { IConfig } from "../../Config";
 import styled from "styled-components";
-import { NetworkChanged } from "../../EventBus/Events/AdapterEvents";
 import { ShellEventBus } from "../../EventBus";
 import { OpenNetworkModalEvent } from "../../EventBus/Events/UIEvents";
 import { getVernacularBlockchain } from "@unifiprotocol/utils";
