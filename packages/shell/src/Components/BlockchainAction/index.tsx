@@ -51,7 +51,6 @@ export const BlockchainAction = () => {
     (cfg: IConfig) => {
       wipe(); // wipe here to be sync
       updateChain(cfg);
-      ShellEventBus.emit(new NetworkChanged(cfg.chainId));
       setIsModalOpen(false);
     },
     [updateChain, wipe]

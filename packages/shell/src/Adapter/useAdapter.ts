@@ -111,6 +111,8 @@ export const useAdapter = () => {
   const updateChain = useCallback(
     (cfg: IConfig) => {
       setChainOnStorage(cfg.blockchain);
+      connector?.disconnect();
+      connectOffline();
       dispatch({
         type: AdapterActionKind.SWITCH_CHAIN,
         payload: cfg,

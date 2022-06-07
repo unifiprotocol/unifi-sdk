@@ -11,7 +11,8 @@ const ConnectingAdapter = styled.div`
 `;
 
 export const EnsureAdapter: React.FC = ({ children }) => {
-  const { connect, connectOffline, activeChain, isAdapterReady } = useAdapter();
+  const { connect, connectOffline, activeChain, isAdapterReady, connector } =
+    useAdapter();
   useEffect(() => {
     const lastConnector = getStorageKey<Connectors>(
       activeChain.blockchain,
