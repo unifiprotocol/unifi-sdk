@@ -118,7 +118,7 @@ export const useAdapter = () => {
         payload: cfg,
       });
     },
-    [dispatch]
+    [dispatch, connector, connectOffline]
   );
 
   const disconnect = useCallback(async () => {
