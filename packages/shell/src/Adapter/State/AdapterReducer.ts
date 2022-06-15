@@ -1,6 +1,7 @@
 import { AdapterActionKind } from "./AdapterActions";
 import { AdapterState } from "./AdapterState";
 import { ShellPartialReducer } from "../../State/Types";
+import { getBlockchainOfflineConnectors } from "@unifiprotocol/core-sdk";
 
 export const AdapterReducer: ShellPartialReducer<AdapterState> = (
   state,
@@ -11,7 +12,6 @@ export const AdapterReducer: ShellPartialReducer<AdapterState> = (
       const connector = action.payload;
       // keep error if connecting to offline wallet after error
       const walletError = connector.isWallet ? undefined : state.walletError;
-      connector !== state.connector && state.connector?.disconnect();
       return {
         ...state,
         connector,
@@ -30,10 +30,13 @@ export const AdapterReducer: ShellPartialReducer<AdapterState> = (
       };
     case AdapterActionKind.SWITCH_CHAIN:
       const cfg = action.payload;
+      const offlineConnector = getBlockchainOfflineConnectors(
+        cfg.blockchain
+      )[0];
+      offlineConnector.connect();
       return {
         ...state,
-        adapter: undefined,
-        multicallAdapter: undefined,
+        connector: offlineConnector,
         activeChain: cfg,
       };
     default:
