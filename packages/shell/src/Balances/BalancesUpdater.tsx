@@ -12,6 +12,7 @@ import {
 } from "../EventBus/Events/BalancesEvents";
 import { coinGeckoService } from "../Services/Coingecko";
 import { AddressChangedEvent } from "../EventBus/Events/AdapterEvents";
+import { usePrevious } from "../Hooks/usePrevious";
 
 export const BalancesUpdater = () => {
   const [initialTrigger, setInitialTrigger] = useState(false);
@@ -19,6 +20,7 @@ export const BalancesUpdater = () => {
   const { refreshingBalances, addToken, refresh, wipe, updateUnfiPrice } =
     useBalances();
   const { adapter } = useAdapter();
+  const prevAdapter = usePrevious(adapter);
 
   useEffect(() => {
     Clocks.on("SIXTY_SECONDS", refresh);
@@ -28,8 +30,11 @@ export const BalancesUpdater = () => {
   }, [refresh]);
 
   useEffect(() => {
-    refresh();
-  }, [adapter]);
+    if (adapter !== prevAdapter) {
+      wipe();
+      refresh();
+    }
+  }, [prevAdapter, adapter, refresh]);
 
   useEffect(() => {
     const fn = () =>

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useAdapter } from "./useAdapter";
 import { getStorageKey } from "../Utils/ChainStorage";
+import { usePrevious } from "../Hooks/usePrevious";
 
 const ConnectingAdapter = styled.div`
   margin: 2rem;
@@ -11,7 +12,8 @@ const ConnectingAdapter = styled.div`
 `;
 
 export const EnsureAdapter: React.FC = ({ children }) => {
-  const { connect, connectOffline, activeChain, isAdapterReady } = useAdapter();
+  const { connect, connectOffline, activeChain, isAdapterReady, connector } =
+    useAdapter();
   useEffect(() => {
     const lastConnector = getStorageKey<Connectors>(
       activeChain.blockchain,
@@ -32,6 +34,14 @@ export const EnsureAdapter: React.FC = ({ children }) => {
     }
     setTimeout(() => setSecondsWaiting(secondsWaiting + 1), 1000);
   }, [secondsWaiting, isAdapterReady]);
+
+  const prevConnector = usePrevious(connector);
+
+  useEffect(() => {
+    if (connector !== prevConnector && prevConnector?.isWallet) {
+      prevConnector?.disconnect();
+    }
+  }, [connector, prevConnector]);
 
   const dots = (secondsWaiting % 3) + 1;
 
