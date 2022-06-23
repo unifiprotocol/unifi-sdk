@@ -46,6 +46,7 @@ export function mapTronTxToGlobal(
   return {
     hash: ensureHexPrefix(tronTx.txID), // string
     value: scData?.call_value || "0",
+    txFee: null,
     status:
       tronTx.ret[0].contractRet === "SUCCESS"
         ? TransactionStatus.Success

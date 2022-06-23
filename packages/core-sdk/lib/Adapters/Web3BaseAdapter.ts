@@ -64,6 +64,7 @@ export class Web3BaseAdapter extends BaseAdapter<
 
     const transactions = (blockWithTxs.transactions || []).map((tx) => ({
       ...tx,
+      txFee: null,
       value: tx.value.toString(),
     }));
     return {
@@ -290,6 +291,7 @@ export class Web3BaseAdapter extends BaseAdapter<
         receipt.status === 1
           ? TransactionStatus.Success
           : TransactionStatus.Failed,
+      txFee: calcTxFee(block, res, receipt),
       from: res.from,
       hash: transactionHash,
       blockHash: res.blockHash,
@@ -423,4 +425,20 @@ function computeInvocationParams(
 
 function isSmartContractCall(res: ethers.Transaction) {
   return res.data !== "0x";
+}
+
+function calcTxFee(
+  block: ethers.providers.Block,
+  tx: ethers.providers.TransactionResponse,
+  receipt: ethers.providers.TransactionReceipt
+) {
+  let txFee;
+  if (tx.type === 2) {
+    txFee = block.baseFeePerGas
+      .add(tx.maxPriorityFeePerGas)
+      .mul(receipt.gasUsed);
+  } else {
+    txFee = receipt.gasUsed.mul(receipt.effectiveGasPrice);
+  }
+  return ethers.utils.formatEther(txFee);
 }
