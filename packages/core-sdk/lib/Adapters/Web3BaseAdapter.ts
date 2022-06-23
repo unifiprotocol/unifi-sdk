@@ -432,6 +432,8 @@ function calcTxFee(
   tx: ethers.providers.TransactionResponse,
   receipt: ethers.providers.TransactionReceipt
 ) {
+  return null;
+  // TODO: needs to be checked in all chains..
   let txFee;
   if (tx.type === 2) {
     txFee = block.baseFeePerGas
