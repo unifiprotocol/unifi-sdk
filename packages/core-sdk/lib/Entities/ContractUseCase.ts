@@ -1,5 +1,8 @@
 import { ExecutionResponse, IAdapter } from "../Types";
 
+export interface IContractUseCaseExecuteOptions {
+  blockHeight?: string;
+}
 export abstract class ContractUseCase<
   ContractMethod extends string,
   ContractParams,
@@ -20,7 +23,10 @@ export abstract class ContractUseCase<
     return [];
   }
 
-  execute(adapter: IAdapter): Promise<ExecutionResponse<ResponseValue>> {
+  execute(
+    adapter: IAdapter,
+    options?: IContractUseCaseExecuteOptions
+  ): Promise<ExecutionResponse<ResponseValue>> {
     return adapter
       .execute<ResponseValue>(
         this.contractAddress,
@@ -28,6 +34,7 @@ export abstract class ContractUseCase<
         {
           args: this.getArgs(),
           callValue: this.getCallValue(),
+          block: options.blockHeight,
         },
         this.isWrite
       )

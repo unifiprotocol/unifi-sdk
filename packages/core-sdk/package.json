@@ -37,7 +37,7 @@
     "@unifiprotocol/utils": "^2.3.3",
     "@walletconnect/ethereum-provider": "^1.7.8",
     "bignumber.js": "^9.0.1",
-    "ethereum-multicall": "^2.4.0",
+    "ethereum-multicall": "^2.13.0",
     "ethers": "^5.6.2",
     "eventemitter3": "^4.0.7",
     "promise-parallel-throttle": "^3.3.0",
