@@ -6,7 +6,11 @@ import {
 } from "ethereum-multicall";
 
 import { BigNumber } from "ethers";
-import { ExecutionResponse, IAdapter } from "../../Types";
+import {
+  ExecutionResponse,
+  IAdapter,
+  IMulticallExecuteOptions,
+} from "../../Types";
 
 import { GenericUseCase } from "../../Entities";
 import { MulticallBaseAdapter } from "./MulticallBaseAdapter";
@@ -41,20 +45,23 @@ export class Web3MulticallAdapter extends MulticallBaseAdapter {
     }
   }
 
-  async execute(useCases: GenericUseCase[]): Promise<ExecutionResponse[]> {
+  async execute(
+    useCases: GenericUseCase[],
+    options?: IMulticallExecuteOptions
+  ): Promise<ExecutionResponse[]> {
     if (!this.isMulticallSupported) {
-      return super.execute(useCases);
+      return super.execute(useCases, options);
     }
     const callContexts: ContractCallContext[] = Object.values(
       useCases.reduce(this.groupUseCasesByContractKeepingOrder.bind(this), {})
     ).map(this.mapGroupedUseCasesToMulticallCtx.bind(this));
 
     const chunks = this.getChunks([...callContexts]);
-    let result: ExecutionResponse<any>[] = [];
-    for (let chunk of chunks) {
-      let chunkResult = await this.multicall
-        .call(chunk)
-        .then<ExecutionResponse<any>[]>(this.processMulticallResult.bind(this));
+    const result: ExecutionResponse[] = [];
+    for (const chunk of chunks) {
+      const chunkResult = await this.multicall
+        .call(chunk, { blockNumber: options?.blockHeight })
+        .then<ExecutionResponse[]>(this.processMulticallResult.bind(this));
       this._mergeArray(result, chunkResult);
     }
     return result;
