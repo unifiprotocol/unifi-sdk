@@ -25,7 +25,7 @@ export abstract class ContractUseCase<
 
   execute(
     adapter: IAdapter,
-    options?: IContractUseCaseExecuteOptions
+    options: IContractUseCaseExecuteOptions = {}
   ): Promise<ExecutionResponse<ResponseValue>> {
     return adapter
       .execute<ResponseValue>(
