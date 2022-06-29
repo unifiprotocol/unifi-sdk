@@ -27,7 +27,7 @@ export class MulticallBaseAdapter implements IMulticallAdapter {
 
   async executeGrouped(
     useCaseGroups: GenericUseCase[][],
-    options: IMulticallExecuteOptions
+    options: IMulticallExecuteOptions = {}
   ): Promise<ExecutionResponse[][]> {
     const useCases: GenericUseCase[] = useCaseGroups.reduce(
       (list, group) => [...list, ...group],

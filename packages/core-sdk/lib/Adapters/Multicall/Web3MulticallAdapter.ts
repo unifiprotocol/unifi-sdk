@@ -47,7 +47,7 @@ export class Web3MulticallAdapter extends MulticallBaseAdapter {
 
   async execute(
     useCases: GenericUseCase[],
-    options?: IMulticallExecuteOptions
+    options: IMulticallExecuteOptions = {}
   ): Promise<ExecutionResponse[]> {
     if (!this.isMulticallSupported) {
       return super.execute(useCases, options);
