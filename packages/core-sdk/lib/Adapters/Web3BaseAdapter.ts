@@ -1,4 +1,4 @@
-import { BN } from "@unifiprotocol/utils";
+import { Blockchains, BN } from "@unifiprotocol/utils";
 import { ContractInterface, ethers, utils } from "ethers";
 import {
   AdapterBalance,
@@ -291,7 +291,7 @@ export class Web3BaseAdapter extends BaseAdapter<
         receipt.status === 1
           ? TransactionStatus.Success
           : TransactionStatus.Failed,
-      txFee: calcTxFee(block, res, receipt),
+      txFee: calcTxFee(this.blockchainConfig.blockchain, block, res, receipt),
       from: res.from,
       hash: transactionHash,
       blockHash: res.blockHash,
@@ -428,19 +428,34 @@ function isSmartContractCall(res: ethers.Transaction) {
 }
 
 function calcTxFee(
+  blockchain: Blockchains,
   block: ethers.providers.Block,
   tx: ethers.providers.TransactionResponse,
   receipt: ethers.providers.TransactionReceipt
 ) {
-  return null;
-  // TODO: needs to be checked in all chains..
   let txFee;
-  if (tx.type === 2) {
-    txFee = block.baseFeePerGas
-      .add(tx.maxPriorityFeePerGas)
-      .mul(receipt.gasUsed);
-  } else {
-    txFee = receipt.gasUsed.mul(receipt.effectiveGasPrice);
+  switch (blockchain) {
+    case Blockchains.Ethereum:
+      if (tx.type === 2) {
+        txFee = block.baseFeePerGas
+          .add(tx.maxPriorityFeePerGas)
+          .mul(receipt.gasUsed);
+      } else {
+        txFee = receipt.gasUsed.mul(receipt.effectiveGasPrice);
+      }
+      break;
+    case Blockchains.Polygon:
+    case Blockchains.Binance:
+    case Blockchains.Avalanche:
+    case Blockchains.FTM:
+    case Blockchains.BTTC:
+    case Blockchains.Harmony:
+    case Blockchains.Iotex:
+    case Blockchains.Ontology:
+      txFee = receipt.gasUsed.mul(tx.gasPrice);
+      break;
+    default:
+      return null;
   }
   return ethers.utils.formatEther(txFee);
 }
