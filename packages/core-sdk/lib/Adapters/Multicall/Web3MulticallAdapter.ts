@@ -102,7 +102,7 @@ export class Web3MulticallAdapter extends MulticallBaseAdapter {
 
   private decodeReturnValues(ret: CallReturnContext): string[] {
     if (Array.isArray(ret)) {
-      ret.returnValues.map(decodeReturnValue);
+      return ret.returnValues.map(decodeReturnValue);
     }
     return decodeReturnValue(ret.returnValues);
   }
@@ -159,7 +159,10 @@ export class Web3MulticallAdapter extends MulticallBaseAdapter {
   }
 }
 
-function decodeReturnValue(v: any) {
+function decodeReturnValue(v: any): any {
+  if (Array.isArray(v)) {
+    return v.map(decodeReturnValue);
+  }
   if (typeof v === "object" && v.type === "BigNumber") {
     return BigNumber.from(v.hex).toString();
   }
