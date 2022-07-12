@@ -1,5 +1,5 @@
-import { OpenSearchTransport } from "../../lib/Logger/Winston/Transports/OpenSearchTransport";
-import { WinstonLogger } from "../../lib/Logger/Winston/WinstonLogger";
+import winston from "winston";
+import { OpenSearchTransport, WinstonLogger } from "../../lib";
 
 interface LoggerContext {
   blockchain?: string;
@@ -8,10 +8,13 @@ interface LoggerContext {
 class Logger extends WinstonLogger<LoggerContext> {
   constructor() {
     super({
-      transports: new OpenSearchTransport({
-        indexName: "logs",
-        openSearchNode: `${process.env.openSearchNode}`,
-      }),
+      transports: [
+        new winston.transports.Console(),
+        new OpenSearchTransport({
+          indexName: "logs",
+          openSearchNode: `${process.env.openSearchNode}`,
+        }),
+      ],
       defaultMeta: {
         app: "sample-1",
         id: "id-1",

@@ -2,7 +2,6 @@ import { v4 } from "uuid";
 import { Client } from "@opensearch-project/opensearch";
 import TransportStream, { TransportStreamOptions } from "winston-transport";
 import { Optional } from "utility-types";
-
 export interface OpenSearchTransportOptions extends TransportStreamOptions {
   indexName: string;
   openSearchNode: string;
