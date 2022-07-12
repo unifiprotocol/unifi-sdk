@@ -21,7 +21,8 @@
     "clean": "rm -rf ./dist && rm -rf tsconfig.tsbuildinfo",
     "compile": "tsc -b tsconfig.json",
     "lint": "eslint lib/**.ts",
-    "prepublishOnly": "npm run lint"
+    "prepublishOnly": "npm run lint",
+    "sample:run:open-search-logger": "ts-node samples/Logger/OpenSearchLogger.ts"
   },
   "directories": {
     "lib": "lib",
@@ -39,6 +40,7 @@
   "devDependencies": {
     "@tsconfig/node16": "^1.0.3",
     "@types/node": "^18.0.3",
+    "ts-node": "^10.8.2",
     "typescript": "^4.2.4"
   }
 }

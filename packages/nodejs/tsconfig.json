@@ -16,6 +16,7 @@
     "rootDir": "./lib",
   },
   "exclude": [
+    "samples",
     "node_modules",
     "dist"
   ]
