@@ -8,23 +8,31 @@ export interface OpenSearchTransportOptions extends TransportStreamOptions {
   bulkMode: boolean;
   bulkSize: number;
   bulkInterval: number;
+  refreshOnIndividualMode: boolean;
+  refreshOnBulkMode: boolean;
 }
 
 type ConstructorOptions = Optional<
   OpenSearchTransportOptions,
-  "bulkMode" | "bulkSize" | "bulkInterval"
+  | "refreshOnBulkMode"
+  | "refreshOnIndividualMode"
+  | "bulkMode"
+  | "bulkSize"
+  | "bulkInterval"
 >;
 
 type BulkItemTuple = [string, any]; // id, info
 
 const defaultOptions = {
-  bulkInterval: 5000,
+  bulkInterval: 10_000,
   bulkMode: true,
-  bulkSize: 10_000,
+  bulkSize: 10,
+  refreshOnIndividualMode: false,
+  refreshOnBulkMode: true,
 };
 
 export class OpenSearchTransport extends TransportStream {
-  private client: Client;
+  public readonly client: Client;
   private bulk: BulkItemTuple[] = [];
   private bulkTimeout: NodeJS.Timeout | undefined;
   private options: OpenSearchTransportOptions;
@@ -55,18 +63,23 @@ export class OpenSearchTransport extends TransportStream {
     );
   }
   private async sendBulk() {
+    this.clearBulkInterval();
     if (this.bulk.length > 0) {
-      const body = this.bulk.map(
-        ([id, info]) =>
-          `{ "create": { "_index": "${
-            this.options.indexName
-          }", "_id": "${id}" } }\n${JSON.stringify(info)}`
-      );
-      // todo: consider ensuring publication
+      const body = this.bulk.map(([id, info]) => {
+        const createRaw = JSON.stringify({
+          create: { _index: this.options.indexName, _id: id },
+        });
+        const infoRaw = JSON.stringify(info);
+        return `${createRaw}\n${infoRaw}`;
+      });
+
       this.bulk = [];
-      this.clearBulkInterval();
+      const mandatoryBulkEof = `\n`;
       await this.client
-        .bulk({ body: `${body.join(`\n`)}\n` })
+        .bulk({
+          body: `${body.join(`\n`)}${mandatoryBulkEof}`,
+          refresh: this.options.refreshOnBulkMode,
+        })
         .catch((error) => {
           this.emit("error", error);
         });
@@ -91,7 +104,7 @@ export class OpenSearchTransport extends TransportStream {
         id: v4(),
         index: this.options.indexName,
         body: info,
-        refresh: false,
+        refresh: this.options.refreshOnIndividualMode,
       })
       .then((res) => {
         if (res && res.statusCode !== 200) {

@@ -5,16 +5,14 @@ interface LoggerContext {
   blockchain?: string;
 }
 
+const openSearchTransport = new OpenSearchTransport({
+  indexName: "logs",
+  openSearchNode: `${process.env.openSearchNode}`,
+});
 class Logger extends WinstonLogger<LoggerContext> {
   constructor() {
     super({
-      transports: [
-        new winston.transports.Console(),
-        new OpenSearchTransport({
-          indexName: "logs",
-          openSearchNode: `${process.env.openSearchNode}`,
-        }),
-      ],
+      transports: [new winston.transports.Console(), openSearchTransport],
       defaultMeta: {
         app: "sample-1",
         id: "id-1",
@@ -26,8 +24,9 @@ class Logger extends WinstonLogger<LoggerContext> {
 (async () => {
   const logger = new Logger();
 
-  let i = 1000;
+  let i = 100000;
   while (i-- > 0) {
+    await sleep(500);
     logger.log({
       message: `Successful log ${i}`,
       type: "log.success",
@@ -35,3 +34,7 @@ class Logger extends WinstonLogger<LoggerContext> {
     });
   }
 })();
+
+function sleep(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
