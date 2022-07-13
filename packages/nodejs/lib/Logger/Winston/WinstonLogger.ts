@@ -97,10 +97,3 @@ export class WinstonLogger<ContextType> implements ILogger<ContextType> {
     return error;
   }
 }
-
-export const Logger = new WinstonLogger({
-  defaultMeta: {
-    app: "SampleApp",
-    id: "SampleApp-1",
-  },
-});
