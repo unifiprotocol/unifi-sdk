@@ -3,10 +3,10 @@
   </a>
   <br />
 
-# Unifi Protocol JS Utils
+# Unifi Protocol NodeJS Utils
 
 ## Usage
 
 ```
-import coreSdk from '@unifiprotocol/utils';
+import * as nodeJsUtils from '@unifiprotocol/nodejs';
 ```
