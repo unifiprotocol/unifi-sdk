@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import {
   UnifiThemeProvider,
@@ -55,10 +55,25 @@ export interface ShellProps {
   Sidebar?: ShellWrappedComp[];
 }
 
+function localStorageClearController() {
+  const oneMonthInMs = 30 * 24 * 3600 * 1000;
+  const now = Date.now();
+  const key = "nextClear";
+  const nextClear = localStorage.getItem(key);
+  if (!nextClear || Number(nextClear) <= now) {
+    localStorage.clear();
+    localStorage.setItem(key, `${now + oneMonthInMs}`);
+  }
+}
+
 export const Shell: React.FC<ShellProps> = ({
   Wrapped,
   Sidebar: SidebarComps = [],
 }) => {
+  useEffect(() => {
+    localStorageClearController();
+  }, []);
+
   return (
     <BrowserRouter>
       <ShellProvider>
