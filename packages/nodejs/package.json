@@ -1,0 +1,46 @@
+{
+  "name": "@unifiprotocol/nodejs",
+  "version": "0.1.0",
+  "description": "Unifi Protocol NodeJS Utils",
+  "author": "Unifi Protocol",
+  "repository": "git@github.com:unifiprotocol/unifi-sdk.git",
+  "homepage": "https://github.com/unifiprotocol/unifi-sdk/tree/master/packages/nodejs",
+  "license": "BSD-3-Clause",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "prepublish": "yarn build",
+    "build": "yarn run clean && yarn run compile",
+    "build:watch": "tsc --watch",
+    "clean": "rm -rf ./dist && rm -rf tsconfig.tsbuildinfo",
+    "compile": "tsc -b tsconfig.json",
+    "lint": "eslint lib/**.ts",
+    "prepublishOnly": "npm run lint",
+    "sample:run:open-search-logger": "ts-node samples/Logger/OpenSearchLogger.ts"
+  },
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "dependencies": {
+    "@opensearch-project/opensearch": "^2.0.0",
+    "@types/uuid": "^8.3.4",
+    "tslib": "^2.1.0",
+    "utility-types": "^3.10.0",
+    "uuid": "^8.3.2",
+    "winston": "^3.8.1",
+    "winston-transport": "^4.5.0"
+  },
+  "devDependencies": {
+    "@tsconfig/node16": "^1.0.3",
+    "@types/node": "^18.0.3",
+    "ts-node": "^10.8.2",
+    "typescript": "^4.2.4"
+  }
+}
