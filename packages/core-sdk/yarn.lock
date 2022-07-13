@@ -2209,10 +2209,10 @@ esutils@^2.0.2:
   resolved "https://registry.yarnpkg.com/esutils/-/esutils-2.0.3.tgz#74d2eb4de0b8da1293711910d50775b9b710ef64"
   integrity sha512-kVscqXk4OCp68SZ0dkgEKVi6/8ij300KBWTJq32P/dYeWTSwK41WyTxalN1eRmA5Z9UU/LX9D7FWSmV9SAYx6g==
 
-ethereum-multicall@^2.13.0:
-  version "2.13.0"
-  resolved "https://registry.yarnpkg.com/ethereum-multicall/-/ethereum-multicall-2.13.0.tgz#fac9729019e267050379835b1a8e08b57dda1de5"
-  integrity sha512-CAC8kJi6DM1ilPl8Oa+h88eX38fjH5h52pBbFFYKfXpSkGDqvkRAP4lLmksjx02h5fOnC8nMyP9Zi4t8nNLEaA==
+ethereum-multicall@^2.14.0:
+  version "2.14.0"
+  resolved "https://registry.yarnpkg.com/ethereum-multicall/-/ethereum-multicall-2.14.0.tgz#aa1e8cdf2932de5e96af51be93c79131aae6695d"
+  integrity sha512-nyfepMbvFqgv1il/gky6J+dyT/kvaNFTNvmiEp+E7xluwKUGnyCfA6/q4oyi2TLvg4yGYnmrwr3D9jcAd1hVYQ==
   dependencies:
     "@ethersproject/providers" "^5.0.10"
     ethers "^5.0.15"
