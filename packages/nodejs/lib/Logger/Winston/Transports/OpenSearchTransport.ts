@@ -26,7 +26,7 @@ type BulkItemTuple = [string, any]; // id, info
 const defaultOptions = {
   bulkInterval: 10_000,
   bulkMode: true,
-  bulkSize: 10,
+  bulkSize: 100,
   refreshOnIndividualMode: false,
   refreshOnBulkMode: true,
 };
