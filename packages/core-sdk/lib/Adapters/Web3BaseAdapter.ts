@@ -180,6 +180,7 @@ export class Web3BaseAdapter extends BaseAdapter<
               // ignore this error
               return;
             }
+            throw err;
           });
 
         const contractCall = await contract[method].apply(null, computedParams);
