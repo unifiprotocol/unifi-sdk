@@ -2,8 +2,8 @@
   "name": "examples",
   "version": "0.0.0",
   "description": "> TODO: description",
-  "author": "Sergio <sergiazow@gmail.com>",
-  "homepage": "https://github.com/sesame-seed/unifi-sdk#readme",
+  "author": "Daniel <daniel@unifiprotocol.com>",
+  "homepage": "https://github.com/unifiprotocol/unifi-sdk#readme",
   "license": "ISC",
   "main": "lib/examples.js",
   "directories": {
@@ -15,7 +15,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sesame-seed/unifi-sdk.git"
+    "url": "git+https://github.com/unifiprotocol/unifi-sdk.git"
   },
   "scripts": {
     "build": "run-p build:react-app",
@@ -24,7 +24,7 @@
     "postinstall": "yarn install:react-app"
   },
   "bugs": {
-    "url": "https://github.com/sesame-seed/unifi-sdk/issues"
+    "url": "https://github.com/unifiprotocol/unifi-sdk/issues"
   },
   "dependencies": {
     "@unifiprotocol/core-sdk": "^3.0.0"
