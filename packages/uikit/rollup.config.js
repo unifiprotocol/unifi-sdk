@@ -3,6 +3,7 @@ import url from "@rollup/plugin-url";
 import pkg from "./package.json";
 import commonjs from "rollup-plugin-commonjs";
 import copy from "rollup-plugin-copy";
+import image from '@rollup/plugin-image'
 
 const external = [
   ...Object.keys(pkg.dependencies || {}),
@@ -16,6 +17,7 @@ export default {
     { file: pkg.module, format: "es" },
   ],
   plugins: [
+    image(),
     url(),
     typescript(),
     commonjs(),
