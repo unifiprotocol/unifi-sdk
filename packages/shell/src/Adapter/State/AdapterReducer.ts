@@ -2,6 +2,8 @@ import { AdapterActionKind } from "./AdapterActions";
 import { AdapterState } from "./AdapterState";
 import { ShellPartialReducer } from "../../State/Types";
 import { getBlockchainOfflineConnectors } from "@unifiprotocol/core-sdk";
+import { ShellEventBus } from "../../EventBus";
+import { NetworkChanged } from "../../EventBus/Events/AdapterEvents";
 
 export const AdapterReducer: ShellPartialReducer<AdapterState> = (
   state,
@@ -30,6 +32,7 @@ export const AdapterReducer: ShellPartialReducer<AdapterState> = (
       };
     case AdapterActionKind.SWITCH_CHAIN:
       const cfg = action.payload;
+      ShellEventBus.emit(new NetworkChanged(cfg.chainId));
       const offlineConnector = getBlockchainOfflineConnectors(
         cfg.blockchain
       )[0];

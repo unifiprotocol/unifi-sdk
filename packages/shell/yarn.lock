@@ -2970,10 +2970,10 @@
     "@typescript-eslint/types" "5.27.1"
     eslint-visitor-keys "^3.3.0"
 
-"@unifiprotocol/core-sdk@^6.4.3":
-  version "6.4.3"
-  resolved "https://registry.yarnpkg.com/@unifiprotocol/core-sdk/-/core-sdk-6.4.3.tgz#20f782be98c5042bbabccefedb72bb5b7b5341dc"
-  integrity sha512-smBkruh0fE+XW4UNSPevGk7vcMujEYImsBRyrnk19Nl9uLZHf4kJ6GB/6NJ8f/cLB+ltirGOosQGgQNEirYJXw==
+"@unifiprotocol/core-sdk@^6.6.3":
+  version "6.6.3"
+  resolved "https://registry.yarnpkg.com/@unifiprotocol/core-sdk/-/core-sdk-6.6.3.tgz#ebae16809cc080df2d92eadf1bfbb1faca68e95f"
+  integrity sha512-8AEFsLOfwgi0dTocWyB/XspB/VNVbARwhv+z+LESsRMGZYKAli7mVVAQulG/GtvwjQoOubN9i7dusAegLfx3bg==
   dependencies:
     "@harmony-js/account" "^0.1.57"
     "@harmony-js/core" "^0.1.57"
@@ -2983,7 +2983,7 @@
     "@unifiprotocol/utils" "^2.3.3"
     "@walletconnect/ethereum-provider" "^1.7.8"
     bignumber.js "^9.0.1"
-    ethereum-multicall "^2.4.0"
+    ethereum-multicall "^2.14.0"
     ethers "^5.6.2"
     eventemitter3 "^4.0.7"
     promise-parallel-throttle "^3.3.0"
@@ -6307,10 +6307,10 @@ etag@~1.8.1:
   resolved "https://registry.yarnpkg.com/etag/-/etag-1.8.1.tgz#41ae2eeb65efa62268aebfea83ac7d79299b0887"
   integrity sha512-aIL5Fx7mawVa300al2BnEE4iNvo1qETxLrPI/o05L7z6go7fCw1J6EQmbK4FmJ2AS7kgVF/KEZWufBfdClMcPg==
 
-ethereum-multicall@^2.4.0:
-  version "2.12.0"
-  resolved "https://registry.yarnpkg.com/ethereum-multicall/-/ethereum-multicall-2.12.0.tgz#ef7ea84ae44c5f43ef0bd4f5e493f7283adf9339"
-  integrity sha512-LarV0DzEMBbzTwIe+vpwUsba27WPuBRTQ45GudzczDSBXqGzDgbBEeUHF+I7TEaxJ4I2zZg5kllsRz5BAjVUYA==
+ethereum-multicall@^2.14.0:
+  version "2.14.0"
+  resolved "https://registry.yarnpkg.com/ethereum-multicall/-/ethereum-multicall-2.14.0.tgz#aa1e8cdf2932de5e96af51be93c79131aae6695d"
+  integrity sha512-nyfepMbvFqgv1il/gky6J+dyT/kvaNFTNvmiEp+E7xluwKUGnyCfA6/q4oyi2TLvg4yGYnmrwr3D9jcAd1hVYQ==
   dependencies:
     "@ethersproject/providers" "^5.0.10"
     ethers "^5.0.15"
