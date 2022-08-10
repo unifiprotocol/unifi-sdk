@@ -95,7 +95,7 @@ export const TokenInput: React.FC<TokenInputProps> = ({
   token,
   amount = "0",
   label,
-  maxPercentage = "0.99",
+  maxPercentage = token?.address.startsWith("0x") ? "1" : "0.99",
   balance,
   balanceLoading = false,
   balanceLabel,
