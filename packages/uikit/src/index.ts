@@ -5,6 +5,7 @@ export * from "./components/BrandedHeader";
 export * from "./components/Button";
 export * from "./components/Card";
 export * from "./components/Checkbox";
+export * from "./components/Hero";
 export * from "./components/Input";
 export * from "./components/NavigationHeader";
 export * from "./components/UniversalNavigationHeader";
