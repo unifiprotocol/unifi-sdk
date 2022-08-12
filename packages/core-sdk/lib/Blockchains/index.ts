@@ -14,11 +14,13 @@ import { OntologyConfig } from "./Ontology";
 import { PolygonConfig } from "./Polygon";
 import { FTMConfig } from "./FTM";
 import { TronConfig } from "./Tron";
+import { EthereumGoerliConfig } from "./EthereumGoerli";
 
 export const blockchainConfigMap: Partial<
   Record<Blockchains, IBlockchainConfig>
 > = {
   [Blockchains.Ethereum]: EthereumConfig,
+  [Blockchains.EthereumGoerli]: EthereumGoerliConfig,
   [Blockchains.EthereumRinkeby]: EthereumRinkebyConfig,
   [Blockchains.EthereumRopsten]: EthereumRopstenConfig,
   [Blockchains.Binance]: BinanceConfig,
