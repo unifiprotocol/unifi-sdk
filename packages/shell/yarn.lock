@@ -2970,17 +2970,17 @@
     "@typescript-eslint/types" "5.27.1"
     eslint-visitor-keys "^3.3.0"
 
-"@unifiprotocol/core-sdk@^6.6.3":
-  version "6.6.3"
-  resolved "https://registry.yarnpkg.com/@unifiprotocol/core-sdk/-/core-sdk-6.6.3.tgz#ebae16809cc080df2d92eadf1bfbb1faca68e95f"
-  integrity sha512-8AEFsLOfwgi0dTocWyB/XspB/VNVbARwhv+z+LESsRMGZYKAli7mVVAQulG/GtvwjQoOubN9i7dusAegLfx3bg==
+"@unifiprotocol/core-sdk@^6.6.5":
+  version "6.6.5"
+  resolved "https://registry.yarnpkg.com/@unifiprotocol/core-sdk/-/core-sdk-6.6.5.tgz#dd0f6e37c732565f174d2aec0a9c96d9a9341688"
+  integrity sha512-Ie4XdC5MCS0SDbWWcLN8g4L6WIcqZ9vCBrrI4I006QdcnuKGrQCgFxkcbsNkq4+Ynz4KPyFmxrk5dDY9EoK6rQ==
   dependencies:
     "@harmony-js/account" "^0.1.57"
     "@harmony-js/core" "^0.1.57"
     "@harmony-js/utils" "^0.1.56"
     "@maticnetwork/eth-decoder" "git+https://github.com/deblanco/eth-decoder.git"
     "@types/reflect-metadata" "^0.1.0"
-    "@unifiprotocol/utils" "^2.3.3"
+    "@unifiprotocol/utils" "^2.3.4"
     "@walletconnect/ethereum-provider" "^1.7.8"
     bignumber.js "^9.0.1"
     ethereum-multicall "^2.14.0"
@@ -3017,10 +3017,10 @@
     keccak "^3.0.2"
     tslib "^2.1.0"
 
-"@unifiprotocol/utils@^2.3.3":
-  version "2.3.3"
-  resolved "https://registry.yarnpkg.com/@unifiprotocol/utils/-/utils-2.3.3.tgz#b1eb1ca17194893d99d653b3c9fbc48318d9ba7b"
-  integrity sha512-0DDPiSQkutxTEJt4Z2ffmgp2fH18dUQMOiwajtQYOPnM1osxW2LJcirQKnU0f1pDLUFK/HpxDKSCBlXuSXa2QQ==
+"@unifiprotocol/utils@^2.3.4":
+  version "2.3.4"
+  resolved "https://registry.yarnpkg.com/@unifiprotocol/utils/-/utils-2.3.4.tgz#32a1cc05de98d9ceac83a27233206cfb501a389b"
+  integrity sha512-ToIKZouAvZxaUVhb3P081j/BmcO+AyKPCY67CkZ/tnTLTWqqoG03qWWDd6h9nGL7+i5zE6IkJcW9EVIk0JJNhA==
   dependencies:
     bignumber.js "^9.0.1"
     keccak "^3.0.2"
