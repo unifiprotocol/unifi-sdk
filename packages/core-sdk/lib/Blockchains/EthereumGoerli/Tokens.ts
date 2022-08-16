@@ -10,8 +10,15 @@ export const GoerliWrappedToken = new Currency(
 );
 
 export const GoerliUpToken = new Currency(
-  "0x2A32f19ca22EE817040A3914bD3C4EB02588F928",
+  "0xfb29Ab63B9a5B49c78F033D5A1174b2CcEB1c9b9",
   18,
   "UP",
   "UP"
+);
+
+export const GoerliUnfiToken = new Currency(
+  "0xD6d9361cE2fad69164CBE63E6Bd4fe12CfB8c695",
+  18,
+  "UNFI",
+  "UNFI"
 );

@@ -10,7 +10,7 @@ import {
   web3ConnectorFactory,
 } from "../../Connectors/Factory";
 import { WalletConnectConnector } from "../../Connectors/Wallets/WalletConnectConnector";
-import { GoerliUpToken } from ".";
+import { GoerliUnfiToken, GoerliUpToken } from ".";
 import { unifiBlockchainProxyUrl } from "../../Connectors/Utils";
 
 export const EthereumGoerliConfig = blockchainConfigFactory(
@@ -21,6 +21,7 @@ export const EthereumGoerliConfig = blockchainConfigFactory(
     nativeToken: GoerliNativeToken,
     wrappedToken: GoerliWrappedToken,
     upToken: GoerliUpToken,
+    unfiToken: GoerliUnfiToken,
     logoURI:
       "https://proxy.unifiprotocol.com/ipfs/QmXaeURdHVszjDuGCwM7DauTjaASfm8qBZYzETM5ehq7MD",
     multicall: {
