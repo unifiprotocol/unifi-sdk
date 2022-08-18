@@ -48,9 +48,6 @@ const config: IConfig[] = [
   {
     ...baseConfig(Blockchains.OntologyTestnet),
   },
-  {
-    ...baseConfig(Blockchains.EthereumRopsten),
-  },
 ];
 
 function baseConfig(
