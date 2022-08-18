@@ -2970,10 +2970,10 @@
     "@typescript-eslint/types" "5.27.1"
     eslint-visitor-keys "^3.3.0"
 
-"@unifiprotocol/core-sdk@^6.6.5":
-  version "6.6.5"
-  resolved "https://registry.yarnpkg.com/@unifiprotocol/core-sdk/-/core-sdk-6.6.5.tgz#dd0f6e37c732565f174d2aec0a9c96d9a9341688"
-  integrity sha512-Ie4XdC5MCS0SDbWWcLN8g4L6WIcqZ9vCBrrI4I006QdcnuKGrQCgFxkcbsNkq4+Ynz4KPyFmxrk5dDY9EoK6rQ==
+"@unifiprotocol/core-sdk@^6.6.6":
+  version "6.6.6"
+  resolved "https://registry.yarnpkg.com/@unifiprotocol/core-sdk/-/core-sdk-6.6.6.tgz#06676346420cebc35b47385a3e0f991bdd66586b"
+  integrity sha512-Xc18zBplgJEWVk6gOGaqeA4/GCX/UpR5HT+C09gFbZasjK3XeuhYsRgl9Zy3aGWQvqe6B0IiKXkr6y7WHCsNRg==
   dependencies:
     "@harmony-js/account" "^0.1.57"
     "@harmony-js/core" "^0.1.57"
