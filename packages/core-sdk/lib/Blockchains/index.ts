@@ -6,7 +6,6 @@ import { BinanceTestnetConfig } from "./BinanceTestnet";
 import { BttcConfig } from "./BTTC";
 import { EthereumConfig } from "./Ethereum";
 import { EthereumRinkebyConfig } from "./EthereumRinkeby";
-import { EthereumRopstenConfig } from "./EthereumRopsten";
 import { HarmonyConfig } from "./Harmony";
 import { IotexConfig } from "./Iotex";
 import { OntologyTestnetConfig } from "./OntologyTestnet";
@@ -22,7 +21,6 @@ export const blockchainConfigMap: Partial<
   [Blockchains.Ethereum]: EthereumConfig,
   [Blockchains.EthereumGoerli]: EthereumGoerliConfig,
   [Blockchains.EthereumRinkeby]: EthereumRinkebyConfig,
-  [Blockchains.EthereumRopsten]: EthereumRopstenConfig,
   [Blockchains.Binance]: BinanceConfig,
   [Blockchains.BinanceTestnet]: BinanceTestnetConfig,
   [Blockchains.Harmony]: HarmonyConfig,

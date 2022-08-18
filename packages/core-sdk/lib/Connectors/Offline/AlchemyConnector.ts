@@ -16,7 +16,6 @@ export class AlchemyConnector extends BaseConnector {
   public readonly supportedChainIds = [
     EthChainIds.Eth,
     EthChainIds.Polygon,
-    EthChainIds.EthRopsten,
     // ...more
   ];
 
