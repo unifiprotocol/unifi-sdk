@@ -40,7 +40,7 @@ const config: IConfig[] = [
     ...baseConfig(Blockchains.Tron),
   },
   {
-    ...baseConfig(Blockchains.EthereumRopsten),
+    ...baseConfig(Blockchains.EthereumGoerli),
   },
   {
     ...baseConfig(Blockchains.BinanceTestnet),

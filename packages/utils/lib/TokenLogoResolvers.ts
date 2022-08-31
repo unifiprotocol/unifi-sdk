@@ -35,11 +35,10 @@ export const TokenLogoResolvers: Record<
     `https://icon-service.unifi.report/icon_eth?token=${normalizedToChecksumAddress(
       hash
     )}&autoResolve=false`,
-  [Blockchains.EthereumRopsten]: (hash: string) =>
+  [Blockchains.EthereumGoerli]: (hash: string) =>
     `https://icon-service.unifi.report/icon_eth?token=${normalizedToChecksumAddress(
       hash
     )}&autoResolve=false`,
-
   [Blockchains.Harmony]: (hash: string) =>
     `https://icon-service.unifi.report/icon_one?token=${normalizedToChecksumAddress(
       hash

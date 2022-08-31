@@ -45,6 +45,15 @@ export const TokenSelected = ShowDemo({
   label: "From",
   balanceLabel: "Balance",
 });
+
+export const NativeTokenSelected = ShowDemo({
+  token: new Currency("ETH", 18, "ETH", "ETH"),
+  amount: "10",
+  balance: "100",
+  label: "From",
+  balanceLabel: "Balance",
+});
+
 export const TokenNotSelected = ShowDemo({
   amount: "10",
   balance: "100",

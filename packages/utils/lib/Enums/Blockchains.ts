@@ -1,7 +1,7 @@
 export enum Blockchains {
   Binance = "Binance",
   Ethereum = "Ethereum",
-  EthereumRopsten = "Ropsten",
+  EthereumGoerli = "Goerli",
   EthereumRinkeby = "Rinkeby",
   BinanceTestnet = "BinanceTestnet",
   Iotex = "Iotex",
@@ -19,7 +19,6 @@ export const VernacularBlockchains: { [B in Blockchains]?: string } = {
   [Blockchains.Binance]: "BNB Chain",
   [Blockchains.BinanceTestnet]: "BNB Chain Testnet",
   [Blockchains.Ethereum]: "Ethereum",
-  [Blockchains.EthereumRopsten]: "Ropsten",
   [Blockchains.EthereumRinkeby]: "Rinkeby",
   [Blockchains.Iotex]: "IoTeX",
   [Blockchains.Tron]: "Tron",

@@ -1,6 +1,6 @@
 {
   "name": "@unifiprotocol/core-sdk",
-  "version": "6.6.3",
+  "version": "6.6.7",
   "description": "Unifi Protocol JS Core SDK",
   "author": "Unifi Protocol",
   "repository": "git@github.com:unifiprotocol/unifi-sdk.git",
@@ -34,7 +34,7 @@
     "@harmony-js/utils": "^0.1.56",
     "@maticnetwork/eth-decoder": "git+https://github.com/deblanco/eth-decoder.git",
     "@types/reflect-metadata": "^0.1.0",
-    "@unifiprotocol/utils": "^2.3.3",
+    "@unifiprotocol/utils": "^2.3.5",
     "@walletconnect/ethereum-provider": "^1.7.8",
     "bignumber.js": "^9.0.1",
     "ethereum-multicall": "^2.14.0",

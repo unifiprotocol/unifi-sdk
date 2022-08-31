@@ -2,8 +2,8 @@ export { Blockchains } from "@unifiprotocol/utils";
 
 export enum EthChainIds {
   Eth = 1,
-  EthRopsten = 3,
   EthRinkeby = 4,
+  EthGoerli = 5,
   Bsc = 56,
   BscTestnet = 97,
   Iotex = 4689,
