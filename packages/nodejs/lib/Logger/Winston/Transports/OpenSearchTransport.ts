@@ -117,6 +117,9 @@ export class OpenSearchTransport extends TransportStream {
         if (callback) {
           callback();
         }
+      })
+      .catch((error) => {
+        this.emit("error", error);
       });
   }
 
