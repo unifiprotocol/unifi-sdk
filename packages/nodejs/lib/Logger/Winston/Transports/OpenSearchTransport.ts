@@ -81,7 +81,7 @@ export class OpenSearchTransport extends TransportStream {
           refresh: this.options.refreshOnBulkMode,
         })
         .catch((error) => {
-          this.emit("error", error);
+          console.log("error", error);
         });
     }
     this.setBulkInterval();
@@ -119,7 +119,7 @@ export class OpenSearchTransport extends TransportStream {
         }
       })
       .catch((error) => {
-        this.emit("error", error);
+        console.log("error", error);
       });
   }
 
