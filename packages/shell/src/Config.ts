@@ -50,6 +50,15 @@ const config: IConfig[] = [
   },
 ];
 
+export const externalBlockchainsConfig = [
+  {
+    name: "ICON",
+    logoURI:
+      "https://proxy.unifiprotocol.com/ipfs/QmY9MQ9pL7PVkBC7PeqtZgY8mhh5w39cDWDs9pqgokUxXZ",
+    externalLink: "https://icon.unifiprotocol.com/",
+  },
+];
+
 function baseConfig(
   blockchain: Blockchains
 ): Pick<IConfig, "blockchain" | "chainId" | "nativeToken" | "wrappedToken"> {

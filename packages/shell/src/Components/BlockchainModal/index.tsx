@@ -6,7 +6,7 @@ import {
   ModalClose,
   useModal,
 } from "@unifiprotocol/uikit";
-import config, { IConfig } from "../../Config";
+import config, { IConfig, externalBlockchainsConfig } from "../../Config";
 import {
   ItemLogo,
   ItemName,
@@ -30,7 +30,7 @@ const BlockchainModalComponent: React.FC<ChooseBlockchainModalProps> = ({
   const { activeChain } = useAdapter();
   const { t } = useTranslation();
 
-  const options = useMemo(
+  const internalBlockchains = useMemo(
     () =>
       config.map((network) => {
         const cfg = getBlockchainConfig(network.blockchain);
@@ -50,6 +50,20 @@ const BlockchainModalComponent: React.FC<ChooseBlockchainModalProps> = ({
     []
   );
 
+  const externalBlockchains = useMemo(
+    () =>
+      externalBlockchainsConfig.map(({ name, logoURI, externalLink }) => ({
+        externalLink,
+        display: (
+          <>
+            <ItemLogo alt={name} src={logoURI} />
+            <ItemName>{name}</ItemName>
+          </>
+        ),
+      })),
+    []
+  );
+
   return (
     <Modal>
       <ModalHeader>
@@ -63,7 +77,7 @@ const BlockchainModalComponent: React.FC<ChooseBlockchainModalProps> = ({
           components={{ b: <b /> }}
         />
         <SelectionList>
-          {options.map(({ value, display }, idx) => {
+          {internalBlockchains.map(({ value, display }, idx) => {
             return (
               <SelectionListItem
                 key={idx}
@@ -73,6 +87,14 @@ const BlockchainModalComponent: React.FC<ChooseBlockchainModalProps> = ({
               </SelectionListItem>
             );
           })}
+          {externalBlockchains.map(({ display, externalLink }, idx) => (
+            <SelectionListItem
+              key={idx + internalBlockchains.length}
+              onClick={() => window.location.replace(externalLink)}
+            >
+              {display}
+            </SelectionListItem>
+          ))}
         </SelectionList>
       </ModalBody>
     </Modal>
