@@ -1,8 +1,7 @@
-import { ethers, utils } from "ethers";
+import { ethers } from "ethers";
 import { BaseConnector } from "../BaseConnector";
 import { Web3BaseAdapter } from "../../Adapters/Web3BaseAdapter";
 import Onboard, {
-  AppState,
   EIP1193Provider,
   OnboardAPI,
   WalletState,
@@ -16,7 +15,6 @@ import {
   IAdapter,
 } from "../../Types";
 import { Web3MulticallAdapter } from "../../Adapters/Multicall/Web3MulticallAdapter";
-import { ForceNetworkError } from "../../Errors/ForceNetworkError";
 import { hexToDec } from "@unifiprotocol/utils";
 
 const unfiSvg = `
