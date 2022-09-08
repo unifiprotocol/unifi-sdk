@@ -33,12 +33,12 @@ export class Web3BaseConnector extends BaseConnector {
   private buildWeb3Provider() {
     const protocol = new URL(this.nodeUrl).protocol;
 
-    if (/^http/.test(protocol)) {
+    if (/^http/i.test(protocol)) {
       return new ethers.providers.StaticJsonRpcProvider(
         this.nodeUrl,
         this.config.chainId
       );
-    } else if (/^ws/.test(protocol)) {
+    } else if (/^ws/i.test(protocol)) {
       return new ethers.providers.WebSocketProvider(
         this.nodeUrl,
         this.config.chainId
