@@ -17,10 +17,6 @@ import {
   SignMessageParams,
 } from "../Types";
 
-type AgnosticWeb3Provider =
-  | ethers.providers.Web3Provider
-  | ethers.providers.WebSocketProvider;
-
 import { nonSuccessResponse, successResponse } from "./Helpers";
 import { ERC20ABI } from "../Abis";
 import { BaseAdapter } from "./BaseAdapter";
@@ -119,8 +115,8 @@ export class Web3BaseAdapter extends BaseAdapter<
     );
   }
 
-  protected get web3Provider(): AgnosticWeb3Provider {
-    return this.etherClient as AgnosticWeb3Provider;
+  protected get web3Provider(): ethers.providers.Web3Provider {
+    return this.etherClient as ethers.providers.Web3Provider;
   }
 
   async initializeToken(
