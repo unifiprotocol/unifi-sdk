@@ -34,8 +34,8 @@ export class CoinbaseWalletConnector extends BaseConnector {
   constructor(
     config: IBlockchainConfig,
     metadata: IConnectorMetadata = {
-      name: WalletConnectors.WalletConnect,
-      displayName: "WalletConnect",
+      name: WalletConnectors.CoinbaseWallet,
+      displayName: "Coinbase Wallet",
       isWallet: true,
     }
   ) {
