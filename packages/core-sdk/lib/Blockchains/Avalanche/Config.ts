@@ -13,6 +13,7 @@ import {
   web3ConnectorFactory,
 } from "../../Connectors/Factory";
 import { WalletConnectConnector } from "../../Connectors/Wallets/WalletConnectConnector";
+import { CoinbaseWalletConnector } from "../../Connectors/Wallets/CoinbaseConnector";
 
 export const AvalancheConfig = blockchainConfigFactory(
   {
@@ -44,7 +45,12 @@ export const AvalancheConfig = blockchainConfigFactory(
       },
     },
   },
-  [MetamaskConnector, MetamaskCompatibleConnector, WalletConnectConnector],
+  [
+    MetamaskConnector,
+    MetamaskCompatibleConnector,
+    CoinbaseWalletConnector,
+    WalletConnectConnector,
+  ],
   [
     createWeb3OfflineConnectorHelper(
       OfflineConnectors.Avalanche,
