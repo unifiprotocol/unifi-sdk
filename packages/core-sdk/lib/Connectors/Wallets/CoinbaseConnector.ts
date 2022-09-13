@@ -29,8 +29,6 @@ const unfiSvg = `
 `;
 
 export class CoinbaseWalletConnector extends BaseConnector {
-  static STORAGE_PREFIX = "-walletlink";
-
   private provider: EIP1193Provider;
   private onboard: OnboardAPI;
   constructor(
@@ -45,9 +43,6 @@ export class CoinbaseWalletConnector extends BaseConnector {
   }
 
   async _connect(): Promise<IConnectorAdapters> {
-    const root = document.documentElement;
-    root.style.setProperty("--onboard-modal-z-index", "8000");
-
     const coinbaseWallet = coinbase();
 
     this.onboard = Onboard({
