@@ -8,12 +8,9 @@ import { Web3MulticallAdapter } from "../../Adapters";
 import {
   IConnectorAdapters,
   IBlockchainConfig,
-  IAdapter,
   IConnectorMetadata,
   WalletConnectors,
 } from "../../Types";
-import { ForceNetworkError } from "../../Errors/ForceNetworkError";
-import { hexToDec } from "@unifiprotocol/utils";
 
 export class WalletConnectConnector extends BaseConnector {
   private agent: WalletConnectProvider;

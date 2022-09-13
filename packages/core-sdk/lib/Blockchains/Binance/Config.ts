@@ -17,6 +17,7 @@ import {
 } from "../../Connectors/Factory";
 import { OntoWalletConnector } from "../../Connectors/Wallets/OntoWallet";
 import { WalletConnectConnector } from "../../Connectors/Wallets/WalletConnectConnector";
+import { CoinbaseWalletConnector } from "../../Connectors/Wallets/CoinbaseConnector";
 
 export const BinanceConfig = blockchainConfigFactory(
   {
@@ -53,6 +54,7 @@ export const BinanceConfig = blockchainConfigFactory(
     MathWalletConnector,
     MetamaskCompatibleConnector,
     OntoWalletConnector,
+    CoinbaseWalletConnector,
     WalletConnectConnector,
   ],
   [
