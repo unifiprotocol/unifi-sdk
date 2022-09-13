@@ -8,7 +8,7 @@
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.0.0",
     "@testing-library/user-event": "^13.2.1",
-    "@unifiprotocol/core-sdk": "^6.6.7",
+    "@unifiprotocol/core-sdk": "^6.6.8",
     "@unifiprotocol/uikit": "^1.13.5",
     "@unifiprotocol/utils": "^2.3.5",
     "@unifiprotocol/utrade-v2-localization": "git+https://github.com/unifiprotocol/utrade-v2-localization.git",
