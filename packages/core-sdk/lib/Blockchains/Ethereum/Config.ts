@@ -11,6 +11,7 @@ import {
 } from "../../Connectors/Factory";
 import { ETHUnfiToken } from "./Tokens";
 import { WalletConnectConnector } from "../../Connectors/Wallets/WalletConnectConnector";
+import { CoinbaseWalletConnector } from "../../Connectors/Wallets/CoinbaseConnector";
 
 export const EthereumConfig = blockchainConfigFactory(
   {
@@ -45,6 +46,7 @@ export const EthereumConfig = blockchainConfigFactory(
     TrustWalletConnector,
     MathWalletConnector,
     MetamaskCompatibleConnector,
+    CoinbaseWalletConnector,
     WalletConnectConnector,
   ],
   [

@@ -9,6 +9,7 @@ import {
   web3ConnectorFactory,
 } from "../../Connectors/Factory";
 import { WalletConnectConnector } from "../../Connectors/Wallets/WalletConnectConnector";
+import { CoinbaseWalletConnector } from "../../Connectors/Wallets/CoinbaseConnector";
 
 export const FTMConfig = blockchainConfigFactory(
   {
@@ -44,6 +45,7 @@ export const FTMConfig = blockchainConfigFactory(
     MetamaskConnector,
     MathWalletConnector,
     MetamaskCompatibleConnector,
+    CoinbaseWalletConnector,
     WalletConnectConnector,
   ],
   [

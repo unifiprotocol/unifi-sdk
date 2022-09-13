@@ -10,6 +10,7 @@ import {
   web3ConnectorFactory,
 } from "../../Connectors/Factory";
 import { WalletConnectConnector } from "../../Connectors/Wallets/WalletConnectConnector";
+import { CoinbaseWalletConnector } from "../../Connectors/Wallets/CoinbaseConnector";
 
 export const EthereumRinkebyConfig = blockchainConfigFactory(
   {
@@ -42,6 +43,7 @@ export const EthereumRinkebyConfig = blockchainConfigFactory(
     TrustWalletConnector,
     MathWalletConnector,
     MetamaskCompatibleConnector,
+    CoinbaseWalletConnector,
     WalletConnectConnector,
   ],
   [

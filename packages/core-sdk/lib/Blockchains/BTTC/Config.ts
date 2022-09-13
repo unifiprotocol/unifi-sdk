@@ -8,6 +8,7 @@ import {
   web3ConnectorFactory,
 } from "../../Connectors/Factory";
 import { WalletConnectConnector } from "../../Connectors/Wallets/WalletConnectConnector";
+import { CoinbaseWalletConnector } from "../../Connectors/Wallets/CoinbaseConnector";
 
 export const BttcConfig = blockchainConfigFactory(
   {
@@ -38,7 +39,12 @@ export const BttcConfig = blockchainConfigFactory(
       },
     },
   },
-  [MetamaskConnector, MetamaskCompatibleConnector, WalletConnectConnector],
+  [
+    MetamaskConnector,
+    MetamaskCompatibleConnector,
+    CoinbaseWalletConnector,
+    WalletConnectConnector,
+  ],
   [
     createWeb3OfflineConnectorHelper(
       OfflineConnectors.BTTC,

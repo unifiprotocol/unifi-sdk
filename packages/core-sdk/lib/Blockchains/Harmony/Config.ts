@@ -14,6 +14,7 @@ import {
   web3ConnectorFactory,
 } from "../../Connectors/Factory";
 import { WalletConnectConnector } from "../../Connectors/Wallets/WalletConnectConnector";
+import { CoinbaseWalletConnector } from "../../Connectors/Wallets/CoinbaseConnector";
 
 export const HarmonyConfig = blockchainConfigFactory(
   {
@@ -49,6 +50,7 @@ export const HarmonyConfig = blockchainConfigFactory(
     MetamaskConnector,
     OneWalletConnector,
     MathWalletConnector,
+    CoinbaseWalletConnector,
     WalletConnectConnector,
   ],
   [
