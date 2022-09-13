@@ -48,6 +48,7 @@ export enum WalletConnectors {
   TronLink = "tronlink",
   TrustWallet = "trustwallet",
   MetamaskCompatible = "metamaskCompatible",
+  CoinbaseWallet = "coinbaseWallet",
   WalletConnect = "walletConnect",
 }
 
