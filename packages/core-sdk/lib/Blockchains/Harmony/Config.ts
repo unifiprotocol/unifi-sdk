@@ -6,9 +6,7 @@ import {
 } from "./Tokens";
 import { Blockchains, EthChainIds, OfflineConnectors } from "../../Types";
 import { MetamaskConnector } from "../../Connectors/Wallets/MetamaskConnector";
-import { MathWalletConnector } from "../../Connectors/Wallets/MathWalletConnector";
 import { blockchainConfigFactory } from "../Utils";
-import { OneWalletConnector } from "./Wallets/OneWalletConnector";
 import {
   createWeb3OfflineConnectorHelper,
   web3ConnectorFactory,
@@ -48,8 +46,6 @@ export const HarmonyConfig = blockchainConfigFactory(
   },
   [
     MetamaskConnector,
-    OneWalletConnector,
-    MathWalletConnector,
     CoinbaseWalletConnector,
     WalletConnectConnector,
   ],

@@ -40,7 +40,6 @@ export enum OfflineConnectors {
 }
 
 export enum WalletConnectors {
-  HarmonyOneWallet = "HarmonyOneWallet",
   Binance = "binance",
   Metamask = "metamask",
   OntoWallet = "ontowallet",
