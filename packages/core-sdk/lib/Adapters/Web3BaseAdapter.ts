@@ -27,6 +27,8 @@ export class Web3BaseAdapter extends BaseAdapter<
   ContractInterface,
   ethers.providers.BaseProvider
 > {
+  private static PRIORITY_GAS_FEE_PERCENTAGE = 1;
+
   signMessage(
     message: string,
     { type = "basic" }: SignMessageParams = {}
@@ -160,9 +162,12 @@ export class Web3BaseAdapter extends BaseAdapter<
 
         let gasPrice;
         try {
-          gasPrice = await this.etherClient
-            .getFeeData()
-            .then((data) => data.gasPrice.toHexString());
+          gasPrice = await this.etherClient.getFeeData().then((data) =>
+            data.gasPrice
+              .mul(100 + Web3BaseAdapter.PRIORITY_GAS_FEE_PERCENTAGE)
+              .div(100)
+              .toHexString()
+          );
         } catch (err) {
           console.error("Error fetching Web3BaseAdapter.getFeeData");
         }
