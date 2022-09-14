@@ -37,6 +37,7 @@ export enum OfflineConnectors {
   BTTC = "bttc",
   OntologyTestnet = "ontologytestnet",
   FTM = "ftm",
+  Goerli = "Goerli",
 }
 
 export enum WalletConnectors {
