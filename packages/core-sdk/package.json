@@ -29,9 +29,6 @@
     "test": "__tests__"
   },
   "dependencies": {
-    "@harmony-js/account": "^0.1.57",
-    "@harmony-js/core": "^0.1.57",
-    "@harmony-js/utils": "^0.1.56",
     "@maticnetwork/eth-decoder": "git+https://github.com/deblanco/eth-decoder.git",
     "@types/reflect-metadata": "^0.1.0",
     "@unifiprotocol/utils": "^2.3.5",
