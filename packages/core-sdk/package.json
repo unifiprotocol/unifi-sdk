@@ -1,6 +1,6 @@
 {
   "name": "@unifiprotocol/core-sdk",
-  "version": "6.8.0",
+  "version": "6.8.1",
   "description": "Unifi Protocol JS Core SDK",
   "author": "Unifi Protocol",
   "repository": "git@github.com:unifiprotocol/unifi-sdk.git",
@@ -47,7 +47,9 @@
     "reflect-metadata": "^0.1.13",
     "tron-format-address": "^0.1.8",
     "tronweb": "^4.1.0",
-    "tslib": "^2.1.0"
+    "tslib": "^2.1.0",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0"
   },
   "devDependencies": {
     "@types/bip39": "^3.0.0",
