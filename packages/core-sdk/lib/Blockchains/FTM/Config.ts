@@ -10,6 +10,7 @@ import {
 } from "../../Connectors/Factory";
 import { WalletConnectConnector } from "../../Connectors/Wallets/WalletConnectConnector";
 import { CoinbaseWalletConnector } from "../../Connectors/Wallets/CoinbaseConnector";
+import { TokenPocketConnector } from "../../Connectors/Wallets/TokenPocketConnector";
 
 export const FTMConfig = blockchainConfigFactory(
   {
@@ -44,6 +45,7 @@ export const FTMConfig = blockchainConfigFactory(
   [
     MetamaskConnector,
     MathWalletConnector,
+    TokenPocketConnector,
     MetamaskCompatibleConnector,
     CoinbaseWalletConnector,
     WalletConnectConnector,

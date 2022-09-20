@@ -10,6 +10,7 @@ import {
 import { unifiBlockchainProxyUrl } from "../../Connectors/Utils";
 import { WalletConnectConnector } from "../../Connectors/Wallets/WalletConnectConnector";
 import { CoinbaseWalletConnector } from "../../Connectors/Wallets/CoinbaseConnector";
+import { TokenPocketConnector } from "../../Connectors/Wallets/TokenPocketConnector";
 
 export const OntologyTestnetConfig = blockchainConfigFactory(
   {
@@ -42,6 +43,7 @@ export const OntologyTestnetConfig = blockchainConfigFactory(
   },
   [
     MetamaskConnector,
+    TokenPocketConnector,
     MetamaskCompatibleConnector,
     CoinbaseWalletConnector,
     WalletConnectConnector,
