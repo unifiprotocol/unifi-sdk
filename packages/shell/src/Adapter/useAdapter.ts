@@ -6,7 +6,7 @@ import {
   IConnector,
   InvalidNetworkError,
 } from "@unifiprotocol/core-sdk";
-import { useCallback, useContext } from "react";
+import { useCallback, useContext, useEffect } from "react";
 
 import { IConfig } from "../Config";
 import { ShellEventBus } from "../EventBus";
@@ -80,10 +80,6 @@ export const useAdapter = () => {
             .then(() => successConnection(walletConnector))
             .catch(handleWalletConnectionError),
         ]);
-        walletConnector.on("AddressChanged", (address: string) => {
-          ShellEventBus.emit(new AddressChanged(address));
-        });
-        walletConnector.on("NetworkChanged", changeNetwork);
       } catch (err) {
         dispatch({
           type: AdapterActionKind.CONNECTION_ERROR,
@@ -94,7 +90,7 @@ export const useAdapter = () => {
           .then(() => successConnection(offlineConnector));
       }
     },
-    [activeChain, dispatch, handleWalletConnectionError, changeNetwork]
+    [activeChain, dispatch, handleWalletConnectionError]
   );
 
   const connectOffline = useCallback(() => {
@@ -117,7 +113,7 @@ export const useAdapter = () => {
         payload: cfg,
       });
     },
-    [dispatch, connector, connectOffline]
+    [dispatch, connectOffline]
   );
 
   const disconnect = useCallback(async () => {
@@ -128,6 +124,23 @@ export const useAdapter = () => {
     ShellEventBus.emit(new Wipe());
     connectOffline();
   }, [connectOffline, connector, dispatch]);
+
+  useEffect(() => {
+    const onAddressChanged = (address: string) => {
+      ShellEventBus.emit(new AddressChanged(address));
+    };
+
+    connector?.on("AddressChanged", onAddressChanged);
+    connector?.on("Disconnect", disconnect);
+    connector?.on("NetworkChanged", changeNetwork);
+
+    return () => {
+      connector?.off("AddressChanged", onAddressChanged);
+      connector?.off("Disconnect", disconnect);
+      connector?.off("NetworkChanged", changeNetwork);
+    };
+  }, [connector, disconnect, changeNetwork]);
+
   const isAdapterReady = !!(adapter && multicallAdapter);
 
   return {

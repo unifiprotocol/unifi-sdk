@@ -7,6 +7,8 @@ import web3 from "../Assets/Wallets/Web3.png";
 import OntoWallet from "../Assets/Wallets/OntoWallet.png";
 import TronLink from "../Assets/Wallets/TronLink.jpeg";
 import WalletConnect from "../Assets/Wallets/WalletConnect.png";
+import CoinbaseWalletLogo from "../Assets/Wallets/CoinbaseWalletLogo.png";
+import TokenPocketLogo from "../Assets/Wallets/TokenPocket.png";
 
 export const getWalletIcon = (wallet: string) => {
   return {
@@ -14,9 +16,11 @@ export const getWalletIcon = (wallet: string) => {
     [WalletConnectors.Binance]: binancesmartchain,
     [WalletConnectors.MathWallet]: mathwallet,
     [WalletConnectors.TrustWallet]: trustwallet,
+    [WalletConnectors.TokenPocketWallet]: TokenPocketLogo,
     [WalletConnectors.MetamaskCompatible]: web3,
     [WalletConnectors.OntoWallet]: OntoWallet,
     [WalletConnectors.TronLink]: TronLink,
+    [WalletConnectors.CoinbaseWallet]: CoinbaseWalletLogo,
     [WalletConnectors.WalletConnect]: WalletConnect,
   }[wallet];
 };
