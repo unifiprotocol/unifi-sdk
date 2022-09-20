@@ -47,7 +47,6 @@ export const EthereumGoerliConfig = blockchainConfigFactory(
     MetamaskConnector,
     TrustWalletConnector,
     MathWalletConnector,
-    TokenPocketConnector,
     MetamaskCompatibleConnector,
     CoinbaseWalletConnector,
     WalletConnectConnector,
