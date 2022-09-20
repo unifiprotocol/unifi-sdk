@@ -13,6 +13,7 @@ import { WalletConnectConnector } from "../../Connectors/Wallets/WalletConnectCo
 import { GoerliUnfiToken, GoerliUpToken } from ".";
 import { unifiBlockchainProxyUrl } from "../../Connectors/Utils";
 import { CoinbaseWalletConnector } from "../../Connectors/Wallets/CoinbaseConnector";
+import { TokenPocketConnector } from "../../Connectors/Wallets/TokenPocketConnector";
 
 export const EthereumGoerliConfig = blockchainConfigFactory(
   {
@@ -46,7 +47,7 @@ export const EthereumGoerliConfig = blockchainConfigFactory(
     MetamaskConnector,
     TrustWalletConnector,
     MathWalletConnector,
-    CoinbaseWalletConnector,
+    TokenPocketConnector,
     MetamaskCompatibleConnector,
     CoinbaseWalletConnector,
     WalletConnectConnector,

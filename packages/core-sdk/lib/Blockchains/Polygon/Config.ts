@@ -14,6 +14,7 @@ import {
 } from "../../Connectors/Factory";
 import { WalletConnectConnector } from "../../Connectors/Wallets/WalletConnectConnector";
 import { CoinbaseWalletConnector } from "../../Connectors/Wallets/CoinbaseConnector";
+import { TokenPocketConnector } from "../../Connectors/Wallets/TokenPocketConnector";
 
 export const PolygonConfig = blockchainConfigFactory(
   {
@@ -47,6 +48,7 @@ export const PolygonConfig = blockchainConfigFactory(
   },
   [
     MetamaskConnector,
+    TokenPocketConnector,
     MetamaskCompatibleConnector,
     CoinbaseWalletConnector,
     WalletConnectConnector,

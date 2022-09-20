@@ -45,6 +45,7 @@ export enum WalletConnectors {
   Metamask = "metamask",
   OntoWallet = "ontowallet",
   MathWallet = "mathwallet",
+  TokenPocketWallet = "tokenPocket",
   TronLink = "tronlink",
   TrustWallet = "trustwallet",
   MetamaskCompatible = "metamaskCompatible",

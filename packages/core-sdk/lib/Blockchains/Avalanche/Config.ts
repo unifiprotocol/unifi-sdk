@@ -14,6 +14,7 @@ import {
 } from "../../Connectors/Factory";
 import { WalletConnectConnector } from "../../Connectors/Wallets/WalletConnectConnector";
 import { CoinbaseWalletConnector } from "../../Connectors/Wallets/CoinbaseConnector";
+import { TokenPocketConnector } from "../../Connectors/Wallets/TokenPocketConnector";
 
 export const AvalancheConfig = blockchainConfigFactory(
   {
@@ -49,6 +50,7 @@ export const AvalancheConfig = blockchainConfigFactory(
     MetamaskConnector,
     MetamaskCompatibleConnector,
     CoinbaseWalletConnector,
+    TokenPocketConnector,
     WalletConnectConnector,
   ],
   [
