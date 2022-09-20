@@ -48,9 +48,9 @@ export const AvalancheConfig = blockchainConfigFactory(
   },
   [
     MetamaskConnector,
+    TokenPocketConnector,
     MetamaskCompatibleConnector,
     CoinbaseWalletConnector,
-    TokenPocketConnector,
     WalletConnectConnector,
   ],
   [
