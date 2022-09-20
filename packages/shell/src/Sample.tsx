@@ -43,7 +43,7 @@ export const Sample: ShellWrappedComp = ({ connection, eventBus }) => {
     const useCase = new Approve({
       tokenAddress: address,
       spender: "0x7e3944CBC535766671bf962c3e796540f6007F1e",
-      amount: "-1",
+      amount: "0",
     });
     await adapter?.initializeContract(address, ERC20Artifact.abi);
     useCase.execute(adapter!).then((res) => {
