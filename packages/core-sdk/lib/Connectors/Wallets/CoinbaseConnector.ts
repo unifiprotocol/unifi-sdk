@@ -1,12 +1,6 @@
 import { ethers } from "ethers";
 import { BaseConnector } from "../BaseConnector";
 import { Web3BaseAdapter } from "../../Adapters/Web3BaseAdapter";
-import Onboard, {
-  EIP1193Provider,
-  OnboardAPI,
-  WalletState,
-} from "@web3-onboard/core";
-import coinbase from "@web3-onboard/coinbase";
 import {
   IConnectorAdapters,
   IBlockchainConfig,
@@ -16,6 +10,7 @@ import {
 } from "../../Types";
 import { Web3MulticallAdapter } from "../../Adapters/Multicall/Web3MulticallAdapter";
 import { hexToDec } from "@unifiprotocol/utils";
+import { EIP1193Provider, OnboardAPI, WalletState } from "@web3-onboard/core";
 
 const unfiSvg = `
 <svg xmlns="http://www.w3.org/2000/svg" width="218" height="84" viewBox="0 0 218 84" fill="none">
@@ -43,7 +38,13 @@ export class CoinbaseWalletConnector extends BaseConnector {
   }
 
   async _connect(): Promise<IConnectorAdapters> {
-    const coinbaseWallet = coinbase();
+    const coinbaseWallet = await import("@web3-onboard/coinbase").then(
+      ({ default: coinbaseWallet }) => coinbaseWallet()
+    );
+
+    const Onboard = await import("@web3-onboard/core").then(
+      ({ default: Onboard }) => Onboard
+    );
 
     this.onboard = Onboard({
       wallets: [coinbaseWallet],
