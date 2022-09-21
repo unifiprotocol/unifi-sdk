@@ -8,7 +8,7 @@ import OntoWallet from "../Assets/Wallets/OntoWallet.png";
 import TronLink from "../Assets/Wallets/TronLink.jpeg";
 import WalletConnect from "../Assets/Wallets/WalletConnect.png";
 import CoinbaseWalletLogo from "../Assets/Wallets/CoinbaseWalletLogo.png";
-import TokenPocketLogo from "../Assets/Wallets/TokenPocket.png";
+import TokenPocketLogo from "../Assets/Wallets/TokenPocket.jpg";
 
 export const getWalletIcon = (wallet: string) => {
   return {
