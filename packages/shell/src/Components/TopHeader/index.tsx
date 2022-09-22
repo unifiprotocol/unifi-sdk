@@ -37,7 +37,7 @@ export const TopHeader = () => {
   return (
     <BrandedHeader leftControls={LeftMenu}>
       <TopHeaderWrapper>
-        <LanguageAction />
+        {/* <LanguageAction /> */}
         <BlockchainAction />
         <ConnectionAction />
       </TopHeaderWrapper>
