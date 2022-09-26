@@ -2684,10 +2684,10 @@
   dependencies:
     "@types/yargs-parser" "*"
 
-"@unifiprotocol/utils@^2.3.2":
-  version "2.3.2"
-  resolved "https://registry.yarnpkg.com/@unifiprotocol/utils/-/utils-2.3.2.tgz#b671982567d6486f3c7d4066d9417038528906bc"
-  integrity sha512-wrakRqpLIH+V3A7V1lRlLe4Ijq+LQNfN95DHyfZ1OogAzZoHlpjWJv5FGSWT3SHcyr6wut5KvGqYsYFGKUw9aw==
+"@unifiprotocol/utils@^2.3.5":
+  version "2.3.5"
+  resolved "https://npm.pkg.github.com/download/@unifiprotocol/utils/2.3.5/51f1f77b328cf0db1e82c6900e51fbba6a7b3bd1#51f1f77b328cf0db1e82c6900e51fbba6a7b3bd1"
+  integrity sha512-kw7Sy2xZGvtLLRseTuIh3lO49Ox2ZwhdDCQWqYohfNZzyJ9Y4BMFoAb7VNavTyj0h3rsD++jrrq75Ze5guk+XA==
   dependencies:
     bignumber.js "^9.0.1"
     keccak "^3.0.2"
