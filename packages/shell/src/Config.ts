@@ -37,9 +37,6 @@ const config: IConfig[] = [
     ...baseConfig(Blockchains.FTM),
   },
   {
-    ...baseConfig(Blockchains.Tron),
-  },
-  {
     ...baseConfig(Blockchains.EthereumGoerli),
   },
   {
@@ -56,6 +53,12 @@ export const externalBlockchainsConfig = [
     logoURI:
       "https://proxy.unifiprotocol.com/ipfs/QmY9MQ9pL7PVkBC7PeqtZgY8mhh5w39cDWDs9pqgokUxXZ",
     externalLink: "https://icon.unifiprotocol.com/",
+  },
+  {
+    name: "TRON",
+    logoURI:
+      "https://proxy.unifiprotocol.com/ipfs/QmNfhQcEHNL7tJJHCitHEwKFEr37dLJPVWaWZ13yXbYUZ8",
+    externalLink: "https://tron.unifiprotocol.com/",
   },
 ];
 
