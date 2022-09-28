@@ -3533,10 +3533,9 @@
     keccak "^3.0.2"
     tslib "^2.1.0"
 
-"@unifiprotocol/utrade-v2-localization@^1.0.0":
+"@unifiprotocol/utrade-v2-localization@git+https://github.com/unifiprotocol/utrade-v2-localization.git":
   version "1.0.0"
-  resolved "https://npm.pkg.github.com/download/@unifiprotocol/utrade-v2-localization/1.0.0/83480f59580119acb3da79cb32f711b6ad685e1d#83480f59580119acb3da79cb32f711b6ad685e1d"
-  integrity sha512-26F8AM2glKIv8v43oR5dmwJ4Wi3A9NTwn2I/ds0SpxTMs9I+R1dlfgzBmxMdb0YIXhTgkhaL0x++iz1ZLhQojg==
+  resolved "git+https://github.com/unifiprotocol/utrade-v2-localization.git#35facda8f186f568ef8ee80df9a2424be4dd67be"
 
 "@walletconnect/browser-utils@^1.8.0":
   version "1.8.0"

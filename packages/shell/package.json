@@ -15,7 +15,7 @@
     "@unifiprotocol/core-sdk": "^6.8.3",
     "@unifiprotocol/uikit": "^1.14.3",
     "@unifiprotocol/utils": "^2.3.5",
-    "@unifiprotocol/utrade-v2-localization": "^1.0.0",
+    "@unifiprotocol/utrade-v2-localization": "git+https://github.com/unifiprotocol/utrade-v2-localization.git",
     "assert": "^2.0.0",
     "bech32": "^2.0.0",
     "buffer-browserify": "^0.2.5",
