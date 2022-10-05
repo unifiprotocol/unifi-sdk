@@ -8,7 +8,7 @@ import {
 import { BlockchainAction } from "../BlockchainAction";
 import { ConnectionAction } from "../ConnectionAction";
 import { useNavigation } from "../../Navigation";
-import { LanguageAction } from "../LanguageAction";
+// import { LanguageAction } from "../LanguageAction";
 import { LeftMenuWrapper } from "./Styles";
 
 const TopHeaderWrapper = styled.div`

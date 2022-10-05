@@ -34,7 +34,7 @@ export const BalancesUpdater = () => {
       wipe();
       refresh();
     }
-  }, [prevAdapter, adapter, refresh]);
+  }, [prevAdapter, adapter, refresh, wipe]);
 
   useEffect(() => {
     const fn = () =>
