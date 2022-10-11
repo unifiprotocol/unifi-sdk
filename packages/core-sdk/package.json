@@ -1,6 +1,6 @@
 {
   "name": "@unifiprotocol/core-sdk",
-  "version": "6.8.3",
+  "version": "6.8.4",
   "description": "Unifi Protocol JS Core SDK",
   "author": "Unifi Protocol",
   "repository": "git@github.com:unifiprotocol/unifi-sdk.git",
@@ -31,7 +31,7 @@
   "dependencies": {
     "@maticnetwork/eth-decoder": "git+https://github.com/deblanco/eth-decoder.git",
     "@types/reflect-metadata": "^0.1.0",
-    "@unifiprotocol/utils": "^2.3.5",
+    "@unifiprotocol/utils": "^2.3.6",
     "@walletconnect/ethereum-provider": "^1.7.8",
     "@web3-onboard/coinbase": "^2.1.2",
     "@web3-onboard/core": "^2.8.1",
