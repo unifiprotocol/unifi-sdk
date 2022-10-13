@@ -1050,10 +1050,17 @@
     core-js-pure "^3.25.1"
     regenerator-runtime "^0.13.4"
 
-"@babel/runtime@^7.0.0", "@babel/runtime@^7.1.2", "@babel/runtime@^7.10.2", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.0", "@babel/runtime@^7.12.13", "@babel/runtime@^7.12.5", "@babel/runtime@^7.14.5", "@babel/runtime@^7.16.3", "@babel/runtime@^7.17.2", "@babel/runtime@^7.18.3", "@babel/runtime@^7.18.9", "@babel/runtime@^7.5.5", "@babel/runtime@^7.7.2", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7", "@babel/runtime@^7.9.2":
+"@babel/runtime@^7.0.0", "@babel/runtime@^7.10.2", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.5", "@babel/runtime@^7.14.5", "@babel/runtime@^7.16.3", "@babel/runtime@^7.17.2", "@babel/runtime@^7.18.9", "@babel/runtime@^7.5.5", "@babel/runtime@^7.7.2", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7", "@babel/runtime@^7.9.2":
   version "7.19.0"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.19.0.tgz#22b11c037b094d27a8a2504ea4dcff00f50e2259"
   integrity sha512-eR8Lo9hnDS7tqkO7NsV+mKvCmv5boaXFSZ70DnfhcgiEne8hv9oCEd36Klw74EtizEqLsy4YnW8UWwpBVolHZA==
+  dependencies:
+    regenerator-runtime "^0.13.4"
+
+"@babel/runtime@^7.1.2", "@babel/runtime@^7.12.0", "@babel/runtime@^7.12.13", "@babel/runtime@^7.18.3":
+  version "7.19.4"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.19.4.tgz#a42f814502ee467d55b38dd1c256f53a7b885c78"
+  integrity sha512-EXpLCrk55f+cYqmHsSR+yD/0gAIMxxA9QK9lnQWzhMCvt+YmoBN7Zx94s++Kv0+unHk39vxNO8t+CMA2WSS3wA==
   dependencies:
     regenerator-runtime "^0.13.4"
 
@@ -3519,14 +3526,14 @@
     "@typescript-eslint/types" "5.38.1"
     eslint-visitor-keys "^3.3.0"
 
-"@unifiprotocol/core-sdk@^6.8.3":
-  version "6.8.3"
-  resolved "https://npm.pkg.github.com/download/@unifiprotocol/core-sdk/6.8.3/6271b7b1dff3f9aa8e7106360cd5933b9b6a0a70#6271b7b1dff3f9aa8e7106360cd5933b9b6a0a70"
-  integrity sha512-JqILVhlsGNMIHh7x3pY1pElhtiWWZUSUhO0mn0fLwf/WhY/vQaNTNdquth9JZa1wg7nEl71GCs/K6iTPb9FEqA==
+"@unifiprotocol/core-sdk@^6.8.4":
+  version "6.8.4"
+  resolved "https://npm.pkg.github.com/download/@unifiprotocol/core-sdk/6.8.4/7d110ca58ac995c0f22a089920cdce699ea439cd#7d110ca58ac995c0f22a089920cdce699ea439cd"
+  integrity sha512-3ibyQLhBj8inNDRey3OEBkkYdnREaG5lnAJS7a5ZN5JjtZYB9oiapyGab337EP15FtJqNhxd6YOhnNWVJRi1hw==
   dependencies:
     "@maticnetwork/eth-decoder" "git+https://github.com/deblanco/eth-decoder.git"
     "@types/reflect-metadata" "^0.1.0"
-    "@unifiprotocol/utils" "^2.3.5"
+    "@unifiprotocol/utils" "^2.3.6"
     "@walletconnect/ethereum-provider" "^1.7.8"
     "@web3-onboard/coinbase" "^2.1.2"
     "@web3-onboard/core" "^2.8.1"
@@ -3567,6 +3574,15 @@
   version "2.3.5"
   resolved "https://npm.pkg.github.com/download/@unifiprotocol/utils/2.3.5/51f1f77b328cf0db1e82c6900e51fbba6a7b3bd1#51f1f77b328cf0db1e82c6900e51fbba6a7b3bd1"
   integrity sha512-kw7Sy2xZGvtLLRseTuIh3lO49Ox2ZwhdDCQWqYohfNZzyJ9Y4BMFoAb7VNavTyj0h3rsD++jrrq75Ze5guk+XA==
+  dependencies:
+    bignumber.js "^9.0.1"
+    keccak "^3.0.2"
+    tslib "^2.1.0"
+
+"@unifiprotocol/utils@^2.3.6":
+  version "2.3.6"
+  resolved "https://npm.pkg.github.com/download/@unifiprotocol/utils/2.3.6/951420c7f17ec763de91c40456e88755f8b0436e#951420c7f17ec763de91c40456e88755f8b0436e"
+  integrity sha512-V0gYmgaQV4llYUJTsIBEgh7GAygiPY6c6A0FS0H8toWiTuP4P+lIQdJ8ssLa8LaulylMuQXP/0yrsYaR+ovV7w==
   dependencies:
     bignumber.js "^9.0.1"
     keccak "^3.0.2"
