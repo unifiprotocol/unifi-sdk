@@ -102,7 +102,7 @@
     "@types/react": "^17.0.20",
     "@types/react-dom": "^17.0.9",
     "@types/styled-components": "^5.1.21",
-    "@unifiprotocol/uikit": "^1.14.3",
+    "@unifiprotocol/uikit": "^1.14.5",
     "rollup": "^2.67.2",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "tslib": "^2.3.1",

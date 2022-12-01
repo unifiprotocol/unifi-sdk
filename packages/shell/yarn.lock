@@ -3553,10 +3553,10 @@
     webpack "^5.74.0"
     webpack-cli "^4.10.0"
 
-"@unifiprotocol/uikit@^1.14.3":
-  version "1.14.3"
-  resolved "https://npm.pkg.github.com/download/@unifiprotocol/uikit/1.14.3/f71fd443e4a58f744610bed98b2c8f22f0c8cb23#f71fd443e4a58f744610bed98b2c8f22f0c8cb23"
-  integrity sha512-ug1XHYtziFGG+rTRWetF5rldImLLAhvOWM05tkWOui525nlP8sEXYv9vxcOgqrTVWZ+8ejFRoVKFb/7cxbfg3g==
+"@unifiprotocol/uikit@^1.14.5":
+  version "1.14.5"
+  resolved "https://npm.pkg.github.com/download/@unifiprotocol/uikit/1.14.5/9aeccf6075e8490a84d08a5481e8bdc0a9e79edf#9aeccf6075e8490a84d08a5481e8bdc0a9e79edf"
+  integrity sha512-lMr6LqpMtH9h1KUAMH7JEJ/bM8I4rq8qoJkXKuWhVrFhTKhbtqJfN3e+RXalWyPb7yFo4LKh6qfEtJzt1EyLXg==
   dependencies:
     "@rollup/plugin-image" "^2.1.1"
     "@unifiprotocol/utils" "^2.3.5"
