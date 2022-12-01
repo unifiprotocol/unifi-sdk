@@ -1,6 +1,6 @@
 {
   "name": "@unifiprotocol/shell",
-  "version": "0.5.22",
+  "version": "0.5.23",
   "repository": "git@github.com:unifiprotocol/unifi-sdk.git",
   "homepage": "https://github.com/unifiprotocol/unifi-sdk/tree/master/packages/shell",
   "description": "Unifi Protocol Shell",
