@@ -70,20 +70,20 @@ const LISTED_ITEMS: Array<{ name: string; href: string }> = [
     href: "https://gov.unifiprotocol.com",
   },
   {
-    name: "UTRADE",
-    href: "https://utrade.finance",
-  },
-  {
-    name: "USTAKE",
-    href: "https://ustake.unifiprotocol.com",
-  },
-  {
-    name: "NFT",
-    href: "https://nft.unifiprotocol.com",
+    name: "UP",
+    href: "https://app.unifiprotocol.com/up",
   },
   {
     name: "UBRIDGE",
-    href: "https://ubridge.unifiprotocol.com",
+    href: "https://app.unifiprotocol.com/bridge",
+  },
+  {
+    name: "USTAKE",
+    href: "https://app.unifiprotocol.com/stake",
+  },
+  {
+    name: "NFT",
+    href: "https://app.unifiprotocol.com/nft",
   },
 ];
 
