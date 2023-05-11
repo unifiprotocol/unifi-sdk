@@ -3590,7 +3590,7 @@
 
 "@unifiprotocol/utrade-v2-localization@git+https://github.com/unifiprotocol/utrade-v2-localization.git":
   version "1.0.0"
-  resolved "git+https://github.com/unifiprotocol/utrade-v2-localization.git#35facda8f186f568ef8ee80df9a2424be4dd67be"
+  resolved "git+https://github.com/unifiprotocol/utrade-v2-localization.git#5eb4c7bb801bbf5dc2a1bce3fb91a4b618732cbb"
 
 "@walletconnect/browser-utils@^1.8.0":
   version "1.8.0"
